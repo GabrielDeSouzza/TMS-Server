@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: api_nestjs
+    container_name: api_tms
     build:
       dockerfile: Dockerfile
       context: .
@@ -17,7 +17,7 @@ services:
 
   db:
     image: postgres:latest
-    container_name: db_nestjs
+    container_name: db_tms
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}

@@ -105,6 +105,12 @@
       }
     },
     {
+      "files": ["src/helpers/*"],
+      "rules": {
+        "@typescript-eslint/naming-convention": "off"
+      }
+    },
+    {
       "files": ["src/dtos/*"],
       "rules": {
         "unicorn/filename-case": "off",
@@ -146,6 +152,7 @@
     "node/no-missing-import": "off",
     "node/no-unpublished-import": "off",
     "import/prefer-default-export": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
     "quote-props": ["error", "consistent-as-needed"],
     "arrow-body-style": ["error", "as-needed"],
     "import/no-duplicates": [
@@ -265,12 +272,6 @@
         }
       },
       {
-        "selector": "memberLike",
-        "modifiers": ["private"],
-        "format": ["camelCase"],
-        "leadingUnderscore": "forbid"
-      },
-      {
         "selector": "variable",
         "types": ["boolean"],
         "format": ["PascalCase"],
@@ -292,9 +293,11 @@
         "groups": [
           "/node/",
           "/@nestjs/",
+          "/^@apollo/",
           "/^@testing-library/",
           "/^supertest/",
           "module",
+          "/^domain/",
           "/^app/",
           "/^infra/",
           "/^services/",

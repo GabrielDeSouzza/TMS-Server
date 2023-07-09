@@ -1,0 +1,17 @@
+@startuml User
+
+entity User
+
+User : uuid id
+User : string name
+User : string description
+User : boolean is_active
+User : date created_at
+
+User : create()
+User : update()
+User : activate()
+User : deactivate()
+User : delete()
+
+@enduml

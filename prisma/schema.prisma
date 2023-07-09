@@ -1,6 +1,5 @@
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl", "linux-musl-openssl-3.0.x"]
+  provider = "prisma-client-js"
 }
 
 generator dbml {
@@ -12,8 +11,533 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+  CLIENT
+}
+
+enum CNH {
+  A
+  B
+  C
+  D
+  E
+  AB
+  AC
+  AD
+  AE
+}
+
 model User {
-  id    String @id @default(uuid())
-  email String @unique
-  name  String
+  id         String   @id @default(uuid())
+  name       String
+  username   String   @unique
+  email      String   @unique
+  role       Role     @default(USER)
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  Route                    Route[]
+  Invoice                  Invoice[]
+  Vehicle                  Vehicle[]
+  OwnDriver                OwnDriver[]
+  VehicleType              VehicleType[]
+  VehicleModel             VehicleModel[]
+  VehicleBrand             VehicleBrand[]
+  CustomerOrder            CustomerOrder[]
+  CompanyVehicle           CompanyVehicle[]
+  CarrierCompany           CarrierCompany[]
+  VehicleBodywork          VehicleBodywork[]
+  OrderProcessing          OrderProcessing[]
+  OutsourcedDriver         OutsourcedDriver[]
+  OutsourcedVehicle        OutsourcedVehicle[]
+  VehicleTypeContainsBody  VehicleTypeContainsBody[]
+  ContractOutsourcedDriver ContractOutsourcedDriver[]
+
+  @@map("users")
+}
+
+model Vehicle {
+  id               String   @id @default(uuid())
+  plate            String   @unique
+  year             String
+  color            String
+  renavam          String
+  rntrc_expiration String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @default(now())
+
+  CompanyVehicle    CompanyVehicle?
+  OrderProcessing   OrderProcessing?
+  Maintenance       Maintenance[]
+  OutsourcedVehicle OutsourcedVehicle[]
+
+  CreatedBy  User?        @relation(fields: [created_by], references: [id])
+  created_by String
+  Model      VehicleModel @relation(fields: [model_id], references: [id])
+  model_id   String
+
+  @@map("vehicles")
+}
+
+model VehicleModel {
+  id           String   @id @default(uuid())
+  name         String
+  weight       Float
+  capacity_max Float
+  axles        Int
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
+
+  Vehicle Vehicle[]
+
+  CreatedBy   User?        @relation(fields: [created_by], references: [id])
+  created_by  String
+  Brand       VehicleBrand @relation(fields: [brand_id], references: [id])
+  brand_id    String
+  VehicleType VehicleType  @relation(fields: [type_id], references: [id])
+  type_id     String
+
+  @@map("vehicle_models")
+}
+
+model VehicleBrand {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  VehicleModel VehicleModel[]
+
+  CreatedBy  User?  @relation(fields: [created_by], references: [id])
+  created_by String
+
+  @@map("vehicle_brands")
+}
+
+model VehicleType {
+  id         String   @id @default(uuid())
+  name       String
+  bodywork   Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  VehicleModel            VehicleModel[]
+  VehicleTypeContainsBody VehicleTypeContainsBody[]
+
+  CreatedBy  User?  @relation(fields: [created_by], references: [id])
+  created_by String
+
+  @@map("vehicle_types")
+}
+
+model VehicleBodywork {
+  id         String   @id @default(uuid())
+  name       String
+  axles      Int
+  mass       Float
+  volume     Float
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  VehicleTypeContainsBody VehicleTypeContainsBody[]
+
+  CreatedBy  User?  @relation(fields: [created_by], references: [id])
+  created_by String
+
+  @@map("vehicle_bodyworks")
+}
+
+model VehicleTypeContainsBody {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  CreatedBy       User?           @relation(fields: [created_by], references: [id])
+  created_by      String
+  VehicleType     VehicleType     @relation(fields: [type_id], references: [id])
+  type_id         String
+  VehicleBodywork VehicleBodywork @relation(fields: [bodywork_id], references: [id])
+  bodywork_id     String
+
+  @@unique([bodywork_id, type_id])
+  @@map("vehicle_type_contain_bodyworks")
+}
+
+model OutsourcedVehicle {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  OutsourcedDriver OutsourcedDriver[]
+
+  CreatedBy           User?            @relation(fields: [created_by], references: [id])
+  created_by          String
+  Vehicle             Vehicle          @relation(fields: [vehicle_id], references: [id])
+  vehicle_id          String
+  OrderProcessing     OrderProcessing? @relation(fields: [order_processing_id], references: [id])
+  order_processing_id String?
+
+  @@map("outsourced_vehicles")
+}
+
+model CompanyVehicle {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  CreatedBy           User?            @relation(fields: [created_by], references: [id])
+  created_by          String
+  Vehicle             Vehicle          @relation(fields: [vehicle_id], references: [id])
+  vehicle_id          String           @unique
+  OrderProcessing     OrderProcessing? @relation(fields: [order_processing_id], references: [id])
+  order_processing_id String?
+
+  @@map("company_vehicles")
+}
+
+model OutsourcedDriver {
+  id                       String                     @id @default(uuid())
+  cnh                      String                     @unique
+  cnh_category             CNH
+  cnh_expiration           DateTime
+  company_vehicle          Boolean                    @default(false)
+  course_mopp              Boolean                    @default(false)
+  ContractOutsourcedDriver ContractOutsourcedDriver[]
+  created_at               DateTime                   @default(now())
+  updated_at               DateTime                   @default(now())
+
+  CreatedBy             User?             @relation(fields: [created_by], references: [id])
+  created_by            String
+  NaturalPerson         NaturalPerson     @relation(fields: [cpf], references: [cpf])
+  cpf                   String            @unique
+  OutsourcedVehicle     OutsourcedVehicle @relation(fields: [outsourced_vehicle_id], references: [id])
+  outsourced_vehicle_id String            @unique
+
+  @@map("outsourced_drivers")
+}
+
+model ContractOutsourcedDriver {
+  id         String    @id @default(uuid())
+  type       String
+  situation  String
+  start_at   DateTime
+  end_at     DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+
+  CreatedBy        User?            @relation(fields: [created_by], references: [id])
+  created_by       String
+  OutsourcedDriver OutsourcedDriver @relation(fields: [cpf], references: [cpf])
+  cpf              String           @unique
+
+  @@map("contract_outsourced_drivers")
+}
+
+model OwnDriver {
+  id              String   @id @default(uuid())
+  cnh             String   @unique
+  cnh_category    CNH
+  cnh_expiration  DateTime
+  company_vehicle Boolean  @default(false)
+  course_mopp     Boolean  @default(false)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now())
+
+  CreatedBy     User?         @relation(fields: [created_by], references: [id])
+  created_by    String
+  NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
+  cpf           String
+
+  @@map("own_drivers")
+}
+
+model NaturalPerson {
+  id             String   @id @default(uuid())
+  name           String
+  date_birth     DateTime
+  gender         String
+  cpf            String   @unique
+  rg             Int      @unique
+  cep            Int
+  public_place   String
+  address_number String
+  neighborhood   String
+  complement     String
+  city           String
+  uf             String
+  first_phone    String
+  second_phone   String?
+  third_phone    String?
+  email          String
+  nationality    String
+
+  OwnDriver          OwnDriver[]
+  OutsourcedDriver   OutsourcedDriver[]
+  PhysicalCustomer   PhysicalCustomer[]
+  PhysicalContractor PhysicalContractor[]
+
+  @@map("natural_people")
+}
+
+model LegalPerson {
+  id                 String  @id @default(uuid())
+  fantasy_name       String
+  cnpj               String  @unique
+  state_registration String  @unique
+  corporate_name     String
+  public_place       String
+  address_number     String
+  neighborhood       String
+  complement         String
+  city               String
+  uf                 String
+  first_phone        String
+  second_phone       String?
+  third_phone        String?
+  email              String
+
+  CorporateClient    CorporateClient[]
+  MaintenanceCompany MaintenanceCompany?
+  LegalContractor    LegalContractor[]
+  CarrierCompany     CarrierCompany[]
+
+  @@map("legal_people")
+}
+
+model CarrierCompany {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  Ciot    Ciot[]
+  Invoice Invoice[]
+
+  CreatedBy   User?       @relation(fields: [created_by], references: [id])
+  created_by  String
+  LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
+  cnpj        String      @unique
+
+  @@map("carrier_companies")
+}
+
+model PhysicalCustomer {
+  id     String @id @default(uuid())
+  branch String
+
+  Merchandise Merchandise?
+  Ciot        Ciot[]
+  Invoice     Invoice[]
+
+  NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
+  cpf           String        @unique
+
+  @@map("physical_customers")
+}
+
+model CorporateClient {
+  id     String @id @default(uuid())
+  branch String
+
+  Ciot        Ciot[]
+  Invoice     Invoice[]
+  Merchandise Merchandise[]
+
+  LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
+  cnpj        String      @unique
+
+  @@map("corporate_clients")
+}
+
+model PhysicalContractor {
+  id     String @id @default(uuid())
+  branch String
+
+  Merchandise Merchandise[]
+
+  NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
+  cpf           String        @unique
+
+  @@map("physical_contractors")
+}
+
+model LegalContractor {
+  id     String @id @default(uuid())
+  branch String
+
+  Merchandise Merchandise[]
+
+  LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
+  cnpj        String      @unique
+  Ciot        Ciot[]
+
+  @@map("legal_contractors")
+}
+
+model Merchandise {
+  id             String @id @default(uuid())
+  codMerchandise String @unique
+  amount         Int
+  description    String
+  mass           Float
+  volume         Float
+  value          Float
+
+  PhysicalCustomer   PhysicalCustomer?   @relation(fields: [customer_cpf], references: [cpf])
+  customer_cpf       String?             @unique
+  Order              CustomerOrder       @relation(fields: [order_id], references: [id])
+  order_id           String
+  PhysicalContractor PhysicalContractor? @relation(fields: [contractor_cpf], references: [cpf])
+  contractor_cpf     String?
+  LegalContractor    LegalContractor?    @relation(fields: [contractor_cnpj], references: [cnpj])
+  contractor_cnpj    String?
+  CorporateClient    CorporateClient?    @relation(fields: [corporate_cnpj], references: [cnpj])
+  corporate_cnpj     String?
+
+  @@map("merchandise")
+}
+
+model CustomerOrder {
+  id         String   @id @default(uuid())
+  order      String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  Route       Route[]
+  Merchandise Merchandise[]
+
+  CreatedBy  User?   @relation(fields: [created_by], references: [id])
+  created_by String
+  Invoice    Invoice @relation(fields: [invoice_id], references: [id])
+  invoice_id String  @unique
+
+  @@map("customer_orders")
+}
+
+model Route {
+  id             String   @id @default(uuid())
+  cep            String
+  public_place   String
+  address_number String
+  neighborhood   String
+  complement     String?
+  city           String
+  uf             String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now())
+
+  OrderProcessing OrderProcessing[]
+
+  CreatedBy  User?         @relation(fields: [created_by], references: [id])
+  created_by String
+  Order      CustomerOrder @relation(fields: [order_id], references: [id])
+  order_id   String
+
+  @@map("routes")
+}
+
+model Invoice {
+  id                String   @id @default(uuid())
+  num_invoices      Int
+  emission_date     DateTime @default(now())
+  nature_invoice    String
+  invoice_total     Float
+  form_payment      String
+  additional_data   String
+  digital_signature String   @unique
+  invoice_taxes     Float
+  created_at        DateTime @default(now())
+  updated_at        DateTime @default(now())
+
+  CustomerOrder CustomerOrder?
+
+  CreatedBy        User?             @relation(fields: [created_by], references: [id])
+  created_by       String
+  PhysicalCustomer PhysicalCustomer? @relation(fields: [cpf], references: [cpf])
+  cpf              String?
+  CarrierCompany   CarrierCompany    @relation(fields: [carrier_cnpj], references: [cnpj])
+  carrier_cnpj     String
+  CorporateClient  CorporateClient?  @relation(fields: [corporate_cnpj], references: [cnpj])
+  corporate_cnpj   String?
+
+  @@map("invoices")
+}
+
+model Ciot {
+  id            String   @id @default(uuid())
+  ciot          String   @unique
+  emission_date DateTime @default(now())
+
+  PhysicalCustomer PhysicalCustomer? @relation(fields: [cpf], references: [cpf])
+  cpf              String?
+  CarrierCompany   CarrierCompany    @relation(fields: [carrier_cnpj], references: [cnpj])
+  carrier_cnpj     String
+  CorporateClient  CorporateClient?  @relation(fields: [corporate_cnpj], references: [cnpj])
+  corporate_cnpj   String?
+  LegalContractor  LegalContractor?  @relation(fields: [contractor_cnpj], references: [cnpj])
+  contractor_cnpj  String?
+
+  @@map("ciots")
+}
+
+model OrderProcessing {
+  id                   String   @id @default(uuid())
+  total_distance       Float
+  total_spend_liters   Int
+  total_spending_money Float
+  start_at             DateTime
+  end_at               DateTime
+  created_at           DateTime @default(now())
+  updated_at           DateTime @default(now())
+
+  CompanyVehicle    CompanyVehicle[]
+  OutsourcedVehicle OutsourcedVehicle[]
+
+  CreatedBy  User?   @relation(fields: [created_by], references: [id])
+  created_by String
+  Route      Route   @relation(fields: [route_id], references: [id])
+  route_id   String
+  Vehicle    Vehicle @relation(fields: [plate], references: [plate])
+  plate      String  @unique
+
+  @@map("order_processing")
+}
+
+model MaintenanceProcess {
+  id             String @id @default(uuid())
+  description    String
+  classification String
+  preventive     Int
+  corrective     Int
+
+  Maintenance Maintenance[]
+
+  @@map("maintenance_processes")
+}
+
+model MaintenanceCompany {
+  id                    String @id @default(uuid())
+  specialty_maintenance String
+
+  Maintenance Maintenance[]
+
+  LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
+  cnpj        String      @unique
+
+  @@map("maintenance_companies")
+}
+
+model Maintenance {
+  id String @id @default(uuid())
+
+  MaintenanceCompany       MaintenanceCompany @relation(fields: [maintenance_company_cnpj], references: [cnpj])
+  maintenance_company_cnpj String
+  Vehicle                  Vehicle            @relation(fields: [plate], references: [plate])
+  plate                    String
+  MaintenanceProcess       MaintenanceProcess @relation(fields: [maintenance_process_id], references: [id])
+  maintenance_process_id   String
+
+  @@map("maintenance")
 }

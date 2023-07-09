@@ -1,7 +1,7 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
-    "source.fixAll.tslint": true,
+    "source.fixAll.tslint": true
   },
 
   "[json][jsonc][yaml]": {
@@ -9,17 +9,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
-  "eslint.validate": [
-    "mdx",
-    "markdown",
-    "javascript",
-    "typescript",
-  ],
+  "eslint.validate": ["mdx", "markdown", "javascript", "typescript"],
 
   "search.exclude": {
     "package-lock.json": true,
     "yarn.lock": true,
-    "pnpm-lock.yaml": true,
+    "pnpm-lock.yaml": true
   },
 
   "prettier.ignorePath": ".gitignore",
@@ -28,6 +23,7 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "mdx.experimentalLanguageServer": true,
 
+  "material-icon-theme.activeIconPack": "nest",
   "material-icon-theme.folders.associations": {
     "workflows": "ci",
     "ISSUE_TEMPLATE": "error",

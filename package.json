@@ -1,8 +1,8 @@
 {
-  "name": "nestjs-boilerplate",
-  "version": "1.0.3",
+  "name": "tms-server",
+  "version": "1.0.0",
   "private": false,
-  "description": "NestJS boilerplate",
+  "description": "TMS API Server",
   "license": "MIT",
   "author": "Gabriel Guedes <gabrielrguedess@gmail.com>",
   "scripts": {
@@ -36,7 +36,6 @@
     "package.json": "pnpm sort:package",
     "src/**/*.ts": [
       "bash -c tsc --noEmit",
-      "pnpm find-deadcode",
       "pnpm lint --fix",
       "pnpm test -- --findRelatedTests --bail --passWithNoTests"
     ],
@@ -50,17 +49,21 @@
     }
   },
   "dependencies": {
+    "@apollo/server": "^4.7.5",
+    "@as-integrations/fastify": "^2.0.0",
     "@fastify/static": "^6.10.2",
+    "@nestjs/apollo": "^12.0.4",
     "@nestjs/cache-manager": "^2.0.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/graphql": "^12.0.6",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/platform-fastify": "^10.0.0",
-    "@nestjs/swagger": "^7.0.0",
     "@prisma/client": "^4.15.0",
     "cache-manager": "^5.2.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "graphql": "^16.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.1",
     "rxjs": "^7.8.1"
