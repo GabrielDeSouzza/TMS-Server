@@ -5,6 +5,7 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../shared/entities/Entity';
 import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
+import { type VehicleModel } from '../vehicleModel/VehicleModel';
 
 interface IVehicle {
   plate: string;
@@ -14,6 +15,7 @@ interface IVehicle {
   rntrc_expiration: string;
   created_at: Date;
   updated_at: Date;
+  VehicleModel?: VehicleModel;
 }
 
 export class Vehicle extends Entity {
@@ -107,10 +109,15 @@ export class Vehicle extends Entity {
     return this.props.rntrc_expiration;
   }
 
+  public get VehicleModel(): VehicleModel {
+    return this.props.VehicleModel;
+  }
+  public set VehicleModel(vehicleModel: VehicleModel) {
+    this.props.VehicleModel = vehicleModel;
+  }
   public set updatedAt(updatedAt: Date) {
     this.props.updated_at = updatedAt;
   }
-
   public get updatedAt(): Date {
     return this.props.updated_at;
   }
