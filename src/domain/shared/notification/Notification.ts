@@ -5,7 +5,7 @@ export interface INotificationError {
 }
 
 export interface IValidationField {
-  field: string;
+  field: string | number;
   fieldName: string;
   maxLength: number;
   minLength?: number;
@@ -34,32 +34,66 @@ export class Notification {
 
   requiredField(context: string, fieldsValidation: Array<IValidationField>) {
     fieldsValidation.forEach(fieldValidation => {
-      fieldValidation.minLength ?? fieldValidation.maxLength;
+      if (typeof fieldValidation.field === 'string')
+        this.requiredFieldIsString(context, fieldValidation);
+      else if (typeof fieldValidation.field === 'number')
+        this.requiredFieldIsNumber(context, fieldValidation);
+    });
+  }
+  private requiredFieldIsNumber(
+    context: string,
+    fieldValidation: IValidationField,
+  ) {
+    fieldValidation.minLength ?? fieldValidation.maxLength;
+    fieldValidation.field = fieldValidation.field as number;
 
-      if (fieldValidation.field.length === 0) {
-        this.errors.push({
-          context,
-          message: fieldValidation.fieldName + ' is required',
-        });
-
-        return;
-      } else if (fieldValidation.field.length > fieldValidation.maxLength) {
-        this.errors.push({
-          context,
-          message: fieldValidation.fieldName + ' exceeded the character limit',
-        });
-
-        return;
-      } else if (fieldValidation.field.length < fieldValidation.minLength) {
-        this.errors.push({
-          context,
-          message:
-            fieldValidation.fieldName +
-            ' does not have the minimum number of characters accepted',
-        });
-      }
+    if (fieldValidation.field > fieldValidation.maxLength) {
+      this.errors.push({
+        context,
+        message: fieldValidation.fieldName + ' exceeded the number limit',
+      });
 
       return;
-    });
+    } else if (fieldValidation.field < fieldValidation.minLength) {
+      this.errors.push({
+        context,
+        message:
+          fieldValidation.fieldName +
+          ' does not have the minimum number accepted',
+      });
+    }
+
+    return;
+  }
+  private requiredFieldIsString(
+    context: string,
+    fieldValidation: IValidationField,
+  ) {
+    fieldValidation.minLength ?? fieldValidation.maxLength;
+    fieldValidation.field = fieldValidation.field as string;
+    fieldValidation.minLength ?? fieldValidation.maxLength;
+
+    if (fieldValidation.field.length === 0) {
+      this.errors.push({
+        context,
+        message: fieldValidation.fieldName + ' is required',
+      });
+
+      return;
+    } else if (fieldValidation.field.length > fieldValidation.maxLength) {
+      this.errors.push({
+        context,
+        message: fieldValidation.fieldName + ' exceeded the character limit',
+      });
+
+      return;
+    } else if (fieldValidation.field.length < fieldValidation.minLength) {
+      this.errors.push({
+        context,
+        message:
+          fieldValidation.fieldName +
+          ' does not have the minimum number of characters accepted',
+      });
+    }
   }
 }
