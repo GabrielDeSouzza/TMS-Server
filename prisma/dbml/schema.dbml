@@ -2,8 +2,544 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Table User {
+Table users {
   id String [pk]
-  email String [unique, not null]
   name String [not null]
+  username String [unique, not null]
+  email String [unique, not null]
+  role Role [not null, default: 'USER']
+  password String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  Route routes [not null]
+  Invoice invoices [not null]
+  Vehicle vehicles [not null]
+  OwnDriver own_drivers [not null]
+  VehicleType vehicle_types [not null]
+  VehicleModel vehicle_models [not null]
+  VehicleBrand vehicle_brands [not null]
+  CustomerOrder customer_orders [not null]
+  CompanyVehicle company_vehicles [not null]
+  CarrierCompany carrier_companies [not null]
+  VehicleBodywork vehicle_bodyworks [not null]
+  OrderProcessing order_processing [not null]
+  OutsourcedDriver outsourced_drivers [not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
+  VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
+  ContractOutsourcedDriver contract_outsourced_drivers [not null]
 }
+
+Table vehicles {
+  id String [pk]
+  plate String [unique, not null]
+  year String [not null]
+  color String [not null]
+  renavam String [not null]
+  rntrc_expiration String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CompanyVehicle company_vehicles
+  OrderProcessing order_processing
+  Maintenance maintenance [not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
+  CreatedBy users
+  created_by String [not null]
+  Model vehicle_models [not null]
+  model_id String [not null]
+}
+
+Table vehicle_models {
+  id String [pk]
+  name String [not null]
+  weight Float [not null]
+  capacity_max Float [not null]
+  axles Int [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  Vehicle vehicles [not null]
+  CreatedBy users
+  created_by String [not null]
+  Brand vehicle_brands [not null]
+  brand_id String [not null]
+  VehicleType vehicle_types [not null]
+  type_id String [not null]
+}
+
+Table vehicle_brands {
+  id String [pk]
+  name String [unique, not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  VehicleModel vehicle_models [not null]
+  CreatedBy users
+  created_by String [not null]
+}
+
+Table vehicle_types {
+  id String [pk]
+  name String [not null]
+  bodywork Boolean [not null, default: false]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  VehicleModel vehicle_models [not null]
+  VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
+  CreatedBy users
+  created_by String [not null]
+}
+
+Table vehicle_bodyworks {
+  id String [pk]
+  name String [not null]
+  axles Int [not null]
+  mass Float [not null]
+  volume Float [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
+  CreatedBy users
+  created_by String [not null]
+}
+
+Table vehicle_type_contain_bodyworks {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  VehicleType vehicle_types [not null]
+  type_id String [not null]
+  VehicleBodywork vehicle_bodyworks [not null]
+  bodywork_id String [not null]
+
+  indexes {
+    (bodywork_id, type_id) [unique]
+  }
+}
+
+Table outsourced_vehicles {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  OutsourcedDriver outsourced_drivers [not null]
+  CreatedBy users
+  created_by String [not null]
+  Vehicle vehicles [not null]
+  vehicle_id String [not null]
+  OrderProcessing order_processing
+  order_processing_id String
+}
+
+Table company_vehicles {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  Vehicle vehicles [not null]
+  vehicle_id String [unique, not null]
+  OrderProcessing order_processing
+  order_processing_id String
+}
+
+Table outsourced_drivers {
+  id String [pk]
+  cnh String [unique, not null]
+  cnh_category CNH [not null]
+  cnh_expiration DateTime [not null]
+  company_vehicle Boolean [not null, default: false]
+  course_mopp Boolean [not null, default: false]
+  ContractOutsourcedDriver contract_outsourced_drivers [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  NaturalPerson natural_people [not null]
+  cpf String [unique, not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
+  outsourced_vehicle_id String [unique, not null]
+}
+
+Table contract_outsourced_drivers {
+  id String [pk]
+  type String [not null]
+  situation String [not null]
+  start_at DateTime [not null]
+  end_at DateTime
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  OutsourcedDriver outsourced_drivers [not null]
+  cpf String [unique, not null]
+}
+
+Table own_drivers {
+  id String [pk]
+  cnh String [unique, not null]
+  cnh_category CNH [not null]
+  cnh_expiration DateTime [not null]
+  company_vehicle Boolean [not null, default: false]
+  course_mopp Boolean [not null, default: false]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  NaturalPerson natural_people [not null]
+  cpf String [not null]
+}
+
+Table natural_people {
+  id String [pk]
+  name String [not null]
+  date_birth DateTime [not null]
+  gender String [not null]
+  cpf String [unique, not null]
+  rg Int [unique, not null]
+  cep Int [not null]
+  public_place String [not null]
+  address_number String [not null]
+  neighborhood String [not null]
+  complement String [not null]
+  city String [not null]
+  uf String [not null]
+  first_phone String [not null]
+  second_phone String
+  third_phone String
+  email String [not null]
+  nationality String [not null]
+  OwnDriver own_drivers [not null]
+  OutsourcedDriver outsourced_drivers [not null]
+  PhysicalCustomer physical_customers [not null]
+  PhysicalContractor physical_contractors [not null]
+}
+
+Table legal_people {
+  id String [pk]
+  fantasy_name String [not null]
+  cnpj String [unique, not null]
+  state_registration String [unique, not null]
+  corporate_name String [not null]
+  public_place String [not null]
+  address_number String [not null]
+  neighborhood String [not null]
+  complement String [not null]
+  city String [not null]
+  uf String [not null]
+  first_phone String [not null]
+  second_phone String
+  third_phone String
+  email String [not null]
+  CorporateClient corporate_clients [not null]
+  MaintenanceCompany maintenance_companies
+  LegalContractor legal_contractors [not null]
+  CarrierCompany carrier_companies [not null]
+}
+
+Table carrier_companies {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  Ciot ciots [not null]
+  Invoice invoices [not null]
+  CreatedBy users
+  created_by String [not null]
+  LegalPerson legal_people [not null]
+  cnpj String [unique, not null]
+}
+
+Table physical_customers {
+  id String [pk]
+  branch String [not null]
+  Merchandise merchandise
+  Ciot ciots [not null]
+  Invoice invoices [not null]
+  NaturalPerson natural_people [not null]
+  cpf String [unique, not null]
+}
+
+Table corporate_clients {
+  id String [pk]
+  branch String [not null]
+  Ciot ciots [not null]
+  Invoice invoices [not null]
+  Merchandise merchandise [not null]
+  LegalPerson legal_people [not null]
+  cnpj String [unique, not null]
+}
+
+Table physical_contractors {
+  id String [pk]
+  branch String [not null]
+  Merchandise merchandise [not null]
+  NaturalPerson natural_people [not null]
+  cpf String [unique, not null]
+}
+
+Table legal_contractors {
+  id String [pk]
+  branch String [not null]
+  Merchandise merchandise [not null]
+  LegalPerson legal_people [not null]
+  cnpj String [unique, not null]
+  Ciot ciots [not null]
+}
+
+Table merchandise {
+  id String [pk]
+  codMerchandise String [unique, not null]
+  amount Int [not null]
+  description String [not null]
+  mass Float [not null]
+  volume Float [not null]
+  value Float [not null]
+  PhysicalCustomer physical_customers
+  customer_cpf String [unique]
+  Order customer_orders [not null]
+  order_id String [not null]
+  PhysicalContractor physical_contractors
+  contractor_cpf String
+  LegalContractor legal_contractors
+  contractor_cnpj String
+  CorporateClient corporate_clients
+  corporate_cnpj String
+}
+
+Table customer_orders {
+  id String [pk]
+  order String [unique, not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  Route routes [not null]
+  Merchandise merchandise [not null]
+  CreatedBy users
+  created_by String [not null]
+  Invoice invoices [not null]
+  invoice_id String [unique, not null]
+}
+
+Table routes {
+  id String [pk]
+  cep String [not null]
+  public_place String [not null]
+  address_number String [not null]
+  neighborhood String [not null]
+  complement String
+  city String [not null]
+  uf String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  OrderProcessing order_processing [not null]
+  CreatedBy users
+  created_by String [not null]
+  Order customer_orders [not null]
+  order_id String [not null]
+}
+
+Table invoices {
+  id String [pk]
+  num_invoices Int [not null]
+  emission_date DateTime [default: `now()`, not null]
+  nature_invoice String [not null]
+  invoice_total Float [not null]
+  form_payment String [not null]
+  additional_data String [not null]
+  digital_signature String [unique, not null]
+  invoice_taxes Float [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CustomerOrder customer_orders
+  CreatedBy users
+  created_by String [not null]
+  PhysicalCustomer physical_customers
+  cpf String
+  CarrierCompany carrier_companies [not null]
+  carrier_cnpj String [not null]
+  CorporateClient corporate_clients
+  corporate_cnpj String
+}
+
+Table ciots {
+  id String [pk]
+  ciot String [unique, not null]
+  emission_date DateTime [default: `now()`, not null]
+  PhysicalCustomer physical_customers
+  cpf String
+  CarrierCompany carrier_companies [not null]
+  carrier_cnpj String [not null]
+  CorporateClient corporate_clients
+  corporate_cnpj String
+  LegalContractor legal_contractors
+  contractor_cnpj String
+}
+
+Table order_processing {
+  id String [pk]
+  total_distance Float [not null]
+  total_spend_liters Int [not null]
+  total_spending_money Float [not null]
+  start_at DateTime [not null]
+  end_at DateTime [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CompanyVehicle company_vehicles [not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
+  CreatedBy users
+  created_by String [not null]
+  Route routes [not null]
+  route_id String [not null]
+  Vehicle vehicles [not null]
+  plate String [unique, not null]
+}
+
+Table maintenance_processes {
+  id String [pk]
+  description String [not null]
+  classification String [not null]
+  preventive Int [not null]
+  corrective Int [not null]
+  Maintenance maintenance [not null]
+}
+
+Table maintenance_companies {
+  id String [pk]
+  specialty_maintenance String [not null]
+  Maintenance maintenance [not null]
+  LegalPerson legal_people [not null]
+  cnpj String [unique, not null]
+}
+
+Table maintenance {
+  id String [pk]
+  MaintenanceCompany maintenance_companies [not null]
+  maintenance_company_cnpj String [not null]
+  Vehicle vehicles [not null]
+  plate String [not null]
+  MaintenanceProcess maintenance_processes [not null]
+  maintenance_process_id String [not null]
+}
+
+Enum Role {
+  USER
+  ADMIN
+  CLIENT
+}
+
+Enum CNH {
+  A
+  B
+  C
+  D
+  E
+  AB
+  AC
+  AD
+  AE
+}
+
+Ref: vehicles.created_by > users.id
+
+Ref: vehicles.model_id > vehicle_models.id
+
+Ref: vehicle_models.created_by > users.id
+
+Ref: vehicle_models.brand_id > vehicle_brands.id
+
+Ref: vehicle_models.type_id > vehicle_types.id
+
+Ref: vehicle_brands.created_by > users.id
+
+Ref: vehicle_types.created_by > users.id
+
+Ref: vehicle_bodyworks.created_by > users.id
+
+Ref: vehicle_type_contain_bodyworks.created_by > users.id
+
+Ref: vehicle_type_contain_bodyworks.type_id > vehicle_types.id
+
+Ref: vehicle_type_contain_bodyworks.bodywork_id > vehicle_bodyworks.id
+
+Ref: outsourced_vehicles.created_by > users.id
+
+Ref: outsourced_vehicles.vehicle_id > vehicles.id
+
+Ref: outsourced_vehicles.order_processing_id > order_processing.id
+
+Ref: company_vehicles.created_by > users.id
+
+Ref: company_vehicles.vehicle_id - vehicles.id
+
+Ref: company_vehicles.order_processing_id > order_processing.id
+
+Ref: outsourced_drivers.created_by > users.id
+
+Ref: outsourced_drivers.cpf > natural_people.cpf
+
+Ref: outsourced_drivers.outsourced_vehicle_id > outsourced_vehicles.id
+
+Ref: contract_outsourced_drivers.created_by > users.id
+
+Ref: contract_outsourced_drivers.cpf > outsourced_drivers.cpf
+
+Ref: own_drivers.created_by > users.id
+
+Ref: own_drivers.cpf > natural_people.cpf
+
+Ref: carrier_companies.created_by > users.id
+
+Ref: carrier_companies.cnpj > legal_people.cnpj
+
+Ref: physical_customers.cpf > natural_people.cpf
+
+Ref: corporate_clients.cnpj > legal_people.cnpj
+
+Ref: physical_contractors.cpf > natural_people.cpf
+
+Ref: legal_contractors.cnpj > legal_people.cnpj
+
+Ref: merchandise.customer_cpf - physical_customers.cpf
+
+Ref: merchandise.order_id > customer_orders.id
+
+Ref: merchandise.contractor_cpf > physical_contractors.cpf
+
+Ref: merchandise.contractor_cnpj > legal_contractors.cnpj
+
+Ref: merchandise.corporate_cnpj > corporate_clients.cnpj
+
+Ref: customer_orders.created_by > users.id
+
+Ref: customer_orders.invoice_id - invoices.id
+
+Ref: routes.created_by > users.id
+
+Ref: routes.order_id > customer_orders.id
+
+Ref: invoices.created_by > users.id
+
+Ref: invoices.cpf > physical_customers.cpf
+
+Ref: invoices.carrier_cnpj > carrier_companies.cnpj
+
+Ref: invoices.corporate_cnpj > corporate_clients.cnpj
+
+Ref: ciots.cpf > physical_customers.cpf
+
+Ref: ciots.carrier_cnpj > carrier_companies.cnpj
+
+Ref: ciots.corporate_cnpj > corporate_clients.cnpj
+
+Ref: ciots.contractor_cnpj > legal_contractors.cnpj
+
+Ref: order_processing.created_by > users.id
+
+Ref: order_processing.route_id > routes.id
+
+Ref: order_processing.plate - vehicles.plate
+
+Ref: maintenance_companies.cnpj - legal_people.cnpj
+
+Ref: maintenance.maintenance_company_cnpj > maintenance_companies.cnpj
+
+Ref: maintenance.plate > vehicles.plate
+
+Ref: maintenance.maintenance_process_id > maintenance_processes.id

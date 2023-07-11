@@ -47,6 +47,34 @@ export class User extends Entity {
         message: 'Name is required!',
       });
     }
+
+    if (this.username.length === 0) {
+      this.notification.addError({
+        context: 'user',
+        message: 'Username is required!',
+      });
+    }
+
+    if (this.password.length === 0) {
+      this.notification.addError({
+        context: 'user',
+        message: 'Password is required!',
+      });
+    }
+
+    if (this.role.length === 0) {
+      this.notification.addError({
+        context: 'user',
+        message: 'Role required!',
+      });
+    }
+
+    if (this.email.length === 0) {
+      this.notification.addError({
+        context: 'user',
+        message: 'Email invalid!',
+      });
+    }
   }
 
   public get id(): string {
