@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { type Replace } from 'helpers/Replace';
 
 import { Entity } from '../../shared/entities/Entity';
+import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
 
 interface IUser {
@@ -41,40 +42,24 @@ export class User extends Entity {
   }
 
   validate() {
-    if (this.name.length === 0) {
-      this.notification.addError({
-        context: 'user',
-        message: 'Name is required!',
-      });
-    }
-
-    if (this.username.length === 0) {
-      this.notification.addError({
-        context: 'user',
-        message: 'Username is required!',
-      });
-    }
-
-    if (this.password.length === 0) {
-      this.notification.addError({
-        context: 'user',
-        message: 'Password is required!',
-      });
-    }
-
-    if (this.role.length === 0) {
-      this.notification.addError({
-        context: 'user',
-        message: 'Role required!',
-      });
-    }
-
-    if (this.email.length === 0) {
-      this.notification.addError({
-        context: 'user',
-        message: 'Email invalid!',
-      });
-    }
+    const fieldsValidation: Array<IValidationField> =
+      new Array<IValidationField>();
+    fieldsValidation.push(
+      {
+        field: this.name,
+        fieldName: 'Name',
+        maxLength: 80,
+      },
+      { field: this.props.email, fieldName: 'Email', maxLength: 80 },
+      { field: this.props.password, fieldName: 'Password', maxLength: 80 },
+      {
+        field: this.props.role,
+        fieldName: 'Role',
+        maxLength: 10,
+      },
+      { field: this.username, fieldName: 'Username', maxLength: 80 },
+    );
+    this.notification.requiredField('User', fieldsValidation);
   }
 
   public get id(): string {
