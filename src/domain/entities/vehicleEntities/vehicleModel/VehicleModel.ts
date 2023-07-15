@@ -2,25 +2,29 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
-import { Entity } from '../../shared/entities/Entity';
-import { type IValidationField } from '../../shared/notification/Notification';
-import { NotificationError } from '../../shared/notification/NotificationError';
+import { Entity } from '../../../shared/entities/Entity';
+import { type IValidationField } from '../../../shared/notification/Notification';
+import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type VehicleBrand } from '../vehicleBrand/VehicleBrand';
 
-interface IVehicleBodywork {
+interface IVehicleModel {
   name: string;
+  weight: number;
+  capacity_max: number;
   axles: number;
-  mass: number;
-  volume: number;
+  brand_id?: string;
+  type_id?: string;
   created_at: Date;
   updated_at: Date;
+  VehicleBrand?: VehicleBrand;
 }
 
-export class VehicleBodywork extends Entity {
+export class VehicleModel extends Entity {
   private _id: string;
-  private props: IVehicleBodywork;
+  private props: IVehicleModel;
 
   constructor(
-    props: Replace<IVehicleBodywork, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<IVehicleModel, { created_at?: Date; updated_at?: Date }>,
     id?: string,
   ) {
     super();
@@ -50,21 +54,26 @@ export class VehicleBodywork extends Entity {
         maxLength: 80,
       },
       {
-        field: this.mass,
-        fieldName: 'Mass',
+        field: this.weight,
+        fieldName: 'Weigh',
         maxLength: 999_000,
         minLength: 0,
       },
       { field: this.axles, fieldName: 'Axles', maxLength: 1000, minLength: 0 },
-      { field: this.mass, fieldName: 'Mass', maxLength: 999_000, minLength: 0 },
       {
-        field: this.volume,
-        fieldName: 'Volume',
+        field: this.capacity_max,
+        minLength: 0,
+        fieldName: 'Max capacity ',
+        maxLength: 999_000,
+      },
+      {
+        field: this.weight,
+        fieldName: 'Weight',
         maxLength: 999_000,
         minLength: 0,
       },
     );
-    this.notification.requiredField('VehicleBodywork', fieldsValidation);
+    this.notification.requiredField('VehicleModel', fieldsValidation);
   }
 
   public get id(): string {
@@ -79,12 +88,20 @@ export class VehicleBodywork extends Entity {
     return this.props.name;
   }
 
-  public set mass(mass: number) {
-    this.props.mass = mass;
+  public set weight(weight: number) {
+    this.props.weight = weight;
   }
 
-  public get mass(): number {
-    return this.props.mass;
+  public get weight(): number {
+    return this.props.weight;
+  }
+
+  public set capacity_max(capacity_max: number) {
+    this.props.capacity_max = capacity_max;
+  }
+
+  public get capacity_max(): number {
+    return this.props.capacity_max;
   }
 
   public set axles(axles: number) {
@@ -93,14 +110,6 @@ export class VehicleBodywork extends Entity {
 
   public get axles(): number {
     return this.props.axles;
-  }
-
-  public set volume(volume: number) {
-    this.props.volume = volume;
-  }
-
-  public get volume(): number {
-    return this.props.volume;
   }
 
   public set updatedAt(updatedAt: Date) {

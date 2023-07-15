@@ -167,10 +167,9 @@ model VehicleTypeContainsBody {
 }
 
 model OutsourcedVehicle {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
+  id               String             @id @default(uuid())
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @default(now())
   OutsourcedDriver OutsourcedDriver[]
 
   CreatedBy           User?            @relation(fields: [created_by], references: [id])
@@ -273,7 +272,7 @@ model NaturalPerson {
   third_phone    String?
   email          String
   nationality    String
-
+  
   OwnDriver          OwnDriver[]
   OutsourcedDriver   OutsourcedDriver[]
   PhysicalCustomer   PhysicalCustomer[]

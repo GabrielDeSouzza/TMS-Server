@@ -5,7 +5,7 @@ export interface INotificationError {
 }
 
 export interface IValidationField {
-  field: string | number | boolean;
+  field: string | number | boolean | Date;
   fieldName: string;
   maxLength: number;
   minLength?: number;
@@ -40,8 +40,24 @@ export class Notification {
         this.requiredFieldIsNumber(context, fieldValidation);
       else if (typeof fieldValidation.field === 'boolean')
         this.requiredFieldIsBoolean(context, fieldValidation);
+      else if (fieldValidation.field instanceof Date)
+        this.requiredFielIsDate(context, fieldValidation);
     });
   }
+  private requiredFielIsDate(
+    context: string,
+    fieldValidation: IValidationField,
+  ) {
+    fieldValidation.field = fieldValidation.field as Date;
+
+    if (Number.isNaN(fieldValidation.field.getDate())) {
+      this.errors.push({
+        context,
+        message: fieldValidation.fieldName + ' is invalid',
+      });
+    }
+  }
+
   private requiredFieldIsBoolean(
     context: string,
     fieldValidation: IValidationField,

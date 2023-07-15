@@ -2,23 +2,26 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
-import { Entity } from '../../shared/entities/Entity';
-import { type IValidationField } from '../../shared/notification/Notification';
-import { NotificationError } from '../../shared/notification/NotificationError';
+import { Entity } from '../../../shared/entities/Entity';
+import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type Vehicle } from '../vehicle/Vehicle';
 
-interface IVehicleType {
-  name: string;
-  bodyWork: boolean;
+interface IOutsourcedVehicle {
+  Vehicle: Vehicle;
   created_at: Date;
   updated_at: Date;
+  //OutsourcedDriver
 }
 
-export class VehicleType extends Entity {
+export class OutsourcedVehicle extends Entity {
   private _id: string;
-  private props: IVehicleType;
+  private props: IOutsourcedVehicle;
 
   constructor(
-    props: Replace<IVehicleType, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IOutsourcedVehicle,
+      { created_at?: Date; updated_at?: Date }
+    >,
     id?: string,
   ) {
     super();
@@ -39,28 +42,19 @@ export class VehicleType extends Entity {
   }
 
   validate() {
-    const fieldsValidation: Array<IValidationField> =
-      new Array<IValidationField>();
-    fieldsValidation.push({
-      field: this.name,
-      fieldName: 'Name',
-      maxLength: 80,
-    });
-    this.notification.requiredField('User', fieldsValidation);
+    this.Vehicle.validate();
   }
 
   public get id(): string {
     return this._id;
   }
 
-  public set name(name: string) {
-    this.props.name = name;
+  public get Vehicle(): Vehicle {
+    return this.props.Vehicle;
   }
-
-  public get name(): string {
-    return this.props.name;
+  public set Vehicle(vehicle: Vehicle) {
+    this.props.Vehicle = vehicle;
   }
-
   public set updatedAt(updatedAt: Date) {
     this.props.updated_at = updatedAt;
   }
