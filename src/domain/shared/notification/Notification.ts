@@ -5,7 +5,7 @@ export interface INotificationError {
 }
 
 export interface IValidationField {
-  field: string | number;
+  field: string | number | boolean;
   fieldName: string;
   maxLength: number;
   minLength?: number;
@@ -38,7 +38,22 @@ export class Notification {
         this.requiredFieldIsString(context, fieldValidation);
       else if (typeof fieldValidation.field === 'number')
         this.requiredFieldIsNumber(context, fieldValidation);
+      else if (typeof fieldValidation.field === 'boolean')
+        this.requiredFieldIsBoolean(context, fieldValidation);
     });
+  }
+  private requiredFieldIsBoolean(
+    context: string,
+    fieldValidation: IValidationField,
+  ) {
+    fieldValidation.field = fieldValidation.field as boolean;
+
+    if (fieldValidation.field !== false && fieldValidation.field !== true) {
+      this.errors.push({
+        context,
+        message: fieldValidation.fieldName + ' is required',
+      });
+    }
   }
   private requiredFieldIsNumber(
     context: string,

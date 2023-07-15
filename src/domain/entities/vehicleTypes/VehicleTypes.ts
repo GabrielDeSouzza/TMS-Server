@@ -6,18 +6,19 @@ import { Entity } from '../../shared/entities/Entity';
 import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
 
-interface IVehicleBrand {
+interface IVehicleType {
   name: string;
+  bodyWork: boolean;
   created_at: Date;
   updated_at: Date;
 }
 
-export class VehicleBrand extends Entity {
+export class VehicleType extends Entity {
   private _id: string;
-  private props: IVehicleBrand;
+  private props: IVehicleType;
 
   constructor(
-    props: Replace<IVehicleBrand, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<IVehicleType, { created_at?: Date; updated_at?: Date }>,
     id?: string,
   ) {
     super();
@@ -45,7 +46,7 @@ export class VehicleBrand extends Entity {
       fieldName: 'Name',
       maxLength: 80,
     });
-    this.notification.requiredField('VehicleBrand', fieldsValidation);
+    this.notification.requiredField('User', fieldsValidation);
   }
 
   public get id(): string {

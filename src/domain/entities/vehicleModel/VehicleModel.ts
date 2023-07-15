@@ -66,7 +66,12 @@ export class VehicleModel extends Entity {
         fieldName: 'Max capacity ',
         maxLength: 999_000,
       },
-      { field: this.weight, fieldName: 'Weight', maxLength: 999_000 },
+      {
+        field: this.weight,
+        fieldName: 'Weight',
+        maxLength: 999_000,
+        minLength: 0,
+      },
     );
     this.notification.requiredField('VehicleModel', fieldsValidation);
   }

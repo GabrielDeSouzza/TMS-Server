@@ -15,7 +15,7 @@ interface IVehicle {
   rntrc_expiration: string;
   created_at: Date;
   updated_at: Date;
-  VehicleModel?: VehicleModel;
+  VehicleModel: VehicleModel;
 }
 
 export class Vehicle extends Entity {
@@ -63,6 +63,7 @@ export class Vehicle extends Entity {
       { field: this.year, fieldName: 'Year', maxLength: 4 },
     );
     this.notification.requiredField('vehicle', fieldsValidation);
+    this.VehicleModel.validate();
   }
 
   public get id(): string {

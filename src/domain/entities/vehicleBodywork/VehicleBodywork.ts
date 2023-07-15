@@ -6,18 +6,21 @@ import { Entity } from '../../shared/entities/Entity';
 import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
 
-interface IVehicleBrand {
+interface IVehicleBodywork {
   name: string;
+  axles: number;
+  mass: number;
+  volume: number;
   created_at: Date;
   updated_at: Date;
 }
 
-export class VehicleBrand extends Entity {
+export class VehicleBodywork extends Entity {
   private _id: string;
-  private props: IVehicleBrand;
+  private props: IVehicleBodywork;
 
   constructor(
-    props: Replace<IVehicleBrand, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<IVehicleBodywork, { created_at?: Date; updated_at?: Date }>,
     id?: string,
   ) {
     super();
@@ -40,12 +43,28 @@ export class VehicleBrand extends Entity {
   validate() {
     const fieldsValidation: Array<IValidationField> =
       new Array<IValidationField>();
-    fieldsValidation.push({
-      field: this.name,
-      fieldName: 'Name',
-      maxLength: 80,
-    });
-    this.notification.requiredField('VehicleBrand', fieldsValidation);
+    fieldsValidation.push(
+      {
+        field: this.name,
+        fieldName: 'Name',
+        maxLength: 80,
+      },
+      {
+        field: this.mass,
+        fieldName: 'Mass',
+        maxLength: 999_000,
+        minLength: 0,
+      },
+      { field: this.axles, fieldName: 'Axles', maxLength: 1000, minLength: 0 },
+      { field: this.mass, fieldName: 'Mass', maxLength: 999_000, minLength: 0 },
+      {
+        field: this.volume,
+        fieldName: 'Volume',
+        maxLength: 999_000,
+        minLength: 0,
+      },
+    );
+    this.notification.requiredField('VehicleBodywork', fieldsValidation);
   }
 
   public get id(): string {
@@ -58,6 +77,30 @@ export class VehicleBrand extends Entity {
 
   public get name(): string {
     return this.props.name;
+  }
+
+  public set mass(mass: number) {
+    this.props.mass = mass;
+  }
+
+  public get mass(): number {
+    return this.props.mass;
+  }
+
+  public set axles(axles: number) {
+    this.props.axles = axles;
+  }
+
+  public get axles(): number {
+    return this.props.axles;
+  }
+
+  public set volume(volume: number) {
+    this.props.volume = volume;
+  }
+
+  public get volume(): number {
+    return this.props.volume;
   }
 
   public set updatedAt(updatedAt: Date) {
