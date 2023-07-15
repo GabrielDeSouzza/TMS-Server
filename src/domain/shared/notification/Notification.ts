@@ -9,6 +9,7 @@ export interface IValidationField {
   fieldName: string;
   maxLength: number;
   minLength?: number;
+  isNullAble?: boolean;
 }
 
 export class Notification {
@@ -34,6 +35,13 @@ export class Notification {
 
   requiredField(context: string, fieldsValidation: Array<IValidationField>) {
     fieldsValidation.forEach(fieldValidation => {
+      if (fieldValidation.isNullAble == true) {
+        this.errors.push({
+          context,
+          message: `${fieldValidation.fieldName} cant be null`,
+        });
+      }
+
       if (typeof fieldValidation.field === 'string')
         this.requiredFieldIsString(context, fieldValidation);
       else if (typeof fieldValidation.field === 'number')

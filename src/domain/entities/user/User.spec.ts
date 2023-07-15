@@ -5,7 +5,7 @@ describe('User', () => {
     const user = new User({
       email: 'gabrielrguedess@gmail.com',
       name: 'Gabriel Guedes',
-      password: '123456',
+      password: '1234',
       role: 'ADMIN',
       username: 'GabrielGuedess',
     });
