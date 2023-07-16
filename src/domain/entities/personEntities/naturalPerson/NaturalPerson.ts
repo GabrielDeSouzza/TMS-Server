@@ -125,11 +125,13 @@ export class NaturalPerson extends Entity {
         field: this.second_phone,
         fieldName: 'Second Phone',
         maxLength: 20,
+        isNullAble: true,
       },
       {
         field: this.third_phone,
         fieldName: 'Third Phone',
         maxLength: 20,
+        isNullAble: true,
       },
       {
         field: this.email,

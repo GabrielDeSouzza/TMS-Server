@@ -35,10 +35,10 @@ export class Notification {
 
   requiredField(context: string, fieldsValidation: Array<IValidationField>) {
     fieldsValidation.forEach(fieldValidation => {
-      if (fieldValidation.isNullAble == true) {
+      if (!fieldValidation.isNullAble && !fieldValidation.field) {
         this.errors.push({
           context,
-          message: `${fieldValidation.fieldName} cant be null`,
+          message: `${fieldValidation.fieldName} can't be null`,
         });
       }
 
