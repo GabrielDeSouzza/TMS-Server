@@ -7,7 +7,7 @@ describe('Natural Person', () => {
       date_birth: new Date(),
       gender: 'Masculino',
       cpf: '147475874747',
-      rg: 1_234_567,
+      rg: '1234567',
       cep: 12_345_678,
       public_place: 'Rua Principal',
       address_number: '123',

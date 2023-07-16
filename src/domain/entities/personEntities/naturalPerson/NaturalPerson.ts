@@ -11,7 +11,7 @@ interface INaturalPerson {
   date_birth: Date;
   gender: string;
   cpf: string;
-  rg: number;
+  rg: string;
   cep: number;
   public_place: string;
   address_number: string;
@@ -189,11 +189,11 @@ export class NaturalPerson extends Entity {
     return this.props.cpf;
   }
 
-  public set rg(rg: number) {
+  public set rg(rg: string) {
     this.props.rg = rg;
   }
 
-  public get rg(): number {
+  public get rg(): string {
     return this.props.rg;
   }
 

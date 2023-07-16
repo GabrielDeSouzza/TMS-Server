@@ -272,7 +272,7 @@ model NaturalPerson {
   third_phone    String?
   email          String
   nationality    String
-  
+
   OwnDriver          OwnDriver[]
   OutsourcedDriver   OutsourcedDriver[]
   PhysicalCustomer   PhysicalCustomer[]

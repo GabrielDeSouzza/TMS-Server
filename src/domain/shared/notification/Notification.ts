@@ -35,14 +35,15 @@ export class Notification {
 
   requiredField(context: string, fieldsValidation: Array<IValidationField>) {
     fieldsValidation.forEach(fieldValidation => {
-      if (!fieldValidation.isNullAble && !fieldValidation.field) {
+      if (
+        (!fieldValidation.isNullAble && fieldValidation.field === null) ||
+        fieldValidation.field === undefined
+      ) {
         this.errors.push({
           context,
           message: `${fieldValidation.fieldName} can't be null`,
         });
-      }
-
-      if (typeof fieldValidation.field === 'string')
+      } else if (typeof fieldValidation.field === 'string')
         this.requiredFieldIsString(context, fieldValidation);
       else if (typeof fieldValidation.field === 'number')
         this.requiredFieldIsNumber(context, fieldValidation);
@@ -84,16 +85,16 @@ export class Notification {
     fieldValidation: IValidationField,
   ) {
     fieldValidation.minLength ?? fieldValidation.maxLength;
-    fieldValidation.field = fieldValidation.field as number;
+    fieldValidation.field = fieldValidation.field.toString();
 
-    if (fieldValidation.field > fieldValidation.maxLength) {
+    if (fieldValidation.field.length > fieldValidation.maxLength) {
       this.errors.push({
         context,
         message: fieldValidation.fieldName + ' exceeded the number limit',
       });
 
       return;
-    } else if (fieldValidation.field < fieldValidation.minLength) {
+    } else if (fieldValidation.field.length < fieldValidation.minLength) {
       this.errors.push({
         context,
         message:

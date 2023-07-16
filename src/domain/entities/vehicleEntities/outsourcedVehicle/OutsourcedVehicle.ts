@@ -10,7 +10,6 @@ interface IOutsourcedVehicle {
   Vehicle: Vehicle;
   created_at: Date;
   updated_at: Date;
-  //OutsourcedDriver
 }
 
 export class OutsourcedVehicle extends Entity {
@@ -55,15 +54,19 @@ export class OutsourcedVehicle extends Entity {
   public set Vehicle(vehicle: Vehicle) {
     this.props.Vehicle = vehicle;
   }
-  public set updatedAt(updatedAt: Date) {
+  public set created_at(createdAt: Date) {
+    this.props.created_at = createdAt;
+  }
+
+  public get created_at(): Date {
+    return this.props.created_at;
+  }
+
+  public set updated_at(updatedAt: Date) {
     this.props.updated_at = updatedAt;
   }
 
-  public get updatedAt(): Date {
+  public get updated_at(): Date {
     return this.props.updated_at;
-  }
-
-  public get createdAt(): Date {
-    return this.props.created_at;
   }
 }
