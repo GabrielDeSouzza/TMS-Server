@@ -48,22 +48,22 @@ export class Vehicle extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.plate,
+        field: this.props.plate,
         fieldName: 'Plate',
         maxLength: 8,
         minLength: 6,
       },
-      { field: this.color, fieldName: 'Color', maxLength: 20 },
-      { field: this.renavam, fieldName: 'Renavam', maxLength: 11 },
+      { field: this.props.color, fieldName: 'Color', maxLength: 20 },
+      { field: this.props.renavam, fieldName: 'Renavam', maxLength: 11 },
       {
-        field: this.rntrc_expiration,
+        field: this.props.rntrc_expiration,
         fieldName: 'Rntrc expitarion',
         maxLength: 4,
       },
-      { field: this.year, fieldName: 'Year', maxLength: 4 },
+      { field: this.props.year, fieldName: 'Year', maxLength: 4 },
     );
     this.notification.requiredField('vehicle', fieldsValidation);
-    this.VehicleModel.validate();
+    this.props.VehicleModel.validate();
   }
 
   public get id(): string {

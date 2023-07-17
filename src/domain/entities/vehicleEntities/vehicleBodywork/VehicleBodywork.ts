@@ -45,20 +45,30 @@ export class VehicleBodywork extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.name,
+        field: this.props.name,
         fieldName: 'Name',
         maxLength: 80,
       },
       {
-        field: this.mass,
+        field: this.props.mass,
         fieldName: 'Mass',
         maxLength: 999_000,
         minLength: 0,
       },
-      { field: this.axles, fieldName: 'Axles', maxLength: 1000, minLength: 0 },
-      { field: this.mass, fieldName: 'Mass', maxLength: 999_000, minLength: 0 },
       {
-        field: this.volume,
+        field: this.props.axles,
+        fieldName: 'Axles',
+        maxLength: 1000,
+        minLength: 0,
+      },
+      {
+        field: this.props.mass,
+        fieldName: 'Mass',
+        maxLength: 999_000,
+        minLength: 0,
+      },
+      {
+        field: this.props.volume,
         fieldName: 'Volume',
         maxLength: 999_000,
         minLength: 0,

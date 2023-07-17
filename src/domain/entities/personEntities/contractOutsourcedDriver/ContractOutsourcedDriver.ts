@@ -14,7 +14,7 @@ interface IContractOutsourcedDriver {
   end_at?: Date;
   created_at: Date;
   updated_at: Date;
-  cpf: string;
+  cpf?: string;
   OutsourcedDriver: OutsourcedDriver;
 }
 export class ContractOutsourcedDriver extends Entity {
@@ -50,30 +50,31 @@ export class ContractOutsourcedDriver extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.cpf,
+        field: this.props.cpf,
         fieldName: 'CPF',
         maxLength: 11,
         minLength: 11,
+        isNullAble: true,
       },
       {
-        field: this.end_at,
+        field: this.props.end_at,
         fieldName: 'End at',
         maxLength: 15,
         isNullAble: true,
       },
       {
-        field: this.situation,
+        field: this.props.situation,
         fieldName: 'Situation',
         maxLength: 50,
       },
-      { field: this.start_at, fieldName: 'Start_at', maxLength: 15 },
-      { field: this.type, fieldName: 'Type', maxLength: 50 },
+      { field: this.props.start_at, fieldName: 'Start_at', maxLength: 15 },
+      { field: this.props.type, fieldName: 'Type', maxLength: 50 },
     );
     this.notification.requiredField(
       'ContractOutsourcedDriver',
       fieldsValidation,
     );
-    this.OutsourcedDriver.validate();
+    this.props.OutsourcedDriver.validate();
   }
 
   public set type(type: string) {

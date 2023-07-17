@@ -49,19 +49,24 @@ export class VehicleModel extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.name,
+        field: this.props.name,
         fieldName: 'Name',
         maxLength: 80,
       },
       {
-        field: this.weight,
+        field: this.props.weight,
         fieldName: 'Weigh',
         maxLength: 999_000,
         minLength: 0,
       },
-      { field: this.axles, fieldName: 'Axles', maxLength: 1000, minLength: 0 },
       {
-        field: this.capacity_max,
+        field: this.props.axles,
+        fieldName: 'Axles',
+        maxLength: 1000,
+        minLength: 0,
+      },
+      {
+        field: this.props.capacity_max,
         minLength: 0,
         fieldName: 'Max capacity ',
         maxLength: 999_000,

@@ -42,7 +42,7 @@ export class VehicleType extends Entity {
     const fieldsValidation: Array<IValidationField> =
       new Array<IValidationField>();
     fieldsValidation.push({
-      field: this.name,
+      field: this.props.name,
       fieldName: 'Name',
       maxLength: 80,
     });

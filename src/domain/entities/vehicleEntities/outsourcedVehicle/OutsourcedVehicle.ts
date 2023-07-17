@@ -41,7 +41,7 @@ export class OutsourcedVehicle extends Entity {
   }
 
   validate() {
-    this.Vehicle.validate();
+    this.props.Vehicle.validate();
   }
 
   public get id(): string {

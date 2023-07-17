@@ -46,7 +46,7 @@ export class User extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.name,
+        field: this.props.name,
         fieldName: 'Name',
         maxLength: 80,
       },
@@ -57,7 +57,7 @@ export class User extends Entity {
         fieldName: 'Role',
         maxLength: 10,
       },
-      { field: this.username, fieldName: 'Username', maxLength: 80 },
+      { field: this.props.username, fieldName: 'Username', maxLength: 80 },
     );
     this.notification.requiredField('User', fieldsValidation);
   }

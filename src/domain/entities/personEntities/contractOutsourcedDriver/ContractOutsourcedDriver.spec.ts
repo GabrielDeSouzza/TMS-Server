@@ -16,6 +16,7 @@ describe('Contract Outsourced Driver', () => {
       end_at: null,
       type: 'Eteasd',
       OutsourcedDriver: new OutsourcedDriver({
+        cpf: null,
         NaturalPerson: new NaturalPerson({
           name: 'Jão',
           date_birth: new Date(),

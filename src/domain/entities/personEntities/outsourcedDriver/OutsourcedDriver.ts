@@ -18,6 +18,7 @@ interface IOutsourcedDriver {
   created_at: Date;
   updated_at: Date;
   OutsourcedVehicle: OutsourcedVehicle;
+  cpf?: string;
 }
 export class OutsourcedDriver extends Entity {
   private _id: string;
@@ -49,32 +50,43 @@ export class OutsourcedDriver extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.cnh,
+        field: this.props.cnh,
         fieldName: 'CNH',
         maxLength: 11,
         minLength: 11,
       },
       {
-        field: this.cnh_category,
+        field: this.props.cnh_category,
         fieldName: 'CNH Category',
         maxLength: 4,
       },
       {
-        field: this.company_vehicle,
+        field: this.props.company_vehicle,
         fieldName: 'Company Vehicle',
         maxLength: 5,
       },
-      { field: this.course_mopp, fieldName: 'Course MOPP', maxLength: 10 },
       {
-        field: this.cnh_expiration,
+        field: this.props.course_mopp,
+        fieldName: 'Course MOPP',
+        maxLength: 10,
+      },
+      {
+        field: this.props.cnh_expiration,
         fieldName: 'CNH Expiration',
         maxLength: 4,
         minLength: 4,
       },
+      {
+        field: this.props.cpf,
+        fieldName: 'CPF',
+        maxLength: 11,
+        minLength: 11,
+        isNullAble: true,
+      },
     );
     this.notification.requiredField('OutsourcedDriver', fieldsValidation);
-    this.OutsourcedVehicle.validate();
-    this.NaturalPerson.validate();
+    this.props.OutsourcedVehicle.validate();
+    this.props.NaturalPerson.validate();
   }
 
   public set NaturalPerson(naturalPerson: NaturalPerson) {
@@ -83,6 +95,14 @@ export class OutsourcedDriver extends Entity {
 
   public get NaturalPerson(): NaturalPerson {
     return this.props.NaturalPerson;
+  }
+
+  public set cpf(cpf: string) {
+    this.props.cpf = cpf;
+  }
+
+  public get cpf(): string {
+    return this.props.cpf;
   }
 
   public set cnh(cnh: string) {

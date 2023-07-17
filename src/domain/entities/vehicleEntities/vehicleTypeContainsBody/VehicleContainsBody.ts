@@ -43,7 +43,10 @@ export class VehicleTypeContainsBody extends Entity {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  validate() {}
+  validate() {
+    this.vehicleBodywork.validate();
+    this.vehicleType.validate();
+  }
 
   public get vehicleType(): VehicleType {
     return this.props.VehicleType;

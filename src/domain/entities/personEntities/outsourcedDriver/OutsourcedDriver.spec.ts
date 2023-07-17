@@ -33,6 +33,7 @@ describe('Outsourced Driver', () => {
       cnh_expiration: 1125,
       company_vehicle: false,
       course_mopp: true,
+      cpf: null,
       OutsourcedVehicle: new OutsourcedVehicle({
         Vehicle: new Vehicle({
           plate: '455445',
