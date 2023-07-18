@@ -323,7 +323,7 @@ model CarrierCompany {
 
 model PhysicalCustomer {
   id     String @id @default(uuid())
-  branch String
+  branch String?
 
   Merchandise Merchandise?
   Ciot        Ciot[]
