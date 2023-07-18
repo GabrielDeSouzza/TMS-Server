@@ -2,9 +2,9 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
-import { Entity } from '../../shared/entities/Entity';
-import { type IValidationField } from '../../shared/notification/Notification';
-import { NotificationError } from '../../shared/notification/NotificationError';
+import { Entity } from '../../../shared/entities/Entity';
+import { type IValidationField } from '../../../shared/notification/Notification';
+import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface ILegalPerson {
   fantasy_name: string;

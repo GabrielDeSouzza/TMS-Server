@@ -310,7 +310,6 @@ model CarrierCompany {
   id         String   @id @default(uuid())
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-
   Ciot    Ciot[]
   Invoice Invoice[]
 
