@@ -290,7 +290,7 @@ model LegalPerson {
   public_place       String
   address_number     String
   neighborhood       String
-  complement         String
+  complement         String?
   city               String
   uf                 String
   first_phone        String
