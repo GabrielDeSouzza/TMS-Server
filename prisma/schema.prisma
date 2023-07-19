@@ -307,11 +307,11 @@ model LegalPerson {
 }
 
 model CarrierCompany {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-  Ciot    Ciot[]
-  Invoice Invoice[]
+  id         String    @id @default(uuid())
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+  Ciot       Ciot[]
+  Invoice    Invoice[]
 
   CreatedBy   User?       @relation(fields: [created_by], references: [id])
   created_by  String
@@ -322,15 +322,16 @@ model CarrierCompany {
 }
 
 model PhysicalCustomer {
-  id     String @id @default(uuid())
+  id     String  @id @default(uuid())
   branch String?
 
-  Merchandise Merchandise?
+  Merchandise Merchandise? @relation(fields: [merchandiseId], references: [id])
   Ciot        Ciot[]
   Invoice     Invoice[]
 
   NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
   cpf           String        @unique
+  merchandiseId String?
 
   @@map("physical_customers")
 }
@@ -350,8 +351,8 @@ model CorporateClient {
 }
 
 model PhysicalContractor {
-  id     String @id @default(uuid())
-  branch String
+  id     String  @id @default(uuid())
+  branch String?
 
   Merchandise Merchandise[]
 
@@ -383,16 +384,15 @@ model Merchandise {
   volume         Float
   value          Float
 
-  PhysicalCustomer   PhysicalCustomer?   @relation(fields: [customer_cpf], references: [cpf])
-  customer_cpf       String?             @unique
   Order              CustomerOrder       @relation(fields: [order_id], references: [id])
   order_id           String
   PhysicalContractor PhysicalContractor? @relation(fields: [contractor_cpf], references: [cpf])
   contractor_cpf     String?
   LegalContractor    LegalContractor?    @relation(fields: [contractor_cnpj], references: [cnpj])
   contractor_cnpj    String?
-  CorporateClient    CorporateClient?    @relation(fields: [corporate_cnpj], references: [cnpj])
-  corporate_cnpj     String?
+  PhysicalCustomer   PhysicalCustomer[]
+  CorporateClient    CorporateClient?    @relation(fields: [corporateClientId], references: [id])
+  corporateClientId  String?
 
   @@map("merchandise")
 }
