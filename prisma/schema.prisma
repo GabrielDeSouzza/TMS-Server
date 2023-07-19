@@ -406,10 +406,9 @@ model CustomerOrder {
   Route       Route[]
   Merchandise Merchandise[]
 
-  CreatedBy  User?   @relation(fields: [created_by], references: [id])
+  CreatedBy  User?     @relation(fields: [created_by], references: [id])
   created_by String
-  Invoice    Invoice @relation(fields: [invoice_id], references: [id])
-  invoice_id String  @unique
+  Invoice    Invoice[]
 
   @@map("customer_orders")
 }
@@ -438,7 +437,6 @@ model Route {
 
 model Invoice {
   id                String   @id @default(uuid())
-  num_invoices      Int
   emission_date     DateTime @default(now())
   nature_invoice    String
   invoice_total     Float
@@ -449,8 +447,6 @@ model Invoice {
   created_at        DateTime @default(now())
   updated_at        DateTime @default(now())
 
-  CustomerOrder CustomerOrder?
-
   CreatedBy        User?             @relation(fields: [created_by], references: [id])
   created_by       String
   PhysicalCustomer PhysicalCustomer? @relation(fields: [cpf], references: [cpf])
@@ -459,6 +455,8 @@ model Invoice {
   carrier_cnpj     String
   CorporateClient  CorporateClient?  @relation(fields: [corporate_cnpj], references: [cnpj])
   corporate_cnpj   String?
+  customerOrderId  String
+  CustomerOrder    CustomerOrder     @relation(fields: [customerOrderId], references: [id])
 
   @@map("invoices")
 }
