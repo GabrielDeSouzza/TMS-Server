@@ -55,7 +55,6 @@ export class Merchandise extends Entity {
         field: this.props.branch,
         fieldName: 'Branch',
         maxLength: 80,
-        minLength: 80,
         isNullAble: true,
       },
     );
