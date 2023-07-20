@@ -2,14 +2,14 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
+import { type PhysicalCustomer } from '../../../entities/clientsEntities/physicalCustomer/PhysicalCustomer';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson';
 
 interface IPhysicalContractor {
   branch?: string;
-  NaturalPerson: NaturalPerson;
+  PhysicalCustomer: PhysicalCustomer;
   cpf?: string;
   updated_at: Date;
   created_at: Date;
@@ -61,8 +61,8 @@ export class PhysicalContractor extends Entity {
         isNullAble: true,
       },
     );
-    this.props.NaturalPerson.validate();
-    this.notification.requiredField('PhysicalCustomer', fieldsValidation);
+    this.props.PhysicalCustomer.validate();
+    this.notification.requiredField('PhysicalContractor', fieldsValidation);
   }
 
   public get id(): string {
@@ -76,12 +76,12 @@ export class PhysicalContractor extends Entity {
     return this.props.branch;
   }
 
-  public set NaturalPerson(naturalPerson: NaturalPerson) {
-    this.props.NaturalPerson = naturalPerson;
+  public set PhysicalCustomer(physicalCustomer: PhysicalCustomer) {
+    this.props.PhysicalCustomer = physicalCustomer;
   }
 
-  public get NaturalPerson(): NaturalPerson {
-    return this.props.NaturalPerson;
+  public get PhysicalCustomer(): PhysicalCustomer {
+    return this.props.PhysicalCustomer;
   }
 
   public set cpf(cpf: string | undefined) {

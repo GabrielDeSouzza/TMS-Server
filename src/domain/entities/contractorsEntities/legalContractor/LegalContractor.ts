@@ -2,14 +2,14 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
-import { type LegalPerson } from '../../../entities/legalPersonEntities/legalPerson/LegalPerson';
+import { type CorporateClient } from '../../../entities/legalPersonEntities/CorporateClient/CorporateClient';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface ILegalContractor {
   branch: string;
-  LegalPerson: LegalPerson;
+  CorporateClient: CorporateClient;
   cnpj?: string;
   updated_at: Date;
   created_at: Date;
@@ -57,7 +57,7 @@ export class LegalContractor extends Entity {
         maxLength: 80,
       },
     );
-    this.props.LegalPerson.validate();
+    this.props.CorporateClient.validate();
     this.notification.requiredField('LegalContractor', fieldsValidation);
   }
 
@@ -72,12 +72,12 @@ export class LegalContractor extends Entity {
     return this.props.branch;
   }
 
-  public set LegalPerson(legalPerson: LegalPerson) {
-    this.props.LegalPerson = legalPerson;
+  public set CorporateClient(corporateClient: CorporateClient) {
+    this.props.CorporateClient = corporateClient;
   }
 
-  public get LegalPerson(): LegalPerson {
-    return this.props.LegalPerson;
+  public get LegalPerson(): CorporateClient {
+    return this.props.CorporateClient;
   }
 
   public set cnpj(cnpj: string | undefined) {
