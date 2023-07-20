@@ -273,10 +273,9 @@ model NaturalPerson {
   email          String
   nationality    String
 
-  OwnDriver          OwnDriver[]
-  OutsourcedDriver   OutsourcedDriver[]
-  PhysicalCustomer   PhysicalCustomer[]
-  PhysicalContractor PhysicalContractor[]
+  OwnDriver        OwnDriver[]
+  OutsourcedDriver OutsourcedDriver[]
+  PhysicalCustomer PhysicalCustomer[]
 
   @@map("natural_people")
 }
@@ -300,7 +299,6 @@ model LegalPerson {
 
   CorporateClient    CorporateClient[]
   MaintenanceCompany MaintenanceCompany?
-  LegalContractor    LegalContractor[]
   CarrierCompany     CarrierCompany[]
 
   @@map("legal_people")
@@ -329,9 +327,10 @@ model PhysicalCustomer {
   Ciot        Ciot[]
   Invoice     Invoice[]
 
-  NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
-  cpf           String        @unique
-  merchandiseId String?
+  NaturalPerson      NaturalPerson       @relation(fields: [cpf], references: [cpf])
+  cpf                String              @unique
+  merchandiseId      String?
+  PhysicalContractor PhysicalContractor?
 
   @@map("physical_customers")
 }
@@ -344,8 +343,9 @@ model CorporateClient {
   Invoice     Invoice[]
   Merchandise Merchandise[]
 
-  LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
-  cnpj        String      @unique
+  LegalPerson     LegalPerson      @relation(fields: [cnpj], references: [cnpj])
+  cnpj            String           @unique
+  LegalContractor LegalContractor?
 
   @@map("corporate_clients")
 }
@@ -356,8 +356,8 @@ model PhysicalContractor {
 
   Merchandise Merchandise[]
 
-  NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
-  cpf           String        @unique
+  PhysicalCustomer PhysicalCustomer @relation(fields: [cpf], references: [cpf])
+  cpf              String           @unique
 
   @@map("physical_contractors")
 }
@@ -368,9 +368,9 @@ model LegalContractor {
 
   Merchandise Merchandise[]
 
-  LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
-  cnpj        String      @unique
-  Ciot        Ciot[]
+  CorporateClient CorporateClient @relation(fields: [cnpj], references: [cnpj])
+  cnpj            String          @unique
+  Ciot            Ciot[]
 
   @@map("legal_contractors")
 }
