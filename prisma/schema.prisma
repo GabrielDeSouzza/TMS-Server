@@ -447,16 +447,16 @@ model Invoice {
   created_at        DateTime @default(now())
   updated_at        DateTime @default(now())
 
-  CreatedBy        User?             @relation(fields: [created_by], references: [id])
-  created_by       String
-  PhysicalCustomer PhysicalCustomer? @relation(fields: [cpf], references: [cpf])
-  cpf              String?
-  CarrierCompany   CarrierCompany    @relation(fields: [carrier_cnpj], references: [cnpj])
-  carrier_cnpj     String
-  CorporateClient  CorporateClient?  @relation(fields: [corporate_cnpj], references: [cnpj])
-  corporate_cnpj   String?
-  customerOrderId  String
-  CustomerOrder    CustomerOrder     @relation(fields: [customerOrderId], references: [id])
+  CreatedBy            User?             @relation(fields: [created_by], references: [id])
+  created_by           String
+  PhysicalCustomer     PhysicalCustomer? @relation(fields: [cpf_physicalcustomer], references: [cpf])
+  cpf_physicalcustomer String?
+  CarrierCompany       CarrierCompany    @relation(fields: [carrier_cnpj], references: [cnpj])
+  carrier_cnpj         String
+  CorporateClient      CorporateClient?  @relation(fields: [corporate_cnpj], references: [cnpj])
+  corporate_cnpj       String?
+  customerOrderId      String
+  CustomerOrder        CustomerOrder     @relation(fields: [customerOrderId], references: [id])
 
   @@map("invoices")
 }

@@ -3,14 +3,13 @@ import { randomUUID } from 'node:crypto';
 import { type Replace } from 'helpers/Replace';
 
 import { type PhysicalCustomer } from '../../../entities/clientsEntities/physicalCustomer/PhysicalCustomer';
-import { type CarrierCompany } from '../../../entities/legalPersonEntities/carrierCompany/CarrierCompany';
-import { type CorporateClient } from '../../../entities/legalPersonEntities/CorporateClient/CorporateClient';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
 import { type CustomerOrder } from '../order/CustomerOrder';
 
-interface IInvoice {
+interface IInvoicePhysicalCustomer {
   emission_date: Date;
   nature_invoice: string;
   invoice_total: number;
@@ -18,24 +17,25 @@ interface IInvoice {
   additional_data: string;
   digital_signature: string;
   invoice_taxes: string;
-  PhysicalCustomer?: PhysicalCustomer;
-  cpf?: string;
   CarrierCompany: CarrierCompany;
   carrier_cnpj?: string;
-  CorporateClient: CorporateClient;
-  corporate_cnpj?: string;
+  PhysicalCustomer: PhysicalCustomer;
+  physicalcustomer_cpf?: string;
   customerOrderId?: string;
   CustomerOrder: CustomerOrder;
   updated_at: Date;
   created_at: Date;
 }
 
-export class Invoice extends Entity {
+export class InvoicePhysicalCustomer extends Entity {
   private _id: string;
-  private props: IInvoice;
+  private props: IInvoicePhysicalCustomer;
 
   constructor(
-    props: Replace<IInvoice, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IInvoicePhysicalCustomer,
+      { created_at?: Date; updated_at?: Date }
+    >,
     id?: string,
   ) {
     super();
@@ -102,8 +102,8 @@ export class Invoice extends Entity {
         isNullAble: true,
       },
       {
-        field: this.props.corporate_cnpj,
-        fieldName: 'Corporate CNPJ',
+        field: this.props.physicalcustomer_cpf,
+        fieldName: 'CPF Physical Customer',
         maxLength: 14,
         minLength: 14,
         isNullAble: true,
@@ -117,9 +117,7 @@ export class Invoice extends Entity {
     );
 
     this.notification.requiredField('Invoice', fieldsValidation);
-    if (this.props.PhysicalCustomer) this.props.PhysicalCustomer.validate();
-    this.props.CarrierCompany.validate();
-    if (this.props.CorporateClient) this.props.CorporateClient.validate();
+    this.props.PhysicalCustomer.validate();
     this.props.CustomerOrder.validate();
   }
 
@@ -182,22 +180,6 @@ export class Invoice extends Entity {
     return this.props.invoice_taxes;
   }
 
-  public set PhysicalCustomer(physicalCustomer: PhysicalCustomer | undefined) {
-    this.props.PhysicalCustomer = physicalCustomer;
-  }
-
-  public get PhysicalCustomer(): PhysicalCustomer | undefined {
-    return this.props.PhysicalCustomer;
-  }
-
-  public set cpf(cpf: string | undefined) {
-    this.props.cpf = cpf;
-  }
-
-  public get cpf(): string | undefined {
-    return this.props.cpf;
-  }
-
   public set CarrierCompany(carrierCompany: CarrierCompany) {
     this.props.CarrierCompany = carrierCompany;
   }
@@ -214,20 +196,20 @@ export class Invoice extends Entity {
     return this.props.carrier_cnpj;
   }
 
-  public set CorporateClient(corporateClient: CorporateClient) {
-    this.props.CorporateClient = corporateClient;
+  public set PhysicalCustomer(physicalCustomer: PhysicalCustomer) {
+    this.props.PhysicalCustomer = physicalCustomer;
   }
 
-  public get CorporateClient(): CorporateClient {
-    return this.props.CorporateClient;
+  public get PhysicalCustomer(): PhysicalCustomer {
+    return this.props.PhysicalCustomer;
   }
 
-  public set corporate_cnpj(corporateCnpj: string) {
-    this.props.corporate_cnpj = corporateCnpj;
+  public set physicalcustomer_cpf(physicalcustomer_cpf: string) {
+    this.props.physicalcustomer_cpf = physicalcustomer_cpf;
   }
 
-  public get corporate_cnpj(): string {
-    return this.props.corporate_cnpj;
+  public get physicalcustomer_cpf(): string {
+    return this.props.physicalcustomer_cpf;
   }
 
   public set customerOrderId(customerOrderId: string | undefined) {
