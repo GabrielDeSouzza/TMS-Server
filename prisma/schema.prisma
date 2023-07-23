@@ -358,6 +358,7 @@ model PhysicalContractor {
 
   PhysicalCustomer PhysicalCustomer @relation(fields: [cpf], references: [cpf])
   cpf              String           @unique
+  Ciot             Ciot[]
 
   @@map("physical_contractors")
 }
@@ -466,14 +467,18 @@ model Ciot {
   ciot          String   @unique
   emission_date DateTime @default(now())
 
-  PhysicalCustomer PhysicalCustomer? @relation(fields: [cpf], references: [cpf])
-  cpf              String?
-  CarrierCompany   CarrierCompany    @relation(fields: [carrier_cnpj], references: [cnpj])
-  carrier_cnpj     String
-  CorporateClient  CorporateClient?  @relation(fields: [corporate_cnpj], references: [cnpj])
-  corporate_cnpj   String?
-  LegalContractor  LegalContractor?  @relation(fields: [contractor_cnpj], references: [cnpj])
-  contractor_cnpj  String?
+  PhysicalCustomer   PhysicalCustomer?   @relation(fields: [cpf], references: [cpf])
+  cpf                String?
+  CarrierCompany     CarrierCompany      @relation(fields: [carrier_cnpj], references: [cnpj])
+  carrier_cnpj       String
+  CorporateClient    CorporateClient?    @relation(fields: [corporate_cnpj], references: [cnpj])
+  corporate_cnpj     String?
+  LegalContractor    LegalContractor?    @relation(fields: [contractor_cnpj], references: [cnpj])
+  contractor_cnpj    String?
+  PhysycalContractor PhysicalContractor? @relation(fields: [contractor_cpf], references: [cpf])
+  contractor_cpf     String?
+  created_at         DateTime            @default(now())
+  updated_at         DateTime            @default(now())
 
   @@map("ciots")
 }
