@@ -1,8 +1,8 @@
 import { LegalPerson } from './LegalPerson';
 
 describe('User', () => {
-  it('should create user', () => {
-    const user = new LegalPerson({
+  it('should create legal person', () => {
+    const legalPerson = new LegalPerson({
       fantasy_name: 'Empresa ABC',
       cnpj: '12345678000123',
       state_registration: '123456789',
@@ -19,6 +19,6 @@ describe('User', () => {
       email: 'empresa@example.com',
     });
 
-    expect(user).toBeTruthy();
+    expect(legalPerson).toBeTruthy();
   });
 });

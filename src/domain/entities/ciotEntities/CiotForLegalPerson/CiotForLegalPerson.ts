@@ -2,32 +2,32 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
+import { type LegalContractor } from '../../../entities/contractorsEntities/legalContractor/LegalContractor';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type PhysicalCustomer } from '../../clientsEntities/physicalCustomer/PhysicalCustomer';
-import { type PhysicalContractor } from '../../contractorsEntities/physicalContractor/PhysicalContractor';
 import { type CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
+import { type CorporateClient } from '../../legalPersonEntities/CorporateClient/CorporateClient';
 
-interface ICiotForPhysicalCustomer {
+interface ICiotForCorporateClient {
   ciot: string;
   emission_date: Date;
-  PhysicalCustomer: PhysicalCustomer;
-  cpf?: string;
+  CorporateClient: CorporateClient;
+  cnpj?: string;
   CarrierCompany: CarrierCompany;
   carrier_cnpj?: string;
-  PhysicalContractor: PhysicalContractor;
+  LegalContractor: LegalContractor;
   updated_at: Date;
   created_at: Date;
 }
 
-export class CiotForPhysicalCustomer extends Entity {
+export class CiotForCorporateClient extends Entity {
   private _id: string;
-  private props: ICiotForPhysicalCustomer;
+  private props: ICiotForCorporateClient;
 
   constructor(
     props: Replace<
-      ICiotForPhysicalCustomer,
+      ICiotForCorporateClient,
       { created_at?: Date; updated_at?: Date }
     >,
     id?: string,
@@ -75,6 +75,9 @@ export class CiotForPhysicalCustomer extends Entity {
       'CiotForPhysicalCustomer',
       fieldsValidation,
     );
+    this.props.CarrierCompany.validate();
+    this.props.LegalContractor.validate();
+    this.props.CorporateClient.validate();
   }
 
   public get id(): string {
@@ -96,20 +99,20 @@ export class CiotForPhysicalCustomer extends Entity {
     return this.props.emission_date;
   }
 
-  public set PhysicalCustomer(physicalCustomer: PhysicalCustomer) {
-    this.props.PhysicalCustomer = physicalCustomer;
+  public set CorporateClient(corporateClient: CorporateClient) {
+    this.props.CorporateClient = corporateClient;
   }
 
-  public get PhysicalCustomer(): PhysicalCustomer {
-    return this.props.PhysicalCustomer;
+  public get CorporateClient(): CorporateClient {
+    return this.props.CorporateClient;
   }
 
-  public set cpf(cpf: string | undefined) {
-    this.props.cpf = cpf;
+  public set cnpj(cnpj: string | undefined) {
+    this.props.cnpj = cnpj;
   }
 
-  public get cpf(): string | undefined {
-    return this.props.cpf;
+  public get cnpj(): string | undefined {
+    return this.props.cnpj;
   }
 
   public set CarrierCompany(carrierCompany: CarrierCompany) {
@@ -128,12 +131,12 @@ export class CiotForPhysicalCustomer extends Entity {
     return this.props.carrier_cnpj;
   }
 
-  public set PhysicalContractor(physicalContractor: PhysicalContractor) {
-    this.props.PhysicalContractor = physicalContractor;
+  public set LegalContractor(legalContractor: LegalContractor) {
+    this.props.LegalContractor = legalContractor;
   }
 
-  public get PhysicalContractor(): PhysicalContractor {
-    return this.props.PhysicalContractor;
+  public get PhysicalContractor(): LegalContractor {
+    return this.props.LegalContractor;
   }
 
   public set updated_at(updatedAt: Date) {

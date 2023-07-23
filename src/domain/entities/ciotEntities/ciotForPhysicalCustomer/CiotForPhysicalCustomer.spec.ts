@@ -1,8 +1,8 @@
-import { PhysicalCustomer } from '../../../entities/clientsEntities/physicalCustomer/PhysicalCustomer';
-import { PhysicalContractor } from '../../../entities/contractorsEntities/physicalContractor/PhysicalContractor';
-import { CarrierCompany } from '../../../entities/legalPersonEntities/carrierCompany/CarrierCompany';
-import { LegalPerson } from '../../../entities/legalPersonEntities/legalPerson/LegalPerson';
-import { NaturalPerson } from '../../../entities/personEntities/naturalPerson/NaturalPerson';
+import { PhysicalCustomer } from '../../clientsEntities/physicalCustomer/PhysicalCustomer';
+import { PhysicalContractor } from '../../contractorsEntities/physicalContractor/PhysicalContractor';
+import { CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
+import { LegalPerson } from '../../legalPersonEntities/legalPerson/LegalPerson';
+import { NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson';
 import { CiotForPhysicalCustomer } from './CiotForPhysicalCustomer';
 
 describe('User', () => {
