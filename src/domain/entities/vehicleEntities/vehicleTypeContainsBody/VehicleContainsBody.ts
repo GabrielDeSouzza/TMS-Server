@@ -42,7 +42,6 @@ export class VehicleTypeContainsBody extends Entity {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   validate() {
     this.vehicleBodywork.validate();
     this.vehicleType.validate();

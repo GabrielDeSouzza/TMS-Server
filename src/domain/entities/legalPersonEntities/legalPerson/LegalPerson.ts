@@ -133,7 +133,7 @@ export class LegalPerson extends Entity {
         maxLength: 80,
       },
     );
-    this.notification.requiredField('User', fieldsValidation);
+    this.notification.requiredField('LegalPerson', fieldsValidation);
   }
 
   public get id(): string {

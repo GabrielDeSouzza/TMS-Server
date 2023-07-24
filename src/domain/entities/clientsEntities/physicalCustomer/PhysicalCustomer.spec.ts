@@ -2,8 +2,8 @@ import { NaturalPerson } from '../../../entities/personEntities/naturalPerson/Na
 import { PhysicalCustomer } from './PhysicalCustomer';
 
 describe('User', () => {
-  it('should create user', () => {
-    const user = new PhysicalCustomer({
+  it('should create physycal custumer', () => {
+    const physycalCustumer = new PhysicalCustomer({
       NaturalPerson: new NaturalPerson({
         name: 'Jão',
         date_birth: new Date(),
@@ -27,6 +27,6 @@ describe('User', () => {
       cpf: null,
     });
 
-    expect(user).toBeTruthy();
+    expect(physycalCustumer).toBeTruthy();
   });
 });

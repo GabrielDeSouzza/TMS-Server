@@ -116,7 +116,10 @@ export class InvoicePhysicalCustomer extends Entity {
       },
     );
 
-    this.notification.requiredField('Invoice', fieldsValidation);
+    this.notification.requiredField(
+      'InvoicePhysicalCustomer',
+      fieldsValidation,
+    );
     this.props.PhysicalCustomer.validate();
     this.props.CustomerOrder.validate();
   }

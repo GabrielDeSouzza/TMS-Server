@@ -66,7 +66,7 @@ export class Maintenance extends Entity {
     this.props.MaintenanceCompany.validate();
     this.props.TypeOfMaintenance.validate();
     this.props.Vehicle.validate();
-    this.notification.requiredField('CustomerOrder', fieldsValidation);
+    this.notification.requiredField('Maintenance', fieldsValidation);
   }
 
   public get id(): string {

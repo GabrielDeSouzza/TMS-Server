@@ -7,7 +7,7 @@ import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OwnsourcedDriver } from './OwnsourcedDriver';
 
 describe('Ownsourced Driver', () => {
-  it('should create Ownsourced Driver', () => {
+  it('should create ownsourced driver', () => {
     const ownsourcedDriver = new OwnsourcedDriver({
       NaturalPerson: new NaturalPerson({
         name: 'Jão',

@@ -71,10 +71,7 @@ export class CiotForCorporateClient extends Entity {
         isNullAble: true,
       },
     );
-    this.notification.requiredField(
-      'CiotForPhysicalCustomer',
-      fieldsValidation,
-    );
+    this.notification.requiredField('CiotForLegalPerson', fieldsValidation);
     this.props.CarrierCompany.validate();
     this.props.LegalContractor.validate();
     this.props.CorporateClient.validate();

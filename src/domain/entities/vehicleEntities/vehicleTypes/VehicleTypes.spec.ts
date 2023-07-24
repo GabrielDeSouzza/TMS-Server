@@ -1,12 +1,12 @@
 import { VehicleType } from './VehicleTypes';
 
-describe('User', () => {
+describe('VehicleType', () => {
   it('should create vehicle type', () => {
-    const user = new VehicleType({
+    const vehicleType = new VehicleType({
       name: 'Caminhão',
       bodyWork: null,
     });
 
-    expect(user).toBeTruthy();
+    expect(vehicleType).toBeTruthy();
   });
 });

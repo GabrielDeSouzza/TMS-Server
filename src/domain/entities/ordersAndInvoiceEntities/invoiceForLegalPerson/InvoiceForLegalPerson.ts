@@ -116,7 +116,7 @@ export class InvoiceForLegalPerson extends Entity {
       },
     );
 
-    this.notification.requiredField('Invoice', fieldsValidation);
+    this.notification.requiredField('TypeOfMaintenance', fieldsValidation);
     this.props.CorporateClient.validate();
     this.props.CustomerOrder.validate();
   }

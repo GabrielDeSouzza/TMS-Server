@@ -6,8 +6,8 @@ import { NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson'
 import { CiotForPhysicalCustomer } from './CiotForPhysicalCustomer';
 
 describe('User', () => {
-  it('should create user', () => {
-    const user = new CiotForPhysicalCustomer({
+  it('should create ciot for physical person', () => {
+    const ciot = new CiotForPhysicalCustomer({
       carrier_cnpj: null,
       CarrierCompany: new CarrierCompany({
         cnpj: null,
@@ -83,6 +83,6 @@ describe('User', () => {
       cpf: null,
     });
 
-    expect(user).toBeTruthy();
+    expect(ciot).toBeTruthy();
   });
 });

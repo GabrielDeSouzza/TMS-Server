@@ -6,9 +6,9 @@ import { MaintenanceCompany } from '../MaintenanceCompany/MaintenanceCompany';
 import { TypeOfMaintenance } from '../MaintenanceProcess/TypeOfMaintenance';
 import { Maintenance } from './Maintenance';
 
-describe('CustomerOrder', () => {
-  it('should create customer order', () => {
-    const customerOrder = new Maintenance({
+describe('Maintenance', () => {
+  it('should create customer maintenance', () => {
+    const maintenance = new Maintenance({
       MaintenanceCompany: new MaintenanceCompany({
         LegalPerson: new LegalPerson({
           fantasy_name: 'Empresa ABC',
@@ -54,6 +54,6 @@ describe('CustomerOrder', () => {
       maintenance_company_cnpj: null,
     });
 
-    expect(customerOrder).toBeTruthy();
+    expect(maintenance).toBeTruthy();
   });
 });

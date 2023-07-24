@@ -2,7 +2,7 @@ import { NaturalPerson } from './NaturalPerson';
 
 describe('Natural Person', () => {
   it('should create Natural Person', () => {
-    const pessoa = new NaturalPerson({
+    const naturalPerson = new NaturalPerson({
       name: 'Jão',
       date_birth: new Date(),
       gender: 'Masculino',
@@ -21,6 +21,6 @@ describe('Natural Person', () => {
       email: 'joao@example.com',
       nationality: 'Brasileiro',
     });
-    expect(pessoa).toBeTruthy();
+    expect(naturalPerson).toBeTruthy();
   });
 });

@@ -1,11 +1,11 @@
 import { VehicleBrand } from './VehicleBrand';
 
-describe('User', () => {
+describe('VehicleBrand', () => {
   it('should create Vehicle Brand', () => {
-    const user = new VehicleBrand({
+    const vehicleBrand = new VehicleBrand({
       name: 'Ford',
     });
 
-    expect(user).toBeTruthy();
+    expect(vehicleBrand).toBeTruthy();
   });
 });

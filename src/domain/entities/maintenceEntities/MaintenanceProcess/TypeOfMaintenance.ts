@@ -65,7 +65,7 @@ export class TypeOfMaintenance extends Entity {
       },
     );
 
-    this.notification.requiredField('CustomerOrder', fieldsValidation);
+    this.notification.requiredField('TypeOfMaintenance', fieldsValidation);
   }
 
   public get id(): string {

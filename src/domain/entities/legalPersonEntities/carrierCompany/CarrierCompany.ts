@@ -50,7 +50,7 @@ export class CarrierCompany extends Entity {
       isNullAble: true,
     });
     this.props.LegalPerson.validate();
-    this.notification.requiredField('User', fieldsValidation);
+    this.notification.requiredField('CarrierCompany', fieldsValidation);
   }
 
   public get id(): string {

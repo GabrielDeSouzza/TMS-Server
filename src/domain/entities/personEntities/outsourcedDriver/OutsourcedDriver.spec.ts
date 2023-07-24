@@ -7,7 +7,7 @@ import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OutsourcedDriver } from './OutsourcedDriver';
 
 describe('Outsourced Driver', () => {
-  it('should create OutsourcedDriver', () => {
+  it('should create outsourced driver', () => {
     const outsourcedDriver = new OutsourcedDriver({
       NaturalPerson: new NaturalPerson({
         name: 'Jão',

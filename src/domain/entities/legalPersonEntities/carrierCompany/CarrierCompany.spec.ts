@@ -1,9 +1,9 @@
 import { LegalPerson } from '../legalPerson/LegalPerson';
 import { CarrierCompany } from './CarrierCompany';
 
-describe('User', () => {
-  it('should create user', () => {
-    const user = new CarrierCompany({
+describe('CarrierCompany', () => {
+  it('should create carrier company', () => {
+    const carrierCompany = new CarrierCompany({
       cnpj: null,
       LegalPerson: new LegalPerson({
         fantasy_name: 'Empresa ABC',
@@ -23,6 +23,6 @@ describe('User', () => {
       }),
     });
 
-    expect(user).toBeTruthy();
+    expect(carrierCompany).toBeTruthy();
   });
 });

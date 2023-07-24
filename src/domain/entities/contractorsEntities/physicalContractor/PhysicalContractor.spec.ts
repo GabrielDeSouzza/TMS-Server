@@ -3,8 +3,8 @@ import { NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson'
 import { PhysicalContractor } from './PhysicalContractor';
 
 describe('Merchandise', () => {
-  it('should create merchandise', () => {
-    const merchandise = new PhysicalContractor({
+  it('should create physical contractor', () => {
+    const physicalContractor = new PhysicalContractor({
       PhysicalCustomer: new PhysicalCustomer({
         NaturalPerson: new NaturalPerson({
           name: 'Jão',
@@ -32,6 +32,6 @@ describe('Merchandise', () => {
       cpf: null,
     });
 
-    expect(merchandise).toBeTruthy();
+    expect(physicalContractor).toBeTruthy();
   });
 });

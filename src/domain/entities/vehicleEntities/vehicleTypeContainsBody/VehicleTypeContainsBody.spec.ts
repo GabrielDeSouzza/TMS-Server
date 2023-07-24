@@ -2,8 +2,8 @@ import { VehicleBodywork } from '../vehicleBodywork/VehicleBodywork';
 import { VehicleType } from '../vehicleTypes/VehicleTypes';
 import { VehicleTypeContainsBody } from './VehicleContainsBody';
 
-describe('User', () => {
-  it('should create vehicle type', () => {
+describe('VehicleTypeContainsBody', () => {
+  it('should create vehicle type containsBody', () => {
     const user = new VehicleTypeContainsBody({
       VehicleBodywork: new VehicleBodywork({
         axles: 5,

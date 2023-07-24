@@ -1,14 +1,14 @@
 import { VehicleBodywork } from './VehicleBodywork';
 
-describe('User', () => {
-  it('should create vehicle model', () => {
-    const user = new VehicleBodywork({
+describe('VehicleBodywork', () => {
+  it('should create vehicle bodywork', () => {
+    const vehicleBodywork = new VehicleBodywork({
       axles: 5,
       mass: 454,
       name: 'Unão',
       volume: 4,
     });
 
-    expect(user).toBeTruthy();
+    expect(vehicleBodywork).toBeTruthy();
   });
 });

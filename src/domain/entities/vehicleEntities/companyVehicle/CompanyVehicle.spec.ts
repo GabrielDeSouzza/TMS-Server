@@ -3,9 +3,9 @@ import { VehicleBrand } from '../vehicleBrand/VehicleBrand';
 import { VehicleModel } from '../vehicleModel/VehicleModel';
 import { CompanyVehicle } from './CompanyVehicle';
 
-describe('OutsourcedVehicle', () => {
-  it('should create outsourced Vehicle', () => {
-    const outsourcedVehicle = new CompanyVehicle({
+describe('CompanyVehicle', () => {
+  it('should create outsourced company vehicle', () => {
+    const companyVehicle = new CompanyVehicle({
       Vehicle: new Vehicle({
         plate: '455445',
         color: 'Azul',
@@ -24,6 +24,6 @@ describe('OutsourcedVehicle', () => {
       }),
     });
 
-    expect(outsourcedVehicle).toBeTruthy();
+    expect(companyVehicle).toBeTruthy();
   });
 });

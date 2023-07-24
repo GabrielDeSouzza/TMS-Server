@@ -46,7 +46,7 @@ export class VehicleType extends Entity {
       fieldName: 'Name',
       maxLength: 80,
     });
-    this.notification.requiredField('User', fieldsValidation);
+    this.notification.requiredField('VehicleType', fieldsValidation);
   }
 
   public get id(): string {

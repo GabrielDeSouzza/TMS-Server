@@ -59,7 +59,7 @@ export class Merchandise extends Entity {
       },
     );
     this.props.NaturalPerson.validate();
-    this.notification.requiredField('PhysicalCustomer', fieldsValidation);
+    this.notification.requiredField('Merchandise', fieldsValidation);
   }
 
   public get id(): string {

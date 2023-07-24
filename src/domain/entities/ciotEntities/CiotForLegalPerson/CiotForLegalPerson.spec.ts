@@ -5,7 +5,7 @@ import { LegalPerson } from '../../legalPersonEntities/legalPerson/LegalPerson';
 import { CiotForCorporateClient } from './CiotForLegalPerson';
 
 describe('User', () => {
-  it('should create user', () => {
+  it('should create ciot for legal person', () => {
     const ciot = new CiotForCorporateClient({
       carrier_cnpj: null,
       CarrierCompany: new CarrierCompany({

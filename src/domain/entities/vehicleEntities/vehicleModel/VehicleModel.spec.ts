@@ -1,7 +1,7 @@
 import { VehicleBrand } from '../vehicleBrand/VehicleBrand';
 import { VehicleModel } from './VehicleModel';
 
-describe('User', () => {
+describe('VehicleModel', () => {
   it('should create vehicle model', () => {
     const vehicleModel = new VehicleModel({
       axles: 5,

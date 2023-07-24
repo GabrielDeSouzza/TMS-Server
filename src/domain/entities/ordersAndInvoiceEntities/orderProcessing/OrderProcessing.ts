@@ -91,7 +91,7 @@ export class OrderProcessing extends Entity {
       },
     );
 
-    this.notification.requiredField('CustomerOrder', fieldsValidation);
+    this.notification.requiredField('OrderProcessing', fieldsValidation);
     this.props.Route.validate();
     this.props.Vehicle.validate();
   }

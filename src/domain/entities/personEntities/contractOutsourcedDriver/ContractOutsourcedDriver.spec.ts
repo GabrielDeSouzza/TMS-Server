@@ -7,8 +7,8 @@ import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OutsourcedDriver } from '../outsourcedDriver/OutsourcedDriver';
 import { ContractOutsourcedDriver } from './ContractOutsourcedDriver';
 
-describe('Contract Outsourced Driver', () => {
-  it('should create ContractOutsourcedDriver', () => {
+describe('ContractOutsourcedDriver', () => {
+  it('should create  contract outsourced driver', () => {
     const contractOutsourcedDriver = new ContractOutsourcedDriver({
       cpf: '12345678910',
       situation: 'Em aberto',

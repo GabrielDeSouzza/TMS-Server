@@ -61,7 +61,7 @@ export class MaintenanceCompany extends Entity {
       },
     );
     this.props.LegalPerson.validate();
-    this.notification.requiredField('CustomerOrder', fieldsValidation);
+    this.notification.requiredField('MaintenanceCompany', fieldsValidation);
   }
 
   public set specialty_maintenance(specialtyMaintenance: string) {

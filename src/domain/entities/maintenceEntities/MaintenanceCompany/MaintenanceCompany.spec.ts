@@ -1,9 +1,9 @@
 import { LegalPerson } from '../../../entities/legalPersonEntities/legalPerson/LegalPerson';
 import { MaintenanceCompany } from './MaintenanceCompany';
 
-describe('CustomerOrder', () => {
-  it('should create customer order', () => {
-    const customerOrder = new MaintenanceCompany({
+describe('MaintenanceCompany', () => {
+  it('should create customer maintenance company', () => {
+    const maintenanceCompany = new MaintenanceCompany({
       LegalPerson: new LegalPerson({
         fantasy_name: 'Empresa ABC',
         cnpj: '12345678000123',
@@ -24,6 +24,6 @@ describe('CustomerOrder', () => {
       cnpj: null,
     });
 
-    expect(customerOrder).toBeTruthy();
+    expect(maintenanceCompany).toBeTruthy();
   });
 });

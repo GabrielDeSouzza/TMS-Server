@@ -1,7 +1,7 @@
 import { Route } from './Route';
 
 describe('Route', () => {
-  it('should create Route', () => {
+  it('should create route', () => {
     const route = new Route({
       cep: '12345678',
       public_place: 'Rua Principal',

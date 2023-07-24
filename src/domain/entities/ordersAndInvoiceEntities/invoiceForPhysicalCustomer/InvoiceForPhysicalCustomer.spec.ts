@@ -6,8 +6,8 @@ import { CustomerOrder } from '../order/CustomerOrder';
 import { InvoicePhysicalCustomer } from './InvoiceForPhysicalCustomer';
 
 describe('InvoiceForLegalPerson', () => {
-  it('should create Invoice For LegalPerson', () => {
-    const customerOrder = new InvoicePhysicalCustomer({
+  it('should create Invoice For Physical Customer', () => {
+    const invoicePhysicalCustomer = new InvoicePhysicalCustomer({
       additional_data: 'Test',
       CarrierCompany: new CarrierCompany({
         cnpj: null,
@@ -65,6 +65,6 @@ describe('InvoiceForLegalPerson', () => {
       physicalcustomer_cpf: null,
     });
 
-    expect(customerOrder).toBeTruthy();
+    expect(invoicePhysicalCustomer).toBeTruthy();
   });
 });

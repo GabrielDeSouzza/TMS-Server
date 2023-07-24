@@ -1,6 +1,6 @@
 import { LegalPerson } from './LegalPerson';
 
-describe('User', () => {
+describe('LegalPerson', () => {
   it('should create legal person', () => {
     const legalPerson = new LegalPerson({
       fantasy_name: 'Empresa ABC',

@@ -1,8 +1,8 @@
 import { LegalPerson } from '../legalPerson/LegalPerson';
 import { CorporateClient } from './CorporateClient';
 
-describe('User', () => {
-  it('should create user', () => {
+describe('CorporateClient', () => {
+  it('should create corporate client', () => {
     const user = new CorporateClient({
       branch: 'Padaria',
       cnpj: null,

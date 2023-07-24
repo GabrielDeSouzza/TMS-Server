@@ -4,8 +4,8 @@ import { VehicleBrand } from '../../../entities/vehicleEntities/vehicleBrand/Veh
 import { VehicleModel } from '../../../entities/vehicleEntities/vehicleModel/VehicleModel';
 import { OrderProcessing } from './OrderProcessing';
 
-describe('CustomerOrder', () => {
-  it('should create customer order', () => {
+describe('OrderProcessing', () => {
+  it('should create order processing', () => {
     const customerOrder = new OrderProcessing({
       Route: new Route({
         cep: '12345678',

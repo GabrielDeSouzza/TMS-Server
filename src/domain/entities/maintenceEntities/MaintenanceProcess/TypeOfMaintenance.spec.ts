@@ -1,13 +1,13 @@
 import { TypeOfMaintenance } from './TypeOfMaintenance';
 
-describe('CustomerOrder', () => {
-  it('should create customer order', () => {
-    const customerOrder = new TypeOfMaintenance({
+describe('TypeOfMaintenance', () => {
+  it('should create type of maintenance', () => {
+    const typeOfMaintenance = new TypeOfMaintenance({
       description: 'Troca de óleo',
       corrective: null,
       preventive: true,
     });
 
-    expect(customerOrder).toBeTruthy();
+    expect(typeOfMaintenance).toBeTruthy();
   });
 });
