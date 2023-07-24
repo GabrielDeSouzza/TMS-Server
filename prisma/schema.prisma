@@ -506,16 +506,15 @@ model OrderProcessing {
   @@map("order_processing")
 }
 
-model MaintenanceProcess {
-  id             String @id @default(uuid())
+model TypeOfMaintenance {
+  id             String  @id @default(uuid())
   description    String
-  classification String
-  preventive     Int
-  corrective     Int
+  preventive     Boolean
+  corrective     Boolean
 
   Maintenance Maintenance[]
 
-  @@map("maintenance_processes")
+  @@map("types_of_maintenances")
 }
 
 model MaintenanceCompany {
@@ -537,7 +536,7 @@ model Maintenance {
   maintenance_company_cnpj String
   Vehicle                  Vehicle            @relation(fields: [plate], references: [plate])
   plate                    String
-  MaintenanceProcess       MaintenanceProcess @relation(fields: [maintenance_process_id], references: [id])
+  TypeOfMaintenance       TypeOfMaintenance @relation(fields: [maintenance_process_id], references: [id])
   maintenance_process_id   String
 
   @@map("maintenance")
