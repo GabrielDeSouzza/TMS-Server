@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
+import { type Maintenance } from '../../../entities/maintenceEntities/Maintenance/Maintenance';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
@@ -16,6 +17,7 @@ interface IVehicle {
   created_at: Date;
   updated_at: Date;
   VehicleModel: VehicleModel;
+  Maintences?: Maintenance[];
 }
 
 export class Vehicle extends Entity {
@@ -70,6 +72,9 @@ export class Vehicle extends Entity {
     return this._id;
   }
 
+  public get maintenances(): Maintenance[] | undefined {
+    return this.props.Maintences;
+  }
   public set plate(plate: string) {
     this.props.plate = plate;
   }

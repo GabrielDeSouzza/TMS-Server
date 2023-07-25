@@ -7,7 +7,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
-import { type CustomerOrder } from '../order/CustomerOrder';
+import { type CustomerOrderForPhysicalCustomer } from '../customerOrderForPhysicalCustomer/CustomerOrderForPhysicalCustomer';
 
 interface IInvoicePhysicalCustomer {
   emission_date: Date;
@@ -22,12 +22,12 @@ interface IInvoicePhysicalCustomer {
   PhysicalCustomer: PhysicalCustomer;
   physicalcustomer_cpf?: string;
   customerOrderId?: string;
-  CustomerOrder: CustomerOrder;
+  CustomerOrderForPhysicalCustomer: CustomerOrderForPhysicalCustomer;
   updated_at: Date;
   created_at: Date;
 }
 
-export class InvoicePhysicalCustomer extends Entity {
+export class InvoiceForPhysicalCustomer extends Entity {
   private _id: string;
   private props: IInvoicePhysicalCustomer;
 
@@ -121,7 +121,7 @@ export class InvoicePhysicalCustomer extends Entity {
       fieldsValidation,
     );
     this.props.PhysicalCustomer.validate();
-    this.props.CustomerOrder.validate();
+    this.props.CustomerOrderForPhysicalCustomer.validate();
   }
 
   public get id(): string {
@@ -223,12 +223,14 @@ export class InvoicePhysicalCustomer extends Entity {
     return this.props.customerOrderId;
   }
 
-  public set CustomerOrder(customerOrder: CustomerOrder) {
-    this.props.CustomerOrder = customerOrder;
+  public set CustomerOrderForPhysicalCustomer(
+    customerOrder: CustomerOrderForPhysicalCustomer,
+  ) {
+    this.props.CustomerOrderForPhysicalCustomer = customerOrder;
   }
 
-  public get CustomerOrder(): CustomerOrder {
-    return this.props.CustomerOrder;
+  public get CustomerOrderForPhysicalCustomer(): CustomerOrderForPhysicalCustomer {
+    return this.props.CustomerOrderForPhysicalCustomer;
   }
 
   public set updated_at(updatedAt: Date) {

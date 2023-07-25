@@ -1,13 +1,15 @@
+import { type Route } from '../../../entities/routeEntities/Route/Route';
 import { PhysicalCustomer } from '../../clientsEntities/physicalCustomer/PhysicalCustomer';
 import { CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
 import { LegalPerson } from '../../legalPersonEntities/legalPerson/LegalPerson';
 import { NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson';
-import { CustomerOrder } from '../order/CustomerOrder';
-import { InvoicePhysicalCustomer } from './InvoiceForPhysicalCustomer';
+import { CustomerOrderForPhysicalCustomer } from '../customerOrderForPhysicalCustomer/CustomerOrderForPhysicalCustomer';
+import { type Merchandise } from '../merchandise/Merchandise';
+import { InvoiceForPhysicalCustomer } from './InvoiceForPhysicalCustomer';
 
 describe('InvoiceForLegalPerson', () => {
   it('should create Invoice For Physical Customer', () => {
-    const invoicePhysicalCustomer = new InvoicePhysicalCustomer({
+    const invoicePhysicalCustomer = new InvoiceForPhysicalCustomer({
       additional_data: 'Test',
       CarrierCompany: new CarrierCompany({
         cnpj: null,
@@ -51,8 +53,11 @@ describe('InvoiceForLegalPerson', () => {
         branch: null,
         cpf: null,
       }),
-      CustomerOrder: new CustomerOrder({
+      CustomerOrderForPhysicalCustomer: new CustomerOrderForPhysicalCustomer({
         order: '65465d4as687d984asd987d9as7d9',
+        InvoiceForPhysicalCustomer: new Array<InvoiceForPhysicalCustomer>(),
+        Merchandase: new Array<Merchandise>(),
+        Route: new Array<Route>(),
       }),
       digital_signature: '545sdas78979sa7d987g9dfd9879dsfds979fs97',
       emission_date: new Date(),

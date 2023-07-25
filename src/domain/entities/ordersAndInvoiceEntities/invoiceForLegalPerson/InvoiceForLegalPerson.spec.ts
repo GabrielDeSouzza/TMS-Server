@@ -1,7 +1,9 @@
+import { type Route } from '../../../entities/routeEntities/Route/Route';
 import { CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
 import { CorporateClient } from '../../legalPersonEntities/CorporateClient/CorporateClient';
 import { LegalPerson } from '../../legalPersonEntities/legalPerson/LegalPerson';
-import { CustomerOrder } from '../order/CustomerOrder';
+import { CustomerOrderForLegalPerson } from '../customerOrderForLegalPerson/CustomerOrderForLegalPerson';
+import { type Merchandise } from '../merchandise/Merchandise';
 import { InvoiceForLegalPerson } from './InvoiceForLegalPerson';
 
 describe('InvoiceForLegalPerson', () => {
@@ -47,8 +49,11 @@ describe('InvoiceForLegalPerson', () => {
           email: 'empresa@example.com',
         }),
       }),
-      CustomerOrder: new CustomerOrder({
+      CustomerOrderForLegalPerson: new CustomerOrderForLegalPerson({
         order: '65465d4as687d984asd987d9as7d9',
+        InvoiceForLegalPerson: new Array<InvoiceForLegalPerson>(),
+        Merchandase: new Array<Merchandise>(),
+        Route: new Array<Route>(),
       }),
       digital_signature: '545sdas78979sa7d987g9dfd9879dsfds979fs97',
       emission_date: new Date(),

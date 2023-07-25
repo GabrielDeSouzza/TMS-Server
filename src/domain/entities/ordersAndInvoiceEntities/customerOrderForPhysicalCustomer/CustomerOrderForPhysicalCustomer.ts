@@ -5,19 +5,28 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type Route } from '../../routeEntities/Route/Route';
+import { type InvoiceForPhysicalCustomer } from '../invoiceForPhysicalCustomer/InvoiceForPhysicalCustomer';
+import { type Merchandise } from '../merchandise/Merchandise';
 
-interface ICustomerOrder {
+interface ICustomerOrderForPhysicalCustomer {
   order: string;
   updated_at: Date;
   created_at: Date;
+  Route: Array<Route>;
+  Merchandase: Array<Merchandise>;
+  InvoiceForPhysicalCustomer: Array<InvoiceForPhysicalCustomer>;
 }
 
-export class CustomerOrder extends Entity {
+export class CustomerOrderForPhysicalCustomer extends Entity {
   private _id: string;
-  private props: ICustomerOrder;
+  private props: ICustomerOrderForPhysicalCustomer;
 
   constructor(
-    props: Replace<ICustomerOrder, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      ICustomerOrderForPhysicalCustomer,
+      { created_at?: Date; updated_at?: Date }
+    >,
     id?: string,
   ) {
     super();
@@ -53,6 +62,9 @@ export class CustomerOrder extends Entity {
     return this._id;
   }
 
+  public get merchandise(): Merchandise[] {
+    return this.props.Merchandase;
+  }
   public set order(order: string) {
     this.props.order = order;
   }

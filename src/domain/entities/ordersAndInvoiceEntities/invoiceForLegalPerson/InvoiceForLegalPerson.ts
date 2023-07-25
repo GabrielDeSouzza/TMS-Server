@@ -7,7 +7,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
 import { type CorporateClient } from '../../legalPersonEntities/CorporateClient/CorporateClient';
-import { type CustomerOrder } from '../order/CustomerOrder';
+import { type CustomerOrderForLegalPerson } from '../customerOrderForLegalPerson/CustomerOrderForLegalPerson';
 
 interface IInvoiceForLegalPerson {
   emission_date: Date;
@@ -22,7 +22,7 @@ interface IInvoiceForLegalPerson {
   CorporateClient: CorporateClient;
   corporate_cnpj?: string;
   customerOrderId?: string;
-  CustomerOrder: CustomerOrder;
+  CustomerOrderForLegalPerson: CustomerOrderForLegalPerson;
   updated_at: Date;
   created_at: Date;
 }
@@ -118,7 +118,7 @@ export class InvoiceForLegalPerson extends Entity {
 
     this.notification.requiredField('TypeOfMaintenance', fieldsValidation);
     this.props.CorporateClient.validate();
-    this.props.CustomerOrder.validate();
+    this.props.CustomerOrderForLegalPerson.validate();
   }
 
   public get id(): string {
@@ -220,12 +220,14 @@ export class InvoiceForLegalPerson extends Entity {
     return this.props.customerOrderId;
   }
 
-  public set CustomerOrder(customerOrder: CustomerOrder) {
-    this.props.CustomerOrder = customerOrder;
+  public set customerOrderForLegalPerson(
+    customerOrder: CustomerOrderForLegalPerson,
+  ) {
+    this.props.CustomerOrderForLegalPerson = customerOrder;
   }
 
-  public get CustomerOrder(): CustomerOrder {
-    return this.props.CustomerOrder;
+  public get CustomerOrder(): CustomerOrderForLegalPerson {
+    return this.props.CustomerOrderForLegalPerson;
   }
 
   public set updated_at(updatedAt: Date) {
