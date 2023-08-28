@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 generator dbml {
@@ -39,9 +40,7 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  Route                    Route[]
   Invoice                  Invoice[]
-  Vehicle                  Vehicle[]
   OwnDriver                OwnDriver[]
   VehicleType              VehicleType[]
   VehicleModel             VehicleModel[]
@@ -55,6 +54,12 @@ model User {
   OutsourcedVehicle        OutsourcedVehicle[]
   VehicleTypeContainsBody  VehicleTypeContainsBody[]
   ContractOutsourcedDriver ContractOutsourcedDriver[]
+  RouteUserId              Route[]                    @relation("user_id")
+  RouteCreatedBy           Route[]                    @relation("created_by")
+  RouteUpdatedBy           Route[]                    @relation("updated_by")
+  VehicleUserId            Vehicle[]                  @relation("user_id")
+  VehicleCreatedBy         Vehicle[]                  @relation("created_by")
+  VehicleUpdateBy          Vehicle[]                  @relation("updated_by")
 
   @@map("users")
 }
@@ -74,10 +79,14 @@ model Vehicle {
   Maintenance       Maintenance[]
   OutsourcedVehicle OutsourcedVehicle[]
 
-  CreatedBy  User?        @relation(fields: [created_by], references: [id])
+  CreatedBy  User?        @relation("created_by", fields: [created_by], references: [id])
   created_by String
+  UpdateBy   User?        @relation("updated_by", fields: [update_by], references: [id])
+  update_by  String
   Model      VehicleModel @relation(fields: [model_id], references: [id])
   model_id   String
+  User       User?        @relation("user_id", fields: [user_id], references: [id])
+  user_id    String?
 
   @@map("vehicles")
 }
@@ -428,10 +437,14 @@ model Route {
 
   OrderProcessing OrderProcessing[]
 
-  CreatedBy  User?         @relation(fields: [created_by], references: [id])
+  CreatedBy  User?         @relation("created_by", fields: [created_by], references: [id])
   created_by String
+  UpdateBy   User?         @relation("updated_by", fields: [update_by], references: [id])
+  update_by  String
   Order      CustomerOrder @relation(fields: [order_id], references: [id])
   order_id   String
+  User       User?         @relation("user_id", fields: [user_id], references: [id])
+  user_id    String?
 
   @@map("routes")
 }
@@ -507,10 +520,10 @@ model OrderProcessing {
 }
 
 model TypeOfMaintenance {
-  id             String  @id @default(uuid())
-  description    String
-  preventive     Boolean
-  corrective     Boolean
+  id          String  @id @default(uuid())
+  description String
+  preventive  Boolean
+  corrective  Boolean
 
   Maintenance Maintenance[]
 
@@ -536,7 +549,7 @@ model Maintenance {
   maintenance_company_cnpj String
   Vehicle                  Vehicle            @relation(fields: [plate], references: [plate])
   plate                    String
-  TypeOfMaintenance       TypeOfMaintenance @relation(fields: [maintenance_process_id], references: [id])
+  TypeOfMaintenance        TypeOfMaintenance  @relation(fields: [maintenance_process_id], references: [id])
   maintenance_process_id   String
 
   @@map("maintenance")

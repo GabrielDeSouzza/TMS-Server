@@ -1,7 +1,7 @@
 # compiled output
 /dist
 /node_modules
-
+.pnpm-store
 # Logs
 logs
 *.log
@@ -37,3 +37,5 @@ tsconfig.build.tsbuildinfo
 
 # Env
 .env
+
+

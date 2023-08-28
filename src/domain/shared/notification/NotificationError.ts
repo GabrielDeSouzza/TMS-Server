@@ -1,6 +1,7 @@
-import { type INotificationError } from './Notification';
+import { GraphQLError } from 'graphql';
 
-export class NotificationError extends Error {
+import { type INotificationError } from './Notification';
+export class NotificationError extends GraphQLError {
   constructor(public errors: INotificationError[]) {
     super(errors.map(error => `${error.context}: ${error.message}`).join(', '));
   }

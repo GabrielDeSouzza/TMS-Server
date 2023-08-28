@@ -5,7 +5,7 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type OutsourcedVehicle } from '../../vehicleEntities/outsourcedVehicle/OutsourcedVehicle';
+import { type OutsourcedVehicle } from '../../vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { type NaturalPerson } from '../naturalPerson/NaturalPerson';
 
 interface IOutsourcedDriver {

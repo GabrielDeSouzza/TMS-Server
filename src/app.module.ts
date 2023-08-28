@@ -1,20 +1,21 @@
 import { join } from 'node:path';
 
-import { type ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { type ApolloDriverConfig } from '@nestjs/apollo';
+import { ApolloDriver } from '@nestjs/apollo';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
-import { PrismaService } from 'infra/database/prisma/prisma.service';
-import { FooResolver } from 'infra/graphql/resolvers/hello.resolver';
+import { UserModule } from 'infra/graphql/UserGraphql/user.module';
 
 @Module({
   imports: [
     CacheModule.register(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+
       autoSchemaFile: join(
         process.cwd(),
         'src/infra/graphql/generated/schema.gql',
@@ -22,8 +23,10 @@ import { FooResolver } from 'infra/graphql/resolvers/hello.resolver';
       sortSchema: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      buildSchemaOptions: { dateScalarMode: 'timestamp' },
     }),
+
+    UserModule,
   ],
-  providers: [PrismaService, FooResolver],
 })
 export class AppModule {}

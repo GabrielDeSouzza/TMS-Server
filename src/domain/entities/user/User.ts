@@ -6,14 +6,14 @@ import { Entity } from '../../shared/entities/Entity';
 import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
 
-interface IUser {
+export abstract class IUser {
   name: string;
   username: string;
   email: string;
   password: string;
-  role: 'USER' | 'ADMIN' | 'CLIENT';
-  created_at: Date;
-  updated_at: Date;
+  role: string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export class User extends Entity {
@@ -49,11 +49,12 @@ export class User extends Entity {
         field: this.props.name,
         fieldName: 'Name',
         maxLength: 80,
+        minLength: 4,
       },
       { field: this.props.email, fieldName: 'Email', maxLength: 80 },
       { field: this.props.password, fieldName: 'Password', maxLength: 80 },
       {
-        field: this.props.role,
+        field: String(this.props.role),
         fieldName: 'Role',
         maxLength: 10,
       },
@@ -82,7 +83,7 @@ export class User extends Entity {
     return this.props.username;
   }
 
-  public set role(role: 'USER' | 'ADMIN' | 'CLIENT') {
+  public set role(role: string) {
     this.props.role = role;
   }
 

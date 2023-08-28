@@ -2,6 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  createUSer(createUserInput: UserInput!): UserModel!
+  updateUser(id: UserInput!): UserModel!
+}
+
 type Query {
-  sayHello: String!
+  user(email: String, id: String): UserModel!
+  users: [UserModel!]!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+input UserInput {
+  email: String!
+  name: String!
+  password: String!
+  role: String!
+  username: String!
+}
+
+type UserModel {
+  created_at: Timestamp
+  email: String!
+  name: String!
+  password: String!
+  role: String!
+  updated_at: Timestamp
+  username: String!
 }

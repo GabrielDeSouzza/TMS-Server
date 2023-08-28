@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type Maintenance } from '../../maintence/Maintenance/Maintenance';
-import { type VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
+import { type VehicleModel } from '../vehicleModel/VehicleModel';
 
 interface IVehicle {
   plate: string;
