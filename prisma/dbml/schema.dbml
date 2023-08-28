@@ -11,22 +11,48 @@ Table users {
   password String [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-  Route routes [not null]
-  Invoice invoices [not null]
-  Vehicle vehicles [not null]
-  OwnDriver own_drivers [not null]
-  VehicleType vehicle_types [not null]
-  VehicleModel vehicle_models [not null]
-  VehicleBrand vehicle_brands [not null]
-  CustomerOrder customer_orders [not null]
-  CompanyVehicle company_vehicles [not null]
-  CarrierCompany carrier_companies [not null]
-  VehicleBodywork vehicle_bodyworks [not null]
-  OrderProcessing order_processing [not null]
-  OutsourcedDriver outsourced_drivers [not null]
-  OutsourcedVehicle outsourced_vehicles [not null]
-  VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
-  ContractOutsourcedDriver contract_outsourced_drivers [not null]
+  RouteCreatedBy routes [not null]
+  RouteUpdatedBy routes [not null]
+  VehicleCreatedBy vehicles [not null]
+  VehicleUpdateBy vehicles [not null]
+  VehicleModelCreatedBy vehicle_models [not null]
+  VehicleModelUpdatedBy vehicle_models [not null]
+  VehicleBrandCreatedBy vehicle_brands [not null]
+  VehicleBrandUpdatedBy vehicle_brands [not null]
+  VehicleTypeCreatedBy vehicle_types [not null]
+  VehicleTypeUpdatedBy vehicle_types [not null]
+  VehicleBodyworkCreatedBy vehicle_bodyworks [not null]
+  VehicleBodyworkUpdatedBy vehicle_bodyworks [not null]
+  VehicleTypeContainsBodyCreatedBy vehicle_type_contain_bodyworks [not null]
+  VehicleTypeContainsBodyUpdatedBy vehicle_type_contain_bodyworks [not null]
+  OutsourcedVehicleCreatedBy outsourced_vehicles [not null]
+  OutsourcedVehicleUpdatedBy outsourced_vehicles [not null]
+  CompanyVehicleCreatedBy company_vehicles [not null]
+  CompanyVehicleUpdatedBy company_vehicles [not null]
+  OutsourcedDriverCreatedBy outsourced_drivers [not null]
+  OutsourcedDriverUpdatedBy outsourced_drivers [not null]
+  ContractOutsourcedDriverCreatedBy contract_outsourced_drivers [not null]
+  ContractOutsourcedDriverUpdatedBy contract_outsourced_drivers [not null]
+  OwnDriverCreatedBy own_drivers [not null]
+  OwnDriverUpdatedBy own_drivers [not null]
+  CarrierCompanyCreatedBt carrier_companies [not null]
+  CarrierCompanyUpdatedBy carrier_companies [not null]
+  PhysicalCustomerCreatedBy physical_customers [not null]
+  PhysicalCustomerUpdatedBy physical_customers [not null]
+  InvoiceCreadeBy invoices [not null]
+  InvoiceUpdatedBy invoices [not null]
+  CiotCreatedBy ciots [not null]
+  CiotUpdatedBy ciots [not null]
+  OrderProcessingCreatedBy order_processing [not null]
+  OrderProcessingUpdatedBy order_processing [not null]
+  CustomerOrderCreatedBy customer_orders [not null]
+  CustomerOrderUpdatedBy customer_orders [not null]
+  MaintenanceCreatedBy maintenance [not null]
+  MaintenanceUpdatedBy maintenance [not null]
+  MaintenanceCompanyCreatedBy maintenance_companies [not null]
+  MaintenanceCompanyUpdatedBy maintenance_companies [not null]
+  TypeOfMaintenanceCreatedBy types_of_maintenances [not null]
+  TypeOfMaintenanceUpdatedBy types_of_maintenances [not null]
 }
 
 Table vehicles {
@@ -44,6 +70,8 @@ Table vehicles {
   OutsourcedVehicle outsourced_vehicles [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   Model vehicle_models [not null]
   model_id String [not null]
 }
@@ -59,6 +87,8 @@ Table vehicle_models {
   Vehicle vehicles [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   Brand vehicle_brands [not null]
   brand_id String [not null]
   VehicleType vehicle_types [not null]
@@ -73,6 +103,8 @@ Table vehicle_brands {
   VehicleModel vehicle_models [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table vehicle_types {
@@ -85,6 +117,8 @@ Table vehicle_types {
   VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table vehicle_bodyworks {
@@ -98,6 +132,8 @@ Table vehicle_bodyworks {
   VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table vehicle_type_contain_bodyworks {
@@ -106,6 +142,8 @@ Table vehicle_type_contain_bodyworks {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   VehicleType vehicle_types [not null]
   type_id String [not null]
   VehicleBodywork vehicle_bodyworks [not null]
@@ -123,6 +161,8 @@ Table outsourced_vehicles {
   OutsourcedDriver outsourced_drivers [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   Vehicle vehicles [not null]
   vehicle_id String [not null]
   OrderProcessing order_processing
@@ -135,6 +175,8 @@ Table company_vehicles {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   Vehicle vehicles [not null]
   vehicle_id String [unique, not null]
   OrderProcessing order_processing
@@ -153,6 +195,8 @@ Table outsourced_drivers {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   NaturalPerson natural_people [not null]
   cpf String [unique, not null]
   OutsourcedVehicle outsourced_vehicles [not null]
@@ -169,6 +213,8 @@ Table contract_outsourced_drivers {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   OutsourcedDriver outsourced_drivers [not null]
   cpf String [unique, not null]
 }
@@ -184,6 +230,8 @@ Table own_drivers {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   NaturalPerson natural_people [not null]
   cpf String [not null]
 }
@@ -241,6 +289,8 @@ Table carrier_companies {
   Invoice invoices [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   LegalPerson legal_people [not null]
   cnpj String [unique, not null]
 }
@@ -255,6 +305,10 @@ Table physical_customers {
   cpf String [unique, not null]
   merchandiseId String
   PhysicalContractor physical_contractors
+  CreatedBy users
+  created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table corporate_clients {
@@ -310,10 +364,12 @@ Table customer_orders {
   order String [unique, not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-  Route routes [not null]
-  Merchandise merchandise [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
+  Route routes [not null]
+  Merchandise merchandise [not null]
   Invoice invoices [not null]
 }
 
@@ -331,6 +387,8 @@ Table routes {
   OrderProcessing order_processing [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   Order customer_orders [not null]
   order_id String [not null]
 }
@@ -348,6 +406,8 @@ Table invoices {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   PhysicalCustomer physical_customers
   cpf_physicalcustomer String
   CarrierCompany carrier_companies [not null]
@@ -374,6 +434,10 @@ Table ciots {
   contractor_cpf String
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table order_processing {
@@ -385,14 +449,16 @@ Table order_processing {
   end_at DateTime [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-  CompanyVehicle company_vehicles [not null]
-  OutsourcedVehicle outsourced_vehicles [not null]
   CreatedBy users
   created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
   Route routes [not null]
   route_id String [not null]
   Vehicle vehicles [not null]
   plate String [unique, not null]
+  CompanyVehicle company_vehicles [not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
 }
 
 Table types_of_maintenances {
@@ -401,6 +467,12 @@ Table types_of_maintenances {
   preventive Boolean [not null]
   corrective Boolean [not null]
   Maintenance maintenance [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table maintenance_companies {
@@ -409,6 +481,12 @@ Table maintenance_companies {
   Maintenance maintenance [not null]
   LegalPerson legal_people [not null]
   cnpj String [unique, not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Table maintenance {
@@ -419,6 +497,12 @@ Table maintenance {
   plate String [not null]
   TypeOfMaintenance types_of_maintenances [not null]
   maintenance_process_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdateBy users
+  update_by String [not null]
 }
 
 Enum Role {
@@ -441,9 +525,13 @@ Enum CNH {
 
 Ref: vehicles.created_by > users.id
 
+Ref: vehicles.update_by > users.id
+
 Ref: vehicles.model_id > vehicle_models.id
 
 Ref: vehicle_models.created_by > users.id
+
+Ref: vehicle_models.update_by > users.id
 
 Ref: vehicle_models.brand_id > vehicle_brands.id
 
@@ -451,11 +539,19 @@ Ref: vehicle_models.type_id > vehicle_types.id
 
 Ref: vehicle_brands.created_by > users.id
 
+Ref: vehicle_brands.update_by > users.id
+
 Ref: vehicle_types.created_by > users.id
+
+Ref: vehicle_types.update_by > users.id
 
 Ref: vehicle_bodyworks.created_by > users.id
 
+Ref: vehicle_bodyworks.update_by > users.id
+
 Ref: vehicle_type_contain_bodyworks.created_by > users.id
+
+Ref: vehicle_type_contain_bodyworks.update_by > users.id
 
 Ref: vehicle_type_contain_bodyworks.type_id > vehicle_types.id
 
@@ -463,11 +559,15 @@ Ref: vehicle_type_contain_bodyworks.bodywork_id > vehicle_bodyworks.id
 
 Ref: outsourced_vehicles.created_by > users.id
 
+Ref: outsourced_vehicles.update_by > users.id
+
 Ref: outsourced_vehicles.vehicle_id > vehicles.id
 
 Ref: outsourced_vehicles.order_processing_id > order_processing.id
 
 Ref: company_vehicles.created_by > users.id
+
+Ref: company_vehicles.update_by > users.id
 
 Ref: company_vehicles.vehicle_id - vehicles.id
 
@@ -475,25 +575,37 @@ Ref: company_vehicles.order_processing_id > order_processing.id
 
 Ref: outsourced_drivers.created_by > users.id
 
+Ref: outsourced_drivers.update_by > users.id
+
 Ref: outsourced_drivers.cpf > natural_people.cpf
 
 Ref: outsourced_drivers.outsourced_vehicle_id > outsourced_vehicles.id
 
 Ref: contract_outsourced_drivers.created_by > users.id
 
+Ref: contract_outsourced_drivers.update_by > users.id
+
 Ref: contract_outsourced_drivers.cpf > outsourced_drivers.cpf
 
 Ref: own_drivers.created_by > users.id
 
+Ref: own_drivers.update_by > users.id
+
 Ref: own_drivers.cpf > natural_people.cpf
 
 Ref: carrier_companies.created_by > users.id
+
+Ref: carrier_companies.update_by > users.id
 
 Ref: carrier_companies.cnpj > legal_people.cnpj
 
 Ref: physical_customers.merchandiseId > merchandise.id
 
 Ref: physical_customers.cpf > natural_people.cpf
+
+Ref: physical_customers.created_by > users.id
+
+Ref: physical_customers.update_by > users.id
 
 Ref: corporate_clients.cnpj > legal_people.cnpj
 
@@ -511,11 +623,17 @@ Ref: merchandise.corporateClientId > corporate_clients.id
 
 Ref: customer_orders.created_by > users.id
 
+Ref: customer_orders.update_by > users.id
+
 Ref: routes.created_by > users.id
+
+Ref: routes.update_by > users.id
 
 Ref: routes.order_id > customer_orders.id
 
 Ref: invoices.created_by > users.id
+
+Ref: invoices.update_by > users.id
 
 Ref: invoices.cpf_physicalcustomer > physical_customers.cpf
 
@@ -535,16 +653,34 @@ Ref: ciots.contractor_cnpj > legal_contractors.cnpj
 
 Ref: ciots.contractor_cpf > physical_contractors.cpf
 
+Ref: ciots.created_by > users.id
+
+Ref: ciots.update_by > users.id
+
 Ref: order_processing.created_by > users.id
+
+Ref: order_processing.update_by > users.id
 
 Ref: order_processing.route_id > routes.id
 
 Ref: order_processing.plate - vehicles.plate
 
+Ref: types_of_maintenances.created_by > users.id
+
+Ref: types_of_maintenances.update_by > users.id
+
 Ref: maintenance_companies.cnpj - legal_people.cnpj
+
+Ref: maintenance_companies.created_by > users.id
+
+Ref: maintenance_companies.update_by > users.id
 
 Ref: maintenance.maintenance_company_cnpj > maintenance_companies.cnpj
 
 Ref: maintenance.plate > vehicles.plate
 
 Ref: maintenance.maintenance_process_id > types_of_maintenances.id
+
+Ref: maintenance.created_by > users.id
+
+Ref: maintenance.update_by > users.id

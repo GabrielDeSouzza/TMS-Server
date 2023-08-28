@@ -78,7 +78,6 @@ export class UserService implements UserRepository {
   async findUserById(id: string): Promise<User> {
     try {
       const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
-      console.log(user.created_at);
 
       return new User(
         {
@@ -102,7 +101,6 @@ export class UserService implements UserRepository {
       const user = await this.prisma.user.findUniqueOrThrow({
         where: { email },
       });
-      console.log(user.created_at);
 
       return new User(
         {
