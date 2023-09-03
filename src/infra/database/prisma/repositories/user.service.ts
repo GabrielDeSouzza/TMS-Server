@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { type Role } from '@prisma/client';
 
-import { User, type IUser } from '../../../../domain/entities/user/User';
+import { ROLE, User, type IUser } from '../../../../domain/entities/user/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';
 import { NotificationErrorsDatabase } from '../NotificationErrorsDatabase.ts';
 import { PrismaService } from '../prisma.service';
@@ -22,7 +22,7 @@ export class UserService implements UserRepository {
           {
             email: user.email,
             name: user.name,
-            role: user.role,
+            role: ROLE[user.role],
             username: user.username,
             password: user.password,
             created_at: user.created_at,
@@ -37,13 +37,14 @@ export class UserService implements UserRepository {
 
   async createUSer(user: IUser): Promise<User> {
     try {
+      console.log(user);
       const newUSer = await this.prisma.user.create({
         data: {
           email: user.email,
           name: user.name,
           password: user.password,
           username: user.username,
-          role: user.role as unknown as Role,
+          role: ROLE[user.role] as unknown as Role,
         },
         select: {
           id: true,
@@ -56,6 +57,7 @@ export class UserService implements UserRepository {
           password: true,
         },
       });
+      console.log(newUSer);
       const iser = new User(
         {
           email: newUSer.email,
@@ -84,7 +86,7 @@ export class UserService implements UserRepository {
           email: user.email,
           name: user.name,
           password: user.password,
-          role: user.role,
+          role: ROLE[user.role],
           username: user.username,
           created_at: user.created_at,
           updated_at: user.updated_at,
@@ -107,7 +109,7 @@ export class UserService implements UserRepository {
           email: user.email,
           name: user.name,
           password: user.password,
-          role: user.role,
+          role: ROLE[user.role],
           username: user.username,
           created_at: user.created_at,
           updated_at: user.updated_at,

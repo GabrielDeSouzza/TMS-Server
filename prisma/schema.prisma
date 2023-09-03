@@ -39,7 +39,7 @@ model User {
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
-  
+
   RouteCreatedBy                   Route[]                   @relation("created_by")
   RouteUpdatedBy                   Route[]                   @relation("updated_by")
   VehicleCreatedBy                 Vehicle[]                 @relation("created_by")

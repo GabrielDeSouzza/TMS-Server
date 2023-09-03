@@ -5,13 +5,17 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../shared/entities/Entity';
 import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
-
+export enum ROLE {
+  USER,
+  ADMIN,
+  CLIENT,
+}
 export abstract class IUser {
   name: string;
   username: string;
   email: string;
   password: string;
-  role: string;
+  role: ROLE;
   created_at?: Date;
   updated_at?: Date;
 }
@@ -83,11 +87,11 @@ export class User extends Entity {
     return this.props.username;
   }
 
-  public set role(role: string) {
+  public set role(role: ROLE) {
     this.props.role = role;
   }
 
-  public get role(): string {
+  public get role(): ROLE {
     return this.props.role;
   }
 

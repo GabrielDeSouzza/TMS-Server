@@ -1,6 +1,6 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
-import { type IUser } from '../../../domain/entities/user/User';
+import { ROLE, type IUser } from '../../../domain/entities/user/User';
 
 @InputType()
 export class UserInput implements IUser {
@@ -12,6 +12,8 @@ export class UserInput implements IUser {
   email: string;
   @Field()
   password: string;
-  @Field()
-  role: string;
+  @Field(() => ROLE)
+  role: ROLE;
 }
+
+registerEnumType(ROLE, { name: 'ROLE' });

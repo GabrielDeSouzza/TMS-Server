@@ -33,6 +33,8 @@ describe('OrderProcessing', () => {
           weight: 4000,
           VehicleBrand: new VehicleBrand({
             name: 'Ford',
+            created_by: 'test',
+            updated_by: 'test',
           }),
         }),
       }),

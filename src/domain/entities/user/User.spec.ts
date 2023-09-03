@@ -1,4 +1,4 @@
-import { User } from './User';
+import { ROLE, User } from './User';
 
 describe('User', () => {
   it('should create user', () => {
@@ -6,7 +6,7 @@ describe('User', () => {
       email: 'gabrielrguedess@gmail.com',
       name: 'Gabriel Guedes',
       password: '1234',
-      role: 'ADMIN',
+      role: ROLE['ADMIN'],
       username: 'GabrielGuedess',
     });
 

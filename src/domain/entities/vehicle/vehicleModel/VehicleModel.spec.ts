@@ -10,6 +10,8 @@ describe('VehicleModel', () => {
       weight: 150,
       VehicleBrand: new VehicleBrand({
         name: 'Ford',
+        created_by: 'test',
+        updated_by: 'test',
       }),
     });
 

@@ -6,10 +6,12 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IVehicleBrand {
+export interface IVehicleBrand {
   name: string;
   created_at: Date;
   updated_at: Date;
+  updated_by: string;
+  created_by: string;
 }
 
 export class VehicleBrand extends Entity {
@@ -40,11 +42,23 @@ export class VehicleBrand extends Entity {
   validate() {
     const fieldsValidation: Array<IValidationField> =
       new Array<IValidationField>();
-    fieldsValidation.push({
-      field: this.props.name,
-      fieldName: 'Name',
-      maxLength: 80,
-    });
+    fieldsValidation.push(
+      {
+        field: this.props.name,
+        fieldName: 'Name',
+        maxLength: 80,
+      },
+      {
+        field: this.props.created_by,
+        fieldName: 'Created By',
+        maxLength: 1000,
+      },
+      {
+        field: this.props.updated_by,
+        fieldName: 'Updated By',
+        maxLength: 1000,
+      },
+    );
     this.notification.requiredField('VehicleBrand', fieldsValidation);
   }
 
@@ -70,5 +84,21 @@ export class VehicleBrand extends Entity {
 
   public get createdAt(): Date {
     return this.props.created_at;
+  }
+
+  public set updatedBy(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updatedBy(): string {
+    return this.props.updated_by;
+  }
+
+  public set createdBy(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get createdBy(): string {
+    return this.props.created_by;
   }
 }

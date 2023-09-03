@@ -12,6 +12,12 @@ type Query {
   users: [UserModel!]!
 }
 
+enum ROLE {
+  ADMIN
+  CLIENT
+  USER
+}
+
 """
 `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
@@ -21,7 +27,7 @@ input UserInput {
   email: String!
   name: String!
   password: String!
-  role: String!
+  role: ROLE!
   username: String!
 }
 
@@ -30,7 +36,7 @@ type UserModel {
   email: String!
   name: String!
   password: String!
-  role: String!
+  role: ROLE!
   updated_at: Timestamp
   username: String!
 }
