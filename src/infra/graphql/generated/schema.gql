@@ -5,9 +5,11 @@
 type Mutation {
   createUSer(createUserInput: UserInput!): UserModel!
   updateUser(id: UserInput!): UserModel!
+  vehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
 }
 
 type Query {
+  getVehicleBrand(id: String!): VehicleBrandModel!
   user(email: String, id: String): UserModel!
   users: [UserModel!]!
 }
@@ -34,9 +36,26 @@ input UserInput {
 type UserModel {
   created_at: Timestamp
   email: String!
+  id: String!
   name: String!
   password: String!
   role: ROLE!
   updated_at: Timestamp
   username: String!
+}
+
+input VehicleBrandInput {
+  created_by: String!
+  name: String!
+  updated_by: String!
+}
+
+type VehicleBrandModel {
+  createdUser: UserModel
+  created_at: Timestamp!
+  created_by: String!
+  name: String!
+  updatedUser: UserModel!
+  updated_at: Timestamp!
+  updated_by: String!
 }

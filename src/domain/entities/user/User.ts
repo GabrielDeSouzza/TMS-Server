@@ -11,6 +11,7 @@ export enum ROLE {
   CLIENT,
 }
 export abstract class IUser {
+  id?: string;
   name: string;
   username: string;
   email: string;

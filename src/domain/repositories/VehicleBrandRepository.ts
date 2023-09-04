@@ -3,11 +3,13 @@ import {
   type VehicleBrand,
 } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 
-export abstract class VeHicleBrandRepository {
-  abstract findUserById(id: string): Promise<VehicleBrand>;
-  abstract createUSer(vehicleBrand: IVehicleBrand): Promise<VehicleBrand>;
+export abstract class VehicleBrandRepository {
+  abstract findVehicleBrandById(id: string): Promise<VehicleBrand>;
+  abstract createVehicleBrand(
+    vehicleBrand: IVehicleBrand,
+  ): Promise<VehicleBrand>;
   abstract updateVehicleBrand(
     vehicleBrand: IVehicleBrand,
   ): Promise<VehicleBrand>;
-  abstract getAllUsers(): Promise<VehicleBrand[]>;
+  abstract getAllVehicleBrand(): Promise<VehicleBrand[]>;
 }

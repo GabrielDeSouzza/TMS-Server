@@ -9,6 +9,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { UserModule } from 'infra/graphql/UserGraphql/user.module';
+import { VehicleBrandModule } from 'infra/graphql/VehicleBrandGraphql/vehicle-brand.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserModule } from 'infra/graphql/UserGraphql/user.module';
     }),
 
     UserModule,
+    VehicleBrandModule,
   ],
 })
 export class AppModule {}

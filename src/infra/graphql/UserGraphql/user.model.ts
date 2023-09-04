@@ -5,6 +5,8 @@ import { ROLE, type IUser } from '../../../domain/entities/user/User';
 @ObjectType()
 export class UserModel implements IUser {
   @Field()
+  id: string;
+  @Field()
   name: string;
   @Field()
   username: string;
