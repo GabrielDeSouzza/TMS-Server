@@ -1,4 +1,5 @@
 import { VehicleBrand } from '../vehicleBrand/VehicleBrand';
+import { VehicleType } from '../vehicleTypes/VehicleTypes';
 import { VehicleModel } from './VehicleModel';
 
 describe('VehicleModel', () => {
@@ -8,10 +9,17 @@ describe('VehicleModel', () => {
       capacity_max: 800,
       name: 'Unão',
       weight: 150,
+      capacity_per_axle: 5,
       VehicleBrand: new VehicleBrand({
         name: 'Ford',
         created_by: 'test',
         updated_by: 'test',
+      }),
+      VehicleType: new VehicleType({
+        bodyWork: true,
+        name: 'Bau',
+        created_at: new Date(),
+        updated_at: new Date(),
       }),
     });
 

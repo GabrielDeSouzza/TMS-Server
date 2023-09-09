@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { OutsourcedVehicle } from '../../vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { Vehicle } from '../../vehicle/vehicle/Vehicle';
 import { VehicleBrand } from '../../vehicle/vehicleBrand/VehicleBrand';
 import { VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
+import { VehicleType } from '../../vehicle/vehicleTypes/VehicleTypes';
 import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OutsourcedDriver } from '../outsourcedDriver/OutsourcedDriver';
 import { ContractOutsourcedDriver } from './ContractOutsourcedDriver';
@@ -51,12 +51,19 @@ describe('ContractOutsourcedDriver', () => {
             VehicleModel: new VehicleModel({
               axles: 4,
               capacity_max: 40_000,
+              capacity_per_axle: 0,
               name: 'Unão',
               weight: 4000,
               VehicleBrand: new VehicleBrand({
                 name: 'Ford',
                 created_by: 'test',
                 updated_by: 'test',
+              }),
+              VehicleType: new VehicleType({
+                bodyWork: true,
+                name: 'Bau',
+                created_at: new Date(),
+                updated_at: new Date(),
               }),
             }),
           }),

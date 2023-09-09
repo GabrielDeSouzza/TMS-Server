@@ -40,24 +40,24 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  RouteCreatedBy                   Route[]                   @relation("created_by")
-  RouteUpdatedBy                   Route[]                   @relation("updated_by")
-  VehicleCreatedBy                 Vehicle[]                 @relation("created_by")
-  VehicleUpdateBy                  Vehicle[]                 @relation("updated_by")
-  VehicleModelCreatedBy            VehicleModel[]            @relation("created_by")
-  VehicleModelUpdatedBy            VehicleModel[]            @relation("updated_by")
-  VehicleBrandCreatedBy            VehicleBrand[]            @relation("created_by")
-  VehicleBrandUpdatedBy            VehicleBrand[]            @relation("updated_by")
-  VehicleTypeCreatedBy             VehicleType[]             @relation("created_by")
-  VehicleTypeUpdatedBy             VehicleType[]             @relation("updated_by")
-  VehicleBodyworkCreatedBy         VehicleBodywork[]         @relation("created_by")
-  VehicleBodyworkUpdatedBy         VehicleBodywork[]         @relation("updated_by")
-  VehicleTypeContainsBodyCreatedBy VehicleTypeContainsBody[] @relation("created_by")
-  VehicleTypeContainsBodyUpdatedBy VehicleTypeContainsBody[] @relation("updated_by")
-  OutsourcedVehicleCreatedBy       OutsourcedVehicle[]       @relation("created_by")
-  OutsourcedVehicleUpdatedBy       OutsourcedVehicle[]       @relation("updated_by")
-  CompanyVehicleCreatedBy          CompanyVehicle[]          @relation("created_by")
-  CompanyVehicleUpdatedBy          CompanyVehicle[]          @relation("updated_by")
+  RouteCreatedBy                    Route[]                    @relation("created_by")
+  RouteUpdatedBy                    Route[]                    @relation("updated_by")
+  VehicleCreatedBy                  Vehicle[]                  @relation("created_by")
+  VehicleUpdateBy                   Vehicle[]                  @relation("updated_by")
+  VehicleModelCreatedBy             VehicleModel[]             @relation("created_by")
+  VehicleModelUpdatedBy             VehicleModel[]             @relation("updated_by")
+  VehicleBrandCreatedBy             VehicleBrand[]             @relation("created_by")
+  VehicleBrandUpdatedBy             VehicleBrand[]             @relation("updated_by")
+  VehicleTypeCreatedBy              VehicleType[]              @relation("created_by")
+  VehicleTypeUpdatedBy              VehicleType[]              @relation("updated_by")
+  VehicleBodyworkCreatedBy          VehicleBodywork[]          @relation("created_by")
+  VehicleBodyworkUpdatedBy          VehicleBodywork[]          @relation("updated_by")
+  VehicleTypeContainsBodyCreatedBy  VehicleTypeContainsBody[]  @relation("created_by")
+  VehicleTypeContainsBodyUpdatedBy  VehicleTypeContainsBody[]  @relation("updated_by")
+  OutsourcedVehicleCreatedBy        OutsourcedVehicle[]        @relation("created_by")
+  OutsourcedVehicleUpdatedBy        OutsourcedVehicle[]        @relation("updated_by")
+  CompanyVehicleCreatedBy           CompanyVehicle[]           @relation("created_by")
+  CompanyVehicleUpdatedBy           CompanyVehicle[]           @relation("updated_by")
   OutsourcedDriverCreatedBy         OutsourcedDriver[]         @relation("created_by")
   OutsourcedDriverUpdatedBy         OutsourcedDriver[]         @relation("updated_by")
   ContractOutsourcedDriverCreatedBy ContractOutsourcedDriver[] @relation("created_by")
@@ -112,13 +112,14 @@ model Vehicle {
 }
 
 model VehicleModel {
-  id           String   @id @default(uuid())
-  name         String
-  weight       Float
-  capacity_max Float
-  axles        Int
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
+  id                String   @id @default(uuid())
+  name              String
+  weight            Float
+  capacity_max      Float
+  axles             Int
+  capacity_per_axle Int?
+  created_at        DateTime @default(now())
+  updated_at        DateTime @default(now())
 
   Vehicle Vehicle[]
 

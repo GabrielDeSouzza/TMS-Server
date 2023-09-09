@@ -6,17 +6,20 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type VehicleBrand } from '../vehicleBrand/VehicleBrand';
+import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 
 interface IVehicleModel {
   name: string;
   weight: number;
   capacity_max: number;
   axles: number;
+  capacity_per_axle?: number;
   brand_id?: string;
   type_id?: string;
   created_at: Date;
   updated_at: Date;
-  VehicleBrand?: VehicleBrand;
+  VehicleBrand: VehicleBrand;
+  VehicleType: VehicleType;
 }
 
 export class VehicleModel extends Entity {
@@ -77,7 +80,15 @@ export class VehicleModel extends Entity {
         maxLength: 999_000,
         minLength: 0,
       },
+      {
+        field: this.capacity_per_axle,
+        fieldName: 'Capacity per Axle',
+        isNullAble: true,
+        maxLength: 10,
+      },
     );
+    this.props.VehicleBrand.validate();
+    this.props.VehicleType.validate();
     this.notification.requiredField('VehicleModel', fieldsValidation);
   }
 
@@ -115,6 +126,13 @@ export class VehicleModel extends Entity {
 
   public get axles(): number {
     return this.props.axles;
+  }
+  public set capacity_per_axle(capacity_per_axle: number) {
+    this.props.capacity_per_axle = capacity_per_axle;
+  }
+
+  public get capacity_per_axle(): number {
+    return this.props.capacity_per_axle;
   }
 
   public set updatedAt(updatedAt: Date) {

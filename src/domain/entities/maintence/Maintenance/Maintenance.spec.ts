@@ -2,6 +2,7 @@ import { LegalPerson } from '../../legalPerson/legalPerson/LegalPerson';
 import { Vehicle } from '../../vehicle/vehicle/Vehicle';
 import { VehicleBrand } from '../../vehicle/vehicleBrand/VehicleBrand';
 import { VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
+import { VehicleType } from '../../vehicle/vehicleTypes/VehicleTypes';
 import { MaintenanceCompany } from '../MaintenanceCompany/MaintenanceCompany';
 import { TypeOfMaintenance } from '../MaintenanceProcess/TypeOfMaintenance';
 import { Maintenance } from './Maintenance';
@@ -43,12 +44,19 @@ describe('Maintenance', () => {
         VehicleModel: new VehicleModel({
           axles: 4,
           capacity_max: 40_000,
+          capacity_per_axle: 4,
           name: 'Unão',
           weight: 4000,
           VehicleBrand: new VehicleBrand({
             name: 'Ford',
             created_by: 'test',
             updated_by: 'test',
+          }),
+          VehicleType: new VehicleType({
+            bodyWork: true,
+            name: 'Bau',
+            created_at: new Date(),
+            updated_at: new Date(),
           }),
         }),
       }),
