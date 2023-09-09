@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ObjectType, OmitType, registerEnumType } from '@nestjs/graphql';
 
 import { ROLE, type IUser } from '../../../domain/entities/user/User';
 
@@ -16,10 +16,18 @@ export class UserModel implements IUser {
   password: string;
   @Field(() => ROLE)
   role: ROLE;
-  @Field({ nullable: true })
+  @Field(() => Date, { nullable: true })
   created_at: Date;
-  @Field({ nullable: true })
+  @Field(() => Date, { nullable: true })
   updated_at: Date;
 }
+
+@ObjectType()
+export class UserModelRefereces extends OmitType(UserModel, [
+  'password',
+  'role',
+  'updated_at',
+  'created_at',
+] as const) {}
 
 registerEnumType(ROLE, { name: 'ROLE' });

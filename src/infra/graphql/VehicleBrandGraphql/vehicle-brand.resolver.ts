@@ -22,12 +22,12 @@ export class VehicleBrandResolver {
 
   @Query(() => VehicleBrandModel)
   async getVehicleBrand(@Args('id') id: string) {
-    const x = await this.vehicleBrandRepository.findVehicleBrandById(id);
-    console.log(x.updated_by);
-
-    return x;
+    return await this.vehicleBrandRepository.findVehicleBrandById(id);
   }
-
+  @Query(() => [VehicleBrandModel])
+  async getAllVehicleBrand() {
+    return await this.vehicleBrandRepository.getAllVehicleBrand();
+  }
   @Mutation(() => VehicleBrandModel, { name: 'vehicleBrand' })
   async createVehicleBrand(
     @Args('vehicleBrandInput') vehicleBrandInput: VehicleBrandInput,

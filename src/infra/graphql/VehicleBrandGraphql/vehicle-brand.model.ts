@@ -2,7 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IVehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 
-import { UserModel } from '../UserGraphql/user.model';
+import { UserModelRefereces } from '../UserGraphql/user.model';
 
 @ObjectType()
 export class VehicleBrandModel implements IVehicleBrand {
@@ -16,8 +16,8 @@ export class VehicleBrandModel implements IVehicleBrand {
   updated_by: string;
   @Field()
   created_by: string;
-  @Field(() => UserModel)
-  updatedUser: UserModel;
-  @Field(() => UserModel, { nullable: true })
-  createdUser: UserModel;
+  @Field(() => UserModelRefereces)
+  updatedUser: UserModelRefereces;
+  @Field(() => UserModelRefereces, { nullable: true })
+  createdUser: UserModelRefereces;
 }

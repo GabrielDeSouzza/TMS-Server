@@ -9,6 +9,7 @@ type Mutation {
 }
 
 type Query {
+  getAllVehicleBrand: [VehicleBrandModel!]!
   getVehicleBrand(id: String!): VehicleBrandModel!
   user(email: String, id: String): UserModel!
   users: [UserModel!]!
@@ -44,18 +45,25 @@ type UserModel {
   username: String!
 }
 
+type UserModelRefereces {
+  email: String!
+  id: String!
+  name: String!
+  username: String!
+}
+
 input VehicleBrandInput {
-  created_by: String!
+  created_at: Timestamp!
   name: String!
   updated_by: String!
 }
 
 type VehicleBrandModel {
-  createdUser: UserModel
+  createdUser: UserModelRefereces
   created_at: Timestamp!
   created_by: String!
   name: String!
-  updatedUser: UserModel!
+  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }

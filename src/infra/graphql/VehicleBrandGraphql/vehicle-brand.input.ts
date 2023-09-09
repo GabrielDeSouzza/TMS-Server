@@ -9,7 +9,7 @@ export class VehicleBrandInput implements IVehicleBrand {
   @Field()
   updated_by: string;
   @Field()
-  created_by: string;
   created_at: Date;
   updated_at: Date;
+  created_by: string;
 }
