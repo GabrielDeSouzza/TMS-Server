@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IVehicleType {
+export interface IVehicleType {
   name: string;
   bodyWork: boolean;
   created_at: Date;
