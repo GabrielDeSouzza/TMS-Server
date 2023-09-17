@@ -5,12 +5,16 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type VehicleModel } from '../vehicleModel/VehicleModel';
+import { type VehicleTypeContainsBody } from '../vehicleTypeContainsBody/VehicleContainsBody';
 
-interface IVehicleType {
+export interface IVehicleType {
   name: string;
   bodyWork: boolean;
   created_at: Date;
   updated_at: Date;
+  VehicleModels?: VehicleModel[];
+  VehicleTypeContainsBody?: VehicleTypeContainsBody[];
 }
 
 export class VehicleType extends Entity {
@@ -52,7 +56,20 @@ export class VehicleType extends Entity {
   public get id(): string {
     return this._id;
   }
-
+  public get VehicleModels(): VehicleModel[] | undefined {
+    return this.props.VehicleModels;
+  }
+  public set VehicleModels(vehicleModel: VehicleModel[]) {
+    this.VehicleModels = vehicleModel;
+  }
+  public get VehiclesTypeContainsBody(): VehicleTypeContainsBody[] | undefined {
+    return this.props.VehicleTypeContainsBody;
+  }
+  public set VehiclesTypeContainsBody(
+    vehiclesTypeContainsBody: VehicleTypeContainsBody[],
+  ) {
+    this.props.VehicleTypeContainsBody = vehiclesTypeContainsBody;
+  }
   public set name(name: string) {
     this.props.name = name;
   }

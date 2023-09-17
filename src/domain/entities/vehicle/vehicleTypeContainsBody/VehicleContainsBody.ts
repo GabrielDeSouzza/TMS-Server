@@ -7,7 +7,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 import { type VehicleBodywork } from '../vehicleBodywork/VehicleBodywork';
 import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 
-interface IVehicleTypeContainsBody {
+export interface IVehicleTypeContainsBody {
   VehicleBodywork: VehicleBodywork;
   VehicleType: VehicleType;
   updated_at: Date;

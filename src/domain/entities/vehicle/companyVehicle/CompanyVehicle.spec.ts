@@ -18,6 +18,8 @@ describe('CompanyVehicle', () => {
           capacity_max: 40_000,
           capacity_per_axle: 0,
           name: 'Unão',
+          created_by: 'test',
+          updated_by: 'test',
           weight: 4000,
           VehicleBrand: new VehicleBrand({
             name: 'Ford',

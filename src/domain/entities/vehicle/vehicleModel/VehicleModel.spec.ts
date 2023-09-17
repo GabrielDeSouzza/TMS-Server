@@ -10,6 +10,8 @@ describe('VehicleModel', () => {
       name: 'Unão',
       weight: 150,
       capacity_per_axle: 5,
+      created_by: 'test',
+      updated_by: 'test',
       VehicleBrand: new VehicleBrand({
         name: 'Ford',
         created_by: 'test',

@@ -8,7 +8,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 import { type VehicleBrand } from '../vehicleBrand/VehicleBrand';
 import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 
-interface IVehicleModel {
+export interface IVehicleModel {
   name: string;
   weight: number;
   capacity_max: number;
@@ -17,7 +17,9 @@ interface IVehicleModel {
   brand_id?: string;
   type_id?: string;
   created_at: Date;
+  created_by: string;
   updated_at: Date;
+  updated_by: string;
   VehicleBrand: VehicleBrand;
   VehicleType: VehicleType;
 }

@@ -54,6 +54,8 @@ describe('ContractOutsourcedDriver', () => {
               capacity_per_axle: 0,
               name: 'Unão',
               weight: 4000,
+              created_by: 'test',
+              updated_by: 'test',
               VehicleBrand: new VehicleBrand({
                 name: 'Ford',
                 created_by: 'test',

@@ -18,6 +18,8 @@ describe('OutsourcedVehicle', () => {
           capacity_max: 40_000,
           name: 'Unão',
           weight: 4000,
+          created_by: 'test',
+          updated_by: 'test',
           capacity_per_axle: 5,
           VehicleBrand: new VehicleBrand({
             name: 'Ford',

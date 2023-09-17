@@ -82,6 +82,7 @@ Table vehicle_models {
   weight Float [not null]
   capacity_max Float [not null]
   axles Int [not null]
+  capacity_per_axle Int
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   Vehicle vehicles [not null]

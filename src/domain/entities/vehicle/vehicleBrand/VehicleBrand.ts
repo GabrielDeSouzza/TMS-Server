@@ -18,7 +18,6 @@ export interface IVehicleBrand {
 export class VehicleBrand extends Entity {
   private _id: string;
   private props: IVehicleBrand;
-
   constructor(
     props: Replace<IVehicleBrand, { created_at?: Date; updated_at?: Date }>,
     id?: string,
