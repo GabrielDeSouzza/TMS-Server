@@ -59,6 +59,7 @@ input VehicleBrandInput {
 }
 
 type VehicleBrandModel {
+  VehicleModels: VehicleModelGraphql!
   createdUser: UserModelRefereces
   created_at: Timestamp!
   created_by: String!
@@ -66,4 +67,24 @@ type VehicleBrandModel {
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
+}
+
+type VehicleModelGraphql {
+  VehicleType: VehicleTypeModel!
+  axles: Float!
+  brand_id: String!
+  capacity_max: Float!
+  capacity_per_axle: Float!
+  created_at: Timestamp!
+  name: String!
+  type_id: String!
+  updated_at: Timestamp!
+  weight: Float!
+}
+
+type VehicleTypeModel {
+  bodyWork: Boolean!
+  created_at: Timestamp!
+  name: String!
+  updated_at: Timestamp!
 }

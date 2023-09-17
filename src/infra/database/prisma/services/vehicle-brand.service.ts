@@ -4,6 +4,8 @@ import {
   VehicleBrand,
   type IVehicleBrand,
 } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
+import { VehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import { VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 import { type VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 
 import { PrismaService } from '../prisma.service';
@@ -57,7 +59,9 @@ export class VehicleBrandService implements VehicleBrandRepository {
     throw new Error('Method not implemented.' + vehicleBrand.name);
   }
   async getAllVehicleBrand(): Promise<VehicleBrand[]> {
-    const brands = await this.prisma.vehicleBrand.findMany();
+    const brands = await this.prisma.vehicleBrand.findMany({
+      include: { VehicleModel: { include: { VehicleType: true } } },
+    });
     const vehicleBrands = brands.map(
       brand =>
         new VehicleBrand({
@@ -66,6 +70,25 @@ export class VehicleBrandService implements VehicleBrandRepository {
           updated_by: brand.update_by,
           created_at: brand.created_at,
           updated_at: brand.updated_at,
+          VehicleModels: brand.VehicleModel.map(
+            model =>
+              new VehicleModel({
+                axles: model.axles,
+                capacity_max: model.capacity_max,
+                name: model.name,
+                weight: model.weight,
+                capacity_per_axle: model.capacity_per_axle,
+                VehicleType: new VehicleType({
+                  bodyWork: model.VehicleType.bodywork,
+                  name: model.VehicleType.name,
+                }),
+                VehicleBrand: new VehicleBrand({
+                  created_by: brand.created_by,
+                  name: brand.name,
+                  updated_by: brand.update_by,
+                }),
+              }),
+          ),
         }),
     );
 
