@@ -3,11 +3,13 @@
 <h1 align="center">
   <br />
     <a href="#****" target="blank">
-      <img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo">
+      <img src="./.github/svg/Logo.svg" width="200">
     </a>
+
+  <br />
   <br />
 
-TMS (Transportation Management System)
+TMS <em>(Transportation Management System)</em>
 <br />
 
 </h1>
@@ -190,7 +192,7 @@ Project Link: [https://github.com/GabrielGuedess/TMS-Server](https://github.com/
 ---
 
 <p align="center">
-Made with ♥ by 👨‍🚀 Gabriel Guedes 👋 <a href="https://www.linkedin.com/in/gabriel-guedess/">Get in touch!</a>
+Made with ♥ by 👨‍🚀 Gabriel Guedes and Gabriel de Souza 👋 <a href="https://www.linkedin.com/in/gabriel-guedess/">Get in touch!</a>
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
