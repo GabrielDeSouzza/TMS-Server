@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { type Role } from '@prisma/client';
-
-import { ROLE, User, type IUser } from '../../../../domain/entities/user/User';
+import { type User, type IUser } from '../../../../domain/entities/user/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';
 import { NotificationErrorsDatabase } from '../NotificationErrorsDatabase.ts';
 import { PrismaService } from '../prisma.service';
+import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 
 @Injectable()
 
@@ -16,20 +15,8 @@ export class UserService implements UserRepository {
   async findAllUsers(): Promise<User[]> {
     const usersPrisma = await this.prisma.user.findMany();
 
-    const users: User[] = usersPrisma.map(
-      user =>
-        new User(
-          {
-            email: user.email,
-            name: user.name,
-            role: ROLE[user.role],
-            username: user.username,
-            password: user.password,
-            created_at: user.created_at,
-            updated_at: user.updated_at,
-          },
-          user.id,
-        ),
+    const users: User[] = usersPrisma.map(user =>
+      UserPrismaDTO.PrismaUserToUserEntity(user),
     );
 
     return users;
@@ -39,13 +26,7 @@ export class UserService implements UserRepository {
     try {
       console.log(user);
       const newUSer = await this.prisma.user.create({
-        data: {
-          email: user.email,
-          name: user.name,
-          password: user.password,
-          username: user.username,
-          role: ROLE[user.role] as unknown as Role,
-        },
+        data: UserPrismaDTO.UserEntityToPrismaUser(user),
         select: {
           id: true,
           email: true,
@@ -58,20 +39,8 @@ export class UserService implements UserRepository {
         },
       });
       console.log(newUSer);
-      const iser = new User(
-        {
-          email: newUSer.email,
-          name: newUSer.name,
-          role: user.role,
-          username: newUSer.username,
-          password: newUSer.password,
-          created_at: newUSer.created_at,
-          updated_at: newUSer.updated_at,
-        },
-        newUSer.id,
-      );
 
-      return iser;
+      return UserPrismaDTO.PrismaUserToUserEntity(newUSer);
     } catch (error) {
       new NotificationErrorsDatabase().HandleErrors(error);
     }
@@ -80,19 +49,9 @@ export class UserService implements UserRepository {
   async findUserById(id: string): Promise<User> {
     try {
       const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
+      console.log(typeof user);
 
-      return new User(
-        {
-          email: user.email,
-          name: user.name,
-          password: user.password,
-          role: ROLE[user.role],
-          username: user.username,
-          created_at: user.created_at,
-          updated_at: user.updated_at,
-        },
-        id,
-      );
+      return UserPrismaDTO.PrismaUserToUserEntity(user);
     } catch (error) {
       new NotificationErrorsDatabase().HandleErrors(error);
     }
@@ -104,33 +63,17 @@ export class UserService implements UserRepository {
         where: { email },
       });
 
-      return new User(
-        {
-          email: user.email,
-          name: user.name,
-          password: user.password,
-          role: ROLE[user.role],
-          username: user.username,
-          created_at: user.created_at,
-          updated_at: user.updated_at,
-        },
-        user.id,
-      );
+      return UserPrismaDTO.PrismaUserToUserEntity(user);
     } catch (error) {
       new NotificationErrorsDatabase().HandleErrors(error);
     }
   }
-  async updateUser(user: IUser): Promise<User> {
+  async updateUser(id: string, user: IUser): Promise<User> {
     try {
+      const userPrisma = UserPrismaDTO.UserEntityToUpdatedUserPrisma(user);
       const newUSer = await this.prisma.user.update({
-        data: {
-          email: user.email,
-          name: user.name,
-          password: user.password,
-          username: user.username,
-          role: user.role as unknown as Role,
-        },
-        where: { username: user.username },
+        data: userPrisma,
+        where: { id },
         select: {
           id: true,
           email: true,
@@ -142,21 +85,8 @@ export class UserService implements UserRepository {
           password: true,
         },
       });
-      const iser = new User(
-        {
-          email: newUSer.email,
-          name: newUSer.name,
-          role: user.role,
-          username: newUSer.username,
-          password: newUSer.password,
-          created_at: newUSer.created_at,
-          updated_at: newUSer.updated_at,
-        },
-        newUSer.id,
-      );
-      console.log(user.created_at);
 
-      return iser;
+      return UserPrismaDTO.PrismaUserToUserEntity(newUSer);
     } catch (error) {
       new NotificationErrorsDatabase().HandleErrors(error);
     }

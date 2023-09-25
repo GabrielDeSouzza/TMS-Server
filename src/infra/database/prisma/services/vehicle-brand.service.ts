@@ -55,8 +55,32 @@ export class VehicleBrandService implements VehicleBrandRepository {
 
     return vehicleBrandReturn;
   }
-  updateVehicleBrand(vehicleBrand: IVehicleBrand): Promise<VehicleBrand> {
-    throw new Error('Method not implemented.' + vehicleBrand.name);
+  async updateVehicleBrand(
+    id: string,
+    vehicleBrand: IVehicleBrand,
+  ): Promise<VehicleBrand> {
+    const updatedVehicleBrand = await this.prisma.vehicleBrand.update({
+      where: { id },
+      data: {
+        name: vehicleBrand.name,
+        created_at: vehicleBrand.created_at,
+        CreatedBy: { connect: { id: vehicleBrand.created_by } },
+        UpdateBy: { connect: { id: vehicleBrand.updated_by } },
+        updated_at: vehicleBrand.updated_at,
+      },
+    });
+    const vehicleBrandReturn = new VehicleBrand(
+      {
+        created_by: updatedVehicleBrand.created_by,
+        name: updatedVehicleBrand.name,
+        updated_by: updatedVehicleBrand.update_by,
+        created_at: updatedVehicleBrand.created_at,
+        updated_at: updatedVehicleBrand.created_at,
+      },
+      updatedVehicleBrand.id,
+    );
+
+    return vehicleBrandReturn;
   }
   async getAllVehicleBrand(): Promise<VehicleBrand[]> {
     const brands = await this.prisma.vehicleBrand.findMany({
@@ -87,6 +111,8 @@ export class VehicleBrandService implements VehicleBrandRepository {
                   name: brand.name,
                   updated_by: brand.update_by,
                 }),
+                created_by: model.created_by,
+                updated_by: model.update_by,
               }),
           ),
         }),

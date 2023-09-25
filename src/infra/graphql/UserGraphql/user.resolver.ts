@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GraphQLError } from 'graphql';
 
 import { UserRepository } from '../../../domain/repositories/UserRepository';
-import { UserInput } from './user.input';
+import { UserInput, UserUpdateInput } from './user.input';
 import { UserModel } from './user.model';
 
 @Resolver(() => UserModel)
@@ -34,7 +34,10 @@ export class UserResolver {
   }
 
   @Mutation(() => UserModel)
-  async updateUser(@Args('id') updateUserInput: UserInput) {
-    return await this.userRepository.updateUser(updateUserInput);
+  async updateUser(
+    @Args('id') id: string,
+    @Args('userUpate') updateUserInput: UserUpdateInput,
+  ) {
+    return await this.userRepository.updateUser(id, updateUserInput);
   }
 }

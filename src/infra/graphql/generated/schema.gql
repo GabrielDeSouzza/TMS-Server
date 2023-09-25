@@ -4,7 +4,8 @@
 
 type Mutation {
   createUSer(createUserInput: UserInput!): UserModel!
-  updateUser(id: UserInput!): UserModel!
+  updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
+  updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   vehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
 }
 
@@ -52,14 +53,22 @@ type UserModelRefereces {
   username: String!
 }
 
+input UserUpdateInput {
+  email: String
+  name: String
+  password: String
+  role: ROLE
+  username: String
+}
+
 input VehicleBrandInput {
-  created_at: Timestamp!
+  created_by: String!
   name: String!
   updated_by: String!
 }
 
 type VehicleBrandModel {
-  VehicleModels: VehicleModelGraphql!
+  VehicleModels: VehicleModelGraphql
   createdUser: UserModelRefereces
   created_at: Timestamp!
   created_by: String!
@@ -69,6 +78,12 @@ type VehicleBrandModel {
   updated_by: String!
 }
 
+input VehicleBrandUpdateInput {
+  created_by: String
+  name: String
+  updated_by: String
+}
+
 type VehicleModelGraphql {
   VehicleType: VehicleTypeModel!
   axles: Float!
@@ -76,9 +91,11 @@ type VehicleModelGraphql {
   capacity_max: Float!
   capacity_per_axle: Float!
   created_at: Timestamp!
+  created_by: String!
   name: String!
   type_id: String!
   updated_at: Timestamp!
+  updated_by: String!
   weight: Float!
 }
 

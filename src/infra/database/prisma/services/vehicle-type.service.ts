@@ -66,7 +66,10 @@ export class VehicleTypeService implements VehicleTypeRepository {
   createVehicleType(vehicleBrand: IVehicleType): Promise<VehicleType> {
     throw new Error('Method not implemented.');
   }
-  updateVehicleType(vehicleBrand: IVehicleType): Promise<VehicleType> {
+  updateVehicleType(
+    id: string,
+    vehicleBrand: Partial<IVehicleType>,
+  ): Promise<VehicleType> {
     throw new Error('Method not implemented.');
   }
   getAllVehicleType(): Promise<VehicleType[]> {

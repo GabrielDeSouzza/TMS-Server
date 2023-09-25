@@ -6,10 +6,11 @@ import {
 export abstract class VehicleBrandRepository {
   abstract findVehicleBrandById(id: string): Promise<VehicleBrand>;
   abstract createVehicleBrand(
-    vehicleBrand: IVehicleBrand,
+    vehicleBrand: Omit<IVehicleBrand, 'updated_at' | 'created_at' | 'id'>,
   ): Promise<VehicleBrand>;
   abstract updateVehicleBrand(
-    vehicleBrand: IVehicleBrand,
+    id: string,
+    vehicleBrand: Partial<IVehicleBrand>,
   ): Promise<VehicleBrand>;
   abstract getAllVehicleBrand(): Promise<VehicleBrand[]>;
 }

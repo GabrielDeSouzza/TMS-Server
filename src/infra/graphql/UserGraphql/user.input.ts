@@ -1,9 +1,17 @@
-import { Field, InputType, registerEnumType } from '@nestjs/graphql';
+import {
+  Field,
+  InputType,
+  PartialType,
+  registerEnumType,
+} from '@nestjs/graphql';
 
-import { ROLE, type IUser } from '../../../domain/entities/user/User';
+import { type IUser } from '../../../domain/entities/user/User';
+import { ROLE } from '../../../domain/entities/user/User';
 
 @InputType()
-export class UserInput implements IUser {
+export class UserInput
+  implements Omit<IUser, 'updated_at' | 'created_at' | 'id'>
+{
   @Field()
   name: string;
   @Field()
@@ -15,5 +23,8 @@ export class UserInput implements IUser {
   @Field(() => ROLE)
   role: ROLE;
 }
+
+@InputType()
+export class UserUpdateInput extends PartialType(UserInput) {}
 
 registerEnumType(ROLE, { name: 'ROLE' });

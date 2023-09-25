@@ -22,6 +22,6 @@ export class VehicleBrandModel implements IVehicleBrand {
   updatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces, { nullable: true })
   createdUser: UserModelRefereces;
-  @Field(() => VehicleModelGraphql)
+  @Field(() => VehicleModelGraphql, { nullable: true })
   VehicleModels?: VehicleModel[];
 }

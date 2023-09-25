@@ -9,6 +9,10 @@ import { VehicleTypeModel } from '../VehicleType./VehicleType.model';
 @ObjectType()
 export class VehicleModelGraphql implements IVehicleModel {
   @Field()
+  created_by: string;
+  @Field()
+  updated_by: string;
+  @Field()
   name: string;
   @Field()
   weight: number;

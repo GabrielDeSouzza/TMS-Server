@@ -5,7 +5,12 @@ import {
 
 export abstract class VehicleTypeRepository {
   abstract findVehicleTypeById(id: string): Promise<VehicleType>;
-  abstract createVehicleType(vehicleBrand: IVehicleType): Promise<VehicleType>;
-  abstract updateVehicleType(vehicleBrand: IVehicleType): Promise<VehicleType>;
+  abstract createVehicleType(
+    vehicleBrand: Omit<IVehicleType, 'updated_at' | 'created_at' | 'id'>,
+  ): Promise<VehicleType>;
+  abstract updateVehicleType(
+    id: string,
+    vehicleBrand: Partial<IVehicleType>,
+  ): Promise<VehicleType>;
   abstract getAllVehicleType(): Promise<VehicleType[]>;
 }

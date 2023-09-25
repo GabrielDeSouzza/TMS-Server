@@ -6,9 +6,9 @@ import { Entity } from '../../shared/entities/Entity';
 import { type IValidationField } from '../../shared/notification/Notification';
 import { NotificationError } from '../../shared/notification/NotificationError';
 export enum ROLE {
-  USER,
-  ADMIN,
-  CLIENT,
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  CLIENT = 'CLIENT',
 }
 export abstract class IUser {
   id?: string;
@@ -17,8 +17,8 @@ export abstract class IUser {
   email: string;
   password: string;
   role: ROLE;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export class User extends Entity {

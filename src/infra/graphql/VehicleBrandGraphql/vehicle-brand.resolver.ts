@@ -10,7 +10,10 @@ import {
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 
-import { VehicleBrandInput } from './vehicle-brand.input';
+import {
+  VehicleBrandInput,
+  VehicleBrandUpdateInput,
+} from './vehicle-brand.input';
 import { VehicleBrandModel } from './vehicle-brand.model';
 
 @Resolver(() => VehicleBrandModel)
@@ -37,6 +40,16 @@ export class VehicleBrandResolver {
     );
   }
 
+  @Mutation(() => VehicleBrandModel)
+  async updatedVehicleBrand(
+    @Args('id') id: string,
+    @Args('vehicleBrandUpdate') vehicleBrandUpdate: VehicleBrandUpdateInput,
+  ) {
+    return this.vehicleBrandRepository.updateVehicleBrand(
+      id,
+      vehicleBrandUpdate,
+    );
+  }
   @ResolveField()
   async createdUser(@Parent() user: VehicleBrandInput) {
     const { created_by: createdBy } = user;
