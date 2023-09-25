@@ -7,46 +7,42 @@
     </a>
   <br />
 
-NestJs Boilerplate
+TMS (Transportation Management System)
 <br />
 
 </h1>
 
-<h4 align="center">A Better template with <a href="http://nestjs.com" target="_blank"><em>NestJs</em></a> with technologies to improve development.</h4>
-
 <p align="center">
-  <a href="https://codecov.io/gh/GabrielGuedess/NestJs-Boilerplate">
-    <img src="https://codecov.io/gh/GabrielGuedess/NetJs-Boilerplate/branch/master/graph/badge.svg?token=B7DKN82TEH">
+  <a href="https://codecov.io/gh/GabrielGuedess/TMS-Server">
+    <img src="https://codecov.io/gh/GabrielGuedess/TMS-Server/branch/master/graph/badge.svg?token=B7DKN82TEH">
   </a>
 
   <a href="#">
-    <img src="https://img.shields.io/github/license/GabrielGuedess/NestJs-Boilerplate">
+    <img src="https://img.shields.io/github/license/GabrielGuedess/TMS-Server">
   </a>
 
   <a href="#">
-    <img src="https://img.shields.io/github/actions/workflow/status/GabrielGuedess/NestJs-Boilerplate/ci.yml?label=CI">
+    <img src="https://img.shields.io/github/actions/workflow/status/GabrielGuedess/TMS-Server/ci.yml?label=CI">
   </a>
 
   <a href="#">
-    <img src="https://img.shields.io/github/languages/count/GabrielGuedess/NestJs-Boilerplate">
+    <img src="https://img.shields.io/github/languages/count/GabrielGuedess/TMS-Server">
   </a>
 
   <a href="#">
-    <img src="https://img.shields.io/github/languages/top/GabrielGuedess/NestJs-Boilerplate">
+    <img src="https://img.shields.io/github/languages/top/GabrielGuedess/TMS-Server">
   </a>
 
-  <a href="https://wakatime.com/badge/github/GabrielGuedess/NestJs-Boilerplate">
-    <img src="https://wakatime.com/badge/github/GabrielGuedess/NestJs-Boilerplate.svg" alt="Wakatime">
+  <a href="https://wakatime.com/badge/github/GabrielGuedess/TMS-Server">
+    <img src="https://wakatime.com/badge/github/GabrielGuedess/TMS-Server.svg" alt="Wakatime">
   </a>
 </p>
 
   <p align="center">
-    <a href="https://github.com/GabrielGuedess/NestJs-Boilerplate/issues">Report Bug</a>
+    <a href="https://github.com/GabrielGuedess/TMS-Server/issues">Report Bug</a>
     ·
-    <a href="https://github.com/GabrielGuedess/NestJs-Boilerplate/issues">Request Feature</a>
+    <a href="https://github.com/GabrielGuedess/TMS-Server/issues">Request Feature</a>
   </p>
-
-![image](https://github.com/GabrielGuedess/NestJs-Boilerplate/assets/64827875/1129f844-627b-4a66-a8c0-0835f1b25caa)
 
 <!-- TABLE OF CONTENTS -->
 
@@ -81,12 +77,13 @@ NestJs Boilerplate
 The following tools were used in building the project:
 
 - ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
-- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+- ![Fastify](https://img.shields.io/badge/fastify-%23000000.svg?style=for-the-badge&logo=fastify&logoColor=white)
 - ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 - ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 - ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 - ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-- ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
+- ![Apollo-GraphQL](https://img.shields.io/badge/-ApolloGraphQL-311C87?style=for-the-badge&logo=apollo-graphql)
+- ![GraphQL](https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white)
 - ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 - ![Codecov](https://img.shields.io/badge/Codecov-F01F7A?style=for-the-badge&logo=Codecov&logoColor=white)
 - ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
@@ -123,13 +120,13 @@ To clone and run this application, you'll need _Git_ and _Docker_ installed on y
 ### Installation
 
 ```sh
-git clone https://github.com/GabrielGuedess/NestJs-Boilerplate
+git clone https://github.com/GabrielGuedess/TMS-Server
 ```
 
 2. Go into the repository
 
 ```sh
-cd NestJs-Boilerplate
+cd TMS-Server
 ```
 
 3. Run Docker.
@@ -154,7 +151,7 @@ docker-compose up -d
   - [ ] Add `POSTGRES_USER` to .env.
   - [ ] Add `POSTGRES_PASSWORD` to .env.
 
-See the [open issues](https://github.com/GabrielGuedess/NestJs-Boilerplate/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/GabrielGuedess/TMS-Server/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -188,7 +185,7 @@ Distributed under the MIT License. See [MIT license](LICENSE) for more informati
 
 Gabriel Guedes - [@GabrielRGuedess](https://twitter.com/GabrielRGuedess) - gabrielrguedess@gmail.com
 
-Project Link: [https://github.com/GabrielGuedess/NestJs-Boilerplate](https://github.com/GabrielGuedess/NestJs-Boilerplate)
+Project Link: [https://github.com/GabrielGuedess/TMS-Server](https://github.com/GabrielGuedess/TMS-Server)
 
 ---
 
