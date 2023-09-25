@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto';
 
-import { type Replace } from 'helpers/Replace';
+import { type Route } from 'domain/entities/routeEntities/Route/Route';
+import { Entity } from 'domain/shared/entities/Entity';
+import { type Replace } from 'domain/shared/helpers/Replace';
+import { type IValidationField } from 'domain/shared/notification/Notification';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
-import { Entity } from '../../../shared/entities/Entity';
-import { type IValidationField } from '../../../shared/notification/Notification';
-import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type Route } from '../../routeEntities/Route/Route';
 import { type InvoiceForPhysicalCustomer } from '../invoiceForPhysicalCustomer/InvoiceForPhysicalCustomer';
 import { type Merchandise } from '../merchandise/Merchandise';
 

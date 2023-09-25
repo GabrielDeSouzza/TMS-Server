@@ -1,9 +1,9 @@
 import { randomUUID } from 'node:crypto';
 
-import { type Replace } from 'helpers/Replace';
+import { Entity } from 'domain/shared/entities/Entity';
+import { type Replace } from 'domain/shared/helpers/Replace';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
-import { Entity } from '../../../shared/entities/Entity';
-import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type VehicleBodywork } from '../vehicleBodywork/VehicleBodywork';
 import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 

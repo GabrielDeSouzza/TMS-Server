@@ -59,6 +59,18 @@
       }
     },
     {
+      "files": ["**/decorators/**/*"],
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variable",
+            "format": ["camelCase", "PascalCase"]
+          }
+        ]
+      }
+    },
+    {
       "files": ["test/**"],
       "rules": {
         "jest/expect-expect": "off"
@@ -86,12 +98,6 @@
       }
     },
     {
-      "files": "next-seo.config.ts",
-      "rules": {
-        "unicorn/filename-case": "off"
-      }
-    },
-    {
       "files": ["**.d.ts"],
       "rules": {
         "@typescript-eslint/naming-convention": "off",
@@ -105,13 +111,13 @@
       }
     },
     {
-      "files": ["src/helpers/*"],
+      "files": ["src/domain/shared/helpers/**"],
       "rules": {
         "@typescript-eslint/naming-convention": "off"
       }
     },
     {
-      "files": ["src/dtos/*"],
+      "files": ["**/dtos/**/*"],
       "rules": {
         "unicorn/filename-case": "off",
         "@typescript-eslint/naming-convention": [
@@ -120,7 +126,7 @@
             "selector": "interface",
             "format": ["PascalCase"],
             "custom": {
-              "regex": "[A-Z]*DTO$",
+              "regex": "^I.*DTO$",
               "match": true
             }
           },
@@ -151,8 +157,13 @@
     "unicorn/no-null": "off",
     "node/no-missing-import": "off",
     "node/no-unpublished-import": "off",
+    "unicorn/no-static-only-class": "off",
     "import/prefer-default-export": "off",
+    "unicorn/prefer-node-protocol": "off",
+    "@typescript-eslint/require-await": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+    "@darraghor/nestjs-typed/injectable-should-be-provided": "off",
+    "@darraghor/nestjs-typed/should-specify-forbid-unknown-values": "off",
     "quote-props": ["error", "consistent-as-needed"],
     "arrow-body-style": ["error", "as-needed"],
     "import/no-duplicates": [

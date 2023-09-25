@@ -1,4 +1,5 @@
-import { type Route } from '../../../entities/routeEntities/Route/Route';
+import { type Route } from 'domain/entities/routeEntities/Route/Route';
+
 import { type InvoiceForPhysicalCustomer } from '../invoiceForPhysicalCustomer/InvoiceForPhysicalCustomer';
 import { type Merchandise } from '../merchandise/Merchandise';
 import { CustomerOrderForPhysicalCustomer } from './CustomerOrderForPhysicalCustomer';

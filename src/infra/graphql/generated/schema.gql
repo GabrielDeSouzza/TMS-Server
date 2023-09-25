@@ -2,6 +2,61 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AuthUserInput {
+  email: String!
+  password: String!
+}
+
+type AuthUserModel {
+  created_at: DateTime!
+
+  """Your E-mail"""
+  email: String!
+
+  """Your Id"""
+  id: String!
+  name: String!
+  role: String!
+  token: String!
+  updated_at: DateTime!
+  username: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+  role: ROLE!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): UserModel!
+  signIn(signin: AuthUserInput!): AuthUserModel!
+}
+
 type Query {
-  sayHello: String!
+  user(id: String!): UserModel!
+  users: [UserModel!]!
+}
+
+enum ROLE {
+  ADMIN
+  CLIENT
+  USER
+}
+
+type UserModel {
+  created_at: DateTime!
+  email: String!
+  id: String!
+  name: String!
+  role: String!
+  updated_at: DateTime!
+  username: String!
 }

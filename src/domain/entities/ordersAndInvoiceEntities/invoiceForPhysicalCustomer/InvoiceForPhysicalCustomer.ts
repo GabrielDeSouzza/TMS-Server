@@ -1,12 +1,12 @@
 import { randomUUID } from 'node:crypto';
 
-import { type Replace } from 'helpers/Replace';
+import { type PhysicalCustomer } from 'domain/entities/clients/physicalCustomer/PhysicalCustomer';
+import { type CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
+import { Entity } from 'domain/shared/entities/Entity';
+import { type Replace } from 'domain/shared/helpers/Replace';
+import { type IValidationField } from 'domain/shared/notification/Notification';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
-import { type PhysicalCustomer } from '../../../entities/clientsEntities/physicalCustomer/PhysicalCustomer';
-import { Entity } from '../../../shared/entities/Entity';
-import { type IValidationField } from '../../../shared/notification/Notification';
-import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
 import { type CustomerOrderForPhysicalCustomer } from '../customerOrderForPhysicalCustomer/CustomerOrderForPhysicalCustomer';
 
 interface IInvoicePhysicalCustomer {

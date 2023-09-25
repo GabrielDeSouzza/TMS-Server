@@ -1,8 +1,9 @@
-import { type Route } from '../../../entities/routeEntities/Route/Route';
-import { PhysicalCustomer } from '../../clientsEntities/physicalCustomer/PhysicalCustomer';
-import { CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
-import { LegalPerson } from '../../legalPersonEntities/legalPerson/LegalPerson';
-import { NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson';
+import { PhysicalCustomer } from 'domain/entities/clients/physicalCustomer/PhysicalCustomer';
+import { CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
+import { LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type Route } from 'domain/entities/routeEntities/Route/Route';
+
 import { CustomerOrderForPhysicalCustomer } from '../customerOrderForPhysicalCustomer/CustomerOrderForPhysicalCustomer';
 import { type Merchandise } from '../merchandise/Merchandise';
 import { InvoiceForPhysicalCustomer } from './InvoiceForPhysicalCustomer';

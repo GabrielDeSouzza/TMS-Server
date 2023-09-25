@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Vehicle } from '../../../entities/vehicleEntities/vehicle/Vehicle';
-import { VehicleBrand } from '../../../entities/vehicleEntities/vehicleBrand/VehicleBrand';
-import { VehicleModel } from '../../../entities/vehicleEntities/vehicleModel/VehicleModel';
-import { OutsourcedVehicle } from '../../vehicleEntities/outsourcedVehicle/OutsourcedVehicle';
+import { OutsourcedVehicle } from 'domain/entities/vehicleEntities/outsourcedVehicle/OutsourcedVehicle';
+import { Vehicle } from 'domain/entities/vehicleEntities/vehicle/Vehicle';
+import { VehicleBrand } from 'domain/entities/vehicleEntities/vehicleBrand/VehicleBrand';
+import { VehicleModel } from 'domain/entities/vehicleEntities/vehicleModel/VehicleModel';
+
 import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OutsourcedDriver } from './OutsourcedDriver';
 

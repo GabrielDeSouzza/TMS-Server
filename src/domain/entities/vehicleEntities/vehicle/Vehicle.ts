@@ -1,11 +1,11 @@
 import { randomUUID } from 'node:crypto';
 
-import { type Replace } from 'helpers/Replace';
+import { type Maintenance } from 'domain/entities/maintence/Maintenance/Maintenance';
+import { Entity } from 'domain/shared/entities/Entity';
+import { type Replace } from 'domain/shared/helpers/Replace';
+import { type IValidationField } from 'domain/shared/notification/Notification';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
-import { type Maintenance } from '../../../entities/maintenceEntities/Maintenance/Maintenance';
-import { Entity } from '../../../shared/entities/Entity';
-import { type IValidationField } from '../../../shared/notification/Notification';
-import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type VehicleModel } from '../vehicleModel/VehicleModel';
 
 interface IVehicle {

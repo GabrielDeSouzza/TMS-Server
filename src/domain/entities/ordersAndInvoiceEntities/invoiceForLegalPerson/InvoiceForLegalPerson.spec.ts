@@ -1,7 +1,8 @@
-import { type Route } from '../../../entities/routeEntities/Route/Route';
-import { CarrierCompany } from '../../legalPersonEntities/carrierCompany/CarrierCompany';
-import { CorporateClient } from '../../legalPersonEntities/CorporateClient/CorporateClient';
-import { LegalPerson } from '../../legalPersonEntities/legalPerson/LegalPerson';
+import { CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
+import { CorporateClient } from 'domain/entities/legalPerson/CorporateClient/CorporateClient';
+import { LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { type Route } from 'domain/entities/routeEntities/Route/Route';
+
 import { CustomerOrderForLegalPerson } from '../customerOrderForLegalPerson/CustomerOrderForLegalPerson';
 import { type Merchandise } from '../merchandise/Merchandise';
 import { InvoiceForLegalPerson } from './InvoiceForLegalPerson';

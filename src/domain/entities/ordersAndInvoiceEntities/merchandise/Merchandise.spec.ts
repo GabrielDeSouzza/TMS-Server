@@ -1,4 +1,5 @@
-import { NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson';
+import { NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+
 import { Merchandise } from './Merchandise';
 
 describe('Merchandise', () => {

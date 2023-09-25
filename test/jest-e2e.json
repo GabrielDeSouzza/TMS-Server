@@ -5,6 +5,7 @@
   "testRegex": ".test.ts$",
   "modulePaths": ["<rootDir>"],
   "moduleDirectories": ["<rootDir>/../src", "node_modules"],
+  "setupFiles": ["<rootDir>../.jest/jest.setup.ts"],
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   }

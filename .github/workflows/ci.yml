@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: pnpm i --no-frozen-lockfile
 
+      - name: Find Dead Code
+        run: pnpm find-deadcode
+
       - name: Linting
         run: pnpm lint
 

@@ -1,12 +1,11 @@
 import { randomUUID } from 'node:crypto';
 
-import { type Replace } from 'helpers/Replace';
-
-import { type Route } from '../../../entities/routeEntities/Route/Route';
-import { type Vehicle } from '../../../entities/vehicleEntities/vehicle/Vehicle';
-import { Entity } from '../../../shared/entities/Entity';
-import { type IValidationField } from '../../../shared/notification/Notification';
-import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type Route } from 'domain/entities/routeEntities/Route/Route';
+import { type Vehicle } from 'domain/entities/vehicleEntities/vehicle/Vehicle';
+import { Entity } from 'domain/shared/entities/Entity';
+import { type Replace } from 'domain/shared/helpers/Replace';
+import { type IValidationField } from 'domain/shared/notification/Notification';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
 interface IOrderProcessing {
   total_distance: number;

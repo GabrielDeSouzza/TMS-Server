@@ -1,7 +1,8 @@
-import { Route } from '../../../entities/routeEntities/Route/Route';
-import { Vehicle } from '../../../entities/vehicleEntities/vehicle/Vehicle';
-import { VehicleBrand } from '../../../entities/vehicleEntities/vehicleBrand/VehicleBrand';
-import { VehicleModel } from '../../../entities/vehicleEntities/vehicleModel/VehicleModel';
+import { Route } from 'domain/entities/routeEntities/Route/Route';
+import { Vehicle } from 'domain/entities/vehicleEntities/vehicle/Vehicle';
+import { VehicleBrand } from 'domain/entities/vehicleEntities/vehicleBrand/VehicleBrand';
+import { VehicleModel } from 'domain/entities/vehicleEntities/vehicleModel/VehicleModel';
+
 import { OrderProcessing } from './OrderProcessing';
 
 describe('OrderProcessing', () => {
