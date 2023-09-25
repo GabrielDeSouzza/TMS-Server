@@ -104,6 +104,8 @@ export class VehicleBrandService implements VehicleBrandRepository {
                 capacity_per_axle: model.capacity_per_axle,
                 VehicleType: new VehicleType({
                   bodyWork: model.VehicleType.bodywork,
+                  created_by: model.created_by,
+                  updated_by: model.update_by,
                   name: model.VehicleType.name,
                 }),
                 VehicleBrand: new VehicleBrand({

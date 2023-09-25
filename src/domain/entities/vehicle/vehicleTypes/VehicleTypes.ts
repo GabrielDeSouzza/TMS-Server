@@ -9,10 +9,13 @@ import { type VehicleModel } from '../vehicleModel/VehicleModel';
 import { type VehicleTypeContainsBody } from '../vehicleTypeContainsBody/VehicleContainsBody';
 
 export interface IVehicleType {
+  id?: string;
   name: string;
   bodyWork: boolean;
   created_at: Date;
   updated_at: Date;
+  created_by: string;
+  updated_by: string;
   VehicleModels?: VehicleModel[];
   VehicleTypeContainsBody?: VehicleTypeContainsBody[];
 }
@@ -88,5 +91,21 @@ export class VehicleType extends Entity {
 
   public get createdAt(): Date {
     return this.props.created_at;
+  }
+  public set createdBy(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public set updatedBy(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+  public get updatedBy(): string {
+    return this.props.updated_by;
+  }
+  public set bodyWork(bodywork: boolean) {
+    this.props.bodyWork = bodywork;
+  }
+  public get bodyWork(): boolean {
+    return this.props.bodyWork;
   }
 }

@@ -61,6 +61,15 @@ input UserUpdateInput {
   username: String
 }
 
+type VehicleBodyworkModel {
+  axles: Float!
+  created_at: Timestamp!
+  mass: Float!
+  name: String!
+  updated_at: Timestamp!
+  volume: Float!
+}
+
 input VehicleBrandInput {
   created_by: String!
   name: String!
@@ -100,8 +109,12 @@ type VehicleModelGraphql {
 }
 
 type VehicleTypeModel {
+  VehicleModels: VehicleModelGraphql!
+  VehicleTypeContainsBody: VehicleBodyworkModel!
   bodyWork: Boolean!
   created_at: Timestamp!
+  created_by: String!
   name: String!
   updated_at: Timestamp!
+  updated_by: String!
 }

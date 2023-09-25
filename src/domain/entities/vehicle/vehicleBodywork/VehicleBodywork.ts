@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IVehicleBodywork {
+export interface IVehicleBodywork {
   name: string;
   axles: number;
   mass: number;

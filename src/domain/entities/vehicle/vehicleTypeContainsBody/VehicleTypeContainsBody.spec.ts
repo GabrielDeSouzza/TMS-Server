@@ -12,6 +12,8 @@ describe('VehicleTypeContainsBody', () => {
         volume: 4,
       }),
       VehicleType: new VehicleType({
+        created_by: 'test',
+        updated_by: 'test',
         name: 'Caminhão',
         bodyWork: false,
       }),

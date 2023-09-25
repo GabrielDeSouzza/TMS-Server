@@ -9,6 +9,7 @@ import { type VehicleBrand } from '../vehicleBrand/VehicleBrand';
 import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 
 export interface IVehicleModel {
+  id?: string;
   name: string;
   weight: number;
   capacity_max: number;

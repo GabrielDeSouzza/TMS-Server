@@ -57,6 +57,8 @@ describe('Ownsourced Driver', () => {
               updated_by: 'test',
             }),
             VehicleType: new VehicleType({
+              created_by: 'test',
+              updated_by: 'test',
               bodyWork: true,
               name: 'Bau',
               created_at: new Date(),

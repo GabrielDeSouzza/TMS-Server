@@ -11,7 +11,6 @@ import { type VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepos
 
 import { PrismaService } from '../prisma.service';
 
-//Codigo incompleto, Precisa resolver questões sobre os DTO´s para o prisma
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleTypeService implements VehicleTypeRepository {
@@ -20,8 +19,6 @@ export class VehicleTypeService implements VehicleTypeRepository {
     const vehicleTypePrisma = await this.prisma.vehicleType.findFirstOrThrow({
       where: { id },
       include: {
-        CreatedBy: true,
-        UpdateBy: true,
         VehicleModel: {
           include: { Vehicle: true, VehicleType: true, Brand: true },
         },
@@ -31,6 +28,10 @@ export class VehicleTypeService implements VehicleTypeRepository {
     const vehicleType = new VehicleType({
       bodyWork: vehicleTypePrisma.bodywork,
       name: vehicleTypePrisma.name,
+      created_by: vehicleTypePrisma.created_by,
+      updated_by: vehicleTypePrisma.update_by,
+      created_at: vehicleTypePrisma.created_at,
+      updated_at: vehicleTypePrisma.updated_at,
       VehicleModels: vehicleTypePrisma.VehicleModel.map(
         vehicle =>
           new VehicleModel({
@@ -47,6 +48,8 @@ export class VehicleTypeService implements VehicleTypeRepository {
             }),
             VehicleType: new VehicleType({
               bodyWork: vehicle.VehicleType.bodywork,
+              created_by: vehicle.VehicleType.created_by,
+              updated_by: vehicle.VehicleType.update_by,
               name: vehicle.VehicleType.name,
               created_at: vehicle.VehicleType.created_at,
               updated_at: vehicle.VehicleType.updated_at,
@@ -61,9 +64,29 @@ export class VehicleTypeService implements VehicleTypeRepository {
       ),
     });
 
-    throw new Error('Method not implemented.');
+    return vehicleType;
   }
-  createVehicleType(vehicleBrand: IVehicleType): Promise<VehicleType> {
+  async createVehicleType(vehicleType: IVehicleType): Promise<VehicleType> {
+    await this.prisma.vehicleType.create({
+      data: {
+        name: vehicleType.name,
+        bodywork: vehicleType.bodyWork,
+        UpdateBy: { connect: { id: vehicleType.updated_by } },
+        CreatedBy: { connect: { id: vehicleType.updated_by } },
+        updated_at: vehicleType.updated_at,
+        created_at: vehicleType.created_at,
+      },
+      select: {
+        name: true,
+        bodywork: true,
+        created_at: true,
+        created_by: true,
+        id: true,
+        update_by: true,
+        updated_at: true,
+      },
+    });
+
     throw new Error('Method not implemented.');
   }
   updateVehicleType(
