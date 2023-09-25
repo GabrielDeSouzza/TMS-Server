@@ -81,19 +81,12 @@
     "@nestjs/testing": "^10.2.6",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-<<<<<<< HEAD
-    "@types/cache-manager": "^4.0.2",
-    "@types/express": "^4.17.17",
-    "@types/jest": "29.5.5",
-    "@types/node": "^20.2.5",
-=======
     "@types/bcrypt": "^5.0.0",
     "@types/cache-manager": "^4.0.3",
     "@types/express": "^4.17.18",
     "@types/jest": "29.5.5",
     "@types/node": "^20.6.5",
     "@types/passport-jwt": "^3.0.10",
->>>>>>> 6c2b840 (feat: add auth jwt in users)
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
@@ -110,15 +103,9 @@
     "eslint-plugin-unicorn": "^48.0.1",
     "husky": "^8.0.3",
     "jest": "29.7.0",
-<<<<<<< HEAD
-    "lint-staged": "^13.2.2",
-    "prettier": "^2.8.8",
-    "prisma": "^4.15.0",
-=======
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "prisma": "^5.3.1",
->>>>>>> 6c2b840 (feat: add auth jwt in users)
     "prisma-dbml-generator": "^0.10.0",
     "semantic-release": "^22.0.5",
     "sort-package-json": "^2.5.1",
