@@ -7,12 +7,15 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 export interface IVehicleBodywork {
+  id?: string;
   name: string;
   axles: number;
   mass: number;
   volume: number;
   created_at: Date;
   updated_at: Date;
+  created_by: string;
+  updated_by: string;
 }
 
 export class VehicleBodywork extends Entity {
@@ -123,5 +126,20 @@ export class VehicleBodywork extends Entity {
 
   public get createdAt(): Date {
     return this.props.created_at;
+  }
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  public set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
   }
 }

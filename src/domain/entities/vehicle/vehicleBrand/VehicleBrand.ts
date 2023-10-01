@@ -5,7 +5,6 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type VehicleModel } from '../vehicleModel/VehicleModel';
 
 export interface IVehicleBrand {
   id?: string;
@@ -14,7 +13,6 @@ export interface IVehicleBrand {
   updated_at: Date;
   updated_by: string;
   created_by: string;
-  VehicleModels?: VehicleModel[];
 }
 
 export class VehicleBrand extends Entity {

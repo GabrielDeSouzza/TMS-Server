@@ -3,23 +3,26 @@ import {
   type Prisma,
 } from '@prisma/client';
 
-import { type IVehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
+import {
+  VehicleBrand,
+  type IVehicleBrand,
+} from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 
 export class VehicleBrandPrismaDTO {
-  public static PrismaVehicleBrandToVehicleBrandEntity(
+  public static PrismaToEntity(
     vehicleBrandPrisma: VehicleBrandPrisma,
-  ): IVehicleBrand {
-    return {
+  ): VehicleBrand {
+    return new VehicleBrand({
       id: vehicleBrandPrisma.id,
       name: vehicleBrandPrisma.name,
       created_at: vehicleBrandPrisma.created_at,
       updated_at: vehicleBrandPrisma.updated_at,
       updated_by: vehicleBrandPrisma.update_by,
       created_by: vehicleBrandPrisma.created_by,
-    };
+    });
   }
 
-  public static VehicleBrandEntityToPrismaVehicleBrand(
+  public static EntityToPrisma(
     vehicleBrandEntity: IVehicleBrand,
   ): Prisma.VehicleBrandCreateInput {
     const vehicleBrandPrisma: Prisma.VehicleBrandUncheckedCreateInput = {
@@ -33,7 +36,7 @@ export class VehicleBrandPrismaDTO {
     return vehicleBrandPrisma;
   }
 
-  public static VehicleBrandEntityToUpdatedVehicleBrandPrisma(
+  public static EntityToPrismaUpdate(
     vehicleBrand: IVehicleBrand,
   ): Prisma.VehicleBrandUpdateInput {
     const vehicleBrandUpdate: Prisma.VehicleBrandUncheckedUpdateInput = {

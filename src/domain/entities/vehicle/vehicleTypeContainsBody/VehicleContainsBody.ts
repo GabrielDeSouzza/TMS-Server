@@ -8,6 +8,7 @@ import { type VehicleBodywork } from '../vehicleBodywork/VehicleBodywork';
 import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 
 export interface IVehicleTypeContainsBody {
+  id?: string;
   VehicleBodywork: VehicleBodywork;
   VehicleType: VehicleType;
   updated_at: Date;

@@ -1,10 +1,9 @@
 import { type Prisma, Role, type User as UserPrisma } from '@prisma/client';
 
-import { type IUser } from 'domain/entities/user/User';
-import { ROLE, User } from 'domain/entities/user/User';
+import { type IUser, ROLE, User } from 'domain/entities/user/User';
 
 export class UserPrismaDTO {
-  public static PrismaUserToUserEntity(userPrisma: UserPrisma) {
+  public static PrismaToEntity(userPrisma: UserPrisma) {
     return new User({
       email: userPrisma.email,
       name: userPrisma.name,
@@ -16,7 +15,7 @@ export class UserPrismaDTO {
       updated_at: userPrisma.updated_at,
     });
   }
-  public static UserEntityToPrismaUser(userEntity: IUser) {
+  public static EntityToPrisma(userEntity: IUser) {
     const userPrisma: UserPrisma = {
       created_at: userEntity.created_at,
       email: userEntity.email,
@@ -31,7 +30,7 @@ export class UserPrismaDTO {
     return userPrisma;
   }
 
-  public static UserEntityToUpdatedUserPrisma(user: IUser) {
+  public static EntityToPrismaUpdate(user: IUser) {
     const userUptade: Prisma.UserUpdateInput = {
       created_at: user.created_at,
       email: user.email,

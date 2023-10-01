@@ -3,28 +3,32 @@ import {
   type Prisma,
 } from '@prisma/client';
 
-import { type IVehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import {
+  VehicleModel,
+  type IVehicleModel,
+} from 'domain/entities/vehicle/vehicleModel/VehicleModel';
 
 export class VehicleModelPrismaDTO {
-  public static PrismaVehicleModelToVehicleModelEntity(
+  public static PrismaToEntity(
     vehicleModelPrisma: VehicleModelPrisma,
-  ): Omit<IVehicleModel, 'VehicleBrand' | 'VehicleType'> {
-    return {
-      name: vehicleModelPrisma.name,
-      weight: vehicleModelPrisma.weight,
-      capacity_max: vehicleModelPrisma.capacity_max,
+  ): VehicleModel {
+    return new VehicleModel({
       axles: vehicleModelPrisma.axles,
-      capacity_per_axle: vehicleModelPrisma.capacity_per_axle,
-      brand_id: vehicleModelPrisma.brand_id,
-      type_id: vehicleModelPrisma.type_id,
-      created_at: vehicleModelPrisma.created_at,
+      capacity_max: vehicleModelPrisma.capacity_max,
       created_by: vehicleModelPrisma.created_by,
+      name: vehicleModelPrisma.name,
+      updated_by: vehicleModelPrisma.created_by,
+      weight: vehicleModelPrisma.weight,
+      brand_id: vehicleModelPrisma.brand_id,
+      created_at: vehicleModelPrisma.created_at,
+      capacity_per_axle: vehicleModelPrisma.capacity_per_axle,
+      id: vehicleModelPrisma.id,
+      type_id: vehicleModelPrisma.type_id,
       updated_at: vehicleModelPrisma.updated_at,
-      updated_by: vehicleModelPrisma.update_by,
-    };
+    });
   }
 
-  public static VehicleModelEntityToPrismaVehicleModel(
+  public static EntityToPrisma(
     vehicleModelEntity: IVehicleModel,
   ): VehicleModelPrisma {
     const vehicleModelPrisma: VehicleModelPrisma = {
@@ -45,7 +49,7 @@ export class VehicleModelPrismaDTO {
     return vehicleModelPrisma;
   }
 
-  public static VehicleModelEntityToUpdatedVehicleModelPrisma(
+  public static EntityToPrismaUpdate(
     vehicleModel: IVehicleModel,
   ): Prisma.VehicleModelUpdateInput {
     const vehicleModelUpdate: Prisma.VehicleModelUncheckedUpdateInput = {

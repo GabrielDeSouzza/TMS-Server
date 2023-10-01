@@ -1,8 +1,6 @@
 import { OutsourcedVehicle } from '../../vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { Vehicle } from '../../vehicle/vehicle/Vehicle';
-import { VehicleBrand } from '../../vehicle/vehicleBrand/VehicleBrand';
 import { VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
-import { VehicleType } from '../../vehicle/vehicleTypes/VehicleTypes';
 import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OutsourcedDriver } from './OutsourcedDriver';
 
@@ -41,6 +39,8 @@ describe('Outsourced Driver', () => {
           renavam: '449984944',
           rntrc_expiration: 'dsa',
           year: '455',
+          created_by: 'test',
+          updated_by: 'test',
           VehicleModel: new VehicleModel({
             axles: 4,
             capacity_max: 40_000,
@@ -49,19 +49,6 @@ describe('Outsourced Driver', () => {
             weight: 4000,
             created_by: 'test',
             updated_by: 'test',
-            VehicleBrand: new VehicleBrand({
-              name: 'Ford',
-              created_by: 'test',
-              updated_by: 'test',
-            }),
-            VehicleType: new VehicleType({
-              created_by: 'test',
-              updated_by: 'test',
-              bodyWork: true,
-              name: 'Bau',
-              created_at: new Date(),
-              updated_at: new Date(),
-            }),
           }),
         }),
       }),

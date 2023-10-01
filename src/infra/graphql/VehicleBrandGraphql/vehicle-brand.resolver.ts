@@ -9,6 +9,7 @@ import {
 
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
+import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
 import {
   VehicleBrandInput,
@@ -21,6 +22,7 @@ export class VehicleBrandResolver {
   constructor(
     private vehicleBrandRepository: VehicleBrandRepository,
     private userRepository: UserRepository,
+    private vehicleModelRepository: VehicleModelRepository,
   ) {}
 
   @Query(() => VehicleBrandModel)
@@ -31,7 +33,7 @@ export class VehicleBrandResolver {
   async getAllVehicleBrand() {
     return await this.vehicleBrandRepository.getAllVehicleBrand();
   }
-  @Mutation(() => VehicleBrandModel, { name: 'vehicleBrand' })
+  @Mutation(() => VehicleBrandModel)
   async createVehicleBrand(
     @Args('vehicleBrandInput') vehicleBrandInput: VehicleBrandInput,
   ) {
@@ -61,5 +63,12 @@ export class VehicleBrandResolver {
     const { updated_by: updatedBy } = user;
 
     return this.userRepository.findUserById(updatedBy);
+  }
+
+  @ResolveField()
+  async VehicleModels() {
+    const models = await this.vehicleModelRepository.getAllVehicleModel();
+
+    return models.length > 0 ? models : null;
   }
 }

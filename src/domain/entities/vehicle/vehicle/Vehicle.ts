@@ -8,7 +8,8 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 import { type Maintenance } from '../../maintence/Maintenance/Maintenance';
 import { type VehicleModel } from '../vehicleModel/VehicleModel';
 
-interface IVehicle {
+export interface IVehicle {
+  id?: string;
   plate: string;
   year: string;
   color: string;
@@ -16,6 +17,8 @@ interface IVehicle {
   rntrc_expiration: string;
   created_at: Date;
   updated_at: Date;
+  updated_by: string;
+  created_by: string;
   VehicleModel: VehicleModel;
   Maintences?: Maintenance[];
 }
@@ -130,5 +133,20 @@ export class Vehicle extends Entity {
 
   public get createdAt(): Date {
     return this.props.created_at;
+  }
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  public set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
   }
 }

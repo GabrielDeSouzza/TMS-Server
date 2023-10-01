@@ -1,7 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { type VehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
-import { type VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
 import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
 import { VehicleBodyworkModel } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
@@ -14,9 +12,9 @@ export class VehicleTypeModel implements IVehicleType {
   @Field()
   updated_by: string;
   @Field(() => VehicleModelGraphql)
-  VehicleModels?: VehicleModel[];
+  VehicleModels?: VehicleModelGraphql[];
   @Field(() => VehicleBodyworkModel)
-  VehicleTypeContainsBody?: VehicleTypeContainsBody[];
+  VehicleTypeContainsBody?: VehicleBodyworkModel[];
   @Field()
   name: string;
   @Field()

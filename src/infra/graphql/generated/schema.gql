@@ -4,14 +4,18 @@
 
 type Mutation {
   createUSer(createUserInput: UserInput!): UserModel!
+  createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
+  createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
-  vehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
+  updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeInput!): VehicleTypeModel!
 }
 
 type Query {
   getAllVehicleBrand: [VehicleBrandModel!]!
+  getAllVehicleTypes: VehicleTypeModel
   getVehicleBrand(id: String!): VehicleBrandModel!
+  getVehicleType(id: String!): VehicleTypeModel!
   user(email: String, id: String): UserModel!
   users: [UserModel!]!
 }
@@ -94,6 +98,7 @@ input VehicleBrandUpdateInput {
 }
 
 type VehicleModelGraphql {
+  VehicleBrand: VehicleTypeModel!
   VehicleType: VehicleTypeModel!
   axles: Float!
   brand_id: String!
@@ -108,13 +113,22 @@ type VehicleModelGraphql {
   weight: Float!
 }
 
+input VehicleTypeInput {
+  bodyWork: Boolean!
+  created_by: String!
+  name: String!
+  updated_by: String!
+}
+
 type VehicleTypeModel {
   VehicleModels: VehicleModelGraphql!
   VehicleTypeContainsBody: VehicleBodyworkModel!
   bodyWork: Boolean!
+  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   name: String!
+  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }

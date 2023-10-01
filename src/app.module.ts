@@ -10,6 +10,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 
 import { UserModule } from 'infra/graphql/UserGraphql/user.module';
 import { VehicleBrandModule } from 'infra/graphql/VehicleBrandGraphql/vehicle-brand.module';
+import { VehicleTypeModule } from 'infra/graphql/VehicleType/vehicle-type.module';
 
 @Module({
   imports: [
@@ -26,9 +27,9 @@ import { VehicleBrandModule } from 'infra/graphql/VehicleBrandGraphql/vehicle-br
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       buildSchemaOptions: { dateScalarMode: 'timestamp' },
     }),
-
     UserModule,
     VehicleBrandModule,
+    VehicleTypeModule,
   ],
 })
 export class AppModule {}

@@ -7,6 +7,8 @@ describe('VehicleBodywork', () => {
       mass: 454,
       name: 'Unão',
       volume: 4,
+      created_by: 'test',
+      updated_by: 'test',
     });
 
     expect(vehicleBodywork).toBeTruthy();

@@ -10,6 +10,8 @@ describe('VehicleTypeContainsBody', () => {
         mass: 454,
         name: 'Unão',
         volume: 4,
+        created_by: 'test',
+        updated_by: 'test',
       }),
       VehicleType: new VehicleType({
         created_by: 'test',

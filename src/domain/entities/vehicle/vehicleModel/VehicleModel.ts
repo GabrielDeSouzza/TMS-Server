@@ -5,8 +5,6 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type VehicleBrand } from '../vehicleBrand/VehicleBrand';
-import { type VehicleType } from '../vehicleTypes/VehicleTypes';
 
 export interface IVehicleModel {
   id?: string;
@@ -21,8 +19,6 @@ export interface IVehicleModel {
   created_by: string;
   updated_at: Date;
   updated_by: string;
-  VehicleBrand: VehicleBrand;
-  VehicleType: VehicleType;
 }
 
 export class VehicleModel extends Entity {
@@ -90,8 +86,6 @@ export class VehicleModel extends Entity {
         maxLength: 10,
       },
     );
-    this.props.VehicleBrand.validate();
-    this.props.VehicleType.validate();
     this.notification.requiredField('VehicleModel', fieldsValidation);
   }
 
@@ -148,5 +142,20 @@ export class VehicleModel extends Entity {
 
   public get createdAt(): Date {
     return this.props.created_at;
+  }
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  public set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
   }
 }

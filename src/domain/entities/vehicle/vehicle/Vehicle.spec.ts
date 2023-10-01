@@ -1,6 +1,4 @@
-import { VehicleBrand } from '../vehicleBrand/VehicleBrand';
 import { VehicleModel } from '../vehicleModel/VehicleModel';
-import { VehicleType } from '../vehicleTypes/VehicleTypes';
 import { Vehicle } from './Vehicle';
 
 describe('Vehicle', () => {
@@ -19,20 +17,9 @@ describe('Vehicle', () => {
         created_by: 'test',
         updated_by: 'test',
         weight: 4000,
-        VehicleBrand: new VehicleBrand({
-          name: 'Ford',
-          created_by: 'test',
-          updated_by: 'test',
-        }),
-        VehicleType: new VehicleType({
-          created_by: 'test',
-          updated_by: 'test',
-          bodyWork: true,
-          name: 'Bau',
-          created_at: new Date(),
-          updated_at: new Date(),
-        }),
       }),
+      created_by: 'test',
+      updated_by: 'test',
     });
 
     expect(vehicle).toBeTruthy();

@@ -1,10 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { type VehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 import { type IVehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
-import { type VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
-import { VehicleTypeModel } from '../VehicleType/VehicleType.model';
+import { VehicleTypeModel } from '../VehicleType/vehicle-type.model';
 
 @ObjectType()
 export class VehicleModelGraphql implements IVehicleModel {
@@ -30,7 +28,8 @@ export class VehicleModelGraphql implements IVehicleModel {
   created_at: Date;
   @Field(() => Date)
   updated_at: Date;
-  VehicleBrand: VehicleBrand;
   @Field(() => VehicleTypeModel)
-  VehicleType: VehicleType;
+  VehicleBrand: VehicleTypeModel;
+  @Field(() => VehicleTypeModel)
+  VehicleType: VehicleTypeModel;
 }

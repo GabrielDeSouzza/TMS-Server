@@ -4,25 +4,25 @@ import {
 } from '@prisma/client';
 
 import {
+  VehicleType,
   type IVehicleType,
-  type VehicleType,
 } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
 export class VehicleTypePrismaDTO {
-  public static PrismaVehicleBrandToVehicleBrandEntity(
+  public static PrismaToEntity(
     vehicleTypePrisma: VehicleTypePrisma,
-  ): IVehicleType {
-    return {
+  ): VehicleType {
+    return new VehicleType({
       name: vehicleTypePrisma.name,
       bodyWork: vehicleTypePrisma.bodywork,
       created_at: vehicleTypePrisma.created_at,
       updated_at: vehicleTypePrisma.updated_at,
       created_by: vehicleTypePrisma.created_by,
       updated_by: vehicleTypePrisma.update_by,
-    };
+    });
   }
 
-  public static VehicleBrandEntityToPrismaVehicleBrand(
+  public static EntityToPrisma(
     vehicleTypeEntity: IVehicleType,
   ): VehicleTypePrisma {
     const vehicleTypePrisma: VehicleTypePrisma = {
@@ -38,7 +38,7 @@ export class VehicleTypePrismaDTO {
     return vehicleTypePrisma;
   }
 
-  public static VehicleTypeEntityToUpdatedVehicleBrandPrisma(
+  public static EntityToPrismaUpdate(
     vehicleType: VehicleType,
   ): Prisma.VehicleTypeUpdateInput {
     const vehicleBrandUpdate: Prisma.VehicleTypeUncheckedUpdateInput = {
