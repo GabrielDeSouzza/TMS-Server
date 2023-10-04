@@ -9,6 +9,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 import { type Vehicle } from '../../vehicle/vehicle/Vehicle';
 
 interface IOrderProcessing {
+  id?: string;
   total_distance: number;
   total_spend_liters: number;
   total_spending_money: number;
@@ -28,13 +29,12 @@ export class OrderProcessing extends Entity {
 
   constructor(
     props: Replace<IOrderProcessing, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -96,6 +96,12 @@ export class OrderProcessing extends Entity {
     this.props.Vehicle.validate();
   }
 
+  public get id(): string {
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
+  }
   public set total_distance(totalDistance: number) {
     this.props.total_distance = totalDistance;
   }

@@ -10,6 +10,7 @@ import { type InvoiceForPhysicalCustomer } from '../invoiceForPhysicalCustomer/I
 import { type Merchandise } from '../merchandise/Merchandise';
 
 interface ICustomerOrderForPhysicalCustomer {
+  id?: string;
   order: string;
   updated_at: Date;
   created_at: Date;
@@ -27,13 +28,12 @@ export class CustomerOrderForPhysicalCustomer extends Entity {
       ICustomerOrderForPhysicalCustomer,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -59,7 +59,10 @@ export class CustomerOrderForPhysicalCustomer extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public get merchandise(): Merchandise[] {

@@ -20,16 +20,14 @@ export class VehicleBrand extends Entity {
   private props: IVehicleBrand;
   constructor(
     props: Replace<IVehicleBrand, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
-      id: this._id,
     };
     this.validate();
 
@@ -64,7 +62,10 @@ export class VehicleBrand extends Entity {
   }
 
   public get id(): string {
-    return this.id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public set name(name: string) {

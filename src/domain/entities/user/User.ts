@@ -22,21 +22,17 @@ export abstract class IUser {
 }
 
 export class User extends Entity {
-  private _id: string;
   private props: IUser;
 
-  constructor(
-    props: Replace<IUser, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
-  ) {
+  constructor(props: Replace<IUser, { created_at?: Date; updated_at?: Date }>) {
     super();
-
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
+    console.log(this.props);
     this.validate();
 
     if (this.notification.hasErrors()) {
@@ -69,9 +65,11 @@ export class User extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
   }
-
+  public set id(id: string) {
+    this.props.id = id;
+  }
   public set name(name: string) {
     this.props.name = name;
   }

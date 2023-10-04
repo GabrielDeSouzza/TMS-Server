@@ -7,6 +7,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface INaturalPerson {
+  id?: string;
   name: string;
   date_birth: Date;
   gender: string;
@@ -33,17 +34,14 @@ export class NaturalPerson extends Entity {
 
   constructor(
     props: Replace<INaturalPerson, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
-
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
-    this.validate();
 
     if (this.notification.hasErrors()) {
       const errors = this.notification.getErrors();
@@ -156,7 +154,12 @@ export class NaturalPerson extends Entity {
     );
     this.notification.requiredField('NaturalPerson', fieldsValidation);
   }
-
+  public get id(): string {
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
+  }
   public set name(name: string) {
     this.props.name = name;
   }

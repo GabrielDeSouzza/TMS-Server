@@ -8,6 +8,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface IPhysicalContractor {
+  id?: string;
   branch?: string;
   PhysicalCustomer: PhysicalCustomer;
   cpf?: string;
@@ -24,13 +25,12 @@ export class PhysicalContractor extends Entity {
       IPhysicalContractor,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -66,7 +66,10 @@ export class PhysicalContractor extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set branch(branch: string) {
     this.props.branch = branch;

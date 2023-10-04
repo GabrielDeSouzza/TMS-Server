@@ -13,6 +13,7 @@ export class VehicleTypePrismaDTO {
     vehicleTypePrisma: VehicleTypePrisma,
   ): VehicleType {
     return new VehicleType({
+      id: vehicleTypePrisma.id,
       name: vehicleTypePrisma.name,
       bodyWork: vehicleTypePrisma.bodywork,
       created_at: vehicleTypePrisma.created_at,
@@ -44,10 +45,11 @@ export class VehicleTypePrismaDTO {
     const vehicleBrandUpdate: Prisma.VehicleTypeUncheckedUpdateInput = {
       name: vehicleType.name,
       bodywork: vehicleType.bodyWork,
-      created_at: vehicleType.createdAt,
-      updated_at: vehicleType.updatedAt,
-      created_by: vehicleType.createdBy,
-      update_by: vehicleType.updatedBy,
+      created_at: vehicleType.created_at,
+      updated_at: vehicleType.updated_at,
+      created_by: vehicleType.created_by,
+      update_by: vehicleType.updated_by,
+      id: vehicleType.id,
     };
 
     return vehicleBrandUpdate;

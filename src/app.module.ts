@@ -9,8 +9,11 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { UserModule } from 'infra/graphql/UserGraphql/user.module';
+import { VehicleBodyworkModule } from 'infra/graphql/VehicleBodyworkGraphql/vehicle-bodywork.module';
 import { VehicleBrandModule } from 'infra/graphql/VehicleBrandGraphql/vehicle-brand.module';
+import { VehicleModule } from 'infra/graphql/VehicleGraphql/Vehicle.module';
 import { VehicleTypeModule } from 'infra/graphql/VehicleType/vehicle-type.module';
+import { VehicleModelModule } from 'infra/graphql/VeihicleModel/vehicle-model.module';
 
 @Module({
   imports: [
@@ -30,6 +33,9 @@ import { VehicleTypeModule } from 'infra/graphql/VehicleType/vehicle-type.module
     UserModule,
     VehicleBrandModule,
     VehicleTypeModule,
+    VehicleModelModule,
+    VehicleModule,
+    VehicleBodyworkModule,
   ],
 })
 export class AppModule {}

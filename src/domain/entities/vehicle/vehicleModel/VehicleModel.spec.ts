@@ -10,6 +10,8 @@ describe('VehicleModel', () => {
       capacity_per_axle: 5,
       created_by: 'test',
       updated_by: 'test',
+      brand_id: 'test',
+      type_id: 'test',
     });
 
     expect(vehicleModel).toBeTruthy();

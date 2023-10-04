@@ -1,12 +1,14 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
 import { type IVehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { VehicleModelGraphql } from '../VeihicleModel/VehicleModel.model';
+import { VehicleModelGraphql } from '../VeihicleModel/vehicle-model.model';
 
 @ObjectType()
 export class VehicleBrandModel implements IVehicleBrand {
+  @Field()
+  id: string;
   @Field()
   name: string;
   @Field(() => Date)
@@ -19,8 +21,19 @@ export class VehicleBrandModel implements IVehicleBrand {
   created_by: string;
   @Field(() => UserModelRefereces)
   updatedUser: UserModelRefereces;
-  @Field(() => UserModelRefereces, { nullable: true })
+  @Field(() => UserModelRefereces)
   createdUser: UserModelRefereces;
   @Field(() => VehicleModelGraphql, { nullable: true })
   VehicleModels?: VehicleModelGraphql[];
 }
+
+@ObjectType()
+export class VehicleBrandReferences extends OmitType(VehicleBrandModel, [
+  'VehicleModels',
+  'createdUser',
+  'updatedUser',
+  'created_at',
+  'created_by',
+  'updated_at',
+  'updated_by',
+]) {}

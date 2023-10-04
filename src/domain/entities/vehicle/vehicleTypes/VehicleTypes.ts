@@ -17,18 +17,16 @@ export interface IVehicleType {
 }
 
 export class VehicleType extends Entity {
-  private _id: string;
   private props: IVehicleType;
 
   constructor(
     props: Replace<IVehicleType, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -53,7 +51,10 @@ export class VehicleType extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public set name(name: string) {
@@ -64,25 +65,29 @@ export class VehicleType extends Entity {
     return this.props.name;
   }
 
-  public set updatedAt(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
+  public set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
 
-  public get updatedAt(): Date {
+  public get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public get createdAt(): Date {
+  public get created_at(): Date {
     return this.props.created_at;
   }
-  public set createdBy(created_by: string) {
+
+  public get created_by(): string {
+    return this.props.created_by;
+  }
+  public set created_by(created_by: string) {
     this.props.created_by = created_by;
   }
 
-  public set updatedBy(updated_by: string) {
+  public set updated_by(updated_by: string) {
     this.props.updated_by = updated_by;
   }
-  public get updatedBy(): string {
+  public get updated_by(): string {
     return this.props.updated_by;
   }
   public set bodyWork(bodywork: boolean) {

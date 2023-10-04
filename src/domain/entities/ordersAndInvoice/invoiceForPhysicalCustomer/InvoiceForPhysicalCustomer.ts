@@ -10,6 +10,7 @@ import { type CarrierCompany } from '../../legalPerson/carrierCompany/CarrierCom
 import { type CustomerOrderForPhysicalCustomer } from '../customerOrderForPhysicalCustomer/CustomerOrderForPhysicalCustomer';
 
 interface IInvoicePhysicalCustomer {
+  id?: string;
   emission_date: Date;
   nature_invoice: string;
   invoice_total: number;
@@ -36,13 +37,12 @@ export class InvoiceForPhysicalCustomer extends Entity {
       IInvoicePhysicalCustomer,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -125,7 +125,10 @@ export class InvoiceForPhysicalCustomer extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set emission_date(emissionDate: Date) {
     this.props.emission_date = emissionDate;

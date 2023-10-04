@@ -5,8 +5,6 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type Maintenance } from '../../maintence/Maintenance/Maintenance';
-import { type VehicleModel } from '../vehicleModel/VehicleModel';
 
 export interface IVehicle {
   id?: string;
@@ -19,23 +17,20 @@ export interface IVehicle {
   updated_at: Date;
   updated_by: string;
   created_by: string;
-  VehicleModel: VehicleModel;
-  Maintences?: Maintenance[];
+  model_id: string;
 }
 
 export class Vehicle extends Entity {
-  private _id: string;
   private props: IVehicle;
 
   constructor(
     props: Replace<IVehicle, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -68,16 +63,22 @@ export class Vehicle extends Entity {
       { field: this.props.year, fieldName: 'Year', maxLength: 4 },
     );
     this.notification.requiredField('vehicle', fieldsValidation);
-    this.props.VehicleModel.validate();
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
-  public get maintenances(): Maintenance[] | undefined {
-    return this.props.Maintences;
+  public get model_id(): string {
+    return this.props.model_id;
   }
+  public set model_id(model_id: string) {
+    this.props.model_id = model_id;
+  }
+
   public set plate(plate: string) {
     this.props.plate = plate;
   }
@@ -118,21 +119,18 @@ export class Vehicle extends Entity {
     return this.props.rntrc_expiration;
   }
 
-  public get VehicleModel(): VehicleModel {
-    return this.props.VehicleModel;
+  public set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
-  public set VehicleModel(vehicleModel: VehicleModel) {
-    this.props.VehicleModel = vehicleModel;
-  }
-  public set updatedAt(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
-  }
-  public get updatedAt(): Date {
+  public get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public get createdAt(): Date {
+  public get created_at(): Date {
     return this.props.created_at;
+  }
+  public set created_at(created_at: Date) {
+    this.props.created_at = created_at;
   }
   public set updated_by(updated_by: string) {
     this.props.updated_by = updated_by;

@@ -1,11 +1,10 @@
 import { type Vehicle as VehiclePrisma, type Prisma } from '@prisma/client';
 
 import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 export class VehicleDto {
-  public static PrismaToEntity(
-    vehicle: VehiclePrisma,
-  ): Omit<IVehicle, 'VehicleModel'> {
-    return {
+  public static PrismaToEntity(vehicle: VehiclePrisma): Vehicle {
+    return new Vehicle({
       plate: vehicle.plate,
       year: vehicle.year,
       color: vehicle.color,
@@ -15,7 +14,9 @@ export class VehicleDto {
       updated_at: vehicle.updated_at,
       created_by: vehicle.created_by,
       updated_by: vehicle.created_by,
-    };
+      id: vehicle.id,
+      model_id: vehicle.model_id,
+    });
   }
 
   public static EntityToPrisma(vehicle: IVehicle): VehiclePrisma {
@@ -29,13 +30,13 @@ export class VehicleDto {
       updated_at: vehicle.updated_at,
       created_by: vehicle.created_by,
       id: vehicle.id,
-      model_id: vehicle.VehicleModel.id,
+      model_id: vehicle.model_id,
       update_by: vehicle.updated_by,
     };
   }
 
   public static EntityToPrismaUpdate(
-    vehicle: IVehicle,
+    vehicle: Partial<Vehicle>,
   ): Prisma.VehicleUncheckedUpdateInput {
     return {
       plate: vehicle.plate,
@@ -47,7 +48,7 @@ export class VehicleDto {
       updated_at: vehicle.updated_at,
       created_by: vehicle.created_by,
       id: vehicle.id,
-      model_id: vehicle.VehicleModel.id,
+      model_id: vehicle.model_id,
       update_by: vehicle.updated_by,
     };
   }

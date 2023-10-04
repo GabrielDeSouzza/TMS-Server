@@ -13,8 +13,8 @@ export interface IVehicleModel {
   capacity_max: number;
   axles: number;
   capacity_per_axle?: number;
-  brand_id?: string;
-  type_id?: string;
+  brand_id: string;
+  type_id: string;
   created_at: Date;
   created_by: string;
   updated_at: Date;
@@ -27,13 +27,12 @@ export class VehicleModel extends Entity {
 
   constructor(
     props: Replace<IVehicleModel, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -85,12 +84,39 @@ export class VehicleModel extends Entity {
         isNullAble: true,
         maxLength: 10,
       },
+      {
+        field: this.brand_id,
+        fieldName: 'Brand id',
+        maxLength: 1000,
+      },
+      {
+        field: this.type_id,
+        fieldName: 'Type id',
+        maxLength: 1000,
+      },
     );
     this.notification.requiredField('VehicleModel', fieldsValidation);
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
+  }
+
+  public get brand_id(): string {
+    return this.props.brand_id;
+  }
+  public set brand_id(brand_id: string) {
+    this.props.brand_id = brand_id;
+  }
+
+  public get type_id(): string {
+    return this.props.type_id;
+  }
+  public set type_id(type_id: string) {
+    this.props.type_id = type_id;
   }
 
   public set name(name: string) {

@@ -5,13 +5,13 @@ import { type IUser, ROLE, User } from 'domain/entities/user/User';
 export class UserPrismaDTO {
   public static PrismaToEntity(userPrisma: UserPrisma) {
     return new User({
+      id: userPrisma.id,
       email: userPrisma.email,
       name: userPrisma.name,
       password: userPrisma.password,
       role: ROLE[userPrisma.role],
       username: userPrisma.username,
       created_at: userPrisma.created_at,
-      id: userPrisma.id,
       updated_at: userPrisma.updated_at,
     });
   }

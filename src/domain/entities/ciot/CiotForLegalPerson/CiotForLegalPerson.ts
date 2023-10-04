@@ -10,6 +10,7 @@ import { type CarrierCompany } from '../../legalPerson/carrierCompany/CarrierCom
 import { type CorporateClient } from '../../legalPerson/CorporateClient/CorporateClient';
 
 interface ICiotForCorporateClient {
+  id?: string;
   ciot: string;
   emission_date: Date;
   CorporateClient: CorporateClient;
@@ -30,13 +31,12 @@ export class CiotForCorporateClient extends Entity {
       ICiotForCorporateClient,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -78,7 +78,10 @@ export class CiotForCorporateClient extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set ciot(ciot: string) {
     this.props.ciot = ciot;

@@ -1,6 +1,5 @@
 import { Route } from '../../../entities/routeEntities/Route/Route';
 import { Vehicle } from '../../vehicle/vehicle/Vehicle';
-import { VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
 import { OrderProcessing } from './OrderProcessing';
 
 describe('OrderProcessing', () => {
@@ -27,15 +26,7 @@ describe('OrderProcessing', () => {
         year: '455',
         created_by: 'test',
         updated_by: 'test',
-        VehicleModel: new VehicleModel({
-          axles: 4,
-          capacity_max: 40_000,
-          capacity_per_axle: 0,
-          name: 'Unão',
-          weight: 4000,
-          created_by: 'test',
-          updated_by: 'test',
-        }),
+        model_id: '123',
       }),
       plate: null,
       route_id: null,

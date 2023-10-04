@@ -7,6 +7,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface ITypeOfMaintenance {
+  id?: string;
   description: string;
   preventive?: boolean;
   corrective?: boolean;
@@ -23,13 +24,12 @@ export class TypeOfMaintenance extends Entity {
       ITypeOfMaintenance,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -69,7 +69,10 @@ export class TypeOfMaintenance extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public set description(description: string) {

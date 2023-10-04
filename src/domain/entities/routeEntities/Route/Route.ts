@@ -7,6 +7,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface IRoute {
+  id?: string;
   cep: string;
   public_place: string;
   address_number: string;
@@ -24,13 +25,11 @@ export class Route extends Entity {
 
   constructor(
     props: Replace<IRoute, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
-
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -88,7 +87,12 @@ export class Route extends Entity {
     );
     this.notification.requiredField('Route', fieldsValidation);
   }
-
+  public get id(): string {
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
+  }
   public set cep(cep: string) {
     this.props.cep = cep;
   }

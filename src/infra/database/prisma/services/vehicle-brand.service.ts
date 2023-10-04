@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import {
-  VehicleBrand,
+  type VehicleBrand,
   type IVehicleBrand,
 } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 import { type VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
@@ -16,29 +16,17 @@ export class VehicleBrandService implements VehicleBrandRepository {
   async findVehicleBrandById(id: string): Promise<VehicleBrand> {
     const brand = await this.prisma.vehicleBrand.findFirstOrThrow({
       where: { id },
-      include: { CreatedBy: true, UpdateBy: true },
     });
+    console.log(brand);
 
-    const vehicleBrand = VehicleBrandPrismaDTO.PrismaToEntity(brand);
-
-    return vehicleBrand;
+    return VehicleBrandPrismaDTO.PrismaToEntity(brand);
   }
   async createVehicleBrand(vehicleBrand: IVehicleBrand): Promise<VehicleBrand> {
     const newVehicleBrand = await this.prisma.vehicleBrand.create({
       data: VehicleBrandPrismaDTO.EntityToPrisma(vehicleBrand),
     });
-    const vehicleBrandReturn = new VehicleBrand(
-      {
-        created_by: newVehicleBrand.created_by,
-        name: newVehicleBrand.name,
-        updated_by: newVehicleBrand.update_by,
-        created_at: newVehicleBrand.created_at,
-        updated_at: newVehicleBrand.created_at,
-      },
-      newVehicleBrand.id,
-    );
 
-    return vehicleBrandReturn;
+    return VehicleBrandPrismaDTO.PrismaToEntity(newVehicleBrand);
   }
   async updateVehicleBrand(
     id: string,

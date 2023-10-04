@@ -18,6 +18,7 @@ export class UserService implements UserRepository {
     const users: User[] = usersPrisma.map(user =>
       UserPrismaDTO.PrismaToEntity(user),
     );
+    console.log(users);
 
     return users;
   }
@@ -27,16 +28,6 @@ export class UserService implements UserRepository {
       console.log(user);
       const newUSer = await this.prisma.user.create({
         data: UserPrismaDTO.EntityToPrisma(user),
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          username: true,
-          role: true,
-          created_at: true,
-          updated_at: true,
-          password: true,
-        },
       });
       console.log(newUSer);
 
@@ -74,16 +65,6 @@ export class UserService implements UserRepository {
       const newUSer = await this.prisma.user.update({
         data: userPrisma,
         where: { id },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          username: true,
-          role: true,
-          created_at: true,
-          updated_at: true,
-          password: true,
-        },
       });
 
       return UserPrismaDTO.PrismaToEntity(newUSer);

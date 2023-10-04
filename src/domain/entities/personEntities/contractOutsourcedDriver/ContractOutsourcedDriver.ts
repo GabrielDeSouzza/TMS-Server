@@ -8,6 +8,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 import { type OutsourcedDriver } from '../outsourcedDriver/OutsourcedDriver';
 
 interface IContractOutsourcedDriver {
+  id?: string;
   type: string;
   situation: string;
   start_at: Date;
@@ -26,13 +27,12 @@ export class ContractOutsourcedDriver extends Entity {
       IContractOutsourcedDriver,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -76,7 +76,12 @@ export class ContractOutsourcedDriver extends Entity {
     );
     this.props.OutsourcedDriver.validate();
   }
-
+  public get id(): string {
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
+  }
   public set type(type: string) {
     this.props.type = type;
   }

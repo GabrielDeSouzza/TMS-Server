@@ -10,6 +10,7 @@ import { type MaintenanceCompany } from '../MaintenanceCompany/MaintenanceCompan
 import { type TypeOfMaintenance } from '../MaintenanceProcess/TypeOfMaintenance';
 
 interface IMaintenance {
+  id?: string;
   MaintenanceCompany: MaintenanceCompany;
   maintenance_company_cnpj?: string;
   Vehicle: Vehicle;
@@ -25,13 +26,12 @@ export class Maintenance extends Entity {
 
   constructor(
     props: Replace<IMaintenance, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -70,7 +70,10 @@ export class Maintenance extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set MaintenanceCompany(maintenanceCompany: MaintenanceCompany) {
     this.props.MaintenanceCompany = maintenanceCompany;

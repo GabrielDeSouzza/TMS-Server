@@ -1,6 +1,5 @@
 import { LegalPerson } from '../../legalPerson/legalPerson/LegalPerson';
 import { Vehicle } from '../../vehicle/vehicle/Vehicle';
-import { VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
 import { MaintenanceCompany } from '../MaintenanceCompany/MaintenanceCompany';
 import { TypeOfMaintenance } from '../MaintenanceProcess/TypeOfMaintenance';
 import { Maintenance } from './Maintenance';
@@ -41,15 +40,7 @@ describe('Maintenance', () => {
         year: '455',
         created_by: 'test',
         updated_by: 'test',
-        VehicleModel: new VehicleModel({
-          axles: 4,
-          capacity_max: 40_000,
-          capacity_per_axle: 4,
-          name: 'Unão',
-          created_by: 'test',
-          updated_by: 'test',
-          weight: 4000,
-        }),
+        model_id: 'test',
       }),
       plate: null,
       maintenance_company_cnpj: null,

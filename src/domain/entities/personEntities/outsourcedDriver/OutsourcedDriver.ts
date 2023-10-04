@@ -9,6 +9,7 @@ import { type OutsourcedVehicle } from '../../vehicle/outsourcedVehicle/Outsourc
 import { type NaturalPerson } from '../naturalPerson/NaturalPerson';
 
 interface IOutsourcedDriver {
+  id?: string;
   NaturalPerson: NaturalPerson;
   cnh: string;
   cnh_category: string;
@@ -26,13 +27,12 @@ export class OutsourcedDriver extends Entity {
 
   constructor(
     props: Replace<IOutsourcedDriver, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -88,7 +88,12 @@ export class OutsourcedDriver extends Entity {
     this.props.OutsourcedVehicle.validate();
     this.props.NaturalPerson.validate();
   }
-
+  public get id(): string {
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
+  }
   public set NaturalPerson(naturalPerson: NaturalPerson) {
     this.props.NaturalPerson = naturalPerson;
   }

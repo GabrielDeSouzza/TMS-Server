@@ -7,6 +7,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface ILegalPerson {
+  id?: string;
   fantasy_name: string;
   cnpj: string;
   state_registration: string;
@@ -26,18 +27,16 @@ interface ILegalPerson {
 }
 
 export class LegalPerson extends Entity {
-  private _id: string;
   private props: ILegalPerson;
 
   constructor(
     props: Replace<ILegalPerson, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -137,7 +136,10 @@ export class LegalPerson extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set fantasy_name(fantasyName: string) {
     this.props.fantasy_name = fantasyName;

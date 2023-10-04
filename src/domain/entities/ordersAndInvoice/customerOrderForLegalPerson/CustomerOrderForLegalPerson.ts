@@ -10,6 +10,7 @@ import { type InvoiceForLegalPerson } from '../invoiceForLegalPerson/InvoiceForL
 import { type Merchandise } from '../merchandise/Merchandise';
 
 interface ICustomerOrder {
+  id?: string;
   order: string;
   updated_at: Date;
   created_at: Date;
@@ -24,13 +25,12 @@ export class CustomerOrderForLegalPerson extends Entity {
 
   constructor(
     props: Replace<ICustomerOrder, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -56,7 +56,10 @@ export class CustomerOrderForLegalPerson extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public set order(order: string) {

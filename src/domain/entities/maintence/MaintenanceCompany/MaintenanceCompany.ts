@@ -8,6 +8,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 import { type LegalPerson } from '../../legalPerson/legalPerson/LegalPerson';
 
 interface IMaintenanceCompany {
+  id?: string;
   specialty_maintenance: string;
   LegalPerson: LegalPerson;
   cnpj?: string;
@@ -24,13 +25,12 @@ export class MaintenanceCompany extends Entity {
       IMaintenanceCompany,
       { created_at?: Date; updated_at?: Date }
     >,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -62,6 +62,12 @@ export class MaintenanceCompany extends Entity {
     );
     this.props.LegalPerson.validate();
     this.notification.requiredField('MaintenanceCompany', fieldsValidation);
+  }
+  public get id(): string {
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
 
   public set specialty_maintenance(specialtyMaintenance: string) {

@@ -1,6 +1,4 @@
 import { OutsourcedVehicle } from '../../vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { Vehicle } from '../../vehicle/vehicle/Vehicle';
-import { VehicleModel } from '../../vehicle/vehicleModel/VehicleModel';
 import { NaturalPerson } from '../naturalPerson/NaturalPerson';
 import { OutsourcedDriver } from '../outsourcedDriver/OutsourcedDriver';
 import { ContractOutsourcedDriver } from './ContractOutsourcedDriver';
@@ -40,24 +38,7 @@ describe('ContractOutsourcedDriver', () => {
         company_vehicle: false,
         course_mopp: true,
         OutsourcedVehicle: new OutsourcedVehicle({
-          Vehicle: new Vehicle({
-            plate: '455445',
-            color: 'sdf',
-            renavam: '449984944',
-            rntrc_expiration: 'dsa',
-            year: '455',
-            created_by: 'test',
-            updated_by: 'test',
-            VehicleModel: new VehicleModel({
-              axles: 4,
-              capacity_max: 40_000,
-              capacity_per_axle: 0,
-              name: 'Unão',
-              weight: 4000,
-              created_by: 'test',
-              updated_by: 'test',
-            }),
-          }),
+          vehicle_id: '123',
         }),
       }),
     });

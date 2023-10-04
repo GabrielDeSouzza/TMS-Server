@@ -8,6 +8,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
 interface IPhysicalCustomer {
+  id?: string;
   branch?: string;
   NaturalPerson: NaturalPerson;
   cpf?: string;
@@ -21,13 +22,12 @@ export class PhysicalCustomer extends Entity {
 
   constructor(
     props: Replace<IPhysicalCustomer, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -64,7 +64,10 @@ export class PhysicalCustomer extends Entity {
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set branch(branch: string) {
     this.props.branch = branch;

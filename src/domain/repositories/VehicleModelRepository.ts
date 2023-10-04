@@ -1,7 +1,9 @@
+import { type VehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
 import {
   type IVehicleModel,
   type VehicleModel,
 } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import { type VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
 export abstract class VehicleModelRepository {
   abstract findVehicleModelById(id: string): Promise<VehicleModel>;
@@ -13,4 +15,6 @@ export abstract class VehicleModelRepository {
     vehicleBrand: Partial<IVehicleModel>,
   ): Promise<VehicleModel>;
   abstract getAllVehicleModel(): Promise<VehicleModel[]>;
+  abstract findOnlyVehicleType(modelId: string): Promise<VehicleType>;
+  abstract findOnlyVehicleBrand(modelId: string): Promise<VehicleBrand>;
 }

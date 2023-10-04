@@ -31,7 +31,10 @@ export class VehicleBrandResolver {
   }
   @Query(() => [VehicleBrandModel])
   async getAllVehicleBrand() {
-    return await this.vehicleBrandRepository.getAllVehicleBrand();
+    const brands = await this.vehicleBrandRepository.getAllVehicleBrand();
+    console.log(brands);
+
+    return brands.length > 0 ? brands : null;
   }
   @Mutation(() => VehicleBrandModel)
   async createVehicleBrand(

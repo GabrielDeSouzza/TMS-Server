@@ -5,11 +5,11 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type NaturalPerson } from '../../personEntities/naturalPerson/NaturalPerson';
 
 interface IMerchandise {
+  id?: string;
   branch?: string;
-  NaturalPerson: NaturalPerson;
+  natural_person_id: string;
   cpf?: string;
   updated_at: Date;
   created_at: Date;
@@ -21,13 +21,12 @@ export class Merchandise extends Entity {
 
   constructor(
     props: Replace<IMerchandise, { created_at?: Date; updated_at?: Date }>,
-    id?: string,
   ) {
     super();
 
-    this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      id: props.id ?? randomUUID(),
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
@@ -58,12 +57,14 @@ export class Merchandise extends Entity {
         isNullAble: true,
       },
     );
-    this.props.NaturalPerson.validate();
     this.notification.requiredField('Merchandise', fieldsValidation);
   }
 
   public get id(): string {
-    return this._id;
+    return this.props.id;
+  }
+  public set id(id: string) {
+    this.props.id = id;
   }
   public set branch(branch: string) {
     this.props.branch = branch;
@@ -73,12 +74,12 @@ export class Merchandise extends Entity {
     return this.props.branch;
   }
 
-  public set NaturalPerson(naturalPerson: NaturalPerson) {
-    this.props.NaturalPerson = naturalPerson;
+  public set natural_person_id(natural_person_id: string) {
+    this.props.natural_person_id = natural_person_id;
   }
 
-  public get NaturalPerson(): NaturalPerson {
-    return this.props.NaturalPerson;
+  public get natural_person_id(): string {
+    return this.props.natural_person_id;
   }
 
   public set cpf(cpf: string | undefined) {

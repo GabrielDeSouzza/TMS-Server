@@ -25,9 +25,10 @@ export class VehicleTypeResolver {
   async getVehicleType(@Args('id') id: string) {
     return this.vehicleTypeRepository.findVehicleTypeById(id);
   }
-  @Query(() => VehicleTypeModel, { nullable: true })
+  @Query(() => [VehicleTypeModel], { nullable: true })
   async getAllVehicleTypes() {
     const vehicleTypes = await this.vehicleTypeRepository.getAllVehicleType();
+    console.log(vehicleTypes[0].created_by);
 
     return vehicleTypes.length > 0 ? vehicleTypes : null;
   }

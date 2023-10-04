@@ -24,15 +24,6 @@ export class VehicleTypeService implements VehicleTypeRepository {
   async createVehicleType(vehicleType: IVehicleType): Promise<VehicleType> {
     const prismaVehicleType = await this.prisma.vehicleType.create({
       data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType),
-      select: {
-        name: true,
-        bodywork: true,
-        created_at: true,
-        created_by: true,
-        id: true,
-        update_by: true,
-        updated_at: true,
-      },
     });
 
     return VehicleTypePrismaDTO.PrismaToEntity(prismaVehicleType);
@@ -44,15 +35,6 @@ export class VehicleTypeService implements VehicleTypeRepository {
     const updatedType = await this.prisma.vehicleType.update({
       data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType),
       where: { id },
-      select: {
-        bodywork: true,
-        created_at: true,
-        created_by: true,
-        id: true,
-        name: true,
-        update_by: true,
-        updated_at: true,
-      },
     });
 
     return VehicleTypePrismaDTO.PrismaToEntity(updatedType);

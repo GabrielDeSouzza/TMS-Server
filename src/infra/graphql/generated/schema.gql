@@ -4,17 +4,29 @@
 
 type Mutation {
   createUSer(createUserInput: UserInput!): UserModel!
+  createVehicle(vehicleInput: VehicleInput!): VehicleCarModel!
+  createVehicleBodywork(vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
+  createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
+  updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
+  updateVehicleBodywork(id: String!, vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
+  updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeInput!): VehicleTypeModel!
 }
 
 type Query {
+  getAllVehicle: [VehicleCarModel!]!
+  getAllVehicleBodywork: [VehicleBodyworkModel!]
   getAllVehicleBrand: [VehicleBrandModel!]!
-  getAllVehicleTypes: VehicleTypeModel
+  getAllVehicleModel: [VehicleModelGraphql!]
+  getAllVehicleTypes: [VehicleTypeModel!]
+  getVehicle(id: String, plate: String): VehicleCarModel!
+  getVehicleBodyworkModel(id: String!): VehicleBodyworkModel!
   getVehicleBrand(id: String!): VehicleBrandModel!
+  getVehicleModel(id: String!): VehicleModelGraphql!
   getVehicleType(id: String!): VehicleTypeModel!
   user(email: String, id: String): UserModel!
   users: [UserModel!]!
@@ -65,12 +77,29 @@ input UserUpdateInput {
   username: String
 }
 
-type VehicleBodyworkModel {
-  axles: Float!
-  created_at: Timestamp!
+input VehicleBodyworkInput {
+  axles: Int!
+  created_by: String!
   mass: Float!
   name: String!
+  updated_by: String!
+  volume: Float!
+}
+
+type VehicleBodyworkModel {
+  CreatedUser: UserModelRefereces!
+  UpdatedUser: UserModelRefereces!
+  VehicleTypeContainsBody: [VehicleTypeContainsBodyGraphql!]
+  axles: Float!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  mass: Float!
+  name: String!
+  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
+  updated_by: String!
   volume: Float!
 }
 
@@ -82,13 +111,19 @@ input VehicleBrandInput {
 
 type VehicleBrandModel {
   VehicleModels: VehicleModelGraphql
-  createdUser: UserModelRefereces
+  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
+  id: String!
   name: String!
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
+}
+
+type VehicleBrandReferences {
+  id: String!
+  name: String!
 }
 
 input VehicleBrandUpdateInput {
@@ -97,20 +132,84 @@ input VehicleBrandUpdateInput {
   updated_by: String
 }
 
-type VehicleModelGraphql {
-  VehicleBrand: VehicleTypeModel!
-  VehicleType: VehicleTypeModel!
-  axles: Float!
-  brand_id: String!
-  capacity_max: Float!
-  capacity_per_axle: Float!
+type VehicleCarModel {
+  VehicleBrand: VehicleBrandReferences!
+  VehicleModel: VehicleModelReferences!
+  VehicleType: VehicleTypeReferences!
+  color: String!
+  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
+  id: String!
+  model_id: String!
+  plate: String!
+  renavam: String!
+  rntrc_expiration: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+  year: String!
+}
+
+input VehicleInput {
+  color: String!
+  created_by: String!
+  model_id: String!
+  plate: String!
+  renavam: String!
+  rntrc_expiration: String!
+  updated_by: String!
+  year: String!
+}
+
+type VehicleModelGraphql {
+  VehicleBrand: VehicleBrandReferences!
+  VehicleType: VehicleTypeReferences!
+  axles: Int!
+  brand_id: String!
+  capacity_max: Float!
+  capacity_per_axle: Int!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
   name: String!
   type_id: String!
+  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
   weight: Float!
+}
+
+input VehicleModelInput {
+  axles: Float!
+  brand_id: String!
+  capacity_max: Float!
+  capacity_per_axle: Int!
+  created_by: String!
+  name: String!
+  type_id: String!
+  updated_by: String!
+  weight: Float!
+}
+
+type VehicleModelReferences {
+  axles: Int!
+  brand_id: String!
+  capacity_max: Float!
+  capacity_per_axle: Int!
+  id: String!
+  name: String!
+  type_id: String!
+  weight: Float!
+}
+
+type VehicleTypeContainsBodyGraphql {
+  created_at: Timestamp!
+  id: String!
+  updated_at: Timestamp!
+  vehicle_bodywork_id: String!
+  vehicle_type_id: String!
 }
 
 input VehicleTypeInput {
@@ -121,14 +220,32 @@ input VehicleTypeInput {
 }
 
 type VehicleTypeModel {
-  VehicleModels: VehicleModelGraphql!
-  VehicleTypeContainsBody: VehicleBodyworkModel!
+  VehicleModels: VehicleModelGraphql
+  VehicleTypeContainsBody: VehicleBodyworkModel
   bodyWork: Boolean!
   createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
+  id: String!
   name: String!
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
+}
+
+type VehicleTypeReferences {
+  bodyWork: Boolean!
+  id: String!
+  name: String!
+}
+
+input VehicleUpdateInput {
+  color: String
+  created_by: String
+  model_id: String
+  plate: String
+  renavam: String
+  rntrc_expiration: String
+  updated_by: String
+  year: String
 }
