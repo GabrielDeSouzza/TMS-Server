@@ -18,7 +18,7 @@ export class VehicleBodyworkPrismaDto {
       created_at: vehicleBodyworkPrisma.created_at,
       updated_at: vehicleBodyworkPrisma.updated_at,
       created_by: vehicleBodyworkPrisma.created_by,
-      updated_by: vehicleBodyworkPrisma.update_by,
+      updated_by: vehicleBodyworkPrisma.updated_by,
       id: vehicleBodyworkPrisma.id,
     });
   }
@@ -32,7 +32,7 @@ export class VehicleBodyworkPrismaDto {
       id: vehicleBodywork.id,
       mass: vehicleBodywork.mass,
       name: vehicleBodywork.name,
-      update_by: vehicleBodywork.updated_by,
+      updated_by: vehicleBodywork.updated_by,
       updated_at: vehicleBodywork.updated_at,
       volume: vehicleBodywork.volume,
     };
@@ -47,7 +47,7 @@ export class VehicleBodyworkPrismaDto {
       id: vehicleBodywork.id,
       mass: vehicleBodywork.mass,
       name: vehicleBodywork.name,
-      update_by: vehicleBodywork.updated_by,
+      updated_by: vehicleBodywork.updated_by,
       updated_at: vehicleBodywork.updated_at,
       volume: vehicleBodywork.volume,
     };

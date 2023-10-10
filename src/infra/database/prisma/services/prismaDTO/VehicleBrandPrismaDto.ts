@@ -17,7 +17,7 @@ export class VehicleBrandPrismaDTO {
       name: vehicleBrandPrisma.name,
       created_at: vehicleBrandPrisma.created_at,
       updated_at: vehicleBrandPrisma.updated_at,
-      updated_by: vehicleBrandPrisma.update_by,
+      updated_by: vehicleBrandPrisma.updated_by,
       created_by: vehicleBrandPrisma.created_by,
     });
   }
@@ -29,7 +29,7 @@ export class VehicleBrandPrismaDTO {
       name: vehicleBrandEntity.name,
       created_at: vehicleBrandEntity.created_at,
       updated_at: vehicleBrandEntity.updated_at,
-      update_by: vehicleBrandEntity.updated_by,
+      updated_by: vehicleBrandEntity.updated_by,
       created_by: vehicleBrandEntity.created_by,
     };
 
@@ -43,7 +43,7 @@ export class VehicleBrandPrismaDTO {
       name: vehicleBrand.name,
       created_at: vehicleBrand.created_at,
       updated_at: vehicleBrand.updated_at,
-      update_by: vehicleBrand.updated_by,
+      updated_by: vehicleBrand.updated_by,
       created_by: vehicleBrand.created_by,
     };
 

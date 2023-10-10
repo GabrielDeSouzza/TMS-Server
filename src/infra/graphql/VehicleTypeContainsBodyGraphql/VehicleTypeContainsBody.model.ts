@@ -1,11 +1,18 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
+import { type IVehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
 import { type IVehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+
+import { VehicleBodyworkModelReferences } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
+import { VehicleTypeReferences } from '../VehicleType/vehicle-type.model';
 
 @ObjectType()
-export class VehicleTypeContainsBodyGraphql
-  implements IVehicleTypeContainsBody
-{
+export class VehicleTypeContainsBodyModel implements IVehicleTypeContainsBody {
+  @Field()
+  created_by: string;
+  @Field()
+  updated_by: string;
   @Field()
   id?: string;
   @Field()
@@ -16,4 +23,15 @@ export class VehicleTypeContainsBodyGraphql
   updated_at: Date;
   @Field(() => Date)
   created_at: Date;
+  @Field(() => [VehicleBodyworkModelReferences])
+  VehicleBodywork: IVehicleBodywork[];
+}
+
+@ObjectType()
+export class VehicleBodyworkContainsTypes extends OmitType(
+  VehicleTypeContainsBodyModel,
+  ['VehicleBodywork'],
+) {
+  @Field(() => [VehicleTypeReferences])
+  VehicleType: IVehicleType[];
 }

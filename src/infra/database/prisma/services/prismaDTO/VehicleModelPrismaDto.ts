@@ -42,7 +42,7 @@ export class VehicleModelPrismaDTO {
       created_at: vehicleModelEntity.created_at,
       created_by: vehicleModelEntity.created_by,
       updated_at: vehicleModelEntity.updated_at,
-      update_by: vehicleModelEntity.updated_by,
+      updated_by: vehicleModelEntity.updated_by,
       id: vehicleModelEntity.id,
     };
 
@@ -63,7 +63,7 @@ export class VehicleModelPrismaDTO {
       created_at: vehicleModel.created_at,
       created_by: vehicleModel.created_by,
       updated_at: vehicleModel.updated_at,
-      update_by: vehicleModel.updated_by,
+      updated_by: vehicleModel.updated_by,
     };
 
     return vehicleModelUpdate;

@@ -43,7 +43,7 @@ model User {
   RouteCreatedBy                    Route[]                    @relation("created_by")
   RouteUpdatedBy                    Route[]                    @relation("updated_by")
   VehicleCreatedBy                  Vehicle[]                  @relation("created_by")
-  VehicleUpdateBy                   Vehicle[]                  @relation("updated_by")
+  VehicleUpdatedBy                  Vehicle[]                  @relation("updated_by")
   VehicleModelCreatedBy             VehicleModel[]             @relation("created_by")
   VehicleModelUpdatedBy             VehicleModel[]             @relation("updated_by")
   VehicleBrandCreatedBy             VehicleBrand[]             @relation("created_by")
@@ -68,7 +68,7 @@ model User {
   CarrierCompanyUpdatedBy           CarrierCompany[]           @relation("updated_by")
   PhysicalCustomerCreatedBy         PhysicalCustomer[]         @relation("created_by")
   PhysicalCustomerUpdatedBy         PhysicalCustomer[]         @relation("updated_by")
-  InvoiceCreadeBy                   Invoice[]                  @relation("created_by")
+  InvoiceCreatedBy                  Invoice[]                  @relation("created_by")
   InvoiceUpdatedBy                  Invoice[]                  @relation("updated_by")
   CiotCreatedBy                     Ciot[]                     @relation("created_by")
   CiotUpdatedBy                     Ciot[]                     @relation("updated_by")
@@ -103,8 +103,8 @@ model Vehicle {
 
   CreatedBy  User?        @relation("created_by", fields: [created_by], references: [id])
   created_by String
-  UpdateBy   User?        @relation("updated_by", fields: [update_by], references: [id])
-  update_by  String
+  UpdatedBy  User?        @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
   Model      VehicleModel @relation(fields: [model_id], references: [id])
   model_id   String
 
@@ -125,8 +125,8 @@ model VehicleModel {
 
   CreatedBy   User?        @relation("created_by", fields: [created_by], references: [id])
   created_by  String
-  UpdateBy    User?        @relation("updated_by", fields: [update_by], references: [id])
-  update_by   String
+  UpdatedBy   User?        @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by  String
   Brand       VehicleBrand @relation(fields: [brand_id], references: [id])
   brand_id    String
   VehicleType VehicleType  @relation(fields: [type_id], references: [id])
@@ -145,15 +145,15 @@ model VehicleBrand {
 
   CreatedBy  User?  @relation("created_by", fields: [created_by], references: [id])
   created_by String
-  UpdateBy   User?  @relation("updated_by", fields: [update_by], references: [id])
-  update_by  String
+  UpdatedBy  User?  @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
 
   @@map("vehicle_brands")
 }
 
 model VehicleType {
   id         String   @id @default(uuid())
-  name       String
+  name       String   @unique
   bodywork   Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
@@ -163,8 +163,8 @@ model VehicleType {
 
   CreatedBy  User?  @relation("created_by", fields: [created_by], references: [id])
   created_by String
-  UpdateBy   User?  @relation("updated_by", fields: [update_by], references: [id])
-  update_by  String
+  UpdatedBy  User?  @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
 
   @@map("vehicle_types")
 }
@@ -182,8 +182,8 @@ model VehicleBodywork {
 
   CreatedBy  User?  @relation("created_by", fields: [created_by], references: [id])
   created_by String
-  UpdateBy   User?  @relation("updated_by", fields: [update_by], references: [id])
-  update_by  String
+  UpdatedBy  User?  @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
 
   @@map("vehicle_bodyworks")
 }
@@ -195,8 +195,8 @@ model VehicleTypeContainsBody {
 
   CreatedBy       User?           @relation("created_by", fields: [created_by], references: [id])
   created_by      String
-  UpdateBy        User?           @relation("updated_by", fields: [update_by], references: [id])
-  update_by       String
+  UpdatedBy       User?           @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by      String
   VehicleType     VehicleType     @relation(fields: [type_id], references: [id])
   type_id         String
   VehicleBodywork VehicleBodywork @relation(fields: [bodywork_id], references: [id])
@@ -214,8 +214,8 @@ model OutsourcedVehicle {
 
   CreatedBy           User?            @relation("created_by", fields: [created_by], references: [id])
   created_by          String
-  UpdateBy            User?            @relation("updated_by", fields: [update_by], references: [id])
-  update_by           String
+  UpdatedBy           User?            @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by          String
   Vehicle             Vehicle          @relation(fields: [vehicle_id], references: [id])
   vehicle_id          String
   OrderProcessing     OrderProcessing? @relation(fields: [order_processing_id], references: [id])
@@ -231,8 +231,8 @@ model CompanyVehicle {
 
   CreatedBy           User?            @relation("created_by", fields: [created_by], references: [id])
   created_by          String
-  UpdateBy            User?            @relation("updated_by", fields: [update_by], references: [id])
-  update_by           String
+  UpdatedBy           User?            @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by          String
   Vehicle             Vehicle          @relation(fields: [vehicle_id], references: [id])
   vehicle_id          String           @unique
   OrderProcessing     OrderProcessing? @relation(fields: [order_processing_id], references: [id])
@@ -254,8 +254,8 @@ model OutsourcedDriver {
 
   CreatedBy             User?             @relation("created_by", fields: [created_by], references: [id])
   created_by            String
-  UpdateBy              User?             @relation("updated_by", fields: [update_by], references: [id])
-  update_by             String
+  UpdatedBy             User?             @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by            String
   NaturalPerson         NaturalPerson     @relation(fields: [cpf], references: [cpf])
   cpf                   String            @unique
   OutsourcedVehicle     OutsourcedVehicle @relation(fields: [outsourced_vehicle_id], references: [id])
@@ -275,8 +275,8 @@ model ContractOutsourcedDriver {
 
   CreatedBy        User?            @relation("created_by", fields: [created_by], references: [id])
   created_by       String
-  UpdateBy         User?            @relation("updated_by", fields: [update_by], references: [id])
-  update_by        String
+  UpdatedBy        User?            @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by       String
   OutsourcedDriver OutsourcedDriver @relation(fields: [cpf], references: [cpf])
   cpf              String           @unique
 
@@ -295,8 +295,8 @@ model OwnDriver {
 
   CreatedBy     User?         @relation("created_by", fields: [created_by], references: [id])
   created_by    String
-  UpdateBy      User?         @relation("updated_by", fields: [update_by], references: [id])
-  update_by     String
+  UpdatedBy     User?         @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by    String
   NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
   cpf           String
 
@@ -363,8 +363,8 @@ model CarrierCompany {
 
   CreatedBy   User?       @relation("created_by", fields: [created_by], references: [id])
   created_by  String
-  UpdateBy    User?       @relation("updated_by", fields: [update_by], references: [id])
-  update_by   String
+  UpdatedBy   User?       @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by  String
   LegalPerson LegalPerson @relation(fields: [cnpj], references: [cnpj])
   cnpj        String      @unique
 
@@ -385,8 +385,8 @@ model PhysicalCustomer {
   PhysicalContractor PhysicalContractor?
   CreatedBy          User?               @relation("created_by", fields: [created_by], references: [id])
   created_by         String
-  UpdateBy           User?               @relation("updated_by", fields: [update_by], references: [id])
-  update_by          String
+  UpdatedBy          User?               @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by         String
 
   @@map("physical_customers")
 }
@@ -461,8 +461,8 @@ model CustomerOrder {
   updated_at  DateTime      @default(now())
   CreatedBy   User?         @relation("created_by", fields: [created_by], references: [id])
   created_by  String
-  UpdateBy    User?         @relation("updated_by", fields: [update_by], references: [id])
-  update_by   String
+  UpdatedBy   User?         @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by  String
   Route       Route[]
   Merchandise Merchandise[]
 
@@ -487,8 +487,8 @@ model Route {
 
   CreatedBy  User?         @relation("created_by", fields: [created_by], references: [id])
   created_by String
-  UpdateBy   User?         @relation("updated_by", fields: [update_by], references: [id])
-  update_by  String
+  UpdatedBy  User?         @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
   Order      CustomerOrder @relation(fields: [order_id], references: [id])
   order_id   String
 
@@ -509,8 +509,8 @@ model Invoice {
 
   CreatedBy            User?             @relation("created_by", fields: [created_by], references: [id])
   created_by           String
-  UpdateBy             User?             @relation("updated_by", fields: [update_by], references: [id])
-  update_by            String
+  UpdatedBy            User?             @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by           String
   PhysicalCustomer     PhysicalCustomer? @relation(fields: [cpf_physicalcustomer], references: [cpf])
   cpf_physicalcustomer String?
   CarrierCompany       CarrierCompany    @relation(fields: [carrier_cnpj], references: [cnpj])
@@ -542,8 +542,8 @@ model Ciot {
   updated_at         DateTime            @default(now())
   CreatedBy          User?               @relation("created_by", fields: [created_by], references: [id])
   created_by         String
-  UpdateBy           User?               @relation("updated_by", fields: [update_by], references: [id])
-  update_by          String
+  UpdatedBy          User?               @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by         String
 
   @@map("ciots")
 }
@@ -560,8 +560,8 @@ model OrderProcessing {
 
   CreatedBy  User?   @relation("created_by", fields: [created_by], references: [id])
   created_by String
-  UpdateBy   User?   @relation("updated_by", fields: [update_by], references: [id])
-  update_by  String
+  UpdatedBy  User?   @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
   Route      Route   @relation(fields: [route_id], references: [id])
   route_id   String
   Vehicle    Vehicle @relation(fields: [plate], references: [plate])
@@ -584,8 +584,8 @@ model TypeOfMaintenance {
   updated_at  DateTime      @default(now())
   CreatedBy   User?         @relation("created_by", fields: [created_by], references: [id])
   created_by  String
-  UpdateBy    User?         @relation("updated_by", fields: [update_by], references: [id])
-  update_by   String
+  UpdatedBy   User?         @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by  String
 
   @@map("types_of_maintenances")
 }
@@ -602,8 +602,8 @@ model MaintenanceCompany {
   updated_at  DateTime    @default(now())
   CreatedBy   User?       @relation("created_by", fields: [created_by], references: [id])
   created_by  String
-  UpdateBy    User?       @relation("updated_by", fields: [update_by], references: [id])
-  update_by   String
+  UpdatedBy   User?       @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by  String
 
   @@map("maintenance_companies")
 }
@@ -621,8 +621,8 @@ model Maintenance {
   updated_at               DateTime           @default(now())
   CreatedBy                User?              @relation("created_by", fields: [created_by], references: [id])
   created_by               String
-  UpdateBy                 User?              @relation("updated_by", fields: [update_by], references: [id])
-  update_by                String
+  UpdatedBy                User?              @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by               String
 
   @@map("maintenance")
 }

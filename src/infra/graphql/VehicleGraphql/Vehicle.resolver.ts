@@ -12,6 +12,7 @@ import { GraphQLError } from 'graphql';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
+import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
@@ -26,6 +27,7 @@ export class VehicleGraphqlResolver {
     private vehicleRepository: VehicleRepository,
     private userRepository: UserRepository,
     private vehicleModelRepository: VehicleModelRepository,
+    private vehicleTypeContainsBodyRepositoy: VehicleTypeContainsBodyRepository,
   ) {}
 
   @Query(() => VehicleCarModel)
@@ -76,8 +78,10 @@ export class VehicleGraphqlResolver {
   @ResolveField(() => VehicleTypeReferences)
   async VehicleType(@Parent() vehicle: VehicleInput) {
     const { model_id: modeld } = vehicle;
+    const type = await this.vehicleModelRepository.findOnlyVehicleType(modeld);
+    console.log(type);
 
-    return this.vehicleModelRepository.findOnlyVehicleType(modeld);
+    return type;
   }
   @ResolveField(() => VehicleBrandReferences)
   async VehicleBrand(@Parent() vehicle: VehicleInput) {

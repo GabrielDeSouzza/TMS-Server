@@ -30,10 +30,11 @@ export class VehicleTypeService implements VehicleTypeRepository {
   }
   async updateVehicleType(
     id: string,
-    vehicleType: IVehicleType,
+    vehicleType: Partial<IVehicleType>,
   ): Promise<VehicleType> {
+    console.log(id);
     const updatedType = await this.prisma.vehicleType.update({
-      data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType),
+      data: VehicleTypePrismaDTO.EntityToPrismaUpdate(vehicleType),
       where: { id },
     });
 

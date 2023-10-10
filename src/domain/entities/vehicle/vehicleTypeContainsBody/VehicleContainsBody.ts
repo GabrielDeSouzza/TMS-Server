@@ -6,6 +6,14 @@ import { type Replace } from 'helpers/Replace';
 
 import { Entity } from '../../../shared/entities/Entity';
 import { NotificationError } from '../../../shared/notification/NotificationError';
+import {
+  type IVehicleBodywork,
+  type VehicleBodywork,
+} from '../vehicleBodywork/VehicleBodywork';
+import {
+  type IVehicleType,
+  type VehicleType,
+} from '../vehicleTypes/VehicleTypes';
 
 export interface IVehicleTypeContainsBody {
   id?: string;
@@ -13,10 +21,13 @@ export interface IVehicleTypeContainsBody {
   vehicle_type_id: string;
   updated_at: Date;
   created_at: Date;
+  created_by: string;
+  updated_by: string;
+  VehicleType?: IVehicleType[] | VehicleType[];
+  VehicleBodywork?: IVehicleBodywork[] | VehicleBodywork[] | void[];
 }
 
 export class VehicleTypeContainsBody extends Entity {
-  private _id: string;
   private props: IVehicleTypeContainsBody;
 
   constructor(
@@ -79,7 +90,7 @@ export class VehicleTypeContainsBody extends Entity {
   public get vehicle_type_id(): string {
     return this.props.vehicle_type_id;
   }
-  public set vehicleType(vehicle_type_id: string) {
+  public set vehicle_type_id(vehicle_type_id: string) {
     this.props.vehicle_type_id = vehicle_type_id;
   }
 
@@ -90,15 +101,53 @@ export class VehicleTypeContainsBody extends Entity {
     this.vehicle_bodywork_id = vehicle_bodywork_id;
   }
 
-  public set updatedAt(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
+  public set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
 
-  public get updatedAt(): Date {
+  public get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public get createdAt(): Date {
+  public get created_at(): Date {
     return this.props.created_at;
+  }
+  public set created_at(created_at: Date) {
+    this.props.created_at = created_at;
+  }
+
+  public set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
+  }
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+  public set VehicleBodywork(
+    VehicleBodywork: VehicleBodywork[] | IVehicleBodywork[] | null | void[],
+  ) {
+    this.props.VehicleBodywork = VehicleBodywork;
+  }
+
+  public get VehicleBodywork():
+    | VehicleBodywork[]
+    | IVehicleBodywork[]
+    | undefined
+    | void[] {
+    return this.props.VehicleBodywork;
+  }
+  public set VehicleType(VehicleType: VehicleType[] | IVehicleType[] | null) {
+    this.props.VehicleType = VehicleType;
+  }
+
+  public get VehicleType(): VehicleType[] | IVehicleType[] | undefined {
+    return this.props.VehicleType;
   }
 }

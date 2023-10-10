@@ -5,15 +5,23 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
+import {
+  type IVehicleTypeContainsBody,
+  type VehicleTypeContainsBody,
+} from '../vehicleTypeContainsBody/VehicleContainsBody';
 
 export interface IVehicleType {
   id?: string;
   name: string;
   bodyWork: boolean;
+  body_work_id?: string[];
   created_at: Date;
   updated_at: Date;
   created_by: string;
   updated_by: string;
+  VehicleTypeContainsBody?:
+    | VehicleTypeContainsBody[]
+    | IVehicleTypeContainsBody[];
 }
 
 export class VehicleType extends Entity {
@@ -95,5 +103,25 @@ export class VehicleType extends Entity {
   }
   public get bodyWork(): boolean {
     return this.props.bodyWork;
+  }
+  public set body_work_id(body_work_id: string[] | undefined) {
+    this.props.body_work_id = body_work_id;
+  }
+  public get body_work_id(): string[] | undefined {
+    return this.props.body_work_id;
+  }
+  public set VehicleTypeContainsBody(
+    VehicleTypeContainsBody:
+      | VehicleTypeContainsBody[]
+      | IVehicleTypeContainsBody[]
+      | undefined,
+  ) {
+    this.props.VehicleTypeContainsBody = VehicleTypeContainsBody;
+  }
+  public get VehicleTypeContainsBody():
+    | VehicleTypeContainsBody[]
+    | IVehicleTypeContainsBody[]
+    | undefined {
+    return this.props.VehicleTypeContainsBody;
   }
 }

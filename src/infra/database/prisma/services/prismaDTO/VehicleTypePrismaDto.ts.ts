@@ -19,7 +19,7 @@ export class VehicleTypePrismaDTO {
       created_at: vehicleTypePrisma.created_at,
       updated_at: vehicleTypePrisma.updated_at,
       created_by: vehicleTypePrisma.created_by,
-      updated_by: vehicleTypePrisma.update_by,
+      updated_by: vehicleTypePrisma.updated_by,
     });
   }
 
@@ -32,7 +32,7 @@ export class VehicleTypePrismaDTO {
       created_at: vehicleTypeEntity.created_at,
       updated_at: vehicleTypeEntity.updated_at,
       created_by: vehicleTypeEntity.created_by,
-      update_by: vehicleTypeEntity.updated_by,
+      updated_by: vehicleTypeEntity.updated_by,
       id: vehicleTypeEntity.id,
     };
 
@@ -40,7 +40,7 @@ export class VehicleTypePrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    vehicleType: VehicleType,
+    vehicleType: Partial<VehicleType>,
   ): Prisma.VehicleTypeUpdateInput {
     const vehicleBrandUpdate: Prisma.VehicleTypeUncheckedUpdateInput = {
       name: vehicleType.name,
@@ -48,7 +48,7 @@ export class VehicleTypePrismaDTO {
       created_at: vehicleType.created_at,
       updated_at: vehicleType.updated_at,
       created_by: vehicleType.created_by,
-      update_by: vehicleType.updated_by,
+      updated_by: vehicleType.updated_by,
       id: vehicleType.id,
     };
 

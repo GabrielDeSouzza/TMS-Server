@@ -14,7 +14,7 @@ type Mutation {
   updateVehicleBodywork(id: String!, vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
-  updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeInput!): VehicleTypeModel!
+  updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUdateInput!): VehicleTypeModel!
 }
 
 type Query {
@@ -89,7 +89,7 @@ input VehicleBodyworkInput {
 type VehicleBodyworkModel {
   CreatedUser: UserModelRefereces!
   UpdatedUser: UserModelRefereces!
-  VehicleTypeContainsBody: [VehicleTypeContainsBodyGraphql!]
+  VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   axles: Float!
   createdUser: UserModelRefereces!
   created_at: Timestamp!
@@ -100,6 +100,14 @@ type VehicleBodyworkModel {
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
+  volume: Float!
+}
+
+type VehicleBodyworkModelReferences {
+  axles: Float!
+  id: String!
+  mass: Float!
+  name: String!
   volume: Float!
 }
 
@@ -204,16 +212,20 @@ type VehicleModelReferences {
   weight: Float!
 }
 
-type VehicleTypeContainsBodyGraphql {
+type VehicleTypeContainsBodyModel {
+  VehicleBodywork: [VehicleBodyworkModelReferences!]!
   created_at: Timestamp!
+  created_by: String!
   id: String!
   updated_at: Timestamp!
+  updated_by: String!
   vehicle_bodywork_id: String!
   vehicle_type_id: String!
 }
 
 input VehicleTypeInput {
   bodyWork: Boolean!
+  body_work_id: [String!]
   created_by: String!
   name: String!
   updated_by: String!
@@ -221,7 +233,7 @@ input VehicleTypeInput {
 
 type VehicleTypeModel {
   VehicleModels: VehicleModelGraphql
-  VehicleTypeContainsBody: VehicleBodyworkModel
+  VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   bodyWork: Boolean!
   createdUser: UserModelRefereces!
   created_at: Timestamp!
@@ -234,9 +246,19 @@ type VehicleTypeModel {
 }
 
 type VehicleTypeReferences {
+  VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   bodyWork: Boolean!
   id: String!
   name: String!
+}
+
+input VehicleTypeUdateInput {
+  bodyWork: Boolean
+  body_work_id: [String!]
+  created_by: String
+  del_body_id: [String!]
+  name: String
+  updated_by: String!
 }
 
 input VehicleUpdateInput {

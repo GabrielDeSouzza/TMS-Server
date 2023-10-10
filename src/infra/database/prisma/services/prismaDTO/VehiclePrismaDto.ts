@@ -31,7 +31,7 @@ export class VehicleDto {
       created_by: vehicle.created_by,
       id: vehicle.id,
       model_id: vehicle.model_id,
-      update_by: vehicle.updated_by,
+      updated_by: vehicle.updated_by,
     };
   }
 
@@ -49,7 +49,7 @@ export class VehicleDto {
       created_by: vehicle.created_by,
       id: vehicle.id,
       model_id: vehicle.model_id,
-      update_by: vehicle.updated_by,
+      updated_by: vehicle.updated_by,
     };
   }
 }

@@ -15,6 +15,9 @@ export abstract class VehicleModelRepository {
     vehicleBrand: Partial<IVehicleModel>,
   ): Promise<VehicleModel>;
   abstract getAllVehicleModel(): Promise<VehicleModel[]>;
-  abstract findOnlyVehicleType(modelId: string): Promise<VehicleType>;
+  abstract findOnlyVehicleType(
+    modelId: string,
+    containsBodies?: boolean,
+  ): Promise<VehicleType>;
   abstract findOnlyVehicleBrand(modelId: string): Promise<VehicleBrand>;
 }

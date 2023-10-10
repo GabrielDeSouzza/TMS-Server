@@ -14,7 +14,14 @@ export class VehicleTypeInput
   created_by: string;
   @Field()
   updated_by: string;
+  @Field(() => [String], { nullable: true })
+  body_work_id: string[];
 }
 
 @InputType()
-export class VehicleBrandUpdateInput extends PartialType(VehicleTypeInput) {}
+export class VehicleTypeUdateInput extends PartialType(VehicleTypeInput) {
+  @Field(() => [String], { nullable: true })
+  del_body_id?: string[];
+  @Field()
+  updated_by: string;
+}
