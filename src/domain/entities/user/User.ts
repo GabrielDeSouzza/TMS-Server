@@ -110,15 +110,18 @@ export class User extends Entity {
     return this.props.password;
   }
 
-  public set updatedAt(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
+  public set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
 
-  public get updatedAt(): Date {
+  public get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public get createdAt(): Date {
+  public get created_at(): Date {
     return this.props.created_at;
+  }
+  public set created_at(created_at: Date) {
+    this.props.created_at = created_at;
   }
 }

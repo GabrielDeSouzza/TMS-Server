@@ -153,6 +153,7 @@
     "node/no-missing-import": "off",
     "node/no-unpublished-import": "off",
     "import/prefer-default-export": "off",
+    "@darraghor/nestjs-typed/injectable-should-be-provided": "off",
     "@typescript-eslint/no-unsafe-call": "off",
     "quote-props": ["error", "consistent-as-needed"],
     "arrow-body-style": ["error", "as-needed"],

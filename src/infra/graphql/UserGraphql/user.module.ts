@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
+import { JwtService } from '@nestjs/jwt';
 
 import { PrismaService } from 'infra/database/prisma/prisma.service';
 
@@ -8,6 +9,7 @@ import { UserResolver } from './user.resolver';
 
 @Module({
   providers: [
+    JwtService,
     UserResolver,
     { provide: UserRepository, useClass: UserService },
     PrismaService,

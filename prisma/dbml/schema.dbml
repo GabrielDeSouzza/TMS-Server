@@ -110,7 +110,7 @@ Table vehicle_brands {
 
 Table vehicle_types {
   id String [pk]
-  name String [not null]
+  name String [unique, not null]
   bodywork Boolean [not null, default: false]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]

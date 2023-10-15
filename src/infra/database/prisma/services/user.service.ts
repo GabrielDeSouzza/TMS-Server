@@ -18,18 +18,15 @@ export class UserService implements UserRepository {
     const users: User[] = usersPrisma.map(user =>
       UserPrismaDTO.PrismaToEntity(user),
     );
-    console.log(users);
 
     return users;
   }
 
   async createUSer(user: IUser): Promise<User> {
     try {
-      console.log(user);
       const newUSer = await this.prisma.user.create({
         data: UserPrismaDTO.EntityToPrisma(user),
       });
-      console.log(newUSer);
 
       return UserPrismaDTO.PrismaToEntity(newUSer);
     } catch (error) {
@@ -40,7 +37,6 @@ export class UserService implements UserRepository {
   async findUserById(id: string): Promise<User> {
     try {
       const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
-      console.log(typeof user);
 
       return UserPrismaDTO.PrismaToEntity(user);
     } catch (error) {

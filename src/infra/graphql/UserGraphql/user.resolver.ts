@@ -1,11 +1,20 @@
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
+import { hashSync } from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
+import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
+
 import { UserRepository } from '../../../domain/repositories/UserRepository';
+import { AcessAllowed } from '../decorators/AcessAllowed';
+import { RoleInterceptor } from '../interceptors/RoleInterceptor';
 import { UserInput, UserUpdateInput } from './user.input';
 import { UserModel } from './user.model';
 
+@UseGuards(GraphQLAuthGuard)
+@AcessAllowed('ADMIN')
+@UseInterceptors(RoleInterceptor)
 @Resolver(() => UserModel)
 export class UserResolver {
   constructor(private userRepository: UserRepository) {}
@@ -28,8 +37,11 @@ export class UserResolver {
   async getAllUsers() {
     return this.userRepository.findAllUsers();
   }
+
   @Mutation(() => UserModel)
   async createUSer(@Args('createUserInput') createUserInput: UserInput) {
+    createUserInput.password = hashSync(createUserInput.password, 10);
+
     return await this.userRepository.createUSer(createUserInput);
   }
 

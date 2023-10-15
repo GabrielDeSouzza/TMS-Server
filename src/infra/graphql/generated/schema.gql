@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+type AuthModel {
+  email: String!
+  id: String!
+  name: String!
+  token: String!
+  username: String!
+}
+
 type Mutation {
   createUSer(createUserInput: UserInput!): UserModel!
   createVehicle(vehicleInput: VehicleInput!): VehicleCarModel!
@@ -9,6 +22,7 @@ type Mutation {
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
+  login(loginData: AuthInput!): AuthModel!
   updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
