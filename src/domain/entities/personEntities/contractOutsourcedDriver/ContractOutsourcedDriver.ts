@@ -7,7 +7,7 @@ import { type IValidationField } from '../../../shared/notification/Notification
 import { NotificationError } from '../../../shared/notification/NotificationError';
 import { type OutsourcedDriver } from '../outsourcedDriver/OutsourcedDriver';
 
-interface IContractOutsourcedDriver {
+export interface IContractOutsourcedDriver {
   id?: string;
   type: string;
   situation: string;

@@ -16,6 +16,7 @@ type AuthModel {
 }
 
 type Mutation {
+  createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createUSer(createUserInput: UserInput!): UserModel!
   createVehicle(vehicleInput: VehicleInput!): VehicleCarModel!
   createVehicleBodywork(vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
@@ -23,6 +24,7 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   login(loginData: AuthInput!): AuthModel!
+  updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
@@ -31,12 +33,111 @@ type Mutation {
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUdateInput!): VehicleTypeModel!
 }
 
+input NaturalPersonInput {
+  address_number: String!
+  cep: String!
+  city: String!
+  complement: String
+  cpf: String!
+  date_birth: Timestamp!
+  email: String!
+  first_phone: String!
+  gender: String!
+  name: String!
+  nationality: String!
+  neighborhood: String!
+  public_place: String!
+  rg: String!
+  second_phone: String
+  third_phone: String
+  uf: String!
+}
+
+type NaturalPersonModel {
+  address_number: String!
+  cep: String!
+  city: String!
+  complement: String
+  cpf: String!
+  date_birth: Timestamp!
+  email: String!
+  first_phone: String!
+  gender: String!
+  id: String!
+  name: String!
+  nationality: String!
+  neighborhood: String!
+  public_place: String!
+  rg: String!
+  second_phone: String
+  third_phone: String
+  uf: String!
+}
+
+input NaturalPersonUpdate {
+  address_number: String
+  cep: String
+  city: String
+  complement: String
+  cpf: String
+  date_birth: Timestamp
+  email: String
+  first_phone: String
+  gender: String
+  name: String
+  nationality: String
+  neighborhood: String
+  public_place: String
+  rg: String
+  second_phone: String
+  third_phone: String
+  uf: String
+}
+
+input OwnDriverInput {
+  NaturalPerson: NaturalPersonInput!
+  cnh: String!
+  cnh_category: String!
+  cnh_expiration: Timestamp!
+  company_vehicle: Boolean!
+  course_mopp: Boolean!
+}
+
+type OwnDriverModel {
+  NaturalPerson: NaturalPersonModel!
+  cnh: String!
+  cnh_category: String!
+  cnh_expiration: Timestamp!
+  company_vehicle: Boolean!
+  course_mopp: Boolean!
+  cpf: String!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  natural_person_id: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input OwnDriverUpdate {
+  NaturalPersonUpdate: NaturalPersonUpdate!
+  cnh: String
+  cnh_category: String
+  cnh_expiration: Timestamp
+  company_vehicle: Boolean
+  course_mopp: Boolean
+}
+
 type Query {
+  getAllOwnDriver: [OwnDriverModel!]!
   getAllVehicle: [VehicleCarModel!]!
   getAllVehicleBodywork: [VehicleBodyworkModel!]
   getAllVehicleBrand: [VehicleBrandModel!]!
   getAllVehicleModel: [VehicleModelGraphql!]
   getAllVehicleTypes: [VehicleTypeModel!]
+  getOwnDriver(id: String!): OwnDriverModel!
   getVehicle(id: String, plate: String): VehicleCarModel!
   getVehicleBodyworkModel(id: String!): VehicleBodyworkModel!
   getVehicleBrand(id: String!): VehicleBrandModel!

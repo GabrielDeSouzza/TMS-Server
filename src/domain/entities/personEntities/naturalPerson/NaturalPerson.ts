@@ -6,30 +6,27 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface INaturalPerson {
+export interface INaturalPerson {
   id?: string;
   name: string;
   date_birth: Date;
   gender: string;
   cpf: string;
   rg: string;
-  cep: number;
+  cep: string;
   public_place: string;
   address_number: string;
   neighborhood: string;
-  complement: string;
+  complement?: string;
   city: string;
   uf: string;
   first_phone: string;
-  second_phone: string;
-  third_phone: string;
+  second_phone?: string;
+  third_phone?: string;
   email: string;
   nationality: string;
-  updated_at: Date;
-  created_at: Date;
 }
 export class NaturalPerson extends Entity {
-  private _id: string;
   private props: INaturalPerson;
 
   constructor(
@@ -39,8 +36,6 @@ export class NaturalPerson extends Entity {
     this.props = {
       ...props,
       id: props.id ?? randomUUID(),
-      updated_at: new Date(),
-      created_at: props.created_at ?? new Date(),
     };
 
     if (this.notification.hasErrors()) {
@@ -141,16 +136,6 @@ export class NaturalPerson extends Entity {
         fieldName: 'Nationality',
         maxLength: 80,
       },
-      {
-        field: this.props.updated_at,
-        fieldName: 'Updated At',
-        maxLength: 10,
-      },
-      {
-        field: this.created_at,
-        fieldName: 'Created At',
-        maxLength: 10,
-      },
     );
     this.notification.requiredField('NaturalPerson', fieldsValidation);
   }
@@ -200,11 +185,11 @@ export class NaturalPerson extends Entity {
     return this.props.rg;
   }
 
-  public set cep(cep: number) {
+  public set cep(cep: string) {
     this.props.cep = cep;
   }
 
-  public get cep(): number {
+  public get cep(): string {
     return this.props.cep;
   }
 
@@ -264,11 +249,11 @@ export class NaturalPerson extends Entity {
     return this.props.first_phone;
   }
 
-  public set second_phone(secondPhone: string) {
+  public set second_phone(secondPhone: string | null) {
     this.props.second_phone = secondPhone;
   }
 
-  public get second_phone(): string {
+  public get second_phone(): string | null {
     return this.props.second_phone;
   }
 
@@ -276,7 +261,7 @@ export class NaturalPerson extends Entity {
     this.props.third_phone = thirdPhone;
   }
 
-  public get third_phone(): string {
+  public get third_phone(): string | null {
     return this.props.third_phone;
   }
 
@@ -294,21 +279,5 @@ export class NaturalPerson extends Entity {
 
   public get nationality(): string {
     return this.props.nationality;
-  }
-
-  public set updated_at(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
-  }
-
-  public get updated_at(): Date {
-    return this.props.updated_at;
-  }
-
-  public set created_at(createdAt: Date) {
-    this.props.created_at = createdAt;
-  }
-
-  public get created_at(): Date {
-    return this.props.created_at;
   }
 }

@@ -6,9 +6,9 @@ import { GraphQLError } from 'graphql';
 
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { UserRepository } from '../../../domain/repositories/UserRepository';
-import { AcessAllowed } from '../decorators/AcessAllowed';
-import { RoleInterceptor } from '../interceptors/RoleInterceptor';
+import { UserRepository } from '../../../../domain/repositories/UserRepository';
+import { AcessAllowed } from '../../utilities/decorators/AcessAllowed';
+import { RoleInterceptor } from '../../utilities/interceptors/RoleInterceptor';
 import { UserInput, UserUpdateInput } from './user.input';
 import { UserModel } from './user.model';
 

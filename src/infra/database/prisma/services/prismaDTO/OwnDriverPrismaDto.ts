@@ -1,0 +1,108 @@
+import {
+  CNH as CNHPrisma,
+  type Prisma,
+  type OwnDriver as OwnDriverPrisma,
+} from '@prisma/client';
+
+import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import {
+  CNH,
+  type IOwnDriver,
+} from 'domain/entities/personEntities/ownDriver/OwnDriver';
+import { OwnDriver } from 'domain/entities/personEntities/ownDriver/OwnDriver';
+
+export class OwnDriverPrismaDTO {
+  public static PrismaToEntity(ownDriverPrisma: OwnDriverPrisma) {
+    return new OwnDriver({
+      id: ownDriverPrisma.id,
+      cnh: ownDriverPrisma.cnh,
+      cnh_category: CNH[ownDriverPrisma.cnh_category],
+      cnh_expiration: ownDriverPrisma.cnh_expiration,
+      company_vehicle: ownDriverPrisma.company_vehicle,
+      course_mopp: ownDriverPrisma.course_mopp,
+      created_by: ownDriverPrisma.created_by,
+      natural_person_id: ownDriverPrisma.natural_person_id,
+      updated_by: ownDriverPrisma.updated_by,
+      created_at: ownDriverPrisma.created_at,
+      updated_at: ownDriverPrisma.updated_at,
+    });
+  }
+  public static EntityToCreatePrisma(
+    ownDriver: IOwnDriver,
+    naturalPerson: INaturalPerson,
+  ) {
+    const ownDriverPrisma: Prisma.OwnDriverCreateInput = {
+      cnh: ownDriver.cnh,
+      cnh_category: CNHPrisma[ownDriver.cnh_category],
+      cnh_expiration: ownDriver.cnh_expiration,
+      company_vehicle: ownDriver.company_vehicle,
+      course_mopp: ownDriver.course_mopp,
+      created_at: ownDriver.created_at,
+      updated_at: ownDriver.updated_at,
+      CreatedBy: { connect: { id: ownDriver.created_by } },
+      UpdatedBy: { connect: { id: ownDriver.updated_by } },
+      NaturalPerson: {
+        create: {
+          address_number: naturalPerson.address_number,
+          cep: naturalPerson.cep,
+          city: naturalPerson.city,
+          complement: naturalPerson.complement,
+          cpf: naturalPerson.cpf,
+          date_birth: naturalPerson.date_birth,
+          email: naturalPerson.email,
+          first_phone: naturalPerson.first_phone,
+          gender: naturalPerson.gender,
+          name: naturalPerson.name,
+          nationality: naturalPerson.nationality,
+          neighborhood: naturalPerson.neighborhood,
+          public_place: naturalPerson.public_place,
+          rg: naturalPerson.rg,
+          uf: naturalPerson.uf,
+          second_phone: naturalPerson.second_phone,
+          third_phone: naturalPerson.third_phone,
+        },
+      },
+    };
+
+    return ownDriverPrisma;
+  }
+
+  public static EntityToPrismaUpdate(
+    ownDriver: IOwnDriver,
+    naturalPerson: INaturalPerson,
+  ) {
+    const ownDriverUptade: Prisma.OwnDriverUpdateInput = {
+      cnh: ownDriver.cnh,
+      cnh_category: CNHPrisma[ownDriver.cnh_category],
+      cnh_expiration: ownDriver.cnh_expiration,
+      company_vehicle: ownDriver.company_vehicle,
+      course_mopp: ownDriver.course_mopp,
+      created_at: ownDriver.created_at,
+      updated_at: ownDriver.updated_at,
+      UpdatedBy: { connect: { id: ownDriver.updated_by } },
+      NaturalPerson: {
+        update: {
+          address_number: naturalPerson.address_number,
+          cep: naturalPerson.cep,
+          city: naturalPerson.city,
+          complement: naturalPerson.complement,
+          cpf: naturalPerson.cpf,
+          date_birth: naturalPerson.date_birth,
+          email: naturalPerson.email,
+          first_phone: naturalPerson.first_phone,
+          gender: naturalPerson.gender,
+          name: naturalPerson.name,
+          nationality: naturalPerson.nationality,
+          neighborhood: naturalPerson.neighborhood,
+          public_place: naturalPerson.public_place,
+          rg: naturalPerson.rg,
+          uf: naturalPerson.uf,
+          second_phone: naturalPerson.second_phone,
+          third_phone: naturalPerson.third_phone,
+        },
+      },
+    };
+
+    return ownDriverUptade;
+  }
+}

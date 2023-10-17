@@ -23,11 +23,8 @@ export class RoleInterceptor implements NestInterceptor {
       context.getClass(),
       context.getHandler(),
     ]);
-    console.log(roleAllowed);
-    console.log(user.role);
-    console.log(roleAllowed.includes(user.role));
 
-    if (!roleAllowed.includes(user.role)) {
+    if (!roleAllowed.includes(user.role) && user.role !== 'ADMIN') {
       throw new GraphQLError('Acess restrict', {
         extensions: { code: HttpStatus.UNAUTHORIZED },
       });

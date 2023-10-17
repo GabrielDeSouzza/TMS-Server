@@ -57,6 +57,7 @@ export class GraphQLAuthGuard extends AuthGuard('jwt') implements CanActivate {
       });
     }
 
+    console.log(request.headers.authorization);
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
 
     return type === 'Bearer' ? token : undefined;

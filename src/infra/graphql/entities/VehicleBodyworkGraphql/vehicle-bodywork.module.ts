@@ -5,8 +5,8 @@ import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRe
 import { PrismaService } from 'infra/database/prisma/prisma.service';
 import { VehicleBodyworkService } from 'infra/database/prisma/services/vehicle-bodywork.service';
 
-import { UserRepository } from '../../../domain/repositories/UserRepository';
-import { UserService } from '../../database/prisma/services/user.service';
+import { UserRepository } from '../../../../domain/repositories/UserRepository';
+import { UserService } from '../../../database/prisma/services/user.service';
 import { VehicleBodyworkResolver } from './vehicle-bodywork.resolver';
 
 @Module({

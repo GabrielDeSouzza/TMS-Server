@@ -10,7 +10,7 @@ describe('User', () => {
         gender: 'Masculino',
         cpf: '147475874747',
         rg: '1234567',
-        cep: 12_345_678,
+        cep: '12345678',
         public_place: 'Rua Principal',
         address_number: '123',
         neighborhood: 'Centro',

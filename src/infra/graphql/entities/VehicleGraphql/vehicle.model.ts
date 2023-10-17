@@ -4,8 +4,8 @@ import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
-import { VehicleTypeReferences } from '../VehicleType/vehicle-type.model';
-import { VehicleModelReferences } from '../VeihicleModel/vehicle-model.model';
+import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
+import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.model';
 
 @ObjectType()
 export class VehicleCarModel implements IVehicle {

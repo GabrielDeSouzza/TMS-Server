@@ -16,8 +16,8 @@ import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTy
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
-import { VehicleTypeReferences } from '../VehicleType/vehicle-type.model';
-import { VehicleModelReferences } from '../VeihicleModel/vehicle-model.model';
+import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
+import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.model';
 import { VehicleInput, VehicleUpdateInput } from './Vehicle.input';
 import { VehicleCarModel } from './vehicle.model';
 

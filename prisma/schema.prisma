@@ -293,12 +293,12 @@ model OwnDriver {
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
 
-  CreatedBy     User?         @relation("created_by", fields: [created_by], references: [id])
-  created_by    String
-  UpdatedBy     User?         @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by    String
-  NaturalPerson NaturalPerson @relation(fields: [cpf], references: [cpf])
-  cpf           String
+  CreatedBy         User?         @relation("created_by", fields: [created_by], references: [id])
+  created_by        String
+  UpdatedBy         User?         @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by        String
+  NaturalPerson     NaturalPerson @relation(fields: [natural_person_id], references: [id])
+  natural_person_id String
 
   @@map("own_drivers")
 }
@@ -309,8 +309,8 @@ model NaturalPerson {
   date_birth     DateTime
   gender         String
   cpf            String   @unique
-  rg             Int      @unique
-  cep            Int
+  rg             String   @unique
+  cep            String
   public_place   String
   address_number String
   neighborhood   String

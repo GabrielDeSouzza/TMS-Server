@@ -234,7 +234,7 @@ Table own_drivers {
   UpdatedBy users
   updated_by String [not null]
   NaturalPerson natural_people [not null]
-  cpf String [not null]
+  natural_person_id String [not null]
 }
 
 Table natural_people {
@@ -243,8 +243,8 @@ Table natural_people {
   date_birth DateTime [not null]
   gender String [not null]
   cpf String [unique, not null]
-  rg Int [unique, not null]
-  cep Int [not null]
+  rg String [unique, not null]
+  cep String [not null]
   public_place String [not null]
   address_number String [not null]
   neighborhood String [not null]
@@ -592,7 +592,7 @@ Ref: own_drivers.created_by > users.id
 
 Ref: own_drivers.updated_by > users.id
 
-Ref: own_drivers.cpf > natural_people.cpf
+Ref: own_drivers.natural_person_id > natural_people.id
 
 Ref: carrier_companies.created_by > users.id
 

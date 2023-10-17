@@ -1,6 +1,6 @@
 import { Field, ObjectType, OmitType, registerEnumType } from '@nestjs/graphql';
 
-import { ROLE, type IUser } from '../../../domain/entities/user/User';
+import { ROLE, type IUser } from '../../../../domain/entities/user/User';
 
 @ObjectType()
 export class UserModel implements IUser {

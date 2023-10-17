@@ -19,7 +19,7 @@ describe('ContractOutsourcedDriver', () => {
           gender: 'Masculino',
           cpf: '75154789711',
           rg: '1475547854',
-          cep: 12_345_678,
+          cep: '0741256',
           public_place: 'Rua Principal',
           address_number: '123',
           neighborhood: 'Centro',

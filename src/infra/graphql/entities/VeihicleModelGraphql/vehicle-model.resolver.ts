@@ -14,7 +14,7 @@ import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
-import { VehicleTypeReferences } from '../VehicleType/vehicle-type.model';
+import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
 import { VehicleModelInput } from './vehicle-model.input';
 import { VehicleModelGraphql } from './vehicle-model.model';
 

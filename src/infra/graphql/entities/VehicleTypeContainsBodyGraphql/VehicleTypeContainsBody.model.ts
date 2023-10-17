@@ -5,7 +5,7 @@ import { type IVehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTy
 import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
 import { VehicleBodyworkModelReferences } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
-import { VehicleTypeReferences } from '../VehicleType/vehicle-type.model';
+import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
 
 @ObjectType()
 export class VehicleTypeContainsBodyModel implements IVehicleTypeContainsBody {

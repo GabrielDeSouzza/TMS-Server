@@ -8,12 +8,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
-import { UserModule } from 'infra/graphql/UserGraphql/user.module';
-import { VehicleBodyworkModule } from 'infra/graphql/VehicleBodyworkGraphql/vehicle-bodywork.module';
-import { VehicleBrandModule } from 'infra/graphql/VehicleBrandGraphql/vehicle-brand.module';
-import { VehicleModule } from 'infra/graphql/VehicleGraphql/Vehicle.module';
-import { VehicleTypeModule } from 'infra/graphql/VehicleType/vehicle-type.module';
-import { VehicleModelModule } from 'infra/graphql/VeihicleModel/vehicle-model.module';
+import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriver.module';
+import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
+import { VehicleBodyworkModule } from 'infra/graphql/entities/VehicleBodyworkGraphql/vehicle-bodywork.module';
+import { VehicleBrandModule } from 'infra/graphql/entities/VehicleBrandGraphql/vehicle-brand.module';
+import { VehicleModule } from 'infra/graphql/entities/VehicleGraphql/Vehicle.module';
+import { VehicleTypeModule } from 'infra/graphql/entities/VehicleTypeGraphql/vehicle-type.module';
+import { VehicleModelModule } from 'infra/graphql/entities/VeihicleModelGraphql/vehicle-model.module';
 import { AuthModule } from 'infra/guard/auth.module';
 
 @Module({
@@ -37,6 +38,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     VehicleModule,
     VehicleBodyworkModule,
     AuthModule,
+    OwnDriverModule,
   ],
 })
 export class AppModule {}

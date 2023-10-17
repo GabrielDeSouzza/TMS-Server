@@ -5,8 +5,8 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 
-import { type IUser } from '../../../domain/entities/user/User';
-import { ROLE } from '../../../domain/entities/user/User';
+import { type IUser } from '../../../../domain/entities/user/User';
+import { ROLE } from '../../../../domain/entities/user/User';
 
 @InputType()
 export class UserInput

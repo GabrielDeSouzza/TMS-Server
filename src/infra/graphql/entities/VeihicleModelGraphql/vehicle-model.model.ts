@@ -3,7 +3,7 @@ import { Field, Float, Int, ObjectType, OmitType } from '@nestjs/graphql';
 import { type IVehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
 
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
-import { VehicleTypeReferences } from '../VehicleType/vehicle-type.model';
+import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
 
 @ObjectType()
 export class VehicleModelGraphql implements IVehicleModel {
