@@ -1,4 +1,4 @@
-FROM node:20 As development
+FROM node:21 As development
 
 RUN npm i -g pnpm
 
@@ -18,7 +18,7 @@ USER node
 
 # BUILD
 
-FROM node:20 As build
+FROM node:21 As build
 
 RUN npm i -g pnpm
 
@@ -44,7 +44,7 @@ USER node
 
 # PRODUCTION
 
-FROM node:20 As production
+FROM node:21 As production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/.docker ./.docker
