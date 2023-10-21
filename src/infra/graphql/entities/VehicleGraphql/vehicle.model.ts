@@ -12,10 +12,6 @@ export class VehicleCarModel implements IVehicle {
   @Field()
   id: string;
   @Field()
-  created_at: Date;
-  @Field()
-  updated_at: Date;
-  @Field()
   plate: string;
   @Field()
   year: string;
@@ -25,10 +21,6 @@ export class VehicleCarModel implements IVehicle {
   renavam: string;
   @Field()
   rntrc_expiration: string;
-  @Field()
-  updated_by: string;
-  @Field()
-  created_by: string;
   @Field()
   model_id: string;
   @Field(() => UserModelRefereces)

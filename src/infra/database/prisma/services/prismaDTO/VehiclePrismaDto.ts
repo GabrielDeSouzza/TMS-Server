@@ -10,10 +10,6 @@ export class VehicleDto {
       color: vehicle.color,
       renavam: vehicle.renavam,
       rntrc_expiration: vehicle.rntrc_expiration,
-      created_at: vehicle.created_at,
-      updated_at: vehicle.updated_at,
-      created_by: vehicle.created_by,
-      updated_by: vehicle.created_by,
       id: vehicle.id,
       model_id: vehicle.model_id,
     });
@@ -26,12 +22,8 @@ export class VehicleDto {
       color: vehicle.color,
       renavam: vehicle.renavam,
       rntrc_expiration: vehicle.rntrc_expiration,
-      created_at: vehicle.created_at,
-      updated_at: vehicle.updated_at,
-      created_by: vehicle.created_by,
       id: vehicle.id,
       model_id: vehicle.model_id,
-      updated_by: vehicle.updated_by,
     };
   }
 
@@ -44,12 +36,8 @@ export class VehicleDto {
       color: vehicle.color,
       renavam: vehicle.renavam,
       rntrc_expiration: vehicle.rntrc_expiration,
-      created_at: vehicle.created_at,
-      updated_at: vehicle.updated_at,
-      created_by: vehicle.created_by,
       id: vehicle.id,
       model_id: vehicle.model_id,
-      updated_by: vehicle.updated_by,
     };
   }
 }

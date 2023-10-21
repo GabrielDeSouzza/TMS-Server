@@ -39,6 +39,8 @@ describe('ContractOutsourcedDriver', () => {
         course_mopp: true,
         OutsourcedVehicle: new OutsourcedVehicle({
           vehicle_id: '123',
+          created_by: 'test',
+          updated_by: 'test',
         }),
       }),
     });

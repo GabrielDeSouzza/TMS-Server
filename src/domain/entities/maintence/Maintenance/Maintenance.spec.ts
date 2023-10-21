@@ -38,8 +38,6 @@ describe('Maintenance', () => {
         renavam: '449984944',
         rntrc_expiration: 'dsa',
         year: '455',
-        created_by: 'test',
-        updated_by: 'test',
         model_id: 'test',
       }),
       plate: null,

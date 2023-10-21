@@ -13,8 +13,6 @@ Table users {
   updated_at DateTime [default: `now()`, not null]
   RouteCreatedBy routes [not null]
   RouteUpdatedBy routes [not null]
-  VehicleCreatedBy vehicles [not null]
-  VehicleUpdatedBy vehicles [not null]
   VehicleModelCreatedBy vehicle_models [not null]
   VehicleModelUpdatedBy vehicle_models [not null]
   VehicleBrandCreatedBy vehicle_brands [not null]
@@ -62,16 +60,10 @@ Table vehicles {
   color String [not null]
   renavam String [not null]
   rntrc_expiration String [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
   CompanyVehicle company_vehicles
   OrderProcessing order_processing
   Maintenance maintenance [not null]
   OutsourcedVehicle outsourced_vehicles [not null]
-  CreatedBy users
-  created_by String [not null]
-  UpdatedBy users
-  updated_by String [not null]
   Model vehicle_models [not null]
   model_id String [not null]
 }
@@ -523,10 +515,6 @@ Enum CNH {
   AD
   AE
 }
-
-Ref: vehicles.created_by > users.id
-
-Ref: vehicles.updated_by > users.id
 
 Ref: vehicles.model_id > vehicle_models.id
 

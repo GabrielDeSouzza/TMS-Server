@@ -7,11 +7,13 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IOutsourcedVehicle {
+export interface IOutsourcedVehicle {
   id?: string;
   vehicle_id: string;
   created_at: Date;
   updated_at: Date;
+  created_by: string;
+  updated_by: string;
 }
 
 export class OutsourcedVehicle extends Entity {
@@ -78,5 +80,20 @@ export class OutsourcedVehicle extends Entity {
 
   public get updated_at(): Date {
     return this.props.updated_at;
+  }
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  public set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
   }
 }

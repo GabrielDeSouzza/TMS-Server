@@ -37,7 +37,6 @@ export class AuthServicePrisma implements AuthRepository {
       credentials.password,
       userPrisma.password,
     );
-    console.log();
 
     if (!shouldPasswordMatch) {
       throw new GraphQLError('Password incorrect!', {
@@ -53,12 +52,11 @@ export class AuthServicePrisma implements AuthRepository {
       username: user.username,
       name: user.name,
     };
-    console.log(process.env.JWT_KEY);
+
     const token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_KEY,
       expiresIn: '2d',
     });
-    console.log(token);
 
     return {
       id: user.id,

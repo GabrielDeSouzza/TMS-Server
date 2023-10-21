@@ -13,10 +13,6 @@ export interface IVehicle {
   color: string;
   renavam: string;
   rntrc_expiration: string;
-  created_at: Date;
-  updated_at: Date;
-  updated_by: string;
-  created_by: string;
   model_id: string;
 }
 
@@ -31,8 +27,6 @@ export class Vehicle extends Entity {
     this.props = {
       ...props,
       id: props.id ?? randomUUID(),
-      updated_at: new Date(),
-      created_at: props.created_at ?? new Date(),
     };
     this.validate();
 
@@ -117,34 +111,5 @@ export class Vehicle extends Entity {
 
   public get rntrc_expiration(): string {
     return this.props.rntrc_expiration;
-  }
-
-  public set updated_at(updated_at: Date) {
-    this.props.updated_at = updated_at;
-  }
-  public get updated_at(): Date {
-    return this.props.updated_at;
-  }
-
-  public get created_at(): Date {
-    return this.props.created_at;
-  }
-  public set created_at(created_at: Date) {
-    this.props.created_at = created_at;
-  }
-  public set updated_by(updated_by: string) {
-    this.props.updated_by = updated_by;
-  }
-
-  public get updated_by(): string {
-    return this.props.updated_by;
-  }
-
-  public set created_by(created_by: string) {
-    this.props.created_by = created_by;
-  }
-
-  public get created_by(): string {
-    return this.props.created_by;
   }
 }

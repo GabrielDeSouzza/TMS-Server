@@ -32,6 +32,8 @@ describe('Outsourced Driver', () => {
       cpf: null,
       OutsourcedVehicle: new OutsourcedVehicle({
         vehicle_id: '123',
+        created_by: 'test',
+        updated_by: 'test',
       }),
     });
     expect(outsourcedDriver).toBeTruthy();

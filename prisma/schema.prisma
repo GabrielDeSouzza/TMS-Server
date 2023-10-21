@@ -40,10 +40,8 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  RouteCreatedBy                    Route[]                    @relation("created_by")
-  RouteUpdatedBy                    Route[]                    @relation("updated_by")
-  VehicleCreatedBy                  Vehicle[]                  @relation("created_by")
-  VehicleUpdatedBy                  Vehicle[]                  @relation("updated_by")
+  RouteCreatedBy Route[] @relation("created_by")
+  RouteUpdatedBy Route[] @relation("updated_by")
   VehicleModelCreatedBy             VehicleModel[]             @relation("created_by")
   VehicleModelUpdatedBy             VehicleModel[]             @relation("updated_by")
   VehicleBrandCreatedBy             VehicleBrand[]             @relation("created_by")
@@ -93,20 +91,13 @@ model Vehicle {
   color            String
   renavam          String
   rntrc_expiration String
-  created_at       DateTime @default(now())
-  updated_at       DateTime @default(now())
-
   CompanyVehicle    CompanyVehicle?
   OrderProcessing   OrderProcessing?
   Maintenance       Maintenance[]
   OutsourcedVehicle OutsourcedVehicle[]
 
-  CreatedBy  User?        @relation("created_by", fields: [created_by], references: [id])
-  created_by String
-  UpdatedBy  User?        @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by String
-  Model      VehicleModel @relation(fields: [model_id], references: [id])
-  model_id   String
+  Model    VehicleModel @relation(fields: [model_id], references: [id])
+  model_id String
 
   @@map("vehicles")
 }

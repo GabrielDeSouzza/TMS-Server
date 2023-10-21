@@ -24,8 +24,6 @@ describe('OrderProcessing', () => {
         renavam: '449984944',
         rntrc_expiration: 'dsa',
         year: '455',
-        created_by: 'test',
-        updated_by: 'test',
         model_id: '123',
       }),
       plate: null,

@@ -9,12 +9,9 @@ import {
 
 import { GraphQLError } from 'graphql';
 
-import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
-import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 
-import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
 import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.model';
@@ -25,9 +22,7 @@ import { VehicleCarModel } from './vehicle.model';
 export class VehicleGraphqlResolver {
   constructor(
     private vehicleRepository: VehicleRepository,
-    private userRepository: UserRepository,
     private vehicleModelRepository: VehicleModelRepository,
-    private vehicleTypeContainsBodyRepositoy: VehicleTypeContainsBodyRepository,
   ) {}
 
   @Query(() => VehicleCarModel)
@@ -54,19 +49,6 @@ export class VehicleGraphqlResolver {
     @Args('vehicleInput') vehicleInput: VehicleUpdateInput,
   ) {
     return await this.vehicleRepository.updateVehicle(id, vehicleInput);
-  }
-
-  @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: VehicleInput) {
-    const { created_by: createdBy } = user;
-
-    return this.userRepository.findUserById(createdBy);
-  }
-  @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: VehicleInput) {
-    const { updated_by: updatedBy } = user;
-
-    return this.userRepository.findUserById(updatedBy);
   }
 
   @ResolveField(() => VehicleModelReferences)

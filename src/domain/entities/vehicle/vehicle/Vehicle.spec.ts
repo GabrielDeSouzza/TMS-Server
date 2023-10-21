@@ -9,8 +9,6 @@ describe('Vehicle', () => {
       rntrc_expiration: 'dsa',
       year: '455',
       model_id: 'test',
-      created_by: 'test',
-      updated_by: 'test',
     });
 
     expect(vehicle).toBeTruthy();

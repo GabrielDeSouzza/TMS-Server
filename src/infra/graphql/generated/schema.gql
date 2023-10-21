@@ -16,6 +16,7 @@ type AuthModel {
 }
 
 type Mutation {
+  createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createUSer(createUserInput: UserInput!): UserModel!
   createVehicle(vehicleInput: VehicleInput!): VehicleCarModel!
@@ -28,6 +29,7 @@ type Mutation {
   updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
+  updatedOutsourcedVehicle(id: String!, outsourced: OutsourcedVehicleUpdateInput!): OutsourcedVehicleIModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUdateInput!): VehicleTypeModel!
@@ -94,6 +96,24 @@ input NaturalPersonUpdate {
   uf: String
 }
 
+type OutsourcedVehicleIModel {
+  Vehicle: VehicleCarModel!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  updated_at: Timestamp!
+  updated_by: String!
+  vehicle_id: String!
+}
+
+input OutsourcedVehicleInput {
+  Vehicle: VehicleInput!
+}
+
+input OutsourcedVehicleUpdateInput {
+  Vehicle: VehicleUpdateInput!
+}
+
 input OwnDriverInput {
   NaturalPerson: NaturalPersonInput!
   cnh: String!
@@ -131,12 +151,14 @@ input OwnDriverUpdate {
 }
 
 type Query {
+  getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
   getAllOwnDriver: [OwnDriverModel!]!
   getAllVehicle: [VehicleCarModel!]!
   getAllVehicleBodywork: [VehicleBodyworkModel!]
   getAllVehicleBrand: [VehicleBrandModel!]!
   getAllVehicleModel: [VehicleModelGraphql!]
   getAllVehicleTypes: [VehicleTypeModel!]
+  getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!
   getOwnDriver(id: String!): OwnDriverModel!
   getVehicle(id: String, plate: String): VehicleCarModel!
   getVehicleBodyworkModel(id: String!): VehicleBodyworkModel!
@@ -261,27 +283,21 @@ type VehicleCarModel {
   VehicleType: VehicleTypeReferences!
   color: String!
   createdUser: UserModelRefereces!
-  created_at: Timestamp!
-  created_by: String!
   id: String!
   model_id: String!
   plate: String!
   renavam: String!
   rntrc_expiration: String!
   updatedUser: UserModelRefereces!
-  updated_at: Timestamp!
-  updated_by: String!
   year: String!
 }
 
 input VehicleInput {
   color: String!
-  created_by: String!
   model_id: String!
   plate: String!
   renavam: String!
   rntrc_expiration: String!
-  updated_by: String!
   year: String!
 }
 
@@ -378,11 +394,9 @@ input VehicleTypeUdateInput {
 
 input VehicleUpdateInput {
   color: String
-  created_by: String
   model_id: String
   plate: String
   renavam: String
   rntrc_expiration: String
-  updated_by: String
   year: String
 }
