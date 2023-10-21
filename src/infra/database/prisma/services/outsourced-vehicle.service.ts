@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { type OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
-import { type OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedRepository';
+import { type OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 
 import { PrismaService } from '../prisma.service';
 import { OutsourcedVehiclePrismaDTO } from './prismaDTO/OwnsourcedVehiclePrisma.Dto';

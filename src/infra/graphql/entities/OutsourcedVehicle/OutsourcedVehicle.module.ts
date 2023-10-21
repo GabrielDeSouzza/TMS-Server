@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedRepository';
+import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { OutsourcedVehicleServicePrisma } from 'infra/database/prisma/services/outsourced-vehicle.service';

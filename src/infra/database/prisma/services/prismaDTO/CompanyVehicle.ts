@@ -8,14 +8,14 @@ import { CompanyVehicle } from 'domain/entities/vehicle/companyVehicle/CompanyVe
 import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 export class CompanyVehiclePrismaDTO {
-  public static PrismaToEntity(CompanyVehiclePrisma: CompanyVehiclePrisma) {
+  public static PrismaToEntity(companyVehiclePrisma: CompanyVehiclePrisma) {
     return new CompanyVehicle({
-      id: CompanyVehiclePrisma.id,
-      created_by: CompanyVehiclePrisma.created_by,
-      updated_by: CompanyVehiclePrisma.updated_by,
-      vehicle_id: CompanyVehiclePrisma.vehicle_id,
-      created_at: CompanyVehiclePrisma.created_at,
-      updated_at: CompanyVehiclePrisma.updated_at,
+      id: companyVehiclePrisma.id,
+      created_by: companyVehiclePrisma.created_by,
+      updated_by: companyVehiclePrisma.updated_by,
+      vehicle_id: companyVehiclePrisma.vehicle_id,
+      created_at: companyVehiclePrisma.created_at,
+      updated_at: companyVehiclePrisma.updated_at,
     });
   }
   public static EntityToCreatePrisma(
