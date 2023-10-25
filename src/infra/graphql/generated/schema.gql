@@ -33,8 +33,41 @@ input CompanyVehicleUpdateInput {
   Vehicle: VehicleUpdateInput!
 }
 
+input ContractOutsoucedDriverUpdateInput {
+  cpf: String
+  end_at: Timestamp
+  id: String
+  outsourced_driver_id: String
+  situation: String
+  start_at: Timestamp
+  type: String
+}
+
+type ContractOutsourcedDriverRefencesModel {
+  cpf: String!
+  created_at: Timestamp!
+  created_by: String!
+  end_at: Timestamp!
+  id: String!
+  situation: String!
+  start_at: Timestamp!
+  type: String!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input ContractOutsourcedDriverReferecesInput {
+  cpf: String!
+  end_at: Timestamp!
+  id: String
+  situation: String!
+  start_at: Timestamp!
+  type: String!
+}
+
 type Mutation {
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
+  createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createUSer(createUserInput: UserInput!): UserModel!
@@ -44,6 +77,7 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   login(loginData: AuthInput!): AuthModel!
+  updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
@@ -116,13 +150,55 @@ input NaturalPersonUpdate {
   uf: String
 }
 
-type OutsourcedVehicleIModel {
-  Vehicle: VehicleCarModel!
-  created_at: Timestamp!
+input OutsourcedDriverInput {
+  ContractOutsourcedDriver: ContractOutsourcedDriverReferecesInput!
+  NaturalPerson: NaturalPersonInput!
+  OutsourcedVehicle: OutsourcedVehicleInput
+  cnh: String!
+  cnh_category: String!
+  cnh_expiration: Timestamp!
+  company_vehicle: Boolean!
+  course_mopp: Boolean!
+}
+
+type OutsourcedDriverModel {
+  ContractOutsourcedDriver: [ContractOutsourcedDriverRefencesModel!]!
+  CreatedUser: UserModelRefereces!
+  NaturalPerson: NaturalPersonModel!
+  OutsourcedVehicle: OutsourcedVehicleIModel
+  UpdatedUser: UserModelRefereces!
+  cnh: String!
+  cnh_category: String!
+  cnh_expiration: Timestamp!
+  company_vehicle: Boolean!
+  course_mopp: Boolean!
+  createdUser: UserModelRefereces!
   created_by: String!
   id: String!
-  updated_at: Timestamp!
+  natural_person_id: String!
+  outsourced_vehicle_id: String!
+  updatedUser: UserModelRefereces!
   updated_by: String!
+}
+
+input OutsourcedDriverUpdateInput {
+  ContractOutsourcedDriver: ContractOutsoucedDriverUpdateInput
+  NaturalPerson: NaturalPersonUpdate
+  OutsourcedVehicle: OutsourcedVehicleUpdateInput
+  cnh: String
+  cnh_category: String
+  cnh_expiration: Timestamp
+  company_vehicle: Boolean
+  course_mopp: Boolean
+}
+
+type OutsourcedVehicleIModel {
+  CreatedUser: UserModelRefereces!
+  UpdatedUser: UserModelRefereces!
+  Vehicle: VehicleCarModel!
+  created_at: Timestamp!
+  id: String!
+  updated_at: Timestamp!
   vehicle_id: String!
 }
 
@@ -131,7 +207,7 @@ input OutsourcedVehicleInput {
 }
 
 input OutsourcedVehicleUpdateInput {
-  Vehicle: VehicleUpdateInput!
+  Vehicle: VehicleUpdateInput
 }
 
 input OwnDriverInput {
@@ -172,6 +248,7 @@ input OwnDriverUpdate {
 
 type Query {
   getAllCompanyVehicle: [CompanyVehicleIModel!]!
+  getAllOutsourcedDriver: [OutsourcedDriverModel!]!
   getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
   getAllOwnDriver: [OwnDriverModel!]!
   getAllVehicle: [VehicleCarModel!]!
@@ -180,6 +257,7 @@ type Query {
   getAllVehicleModel: [VehicleModelGraphql!]
   getAllVehicleTypes: [VehicleTypeModel!]
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
+  getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!
   getOwnDriver(id: String!): OwnDriverModel!
   getVehicle(id: String, plate: String): VehicleCarModel!

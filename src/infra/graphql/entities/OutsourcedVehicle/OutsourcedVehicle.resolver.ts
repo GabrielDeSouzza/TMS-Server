@@ -35,7 +35,7 @@ export class OutsourcedVehicleResolver {
   ) {}
   @Query(() => OutsourcedVehicleIModel)
   async getOutsourcedVehicle(@Args('id') id: string) {
-    return this.outsourcedReposity.findOutsourcedVehicle(id);
+    return await this.outsourcedReposity.findOutsourcedVehicle(id);
   }
   @Query(() => [OutsourcedVehicleIModel])
   async getAllOutsourcedVehicle() {

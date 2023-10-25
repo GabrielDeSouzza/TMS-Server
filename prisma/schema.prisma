@@ -40,8 +40,8 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  RouteCreatedBy Route[] @relation("created_by")
-  RouteUpdatedBy Route[] @relation("updated_by")
+  RouteCreatedBy                    Route[]                    @relation("created_by")
+  RouteUpdatedBy                    Route[]                    @relation("updated_by")
   VehicleModelCreatedBy             VehicleModel[]             @relation("created_by")
   VehicleModelUpdatedBy             VehicleModel[]             @relation("updated_by")
   VehicleBrandCreatedBy             VehicleBrand[]             @relation("created_by")
@@ -85,12 +85,12 @@ model User {
 }
 
 model Vehicle {
-  id               String   @id @default(uuid())
-  plate            String   @unique
-  year             String
-  color            String
-  renavam          String
-  rntrc_expiration String
+  id                String              @id @default(uuid())
+  plate             String              @unique
+  year              String
+  color             String
+  renavam           String
+  rntrc_expiration  String
   CompanyVehicle    CompanyVehicle?
   OrderProcessing   OrderProcessing?
   Maintenance       Maintenance[]
@@ -247,8 +247,8 @@ model OutsourcedDriver {
   created_by            String
   UpdatedBy             User?             @relation("updated_by", fields: [updated_by], references: [id])
   updated_by            String
-  NaturalPerson         NaturalPerson     @relation(fields: [cpf], references: [cpf])
-  cpf                   String            @unique
+  NaturalPerson         NaturalPerson     @relation(fields: [natural_person_id], references: [id])
+  natural_person_id     String            @unique
   OutsourcedVehicle     OutsourcedVehicle @relation(fields: [outsourced_vehicle_id], references: [id])
   outsourced_vehicle_id String            @unique
 
@@ -256,20 +256,20 @@ model OutsourcedDriver {
 }
 
 model ContractOutsourcedDriver {
-  id         String    @id @default(uuid())
-  type       String
-  situation  String
-  start_at   DateTime
-  end_at     DateTime?
-  created_at DateTime  @default(now())
-  updated_at DateTime  @default(now())
-
-  CreatedBy        User?            @relation("created_by", fields: [created_by], references: [id])
-  created_by       String
-  UpdatedBy        User?            @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by       String
-  OutsourcedDriver OutsourcedDriver @relation(fields: [cpf], references: [cpf])
-  cpf              String           @unique
+  id                   String           @id @default(uuid())
+  type                 String
+  situation            String
+  start_at             DateTime
+  end_at               DateTime?
+  created_at           DateTime         @default(now())
+  updated_at           DateTime         @default(now())
+  cpf                  String
+  CreatedBy            User?            @relation("created_by", fields: [created_by], references: [id])
+  created_by           String
+  UpdatedBy            User?            @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by           String
+  OutsourcedDriver     OutsourcedDriver @relation(fields: [outsourced_driver_id], references: [id])
+  outsourced_driver_id String           
 
   @@map("contract_outsourced_drivers")
 }

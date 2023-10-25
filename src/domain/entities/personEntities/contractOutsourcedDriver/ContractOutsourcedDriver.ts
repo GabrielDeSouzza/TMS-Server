@@ -5,7 +5,6 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type OutsourcedDriver } from '../outsourcedDriver/OutsourcedDriver';
 
 export interface IContractOutsourcedDriver {
   id?: string;
@@ -15,8 +14,10 @@ export interface IContractOutsourcedDriver {
   end_at?: Date;
   created_at: Date;
   updated_at: Date;
-  cpf?: string;
-  OutsourcedDriver: OutsourcedDriver;
+  updated_by: string;
+  created_by: string;
+  cpf: string;
+  outsourced_driver_id: string;
 }
 export class ContractOutsourcedDriver extends Entity {
   private _id: string;
@@ -54,7 +55,6 @@ export class ContractOutsourcedDriver extends Entity {
         fieldName: 'CPF',
         maxLength: 11,
         minLength: 11,
-        isNullAble: true,
       },
       {
         field: this.props.end_at,
@@ -74,7 +74,6 @@ export class ContractOutsourcedDriver extends Entity {
       'ContractOutsourcedDriver',
       fieldsValidation,
     );
-    this.props.OutsourcedDriver.validate();
   }
   public get id(): string {
     return this.props.id;
@@ -138,11 +137,26 @@ export class ContractOutsourcedDriver extends Entity {
     return this.props.cpf;
   }
 
-  public set OutsourcedDriver(outsourcedDriver: OutsourcedDriver) {
-    this.props.OutsourcedDriver = outsourcedDriver;
+  public set outsourced_driver_id(outsourced_driver_id: string) {
+    this.props.outsourced_driver_id = outsourced_driver_id;
   }
 
-  public get OutsourcedDriver(): OutsourcedDriver {
-    return this.props.OutsourcedDriver;
+  public get outsourced_driver_id(): string {
+    return this.props.outsourced_driver_id;
+  }
+
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+  public set created_by(updated_by: string) {
+    this.props.created_by = updated_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
   }
 }

@@ -191,7 +191,7 @@ Table outsourced_drivers {
   UpdatedBy users
   updated_by String [not null]
   NaturalPerson natural_people [not null]
-  cpf String [unique, not null]
+  natural_person_id String [unique, not null]
   OutsourcedVehicle outsourced_vehicles [not null]
   outsourced_vehicle_id String [unique, not null]
 }
@@ -204,12 +204,13 @@ Table contract_outsourced_drivers {
   end_at DateTime
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
+  cpf String [not null]
   CreatedBy users
   created_by String [not null]
   UpdatedBy users
   updated_by String [not null]
   OutsourcedDriver outsourced_drivers [not null]
-  cpf String [unique, not null]
+  outsourced_driver_id String [not null]
 }
 
 Table own_drivers {
@@ -566,7 +567,7 @@ Ref: outsourced_drivers.created_by > users.id
 
 Ref: outsourced_drivers.updated_by > users.id
 
-Ref: outsourced_drivers.cpf > natural_people.cpf
+Ref: outsourced_drivers.natural_person_id > natural_people.id
 
 Ref: outsourced_drivers.outsourced_vehicle_id > outsourced_vehicles.id
 
@@ -574,7 +575,7 @@ Ref: contract_outsourced_drivers.created_by > users.id
 
 Ref: contract_outsourced_drivers.updated_by > users.id
 
-Ref: contract_outsourced_drivers.cpf > outsourced_drivers.cpf
+Ref: contract_outsourced_drivers.outsourced_driver_id > outsourced_drivers.id
 
 Ref: own_drivers.created_by > users.id
 

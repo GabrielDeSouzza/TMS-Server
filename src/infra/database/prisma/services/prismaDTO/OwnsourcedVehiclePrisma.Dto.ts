@@ -50,9 +50,12 @@ export class OutsourcedVehiclePrismaDTO {
     outsourcedVehicle: Partial<IOutsourcedVehicle>,
     vehicle: Partial<IVehicle>,
   ) {
+    if (!outsourcedVehicle) {
+      return null;
+    }
+
     const outsourcedVehicleUptade: Prisma.OutsourcedVehicleUpdateInput = {
       created_at: outsourcedVehicle.created_at,
-      id: outsourcedVehicle.id,
       updated_at: outsourcedVehicle.updated_at,
       UpdatedBy: { connect: { id: outsourcedVehicle.updated_by } },
       Vehicle: {

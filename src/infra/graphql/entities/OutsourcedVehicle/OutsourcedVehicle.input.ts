@@ -30,6 +30,6 @@ export class OutsourcedVehicleInput
 export class OutsourcedVehicleUpdateInput extends PartialType(
   OmitType(OutsourcedVehicleInput, ['Vehicle']),
 ) {
-  @Field(() => VehicleUpdateInput)
+  @Field(() => VehicleUpdateInput, { nullable: true })
   Vehicle: VehicleUpdateInput;
 }

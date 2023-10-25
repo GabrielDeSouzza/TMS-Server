@@ -9,6 +9,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/CompanyVehicle.module';
+import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriver/OutsourcedDriver.module';
 import { OutsourcedVehicleModule } from 'infra/graphql/entities/OutsourcedVehicle/OutsourcedVehicle.module';
 import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriver.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
@@ -43,6 +44,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     OwnDriverModule,
     OutsourcedVehicleModule,
     CompanyVehicleModule,
+    OutsourcedDriverModule,
   ],
 })
 export class AppModule {}

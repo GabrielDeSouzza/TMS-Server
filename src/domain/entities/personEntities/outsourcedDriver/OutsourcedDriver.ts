@@ -5,24 +5,23 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type OutsourcedVehicle } from '../../vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type NaturalPerson } from '../naturalPerson/NaturalPerson';
+import { type CNH } from '../ownDriver/OwnDriver';
 
-interface IOutsourcedDriver {
+export interface IOutsourcedDriver {
   id?: string;
-  NaturalPerson: NaturalPerson;
+  natural_person_id: string;
   cnh: string;
-  cnh_category: string;
-  cnh_expiration: number;
+  cnh_category: CNH;
+  cnh_expiration: Date;
   company_vehicle: boolean | false;
   course_mopp: boolean;
+  outsourced_vehicle_id: string;
   created_at: Date;
   updated_at: Date;
-  OutsourcedVehicle: OutsourcedVehicle;
-  cpf?: string;
+  updated_by: string;
+  created_by: string;
 }
 export class OutsourcedDriver extends Entity {
-  private _id: string;
   private props: IOutsourcedDriver;
 
   constructor(
@@ -76,17 +75,8 @@ export class OutsourcedDriver extends Entity {
         maxLength: 4,
         minLength: 4,
       },
-      {
-        field: this.props.cpf,
-        fieldName: 'CPF',
-        maxLength: 11,
-        minLength: 11,
-        isNullAble: true,
-      },
     );
     this.notification.requiredField('OutsourcedDriver', fieldsValidation);
-    this.props.OutsourcedVehicle.validate();
-    this.props.NaturalPerson.validate();
   }
   public get id(): string {
     return this.props.id;
@@ -94,20 +84,12 @@ export class OutsourcedDriver extends Entity {
   public set id(id: string) {
     this.props.id = id;
   }
-  public set NaturalPerson(naturalPerson: NaturalPerson) {
-    this.props.NaturalPerson = naturalPerson;
+  public set natural_person_id(natural_person_id: string) {
+    this.props.natural_person_id = natural_person_id;
   }
 
-  public get NaturalPerson(): NaturalPerson {
-    return this.props.NaturalPerson;
-  }
-
-  public set cpf(cpf: string) {
-    this.props.cpf = cpf;
-  }
-
-  public get cpf(): string {
-    return this.props.cpf;
+  public get natural_person_id(): string {
+    return this.props.natural_person_id;
   }
 
   public set cnh(cnh: string) {
@@ -118,19 +100,19 @@ export class OutsourcedDriver extends Entity {
     return this.props.cnh;
   }
 
-  public set cnh_category(cnhCategory: string) {
+  public set cnh_category(cnhCategory: CNH) {
     this.props.cnh_category = cnhCategory;
   }
 
-  public get cnh_category(): string {
+  public get cnh_category(): CNH {
     return this.props.cnh_category;
   }
 
-  public set cnh_expiration(cnhExpiration: number) {
+  public set cnh_expiration(cnhExpiration: Date) {
     this.props.cnh_expiration = cnhExpiration;
   }
 
-  public get cnh_expiration(): number {
+  public get cnh_expiration(): Date {
     return this.props.cnh_expiration;
   }
 
@@ -166,11 +148,26 @@ export class OutsourcedDriver extends Entity {
     return this.props.updated_at;
   }
 
-  public set OutsourcedVehicle(outsourcedVehicle: OutsourcedVehicle) {
-    this.props.OutsourcedVehicle = outsourcedVehicle;
+  public set outsourced_vehicle_id(outsourced_vehicle_id: string) {
+    this.props.outsourced_vehicle_id = outsourced_vehicle_id;
   }
 
-  public get OutsourcedVehicle(): OutsourcedVehicle {
-    return this.props.OutsourcedVehicle;
+  public get outsourced_vehicle_id(): string {
+    return this.props.outsourced_vehicle_id;
+  }
+
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
+  }
+  public set created_by(updated_by: string) {
+    this.props.created_by = updated_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
   }
 }

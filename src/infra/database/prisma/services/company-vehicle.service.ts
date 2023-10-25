@@ -5,7 +5,7 @@ import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 import { type CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 
 import { PrismaService } from '../prisma.service';
-import { CompanyVehiclePrismaDTO } from './prismaDTO/CompanyVehicle';
+import { CompanyVehiclePrismaDTO } from './prismaDTO/CompanyVehiclePrismaDto';
 
 @Injectable()
 // eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
