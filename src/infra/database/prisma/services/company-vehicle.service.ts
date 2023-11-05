@@ -8,7 +8,6 @@ import { PrismaService } from '../prisma.service';
 import { CompanyVehiclePrismaDTO } from './prismaDTO/CompanyVehiclePrismaDto';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
   constructor(private prisma: PrismaService) {}
 

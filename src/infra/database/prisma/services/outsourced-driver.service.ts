@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { type IContractOutsourcedDriver } from 'domain/entities/personEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import {
   type OutsourcedDriver,
   type IOutsourcedDriver,
-} from 'domain/entities/personEntities/outsourcedDriver/OutsourcedDriver';
+} from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
+import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import { type IOutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 import { type OutsourcedDriverRepository } from 'domain/repositories/OutsourcedDriverRepository';

@@ -1,8 +1,8 @@
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import {
   type IOwnDriver,
   type OwnDriver,
-} from 'domain/entities/personEntities/ownDriver/OwnDriver';
+} from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 
 export abstract class OwnDriverRepository {
   abstract findOwnDriverById(id: string): Promise<OwnDriver>;

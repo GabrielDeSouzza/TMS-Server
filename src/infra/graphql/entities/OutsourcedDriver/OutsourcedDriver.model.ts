@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { type IOutsourcedDriver } from 'domain/entities/personEntities/outsourcedDriver/OutsourcedDriver';
-import { type CNH } from 'domain/entities/personEntities/ownDriver/OwnDriver';
+import { type IOutsourcedDriver } from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
+import { CNH } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
 
 import { ContractOutsourcedDriverRefencesModel } from '../ContractOutsourcedDriverGraphql/ContractOutsourcedDriver.model';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';

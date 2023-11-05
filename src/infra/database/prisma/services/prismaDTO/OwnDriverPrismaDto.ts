@@ -4,12 +4,12 @@ import {
   type OwnDriver as OwnDriverPrisma,
 } from '@prisma/client';
 
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import {
   CNH,
   type IOwnDriver,
-} from 'domain/entities/personEntities/ownDriver/OwnDriver';
-import { OwnDriver } from 'domain/entities/personEntities/ownDriver/OwnDriver';
+} from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 
 export class OwnDriverPrismaDTO {
   public static PrismaToEntity(ownDriverPrisma: OwnDriverPrisma) {

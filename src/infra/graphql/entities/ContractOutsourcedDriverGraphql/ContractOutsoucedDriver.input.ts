@@ -6,7 +6,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { type IContractOutsourcedDriver } from 'domain/entities/personEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
 @InputType()
 export class ContractOutsourcedDriverInput

@@ -2,11 +2,9 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
-import { type Route } from '../../../entities/routeEntities/Route/Route';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type Vehicle } from '../../vehicle/vehicle/Vehicle';
 
 interface IOrderProcessing {
   id?: string;
@@ -15,16 +13,15 @@ interface IOrderProcessing {
   total_spending_money: number;
   start_at: Date;
   end_at?: Date;
-  Route: Route;
-  route_id?: string;
-  Vehicle: Vehicle;
-  plate?: string;
+  route_id: string;
+  vehicle_id: string;
   updated_at: Date;
   created_at: Date;
+  created_by?: string;
+  updated_by: string;
 }
 
 export class OrderProcessing extends Entity {
-  private _id: string;
   private props: IOrderProcessing;
 
   constructor(
@@ -72,14 +69,14 @@ export class OrderProcessing extends Entity {
         maxLength: 20,
       },
       {
-        field: this.props.plate,
-        fieldName: 'Plate',
+        field: this.props.vehicle_id,
+        fieldName: 'Vehicle',
         maxLength: 20,
         isNullAble: true,
       },
       {
         field: this.props.route_id,
-        fieldName: 'Route ID',
+        fieldName: 'Route',
         maxLength: 20,
         isNullAble: true,
       },
@@ -92,101 +89,96 @@ export class OrderProcessing extends Entity {
     );
 
     this.notification.requiredField('OrderProcessing', fieldsValidation);
-    this.props.Route.validate();
-    this.props.Vehicle.validate();
   }
 
-  public get id(): string {
+  get id(): string | undefined {
     return this.props.id;
   }
-  public set id(id: string) {
-    this.props.id = id;
-  }
-  public set total_distance(totalDistance: number) {
-    this.props.total_distance = totalDistance;
-  }
 
-  public get total_distance(): number {
+  get total_distance(): number {
     return this.props.total_distance;
   }
 
-  public set total_spend_liters(totalSpendLiters: number) {
-    this.props.total_spend_liters = totalSpendLiters;
+  set total_distance(total_distance: number) {
+    this.props.total_distance = total_distance;
   }
 
-  public get total_spend_liters(): number {
+  get total_spend_liters(): number {
     return this.props.total_spend_liters;
   }
 
-  public set total_spending_money(totalSpendingMoney: number) {
-    this.props.total_spending_money = totalSpendingMoney;
+  set total_spend_liters(total_spend_liters: number) {
+    this.props.total_spend_liters = total_spend_liters;
   }
 
-  public get total_spending_money(): number {
+  get total_spending_money(): number {
     return this.props.total_spending_money;
   }
 
-  public set start_at(startDate: Date) {
-    this.props.start_at = startDate;
+  set total_spending_money(total_spending_money: number) {
+    this.props.total_spending_money = total_spending_money;
   }
 
-  public get start_at(): Date {
+  get start_at(): Date {
     return this.props.start_at;
   }
 
-  public set end_at(endDate: Date | undefined) {
-    this.props.end_at = endDate;
+  set start_at(start_at: Date) {
+    this.props.start_at = start_at;
   }
 
-  public get end_at(): Date | undefined {
+  get end_at(): Date | undefined {
     return this.props.end_at;
   }
 
-  public set Route(route: Route) {
-    this.props.Route = route;
+  set end_at(end_at: Date | undefined) {
+    this.props.end_at = end_at;
   }
 
-  public get Route(): Route {
-    return this.props.Route;
-  }
-
-  public set route_id(routeId: string | undefined) {
-    this.props.route_id = routeId;
-  }
-
-  public get route_id(): string | undefined {
+  get route_id(): string {
     return this.props.route_id;
   }
 
-  public set Vehicle(vehicle: Vehicle) {
-    this.props.Vehicle = vehicle;
+  set route_id(route_id: string) {
+    this.props.route_id = route_id;
   }
 
-  public get Vehicle(): Vehicle {
-    return this.props.Vehicle;
+  get vehicle_id(): string {
+    return this.props.vehicle_id;
   }
 
-  public set plate(plate: string | undefined) {
-    this.props.plate = plate;
+  set vehicle_id(vehicle_id: string) {
+    this.props.vehicle_id = vehicle_id;
   }
 
-  public get plate(): string | undefined {
-    return this.props.plate;
-  }
-
-  public set updated_at(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
-  }
-
-  public get updated_at(): Date {
+  get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public set created_at(createdAt: Date) {
-    this.props.created_at = createdAt;
+  set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
 
-  public get created_at(): Date {
+  get created_at(): Date {
     return this.props.created_at;
+  }
+
+  set created_at(created_at: Date) {
+    this.props.created_at = created_at;
+  }
+  get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  get created_by(): string | undefined {
+    return this.props.created_by;
+  }
+
+  set created_by(created_by: string | undefined) {
+    this.props.created_by = created_by;
   }
 }

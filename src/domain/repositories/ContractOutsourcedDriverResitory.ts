@@ -1,4 +1,4 @@
-import { type IContractOutsourcedDriver } from 'domain/entities/personEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
 export abstract class ContractOutsourcedDriverRepository {
   abstract findContractOutsourcedDriverById(

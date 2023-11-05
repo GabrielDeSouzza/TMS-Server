@@ -13,6 +13,8 @@ interface IRoute {
   address_number: string;
   neighborhood: string;
   complement?: string;
+  legalClientOrderId?: string;
+  physicalCustomerOrderId?: string;
   city: string;
   uf: string;
   created_at: Date;
@@ -87,81 +89,95 @@ export class Route extends Entity {
     );
     this.notification.requiredField('Route', fieldsValidation);
   }
-  public get id(): string {
+  get id(): string | undefined {
     return this.props.id;
   }
-  public set id(id: string) {
-    this.props.id = id;
-  }
-  public set cep(cep: string) {
-    this.props.cep = cep;
-  }
 
-  public get cep(): string {
+  get cep(): string {
     return this.props.cep;
   }
 
-  public set public_place(publicPlace: string) {
-    this.props.public_place = publicPlace;
+  set cep(cep: string) {
+    this.props.cep = cep;
   }
 
-  public get public_place(): string {
+  get public_place(): string {
     return this.props.public_place;
   }
 
-  public set address_number(addressNumber: string) {
-    this.props.address_number = addressNumber;
+  set public_place(public_place: string) {
+    this.props.public_place = public_place;
   }
 
-  public get address_number(): string {
+  get address_number(): string {
     return this.props.address_number;
   }
 
-  public set neighborhood(neighborhood: string) {
-    this.props.neighborhood = neighborhood;
+  set address_number(address_number: string) {
+    this.props.address_number = address_number;
   }
 
-  public get neighborhood(): string {
+  get neighborhood(): string {
     return this.props.neighborhood;
   }
 
-  public set complement(complement: string | undefined) {
-    this.props.complement = complement;
+  set neighborhood(neighborhood: string) {
+    this.props.neighborhood = neighborhood;
   }
 
-  public get complement(): string | undefined {
+  get complement(): string | undefined {
     return this.props.complement;
   }
 
-  public set city(city: string) {
-    this.props.city = city;
+  set complement(complement: string | undefined) {
+    this.props.complement = complement;
   }
 
-  public get city(): string {
+  get legalClientOrderId(): string | undefined {
+    return this.props.legalClientOrderId;
+  }
+
+  set legalClientOrderId(legalClientOrderId: string | undefined) {
+    this.props.legalClientOrderId = legalClientOrderId;
+  }
+
+  get physicalCustomerOrderId(): string | undefined {
+    return this.props.physicalCustomerOrderId;
+  }
+
+  set physicalCustomerOrderId(physicalCustomerOrderId: string | undefined) {
+    this.props.physicalCustomerOrderId = physicalCustomerOrderId;
+  }
+
+  get city(): string {
     return this.props.city;
   }
 
-  public set uf(uf: string) {
-    this.props.uf = uf;
+  set city(city: string) {
+    this.props.city = city;
   }
 
-  public get uf(): string {
+  get uf(): string {
     return this.props.uf;
   }
 
-  public set created_at(createdAt: Date) {
-    this.props.created_at = createdAt;
+  set uf(uf: string) {
+    this.props.uf = uf;
   }
 
-  public get created_at(): Date {
+  get created_at(): Date {
     return this.props.created_at;
   }
 
-  public set updated_at(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
+  set created_at(created_at: Date) {
+    this.props.created_at = created_at;
   }
 
-  public get updated_at(): Date {
+  get updated_at(): Date {
     return this.props.updated_at;
+  }
+
+  set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
 }

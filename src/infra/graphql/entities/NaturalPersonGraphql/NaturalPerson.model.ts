@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+
 @ObjectType()
 export class NaturalPersonModel implements INaturalPerson {
   @Field()

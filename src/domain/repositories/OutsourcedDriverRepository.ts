@@ -1,9 +1,9 @@
-import { type IContractOutsourcedDriver } from 'domain/entities/personEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import {
   type IOutsourcedDriver,
   type OutsourcedDriver,
-} from 'domain/entities/personEntities/outsourcedDriver/OutsourcedDriver';
+} from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
+import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import { type IOutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
