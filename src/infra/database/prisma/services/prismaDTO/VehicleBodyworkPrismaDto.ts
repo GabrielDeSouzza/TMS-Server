@@ -3,7 +3,6 @@ import {
   type VehicleBodywork as VehicleBodyworkPrisma,
 } from '@prisma/client';
 
-import { type IVehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
 import { VehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
 
 export class VehicleBodyworkPrismaDto {
@@ -23,7 +22,7 @@ export class VehicleBodyworkPrismaDto {
     });
   }
   public static EntityToPrisma(
-    vehicleBodywork: IVehicleBodywork,
+    vehicleBodywork: VehicleBodywork,
   ): VehicleBodyworkPrisma {
     return {
       axles: vehicleBodywork.axles,
@@ -38,7 +37,7 @@ export class VehicleBodyworkPrismaDto {
     };
   }
   public static EntityToPrismaUpdate(
-    vehicleBodywork: IVehicleBodywork,
+    vehicleBodywork: VehicleBodywork,
   ): Prisma.VehicleBodyworkUncheckedUpdateInput {
     return {
       axles: vehicleBodywork.axles,

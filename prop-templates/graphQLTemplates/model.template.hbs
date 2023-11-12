@@ -1,0 +1,19 @@
+import { Field, ObjectType } from '@nestjs/graphql';
+
+
+
+@ObjectType()
+export class {{entityName}}Model implements I{{entityName}} {
+  @Field()
+  id?: string;
+
+
+  @Field()
+  created_by: string;
+  @Field()
+  updated_by: string;
+  @Field(() => UserModelRefereces)
+  CreatedUser: UserModelRefereces;
+  @Field(() => UserModelRefereces)
+  UpdatedUser: UserModelRefereces;
+}

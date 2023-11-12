@@ -15,6 +15,11 @@ import { OutsourcedDriverRepository } from 'domain/repositories/OutsourcedDriver
 import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { ContractOutsourcedDriverGraphDTO } from 'infra/graphql/DTO/ContractOutsourcedDriver';
+import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
+import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
+import { OutsourcedDriverGraphDTO } from 'infra/graphql/DTO/OutsourcedDriver';
+import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -64,13 +69,26 @@ export class OutsourcedDriverResolver {
     outsourcedDriver.created_by = user.id;
     outsourcedVehicle.created_by = user.id;
     outsourcedVehicle.updated_by = user.id;
+    const outsourcedDriverEntity =
+      OutsourcedDriverGraphDTO.createcreateInputToEntity(outsourcedDriver);
+    const naturalPersonEntity =
+      NaturalPersonGraphDTO.createcreateInputToEntity(naturalPerson);
+    const contractOutsourcedDriverEntity =
+      ContractOutsourcedDriverGraphDTO.inputReferencesToEntity(
+        contractOutsourcedDriver,
+      );
+    const outsourcedVehicleEntity =
+      OutsourcedVehicleGraphDTO.createcreateInputToEntity(outsourcedVehicle);
+    const vehicleEntity = VehicleGraphDTO.createcreateInputToEntity(
+      outsourcedVehicle.Vehicle,
+    );
 
     return await this.outsourcedDriverRepository.createOutsourcedDriver(
-      outsourcedDriver,
-      naturalPerson,
-      contractOutsourcedDriver,
-      outsourcedVehicle,
-      outsourcedVehicle.Vehicle,
+      outsourcedDriverEntity,
+      naturalPersonEntity,
+      contractOutsourcedDriverEntity,
+      outsourcedVehicleEntity,
+      vehicleEntity,
     );
   }
   @Mutation(() => OutsourcedDriverModel)
@@ -93,14 +111,29 @@ export class OutsourcedDriverResolver {
       contractOutsourcedDriver.created_by = user.id;
     }
 
+    const outsourcedDriverEntity =
+      OutsourcedDriverGraphDTO.updateInputToEntity(outsourcedDriver);
+    const naturalPersonEntity =
+      NaturalPersonGraphDTO.updateInputToEntity(naturalPerson);
+    const contractOutsourcedDriverEntity =
+      ContractOutsourcedDriverGraphDTO.updateInputToEntity(
+        contractOutsourcedDriver,
+      );
+    const outsourcedVehicleEntity =
+      OutsourcedVehicleGraphDTO.updateInputToEntity(outsourcedVehicle);
+    const vehicleEntity = VehicleGraphDTO.updateInputToEntity(
+      outsourcedVehicle ? outsourcedVehicle.Vehicle : undefined,
+    );
+
     if (outsourcedVehicle) outsourcedVehicle.updated_by = user.id;
 
     return this.outsourcedDriverRepository.updateOutsourcedDriver(
       id,
-      outsourcedDriver,
-      naturalPerson,
-      contractOutsourcedDriver,
-      outsourcedVehicle,
+      outsourcedDriverEntity,
+      naturalPersonEntity,
+      contractOutsourcedDriverEntity,
+      outsourcedVehicleEntity,
+      vehicleEntity,
     );
   }
   @ResolveField(() => UserModelRefereces)

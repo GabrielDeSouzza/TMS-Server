@@ -1,7 +1,4 @@
-import {
-  type IVehicleTypeContainsBody,
-  type VehicleTypeContainsBody,
-} from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { type VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
 
 export abstract class VehicleTypeContainsBodyRepository {
   abstract findVehicleTypeContainsBodyById(
@@ -11,7 +8,7 @@ export abstract class VehicleTypeContainsBodyRepository {
   ): Promise<VehicleTypeContainsBody>;
   abstract createVehicleTypeContainsBody(
     vehicleTypeContainsBody: Omit<
-      IVehicleTypeContainsBody,
+      VehicleTypeContainsBody,
       'id' | 'updated_at' | 'created_at'
     >,
   ): Promise<VehicleTypeContainsBody>;

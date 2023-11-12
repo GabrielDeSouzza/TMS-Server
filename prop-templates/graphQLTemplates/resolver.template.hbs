@@ -1,0 +1,62 @@
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+
+
+
+import { UserModelRefereces } from '../UserGraphql/user.model';
+
+
+@Resolver(() => {{entityName}}Model)
+export class {{entityName}}Resolver {
+  constructor(
+    private {{camelCase entityName}}Repository: {{entityName}}Repository,
+    private userRepository: UserRepository,
+  ) {}
+  @Query(() => {{entityName}}Model)
+  async get{{entityName}}Model(@Args('id') id: string) {
+    return this.{{camelCase entityName}}Repository.find{{entityName}}ById(id);
+  }
+  @Query(() => [{{entityName}}Model], { nullable: true })
+  async getAll{{entityName}}() {
+    const {{camelCase entityName}} =
+      await this.{{camelCase entityName}}Repository.getAll{{entityName}}();
+
+    return {{camelCase entityName}}.length > 0 ? {{camelCase entityName}} : null;
+  }
+  @Mutation(() => {{entityName}}Model)
+  async create{{entityName}}(
+    @Args('{{camelCase entityName}}Input') {{camelCase entityName}}Input: {{entityName}}Input,
+  ) {
+    return this.{{camelCase entityName}}Repository.create{{entityName}}(
+      {{camelCase entityName}}Input,
+    );
+  }
+  @Mutation(() => {{entityName}}Model)
+  async update{{camelCase entityName}}(
+    @Args('id') id: string,
+    @Args('{{camelCase entityName}}Input') {{camelCase entityName}}Input: {{entityName}}Input,
+  ) {
+    return this.{{camelCase entityName}}Repository.update{{entityName}}(
+      id,
+      {{camelCase entityName}}Input,
+    );
+  }
+  @ResolveField(() => UserModelRefereces)
+  async createdUser(@Parent() user: {{entityName}}Input) {
+    const { created_by: createdBy } = user;
+
+    return await this.userRepository.findUserById(createdBy);
+  }
+  @ResolveField(() => UserModelRefereces)
+  async updatedUser(@Parent() user: {{entityName}}Input) {
+    const { updated_by: updatedBy } = user;
+
+    return await this.userRepository.findUserById(updatedBy);
+  }
+}

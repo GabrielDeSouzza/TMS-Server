@@ -22,9 +22,14 @@ export abstract class IUser {
 }
 
 export class User extends Entity {
-  private props: IUser;
+  private props: IUser | Partial<IUser>;
 
-  constructor(props: Replace<IUser, { created_at?: Date; updated_at?: Date }>) {
+  constructor(
+    props: Replace<
+      IUser | Partial<IUser>,
+      { created_at?: Date; updated_at?: Date }
+    >,
+  ) {
     super();
     this.props = {
       ...props,
@@ -59,7 +64,12 @@ export class User extends Entity {
         fieldName: 'Role',
         maxLength: 10,
       },
-      { field: this.props.username, fieldName: 'Username', maxLength: 80 },
+      {
+        field: this.props.username,
+        fieldName: 'Username',
+        maxLength: 80,
+        regex: '^[^0-9]',
+      },
     );
     this.notification.requiredField('User', fieldsValidation);
   }

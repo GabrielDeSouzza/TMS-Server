@@ -14,7 +14,6 @@ import { UserRepository } from 'domain/repositories/UserRepository';
 import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class AuthServicePrisma implements AuthRepository {
   constructor(
     private jwtService: JwtService,
@@ -22,6 +21,7 @@ export class AuthServicePrisma implements AuthRepository {
   ) {}
 
   async signIn(credentials: ISignInRequestDTO): Promise<ISignInResponseDTO> {
+    console.log(credentials);
     const userPrisma = await this.userRepositoty.findUserByEmail(
       credentials.email,
     );
@@ -51,7 +51,6 @@ export class AuthServicePrisma implements AuthRepository {
       username: user.username,
       name: user.name,
     };
-
     const token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_KEY,
       expiresIn: '2d',

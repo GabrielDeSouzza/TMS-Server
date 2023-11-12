@@ -1,0 +1,15 @@
+import { Field, InputType} from '@nestjs/graphql';
+
+
+
+@InputType()
+export class {{entityName}}Input
+  implements Omit<IVehicleBodywork, 'id' | 'created_at' | 'updated_at'>
+{
+  @Field()
+
+}
+@InputType()
+export class {{entityName}}UpdateInput extends PartialType(
+  {{entityName}}kInput,
+) {}

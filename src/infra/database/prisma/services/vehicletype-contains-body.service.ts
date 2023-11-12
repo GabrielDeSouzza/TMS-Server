@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  type VehicleTypeContainsBody,
-  type IVehicleTypeContainsBody,
-} from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { type VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
 import { type VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 
 import { PrismaService } from '../prisma.service';
@@ -11,7 +8,6 @@ import { VehicleBodyworkPrismaDto } from './prismaDTO/VehicleBodyworkPrismaDto';
 import { VehicleTypeContainsBodyPrismaDTO } from './prismaDTO/VehicleTypeContainsBody';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleContainsBodyService
   implements VehicleTypeContainsBodyRepository
 {
@@ -30,7 +26,7 @@ export class VehicleContainsBodyService
     return VehicleTypeContainsBodyPrismaDTO.PrismaToEntity(vehicleTypeCbody);
   }
   async createVehicleTypeContainsBody(
-    vehicleTypeContainsBody: IVehicleTypeContainsBody,
+    vehicleTypeContainsBody: VehicleTypeContainsBody,
   ): Promise<VehicleTypeContainsBody> {
     if (!vehicleTypeContainsBody.created_by) {
       const createdBy =

@@ -19,7 +19,7 @@ export class VehicleTypeInput
 }
 
 @InputType()
-export class VehicleTypeUdateInput extends PartialType(VehicleTypeInput) {
+export class VehicleTypeUpdateInput extends PartialType(VehicleTypeInput) {
   @Field(() => [String], { nullable: true })
   del_body_id?: string[];
   @Field()

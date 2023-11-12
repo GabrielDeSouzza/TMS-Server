@@ -1,27 +1,16 @@
-import {
-  type IOwnDriver,
-  type OwnDriver,
-} from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 
 export abstract class OwnDriverRepository {
   abstract findOwnDriverById(id: string): Promise<OwnDriver>;
   abstract createOwnDriver(
-    OwnDriver: Omit<
-      IOwnDriver,
-      | 'id'
-      | 'created_at'
-      | 'updated_at'
-      | 'created_by'
-      | 'updated_by'
-      | 'natural_person_id'
-    >,
-    naturalPerson: INaturalPerson,
+    OwnDriver: OwnDriver,
+    naturalPerson: NaturalPerson,
   ): Promise<OwnDriver>;
   abstract updateOwnDriver(
     id: string,
-    OwnDriver: Partial<IOwnDriver>,
-    naturalPerson: Partial<INaturalPerson>,
+    OwnDriver: OwnDriver,
+    naturalPerson: NaturalPerson,
   ): Promise<OwnDriver>;
   abstract findAllOwnDrivers(): Promise<OwnDriver[]>;
 }

@@ -2,7 +2,7 @@ import { type Vehicle as VehiclePrisma, type Prisma } from '@prisma/client';
 
 import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 import { Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
-export class VehicleDto {
+export class VehiclePrismaDto {
   public static PrismaToEntity(vehicle: VehiclePrisma): Vehicle {
     return new Vehicle({
       plate: vehicle.plate,
@@ -28,7 +28,7 @@ export class VehicleDto {
   }
 
   public static EntityToPrismaUpdate(
-    vehicle: Partial<Vehicle>,
+    vehicle: Vehicle,
   ): Prisma.VehicleUncheckedUpdateInput {
     return {
       plate: vehicle.plate,

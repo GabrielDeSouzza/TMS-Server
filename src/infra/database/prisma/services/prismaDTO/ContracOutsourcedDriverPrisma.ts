@@ -1,28 +1,27 @@
 import { type Prisma } from '@prisma/client';
 
-import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { ContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
 export class ContractOutsourcedDriverPrismaDto {
   public static PrismaToEntity(
-    contractOutsourcedDriver: IContractOutsourcedDriver,
+    contractOutsourcedDriver: Prisma.ContractOutsourcedDriverUncheckedCreateInput,
   ) {
     return new ContractOutsourcedDriver({
       cpf: contractOutsourcedDriver.cpf,
       created_by: contractOutsourcedDriver.created_by,
       outsourced_driver_id: contractOutsourcedDriver.outsourced_driver_id,
       situation: contractOutsourcedDriver.situation,
-      start_at: contractOutsourcedDriver.start_at,
+      start_at: contractOutsourcedDriver.start_at as Date,
       type: contractOutsourcedDriver.type,
       updated_by: contractOutsourcedDriver.updated_by,
-      created_at: contractOutsourcedDriver.created_at,
-      end_at: contractOutsourcedDriver.end_at,
+      created_at: contractOutsourcedDriver.created_at as Date,
+      end_at: contractOutsourcedDriver.end_at as Date,
       id: contractOutsourcedDriver.id,
-      updated_at: contractOutsourcedDriver.updated_at,
+      updated_at: contractOutsourcedDriver.updated_at as Date,
     });
   }
   public static EntityToPrisma(
-    contractOutsourcedDriver: IContractOutsourcedDriver,
+    contractOutsourcedDriver: ContractOutsourcedDriver,
   ) {
     const contractCreate: Prisma.ContractOutsourcedDriverUncheckedCreateWithoutOutsourcedDriverInput =
       {
@@ -40,7 +39,7 @@ export class ContractOutsourcedDriverPrismaDto {
     return contractCreate;
   }
   public static EntityToPrismaUpdate(
-    contractOutsourcedDriver: IContractOutsourcedDriver,
+    contractOutsourcedDriver: ContractOutsourcedDriver,
   ) {
     const contractCreate: Prisma.ContractOutsourcedDriverUncheckedUpdateWithoutOutsourcedDriverInput =
       {

@@ -17,10 +17,13 @@ export interface ICompanyVehicle {
 }
 
 export class CompanyVehicle extends Entity {
-  private props: ICompanyVehicle;
+  private props: ICompanyVehicle | Partial<ICompanyVehicle>;
 
   constructor(
-    props: Replace<ICompanyVehicle, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      ICompanyVehicle | Partial<ICompanyVehicle>,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
 

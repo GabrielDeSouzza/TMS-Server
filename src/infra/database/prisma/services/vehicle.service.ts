@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  type Vehicle,
-  type IVehicle,
-} from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 import { type VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { PrismaService } from '../prisma.service';
-import { VehicleDto } from './prismaDTO/VehiclePrismaDto';
+import { VehiclePrismaDto } from './prismaDTO/VehiclePrismaDto';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleService implements VehicleRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -19,30 +15,27 @@ export class VehicleService implements VehicleRepository {
       where: { OR: [{ id }, { plate: plate || undefined }] },
     });
 
-    return VehicleDto.PrismaToEntity(vehiclePrisma);
+    return VehiclePrismaDto.PrismaToEntity(vehiclePrisma);
   }
 
-  async createVehicle(vehicleBrand: IVehicle): Promise<Vehicle> {
+  async createVehicle(vehicle: Vehicle): Promise<Vehicle> {
     const vehiclePrisma = await this.prisma.vehicle.create({
-      data: VehicleDto.EntityToPrisma(vehicleBrand),
+      data: VehiclePrismaDto.EntityToPrisma(vehicle),
     });
 
-    return VehicleDto.PrismaToEntity(vehiclePrisma);
+    return VehiclePrismaDto.PrismaToEntity(vehiclePrisma);
   }
-  async updateVehicle(
-    id: string,
-    vehicleBrand: Partial<IVehicle>,
-  ): Promise<Vehicle> {
+  async updateVehicle(id: string, vehicle: Vehicle): Promise<Vehicle> {
     const vehiclePrisma = await this.prisma.vehicle.update({
-      data: VehicleDto.EntityToPrismaUpdate(vehicleBrand),
+      data: VehiclePrismaDto.EntityToPrismaUpdate(vehicle),
       where: { id },
     });
 
-    return VehicleDto.PrismaToEntity(vehiclePrisma);
+    return VehiclePrismaDto.PrismaToEntity(vehiclePrisma);
   }
   async getAllVehicle(): Promise<Vehicle[]> {
     const vehicles = await this.prisma.vehicle.findMany();
 
-    return vehicles.map(vehicle => VehicleDto.PrismaToEntity(vehicle));
+    return vehicles.map(vehicle => VehiclePrismaDto.PrismaToEntity(vehicle));
   }
 }

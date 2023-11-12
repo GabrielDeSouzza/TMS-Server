@@ -12,6 +12,8 @@ import { ROLE, User } from 'domain/entities/user/User';
 import { CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { CompanyVehicleGraphDTO } from 'infra/graphql/DTO/CompanyVehicle';
+import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -30,42 +32,52 @@ import { CompanyVehicleIModel } from './CompanyVehicle.model';
 @Resolver(() => CompanyVehicleIModel)
 export class CompanyVehicleResolver {
   constructor(
-    private outsourcedReposity: CompanyVehicleRepository,
+    private companyRespository: CompanyVehicleRepository,
     private vehicleRepositoy: VehicleRepository,
   ) {}
   @Query(() => CompanyVehicleIModel)
   async getCompanyVehicle(@Args('id') id: string) {
-    return this.outsourcedReposity.findCompanyVehicle(id);
+    return this.companyRespository.findCompanyVehicle(id);
   }
   @Query(() => [CompanyVehicleIModel])
   async getAllCompanyVehicle() {
-    return await this.outsourcedReposity.findAllCompanyVehicle();
+    return await this.companyRespository.findAllCompanyVehicle();
   }
   @Mutation(() => CompanyVehicleIModel)
   async createCompanyVehicle(
-    @Args('CompanyVehicleInput') outsoucedVehicle: CompanyVehicleInput,
+    @Args('CompanyVehicleInput') companyVehicle: CompanyVehicleInput,
     @CurrentUser() user: User,
   ) {
-    outsoucedVehicle.created_by = user.id;
-    outsoucedVehicle.updated_by = user.id;
+    companyVehicle.created_by = user.id;
+    companyVehicle.updated_by = user.id;
+    const companydVehicleEntity =
+      CompanyVehicleGraphDTO.createcreateInputToEntity(companyVehicle);
+    const vehicleEntity = VehicleGraphDTO.createcreateInputToEntity(
+      companyVehicle.Vehicle,
+    );
 
-    return await this.outsourcedReposity.createCompanyVehicle(
-      outsoucedVehicle,
-      outsoucedVehicle.Vehicle,
+    return await this.companyRespository.createCompanyVehicle(
+      companydVehicleEntity,
+      vehicleEntity,
     );
   }
   @Mutation(() => CompanyVehicleIModel)
   async updatedCompanyVehicle(
     @Args('id') id: string,
-    @Args('outsourced') outsourced: CompanyVehicleUpdateInput,
+    @Args('outsourced') companyVehicle: CompanyVehicleUpdateInput,
     @CurrentUser() user: User,
   ) {
-    outsourced.updated_by = user.id;
+    companyVehicle.updated_by = user.id;
+    const companydVehicleEntity =
+      CompanyVehicleGraphDTO.updateInputToEntity(companyVehicle);
+    const vehicleEntity = VehicleGraphDTO.updateInputToEntity(
+      companyVehicle.Vehicle,
+    );
 
-    return await this.outsourcedReposity.updateCompanyVehicle(
+    return await this.companyRespository.updateCompanyVehicle(
       id,
-      outsourced,
-      outsourced.Vehicle,
+      companydVehicleEntity,
+      vehicleEntity,
     );
   }
   @ResolveField(() => VehicleCarModel)

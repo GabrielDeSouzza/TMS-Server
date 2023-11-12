@@ -3,9 +3,8 @@ import {
   type CompanyVehicle as CompanyVehiclePrisma,
 } from '@prisma/client';
 
-import { type ICompanyVehicle } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
 import { CompanyVehicle } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 export class CompanyVehiclePrismaDTO {
   public static PrismaToEntity(companyVehiclePrisma: CompanyVehiclePrisma) {
@@ -19,8 +18,8 @@ export class CompanyVehiclePrismaDTO {
     });
   }
   public static EntityToCreatePrisma(
-    companyVehicle: ICompanyVehicle,
-    vehicle: IVehicle,
+    companyVehicle: CompanyVehicle,
+    vehicle: Vehicle,
   ) {
     const companyVehiclePrisma: Prisma.CompanyVehicleCreateInput = {
       created_at: companyVehicle.created_at,
@@ -44,8 +43,8 @@ export class CompanyVehiclePrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    companyVehicle: Partial<ICompanyVehicle>,
-    vehicle: Partial<IVehicle>,
+    companyVehicle: CompanyVehicle,
+    vehicle: Vehicle,
   ) {
     const companyVehicleUptade: Prisma.CompanyVehicleUpdateInput = {
       created_at: companyVehicle.created_at,

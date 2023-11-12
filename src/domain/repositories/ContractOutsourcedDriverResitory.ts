@@ -1,16 +1,16 @@
-import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { type ContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
 export abstract class ContractOutsourcedDriverRepository {
   abstract findContractOutsourcedDriverById(
     id: string,
-  ): Promise<IContractOutsourcedDriver>;
+  ): Promise<ContractOutsourcedDriver>;
   abstract findAllContracOutsourcedDriverByCpf(
     cpf: string,
-  ): Promise<IContractOutsourcedDriver[]>;
+  ): Promise<ContractOutsourcedDriver[]>;
   abstract findAllContracOutsourcedDriver(): Promise<
-    IContractOutsourcedDriver[]
+    ContractOutsourcedDriver[]
   >;
   abstract findAllContracOutsourcedDriverByOutsourcedDriverId(
     outsoucedDriverId: string,
-  ): Promise<IContractOutsourcedDriver[]>;
+  ): Promise<ContractOutsourcedDriver[]>;
 }

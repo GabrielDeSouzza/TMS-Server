@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type User, type IUser } from '../../../../domain/entities/user/User';
+import { type User } from '../../../../domain/entities/user/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';
 import { NotificationErrorsDatabase } from '../NotificationErrorsDatabase.ts';
 import { PrismaService } from '../prisma.service';
@@ -22,7 +22,7 @@ export class UserService implements UserRepository {
     return users;
   }
 
-  async createUSer(user: IUser): Promise<User> {
+  async createUSer(user: User): Promise<User> {
     try {
       const newUSer = await this.prisma.user.create({
         data: UserPrismaDTO.EntityToPrisma(user),
@@ -50,12 +50,15 @@ export class UserService implements UserRepository {
         where: { email },
       });
 
+      console.log(user);
+      console.log('fsdfds');
+
       return UserPrismaDTO.PrismaToEntity(user);
     } catch (error) {
       new NotificationErrorsDatabase().HandleErrors(error);
     }
   }
-  async updateUser(id: string, user: IUser): Promise<User> {
+  async updateUser(id: string, user: User): Promise<User> {
     try {
       const userPrisma = UserPrismaDTO.EntityToPrismaUpdate(user);
       const newUSer = await this.prisma.user.update({

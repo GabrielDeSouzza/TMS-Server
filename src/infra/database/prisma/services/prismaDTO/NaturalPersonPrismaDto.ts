@@ -3,7 +3,6 @@ import {
   type NaturalPerson as NaturalPersonPrisma,
 } from '@prisma/client';
 
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import { NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 
 export class NaturalPersonPrismaDTO {
@@ -29,7 +28,7 @@ export class NaturalPersonPrismaDTO {
       third_phone: naturalPersonPrisma.third_phone,
     });
   }
-  public static EntityToPrisma(naturalPersonEntity: INaturalPerson) {
+  public static EntityToPrisma(naturalPersonEntity: NaturalPerson) {
     const naturalPersonPrisma: NaturalPersonPrisma = {
       address_number: naturalPersonEntity.address_number,
       cep: naturalPersonEntity.cep,
@@ -54,7 +53,7 @@ export class NaturalPersonPrismaDTO {
     return naturalPersonPrisma;
   }
 
-  public static EntityToPrismaUpdate(naturalPersonEntity: INaturalPerson) {
+  public static EntityToPrismaUpdate(naturalPersonEntity: NaturalPerson) {
     const naturalPersonUptade: Prisma.NaturalPersonUncheckedUpdateInput = {
       address_number: naturalPersonEntity.address_number,
       cep: naturalPersonEntity.cep,

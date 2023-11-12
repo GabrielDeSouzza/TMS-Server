@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  type VehicleType,
-  type IVehicleType,
-} from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { type VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 import { type VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { PrismaService } from '../prisma.service';
 import { VehicleTypePrismaDTO } from './prismaDTO/VehicleTypePrismaDto.ts';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleTypeService implements VehicleTypeRepository {
   constructor(private prisma: PrismaService) {}
   async findVehicleTypeById(id: string): Promise<VehicleType> {
@@ -21,7 +17,7 @@ export class VehicleTypeService implements VehicleTypeRepository {
 
     return vehicleType;
   }
-  async createVehicleType(vehicleType: IVehicleType): Promise<VehicleType> {
+  async createVehicleType(vehicleType: VehicleType): Promise<VehicleType> {
     const prismaVehicleType = await this.prisma.vehicleType.create({
       data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType),
     });
@@ -30,7 +26,7 @@ export class VehicleTypeService implements VehicleTypeRepository {
   }
   async updateVehicleType(
     id: string,
-    vehicleType: Partial<IVehicleType>,
+    vehicleType: VehicleType,
   ): Promise<VehicleType> {
     console.log(id);
     const updatedType = await this.prisma.vehicleType.update({

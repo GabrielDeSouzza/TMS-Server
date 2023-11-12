@@ -14,6 +14,8 @@ import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonReposi
 import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
+import { OwnDriverGraphDTO } from 'infra/graphql/DTO/OwnDriverVehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -52,10 +54,14 @@ export class OwnDriverResolver {
     ownDriverInput.updated_by = user.id;
 
     const { NaturalPerson: naturalPerson } = ownDriverInput;
+    const ownDriverEntity =
+      OwnDriverGraphDTO.createcreateInputToEntity(ownDriverInput);
+    const naturalPersonEntity =
+      NaturalPersonGraphDTO.createcreateInputToEntity(naturalPerson);
 
     return await this.ownDriverRepository.createOwnDriver(
-      ownDriverInput,
-      naturalPerson,
+      ownDriverEntity,
+      naturalPersonEntity,
     );
   }
   @Mutation(() => OwnDriverModel)
@@ -65,11 +71,18 @@ export class OwnDriverResolver {
     @CurrentUser() user: User,
   ) {
     ownDriverUpdate.updated_by = user.id;
+    const ownDriverEntity =
+      OwnDriverGraphDTO.updateInputToEntity(ownDriverUpdate);
+    const naturalPersonEntity = ownDriverUpdate.NaturalPersonUpdate
+      ? NaturalPersonGraphDTO.updateInputToEntity(
+          ownDriverUpdate.NaturalPersonUpdate,
+        )
+      : undefined;
 
     return this.ownDriverRepository.updateOwnDriver(
       id,
-      ownDriverUpdate,
-      ownDriverUpdate.NaturalPersonUpdate,
+      ownDriverEntity,
+      naturalPersonEntity,
     );
   }
   @ResolveField(() => UserModelRefereces)

@@ -10,6 +10,7 @@ export interface IValidationField {
   maxLength: number;
   minLength?: number;
   isNullAble?: boolean;
+  regex?: string;
 }
 
 export class Notification {
@@ -35,15 +36,9 @@ export class Notification {
 
   requiredField(context: string, fieldsValidation: Array<IValidationField>) {
     fieldsValidation.forEach(fieldValidation => {
-      if (
-        (!fieldValidation.isNullAble && fieldValidation.field === null) ||
-        fieldValidation.field === undefined
-      ) {
-        this.errors.push({
-          context,
-          message: `${fieldValidation.fieldName} can't be null`,
-        });
-      } else if (typeof fieldValidation.field === 'string')
+      if (fieldValidation.regex && fieldValidation.regex.length > 0)
+        this.validateRegex(context, fieldValidation);
+      else if (typeof fieldValidation.field === 'string')
         this.requiredFieldIsString(context, fieldValidation);
       else if (typeof fieldValidation.field === 'number')
         this.requiredFieldIsNumber(context, fieldValidation);
@@ -51,6 +46,18 @@ export class Notification {
         this.requiredFieldIsBoolean(context, fieldValidation);
       else if (fieldValidation.field instanceof Date)
         this.requiredFielIsDate(context, fieldValidation);
+    });
+  }
+  private validateRegex(context: string, fielValidation: IValidationField) {
+    const regex = new RegExp(fielValidation.regex);
+
+    if (regex.test(fielValidation.field.toString())) {
+      return;
+    }
+
+    this.errors.push({
+      context,
+      message: fielValidation.fieldName + ' is invalid',
     });
   }
   private requiredFielIsDate(

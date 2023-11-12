@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  type NaturalPerson,
-  type INaturalPerson,
-} from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import { type NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 
 import { PrismaService } from '../prisma.service';
@@ -23,7 +20,7 @@ export class NaturalPersonPrismaService implements NaturalPersonRepository {
     );
   }
   async createNaturalPerson(
-    naturalPerson: INaturalPerson,
+    naturalPerson: NaturalPerson,
   ): Promise<NaturalPerson> {
     const personPrisma = await this.prisma.naturalPerson.create({
       data: NaturalPersonPrismaDTO.EntityToPrisma(naturalPerson),
@@ -33,7 +30,7 @@ export class NaturalPersonPrismaService implements NaturalPersonRepository {
   }
   async updateNaturalPerson(
     id: string,
-    naturalPerson: INaturalPerson,
+    naturalPerson: NaturalPerson,
   ): Promise<NaturalPerson> {
     const personPrisma =
       NaturalPersonPrismaDTO.EntityToPrismaUpdate(naturalPerson);

@@ -32,10 +32,13 @@ export interface IOwnDriver {
   updated_by: string;
 }
 export class OwnDriver extends Entity {
-  private props: IOwnDriver;
+  private props: IOwnDriver | Partial<IOwnDriver>;
 
   constructor(
-    props: Replace<IOwnDriver, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IOwnDriver | Partial<IOwnDriver>,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
 

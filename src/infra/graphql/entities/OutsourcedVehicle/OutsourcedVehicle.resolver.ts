@@ -12,6 +12,8 @@ import { ROLE, User } from 'domain/entities/user/User';
 import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
+import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -48,10 +50,15 @@ export class OutsourcedVehicleResolver {
   ) {
     outsoucedVehicle.created_by = user.id;
     outsoucedVehicle.updated_by = user.id;
+    const outsourcedVehicleEntity =
+      OutsourcedVehicleGraphDTO.createcreateInputToEntity(outsoucedVehicle);
+    const vehicleEntity = VehicleGraphDTO.createcreateInputToEntity(
+      outsoucedVehicle.Vehicle,
+    );
 
     return await this.outsourcedReposity.createOutsourcedVehicle(
-      outsoucedVehicle,
-      outsoucedVehicle.Vehicle,
+      outsourcedVehicleEntity,
+      vehicleEntity,
     );
   }
   @Mutation(() => OutsourcedVehicleIModel)
@@ -61,11 +68,16 @@ export class OutsourcedVehicleResolver {
     @CurrentUser() user: User,
   ) {
     outsourced.updated_by = user.id;
+    const outsourcedVehicleEntity =
+      OutsourcedVehicleGraphDTO.updateInputToEntity(outsourced);
+    const vehicleEntity = outsourced.Vehicle
+      ? VehicleGraphDTO.updateInputToEntity(outsourced.Vehicle)
+      : undefined;
 
     return await this.outsourcedReposity.updateOutsourcedVehicle(
       id,
-      outsourced,
-      outsourced.Vehicle,
+      outsourcedVehicleEntity,
+      vehicleEntity,
     );
   }
   @ResolveField(() => VehicleCarModel)

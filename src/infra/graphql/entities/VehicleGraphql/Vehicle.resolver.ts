@@ -12,6 +12,8 @@ import { GraphQLError } from 'graphql';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
+
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
 import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.model';
@@ -41,14 +43,19 @@ export class VehicleGraphqlResolver {
   }
   @Mutation(() => VehicleCarModel)
   async createVehicle(@Args('vehicleInput') vehicleInput: VehicleInput) {
-    return this.vehicleRepository.createVehicle(vehicleInput);
+    const vehicleEntity =
+      VehicleGraphDTO.createcreateInputToEntity(vehicleInput);
+
+    return this.vehicleRepository.createVehicle(vehicleEntity);
   }
   @Mutation(() => VehicleCarModel)
   async updateVehicle(
     @Args('id') id: string,
     @Args('vehicleInput') vehicleInput: VehicleUpdateInput,
   ) {
-    return await this.vehicleRepository.updateVehicle(id, vehicleInput);
+    const vehicleEntity = VehicleGraphDTO.updateInputToEntity(vehicleInput);
+
+    return await this.vehicleRepository.updateVehicle(id, vehicleEntity);
   }
 
   @ResolveField(() => VehicleModelReferences)
@@ -69,6 +76,6 @@ export class VehicleGraphqlResolver {
   async VehicleBrand(@Parent() vehicle: VehicleInput) {
     const { model_id: modeld } = vehicle;
 
-    return this.vehicleModelRepository.findOnlyVehicleBrand(modeld);
+    return await this.vehicleModelRepository.findVehicleModelById(modeld);
   }
 }

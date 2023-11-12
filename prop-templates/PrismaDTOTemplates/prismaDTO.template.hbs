@@ -1,0 +1,34 @@
+import {
+  type Prisma,
+  type {{entityName}} as {{entityName}}Prisma,
+} from '@prisma/client';
+
+import { type I{{entityName}} } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
+
+
+export class {{entityName}}PrismaDTO {
+  public static PrismaToEntity({{camelCase entityName}}Prisma: {{entityName}}Prisma) {
+    return new {{entityName}}({
+
+    });
+  }
+  public static EntityToCreatePrisma(
+    {{camelCase entityName}}: I{{entityName}},
+  ) {
+    const {{camelCase entityName}}Prisma: Prisma.{{entityName}}CreateInput = {
+
+    };
+
+    return {{camelCase entityName}}Prisma;
+  }
+
+  public static EntityToPrismaUpdate(
+    {{camelCase entityName}}: Partial<I{{entityName}}>,
+  ) {
+    const {{camelCase entityName}}Uptade: Prisma.{{entityName}}UpdateInput = {
+
+    };
+
+    return {{camelCase entityName}}Uptade;
+  }
+}

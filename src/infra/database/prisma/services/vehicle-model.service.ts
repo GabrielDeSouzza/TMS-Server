@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { type VehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
-import {
-  type VehicleModel,
-  type IVehicleModel,
-} from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import { type VehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
 import { type VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 import { type VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
@@ -16,7 +13,6 @@ import { VehicleTypeContainsBodyPrismaDTO } from './prismaDTO/VehicleTypeContain
 import { VehicleTypePrismaDTO } from './prismaDTO/VehicleTypePrismaDto.ts';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleModelService implements VehicleModelRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -27,7 +23,7 @@ export class VehicleModelService implements VehicleModelRepository {
 
     return VehicleModelPrismaDTO.PrismaToEntity(vehicleModelPrisma);
   }
-  async createVehicleModel(vehicleModel: IVehicleModel): Promise<VehicleModel> {
+  async createVehicleModel(vehicleModel: VehicleModel): Promise<VehicleModel> {
     const createdModel = await this.prisma.vehicleModel.create({
       data: VehicleModelPrismaDTO.EntityToPrisma(vehicleModel),
     });
@@ -36,7 +32,7 @@ export class VehicleModelService implements VehicleModelRepository {
   }
   async updateVehicleModel(
     id: string,
-    vehicleModel: IVehicleModel,
+    vehicleModel: VehicleModel,
   ): Promise<VehicleModel> {
     const vehicleModelPrisma = await this.prisma.vehicleModel.update({
       data: VehicleModelPrismaDTO.EntityToPrismaUpdate(vehicleModel),

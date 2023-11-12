@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { type CompanyVehicle } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 import { type CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 
 import { PrismaService } from '../prisma.service';
@@ -17,8 +17,8 @@ export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
     );
   }
   async createCompanyVehicle(
-    companyVehicle: Omit<CompanyVehicle, 'id'>,
-    vehicle: IVehicle,
+    companyVehicle: CompanyVehicle,
+    vehicle: Vehicle,
   ): Promise<CompanyVehicle> {
     return CompanyVehiclePrismaDTO.PrismaToEntity(
       await this.prisma.companyVehicle.create({
@@ -31,8 +31,8 @@ export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
   }
   async updateCompanyVehicle(
     id: string,
-    CompanyVehicle: Partial<CompanyVehicle>,
-    vehicle: Partial<IVehicle>,
+    CompanyVehicle: CompanyVehicle,
+    vehicle: Vehicle,
   ): Promise<CompanyVehicle> {
     return CompanyVehiclePrismaDTO.PrismaToEntity(
       await this.prisma.companyVehicle.update({

@@ -22,11 +22,13 @@ export interface IVehicleModel {
 }
 
 export class VehicleModel extends Entity {
-  private _id: string;
-  private props: IVehicleModel;
+  private props: IVehicleModel | Partial<IVehicleModel>;
 
   constructor(
-    props: Replace<IVehicleModel, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IVehicleModel | Partial<IVehicleModel>,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
 
@@ -158,15 +160,11 @@ export class VehicleModel extends Entity {
     return this.props.capacity_per_axle;
   }
 
-  public set updatedAt(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
-  }
-
-  public get updatedAt(): Date {
+  public get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public get createdAt(): Date {
+  public get created_at(): Date {
     return this.props.created_at;
   }
   public set updated_by(updated_by: string) {

@@ -3,9 +3,8 @@ import {
   type OutsourcedVehicle as OutsourcedVehiclePrisma,
 } from '@prisma/client';
 
-import { type IOutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
 import { OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 export class OutsourcedVehiclePrismaDTO {
   public static PrismaToEntity(
@@ -21,8 +20,8 @@ export class OutsourcedVehiclePrismaDTO {
     });
   }
   public static EntityToCreatePrisma(
-    outsourcedVehicle: IOutsourcedVehicle,
-    vehicle: IVehicle,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle: Vehicle,
   ) {
     const outsourcedVehiclePrisma: Prisma.OutsourcedVehicleCreateInput = {
       created_at: outsourcedVehicle.created_at,
@@ -47,8 +46,8 @@ export class OutsourcedVehiclePrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    outsourcedVehicle: Partial<IOutsourcedVehicle>,
-    vehicle: Partial<IVehicle>,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle: Vehicle,
   ) {
     if (!outsourcedVehicle) {
       return null;

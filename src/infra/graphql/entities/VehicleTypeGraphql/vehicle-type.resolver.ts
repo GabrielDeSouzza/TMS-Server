@@ -9,14 +9,15 @@ import {
   Parent,
 } from '@nestjs/graphql';
 
-import { type IVehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleTypeContainsBodyModel } from '../VehicleTypeContainsBodyGraphql/VehicleTypeContainsBody.model';
-import { VehicleTypeInput, VehicleTypeUdateInput } from './vehicle-type.input';
+import { VehicleTypeInput, VehicleTypeUpdateInput } from './vehicle-type.input';
 import { VehicleTypeModel } from './vehicle-type.model';
 
 @Resolver(() => VehicleTypeModel)
@@ -42,20 +43,19 @@ export class VehicleTypeResolver {
     @Args('vehicleTypeCreate') vehicleTypeInput: VehicleTypeInput,
   ) {
     const { bodyWork: containsBody } = vehicleTypeInput;
+    const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
     const type = await this.vehicleTypeRepository.createVehicleType(
-      vehicleTypeInput,
+      vehicleTypeEntity,
     );
 
     if (containsBody && vehicleTypeInput.body_work_id) {
       vehicleTypeInput.body_work_id.map(async vehicleContains => {
-        const body: IVehicleTypeContainsBody = {
-          created_at: new Date(),
+        const body = new VehicleTypeContainsBody({
           created_by: vehicleTypeInput.created_by,
-          updated_at: new Date(),
           updated_by: vehicleTypeInput.updated_by,
           vehicle_bodywork_id: vehicleContains,
           vehicle_type_id: type.id,
-        };
+        });
         await this.vehicleTypeContainsBoyRepositoy.createVehicleTypeContainsBody(
           body,
         );
@@ -67,11 +67,12 @@ export class VehicleTypeResolver {
   @Mutation(() => VehicleTypeModel)
   async updatedVehicleType(
     @Args('id') id: string,
-    @Args('vehicleTypeInput') vehicleTypeInput: VehicleTypeUdateInput,
+    @Args('vehicleTypeInput') vehicleTypeInput: VehicleTypeUpdateInput,
   ) {
+    const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
     const type = await this.vehicleTypeRepository.updateVehicleType(
       id,
-      vehicleTypeInput,
+      vehicleTypeEntity,
     );
 
     if (vehicleTypeInput.del_body_id) {
@@ -85,14 +86,14 @@ export class VehicleTypeResolver {
 
     if (vehicleTypeInput.body_work_id) {
       vehicleTypeInput.body_work_id.map(async vehicleContains => {
-        const body: IVehicleTypeContainsBody = {
+        const body = new VehicleTypeContainsBody({
           created_at: new Date(),
           updated_at: new Date(),
           created_by: vehicleTypeInput.created_by,
           updated_by: vehicleTypeInput.updated_by,
           vehicle_bodywork_id: vehicleContains,
           vehicle_type_id: type.id,
-        };
+        });
         await this.vehicleTypeContainsBoyRepositoy.createVehicleTypeContainsBody(
           body,
         );

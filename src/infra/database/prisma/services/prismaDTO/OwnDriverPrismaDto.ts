@@ -6,10 +6,9 @@ import {
 
 import {
   CNH,
-  type IOwnDriver,
+  OwnDriver,
 } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 
 export class OwnDriverPrismaDTO {
   public static PrismaToEntity(ownDriverPrisma: OwnDriverPrisma) {
@@ -28,8 +27,8 @@ export class OwnDriverPrismaDTO {
     });
   }
   public static EntityToCreatePrisma(
-    ownDriver: IOwnDriver,
-    naturalPerson: INaturalPerson,
+    ownDriver: OwnDriver,
+    naturalPerson: NaturalPerson,
   ) {
     const ownDriverPrisma: Prisma.OwnDriverCreateInput = {
       cnh: ownDriver.cnh,
@@ -68,8 +67,8 @@ export class OwnDriverPrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    ownDriver: IOwnDriver,
-    naturalPerson: INaturalPerson,
+    ownDriver: OwnDriver,
+    naturalPerson: NaturalPerson,
   ) {
     const ownDriverUptade: Prisma.OwnDriverUpdateInput = {
       cnh: ownDriver.cnh,

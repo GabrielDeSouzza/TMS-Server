@@ -27,16 +27,21 @@ export interface INaturalPerson {
   nationality: string;
 }
 export class NaturalPerson extends Entity {
-  private props: INaturalPerson;
+  private props: INaturalPerson | Partial<INaturalPerson>;
 
   constructor(
-    props: Replace<INaturalPerson, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      INaturalPerson | Partial<INaturalPerson>,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
+    console.log('test');
     this.props = {
       ...props,
       id: props.id ?? randomUUID(),
     };
+    console.log('test5');
 
     if (this.notification.hasErrors()) {
       const errors = this.notification.getErrors();
@@ -142,9 +147,7 @@ export class NaturalPerson extends Entity {
   public get id(): string {
     return this.props.id;
   }
-  public set id(id: string) {
-    this.props.id = id;
-  }
+
   public set name(name: string) {
     this.props.name = name;
   }

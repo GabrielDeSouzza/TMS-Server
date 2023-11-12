@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { type ContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { type ContractOutsourcedDriverRepository } from 'domain/repositories/ContractOutsourcedDriverResitory';
 
 import { PrismaService } from '../prisma.service';
@@ -13,7 +13,7 @@ export class ContractOutsourcedDriverPrismaService
   constructor(private prisma: PrismaService) {}
   async findAllContracOutsourcedDriverByOutsourcedDriverId(
     outsoucedDriverId: string,
-  ): Promise<IContractOutsourcedDriver[]> {
+  ): Promise<ContractOutsourcedDriver[]> {
     const contracts = await this.prisma.contractOutsourcedDriver.findMany({
       where: { outsourced_driver_id: outsoucedDriverId },
     });
@@ -24,7 +24,7 @@ export class ContractOutsourcedDriverPrismaService
   }
   async findContractOutsourcedDriverById(
     id: string,
-  ): Promise<IContractOutsourcedDriver> {
+  ): Promise<ContractOutsourcedDriver> {
     return ContractOutsourcedDriverPrismaDto.PrismaToEntity(
       await this.prisma.contractOutsourcedDriver.findFirstOrThrow({
         where: { id },
@@ -33,7 +33,7 @@ export class ContractOutsourcedDriverPrismaService
   }
   async findAllContracOutsourcedDriverByCpf(
     cpf: string,
-  ): Promise<IContractOutsourcedDriver[]> {
+  ): Promise<ContractOutsourcedDriver[]> {
     const contracts = await this.prisma.contractOutsourcedDriver.findMany({
       where: { cpf },
     });
@@ -42,7 +42,7 @@ export class ContractOutsourcedDriverPrismaService
       ContractOutsourcedDriverPrismaDto.PrismaToEntity(contract),
     );
   }
-  async findAllContracOutsourcedDriver(): Promise<IContractOutsourcedDriver[]> {
+  async findAllContracOutsourcedDriver(): Promise<ContractOutsourcedDriver[]> {
     const contracts = await this.prisma.contractOutsourcedDriver.findMany();
 
     return contracts.map(contract =>

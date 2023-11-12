@@ -22,10 +22,13 @@ export interface IOutsourcedDriver {
   created_by: string;
 }
 export class OutsourcedDriver extends Entity {
-  private props: IOutsourcedDriver;
+  private props: IOutsourcedDriver | Partial<IOutsourcedDriver>;
 
   constructor(
-    props: Replace<IOutsourcedDriver, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IOutsourcedDriver | Partial<IOutsourcedDriver>,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
 

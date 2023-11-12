@@ -11,6 +11,8 @@ import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
+import { VehicleBrandGraphDTO } from 'infra/graphql/DTO/VehicleBrand';
+
 import {
   VehicleBrandInput,
   VehicleBrandUpdateInput,
@@ -40,8 +42,11 @@ export class VehicleBrandResolver {
   async createVehicleBrand(
     @Args('vehicleBrandInput') vehicleBrandInput: VehicleBrandInput,
   ) {
+    const vehicleBrandEntity =
+      VehicleBrandGraphDTO.createcreateInputToEntity(vehicleBrandInput);
+
     return await this.vehicleBrandRepository.createVehicleBrand(
-      vehicleBrandInput,
+      vehicleBrandEntity,
     );
   }
 
@@ -50,9 +55,12 @@ export class VehicleBrandResolver {
     @Args('id') id: string,
     @Args('vehicleBrandUpdate') vehicleBrandUpdate: VehicleBrandUpdateInput,
   ) {
+    const vehicleBrandEntity =
+      VehicleBrandGraphDTO.updateInputToEntity(vehicleBrandUpdate);
+
     return this.vehicleBrandRepository.updateVehicleBrand(
       id,
-      vehicleBrandUpdate,
+      vehicleBrandEntity,
     );
   }
   @ResolveField()

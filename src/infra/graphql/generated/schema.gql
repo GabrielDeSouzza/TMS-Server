@@ -79,14 +79,14 @@ type Mutation {
   login(loginData: AuthInput!): AuthModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
-  updateUser(id: String!, userUpate: UserUpdateInput!): UserModel!
+  updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
-  updateVehicleBodywork(id: String!, vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
+  updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkInput!): VehicleBodyworkModel!
   updatedCompanyVehicle(id: String!, outsourced: CompanyVehicleUpdateInput!): CompanyVehicleIModel!
   updatedOutsourcedVehicle(id: String!, outsourced: OutsourcedVehicleUpdateInput!): OutsourcedVehicleIModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
-  updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUdateInput!): VehicleTypeModel!
+  updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
 }
 
 input NaturalPersonInput {
@@ -483,7 +483,7 @@ type VehicleTypeReferences {
   name: String!
 }
 
-input VehicleTypeUdateInput {
+input VehicleTypeUpdateInput {
   bodyWork: Boolean
   body_work_id: [String!]
   created_by: String

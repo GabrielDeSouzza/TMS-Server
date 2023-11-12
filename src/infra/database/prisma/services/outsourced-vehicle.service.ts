@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
 import { type OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 import { type OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 
 import { PrismaService } from '../prisma.service';
 import { OutsourcedVehiclePrismaDTO } from './prismaDTO/OwnsourcedVehiclePrisma.Dto';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class OutsourcedVehicleServicePrisma
   implements OutsourcedVehicleRepository
 {
@@ -20,8 +19,8 @@ export class OutsourcedVehicleServicePrisma
     );
   }
   async createOutsourcedVehicle(
-    outsourcedVehicle: Omit<OutsourcedVehicle, 'id'>,
-    vehicle: IVehicle,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle: Vehicle,
   ): Promise<OutsourcedVehicle> {
     return OutsourcedVehiclePrismaDTO.PrismaToEntity(
       await this.prisma.outsourcedVehicle.create({
@@ -34,8 +33,8 @@ export class OutsourcedVehicleServicePrisma
   }
   async updateOutsourcedVehicle(
     id: string,
-    outsourcedVehicle: Partial<OutsourcedVehicle>,
-    vehicle: Partial<IVehicle>,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle: Vehicle,
   ): Promise<OutsourcedVehicle> {
     return OutsourcedVehiclePrismaDTO.PrismaToEntity(
       await this.prisma.outsourcedVehicle.update({

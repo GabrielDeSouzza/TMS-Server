@@ -1,22 +1,16 @@
-import {
-  type IOutsourcedVehicle,
-  type OutsourcedVehicle,
-} from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 export abstract class OutsourcedVehicleRepository {
   abstract findOutsourcedVehicle(id: string): Promise<OutsourcedVehicle>;
   abstract createOutsourcedVehicle(
-    outsourcedVehicle: Omit<
-      IOutsourcedVehicle,
-      'id' | 'created_at' | 'updated_at'
-    >,
-    vehicle: IVehicle,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle: Vehicle,
   ): Promise<OutsourcedVehicle>;
   abstract updateOutsourcedVehicle(
     id: string,
-    outsourcedVehicle: Partial<OutsourcedVehicle>,
-    vehicle: Partial<IVehicle>,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle: Vehicle,
   ): Promise<OutsourcedVehicle>;
   abstract findAllOutsourcedVehicle(): Promise<OutsourcedVehicle[]>;
 }

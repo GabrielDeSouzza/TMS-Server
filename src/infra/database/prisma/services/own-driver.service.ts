@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  type IOwnDriver,
-  type OwnDriver,
-} from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
 import { type OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 
 import { PrismaService } from '../prisma.service';
@@ -21,8 +18,8 @@ export class OwnDriverService implements OwnDriverRepository {
     );
   }
   async createOwnDriver(
-    ownDriver: IOwnDriver,
-    naturalPerson: INaturalPerson,
+    ownDriver: OwnDriver,
+    naturalPerson: NaturalPerson,
   ): Promise<OwnDriver> {
     return OwnDriverPrismaDTO.PrismaToEntity(
       await this.prisma.ownDriver.create({
@@ -32,8 +29,8 @@ export class OwnDriverService implements OwnDriverRepository {
   }
   async updateOwnDriver(
     id: string,
-    ownDriver: IOwnDriver,
-    naturalPerson: INaturalPerson,
+    ownDriver: OwnDriver,
+    naturalPerson: NaturalPerson,
   ) {
     return OwnDriverPrismaDTO.PrismaToEntity(
       await this.prisma.ownDriver.update({

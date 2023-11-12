@@ -17,11 +17,11 @@ export interface IOutsourcedVehicle {
 }
 
 export class OutsourcedVehicle extends Entity {
-  private props: IOutsourcedVehicle;
+  private props: IOutsourcedVehicle | Partial<IOutsourcedVehicle>;
 
   constructor(
     props: Replace<
-      IOutsourcedVehicle,
+      IOutsourcedVehicle | Partial<IOutsourcedVehicle>,
       { created_at?: Date; updated_at?: Date }
     >,
   ) {

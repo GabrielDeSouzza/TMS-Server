@@ -4,13 +4,13 @@ import {
   type OutsourcedDriver as OutsourcedDriverPrisma,
 } from '@prisma/client';
 
-import { type IContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { type ContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { type IOutsourcedDriver } from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
 import { OutsourcedDriver } from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
 import { CNH } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type INaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
-import { type IOutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 import { NaturalPersonPrismaDTO } from './NaturalPersonPrismaDto';
 import { OutsourcedVehiclePrismaDTO } from './OwnsourcedVehiclePrisma.Dto';
@@ -33,11 +33,11 @@ export class OutsourcedDriverPrismaDTO {
     });
   }
   public static EntityToCreatePrisma(
-    outsourcedDriver: IOutsourcedDriver,
-    naturalPerson: INaturalPerson,
-    contractOutsourced: IContractOutsourcedDriver,
-    outsourcedVehicle: IOutsourcedVehicle,
-    vehicle?: IVehicle,
+    outsourcedDriver: OutsourcedDriver,
+    naturalPerson: NaturalPerson,
+    contractOutsourced: ContractOutsourcedDriver,
+    outsourcedVehicle: OutsourcedVehicle,
+    vehicle?: Vehicle,
   ) {
     const outsourcedDriverPrisma: Prisma.OutsourcedDriverCreateInput = {
       cnh: outsourcedDriver.cnh,
@@ -100,10 +100,10 @@ export class OutsourcedDriverPrismaDTO {
 
   public static EntityToPrismaUpdate(
     outsourcedDriver: IOutsourcedDriver,
-    naturalPerson?: INaturalPerson,
-    contractOutsourced?: IContractOutsourcedDriver,
-    outsourcedVehicle?: IOutsourcedVehicle,
-    vehicle?: IVehicle,
+    naturalPerson?: NaturalPerson,
+    contractOutsourced?: ContractOutsourcedDriver,
+    outsourcedVehicle?: OutsourcedVehicle,
+    vehicle?: Vehicle,
   ) {
     console.log(outsourcedDriver.id);
     const outsourcedDriverUptade: Prisma.OutsourcedDriverUpdateInput = {
@@ -135,7 +135,7 @@ export class OutsourcedDriverPrismaDTO {
     return outsourcedDriverUptade;
   }
 
-  public static createOrUpdateContract(contract: IContractOutsourcedDriver) {
+  public static createOrUpdateContract(contract: ContractOutsourcedDriver) {
     if (contract.id) {
       console.log(contract);
       const updateContract: Prisma.Enumerable<Prisma.ContractOutsourcedDriverUpdateWithWhereUniqueWithoutOutsourcedDriverInput> =

@@ -3,10 +3,7 @@ import {
   type Prisma,
 } from '@prisma/client';
 
-import {
-  VehicleType,
-  type IVehicleType,
-} from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
 export class VehicleTypePrismaDTO {
   public static PrismaToEntity(
@@ -24,7 +21,7 @@ export class VehicleTypePrismaDTO {
   }
 
   public static EntityToPrisma(
-    vehicleTypeEntity: IVehicleType,
+    vehicleTypeEntity: VehicleType,
   ): VehicleTypePrisma {
     const vehicleTypePrisma: VehicleTypePrisma = {
       name: vehicleTypeEntity.name,
@@ -40,7 +37,7 @@ export class VehicleTypePrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    vehicleType: Partial<VehicleType>,
+    vehicleType: VehicleType,
   ): Prisma.VehicleTypeUpdateInput {
     const vehicleBrandUpdate: Prisma.VehicleTypeUncheckedUpdateInput = {
       name: vehicleType.name,

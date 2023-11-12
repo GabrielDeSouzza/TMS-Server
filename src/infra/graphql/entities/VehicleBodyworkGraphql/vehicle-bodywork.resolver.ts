@@ -10,6 +10,8 @@ import {
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 
+import { VehicleBodyworkGraphDTO } from 'infra/graphql/DTO/VehicleBodywork';
+
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBodyworkInput } from './vehicle-bodywork.input';
 import { VehicleBodyworkModel } from './vehicle-bodywork.model';
@@ -35,18 +37,26 @@ export class VehicleBodyworkResolver {
   async createVehicleBodywork(
     @Args('vehicleBodyworkInput') vehicleBodyworkInput: VehicleBodyworkInput,
   ) {
+    const vehicleBodyworkEntity =
+      VehicleBodyworkGraphDTO.createcreateInputToEntity(vehicleBodyworkInput);
+
     return this.vehicleBodyworkRepository.createVehicleBodywork(
-      vehicleBodyworkInput,
+      vehicleBodyworkEntity,
     );
   }
   @Mutation(() => VehicleBodyworkModel)
   async updateVehicleBodywork(
     @Args('id') id: string,
-    @Args('vehicleBodyworkInput') vehicleBodyworkInput: VehicleBodyworkInput,
+    @Args('vehicleBodyworkIUpdate')
+    vehicleBodyworkUpdated: VehicleBodyworkInput,
   ) {
+    const vehicleBodyworkEntity = VehicleBodyworkGraphDTO.updateInputToEntity(
+      vehicleBodyworkUpdated,
+    );
+
     return this.vehicleBodyworkRepository.updateVehicleBodywork(
       id,
-      vehicleBodyworkInput,
+      vehicleBodyworkEntity,
     );
   }
   @ResolveField(() => UserModelRefereces)

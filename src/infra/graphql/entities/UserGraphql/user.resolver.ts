@@ -4,6 +4,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { hashSync } from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
+import { UserGraphDTO } from 'infra/graphql/DTO/User';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserRepository } from '../../../../domain/repositories/UserRepository';
@@ -41,15 +42,18 @@ export class UserResolver {
   @Mutation(() => UserModel)
   async createUSer(@Args('createUserInput') createUserInput: UserInput) {
     createUserInput.password = hashSync(createUserInput.password, 10);
+    const user = UserGraphDTO.createcreateInputToEntity(createUserInput);
 
-    return await this.userRepository.createUSer(createUserInput);
+    return await this.userRepository.createUSer(user);
   }
 
   @Mutation(() => UserModel)
   async updateUser(
     @Args('id') id: string,
-    @Args('userUpate') updateUserInput: UserUpdateInput,
+    @Args('userUpdate') updateUserInput: UserUpdateInput,
   ) {
-    return await this.userRepository.updateUser(id, updateUserInput);
+    const user = UserGraphDTO.updateInputToEntity(updateUserInput);
+
+    return await this.userRepository.updateUser(id, user);
   }
 }

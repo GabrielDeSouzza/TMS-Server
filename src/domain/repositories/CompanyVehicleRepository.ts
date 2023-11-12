@@ -1,19 +1,16 @@
-import {
-  type CompanyVehicle,
-  type ICompanyVehicle,
-} from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type CompanyVehicle } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
+import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
 
 export abstract class CompanyVehicleRepository {
   abstract findCompanyVehicle(id: string): Promise<CompanyVehicle>;
   abstract createCompanyVehicle(
-    CompanyVehicle: Omit<ICompanyVehicle, 'id' | 'created_at' | 'updated_at'>,
-    vehicle: IVehicle,
+    CompanyVehicle: CompanyVehicle,
+    vehicle: Vehicle,
   ): Promise<CompanyVehicle>;
   abstract updateCompanyVehicle(
     id: string,
-    CompanyVehicle: Partial<CompanyVehicle>,
-    vehicle: Partial<IVehicle>,
+    CompanyVehicle: CompanyVehicle,
+    vehicle: Vehicle,
   ): Promise<CompanyVehicle>;
   abstract findAllCompanyVehicle(): Promise<CompanyVehicle[]>;
 }

@@ -25,10 +25,13 @@ export interface IVehicleType {
 }
 
 export class VehicleType extends Entity {
-  private props: IVehicleType;
+  private props: IVehicleType | Partial<IVehicleType>;
 
   constructor(
-    props: Replace<IVehicleType, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IVehicleType | Partial<IVehicleType>,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
 

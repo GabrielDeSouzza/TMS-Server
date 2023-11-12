@@ -20,11 +20,11 @@ export interface IContractOutsourcedDriver {
   outsourced_driver_id: string;
 }
 export class ContractOutsourcedDriver extends Entity {
-  private props: IContractOutsourcedDriver;
+  private props: IContractOutsourcedDriver | Partial<IContractOutsourcedDriver>;
 
   constructor(
     props: Replace<
-      IContractOutsourcedDriver,
+      IContractOutsourcedDriver | Partial<IContractOutsourcedDriver>,
       { created_at?: Date; updated_at?: Date }
     >,
   ) {
@@ -77,10 +77,8 @@ export class ContractOutsourcedDriver extends Entity {
   public get id(): string {
     return this.props.id;
   }
-  public set id(id: string) {
-    this.props.id = id;
-  }
-  public set type(type: string) {
+
+  public set type(type: string | undefined) {
     this.props.type = type;
   }
 
@@ -88,7 +86,7 @@ export class ContractOutsourcedDriver extends Entity {
     return this.props.type;
   }
 
-  public set situation(situation: string) {
+  public set situation(situation: string | undefined) {
     this.props.situation = situation;
   }
 
@@ -96,7 +94,7 @@ export class ContractOutsourcedDriver extends Entity {
     return this.props.situation;
   }
 
-  public set start_at(startAt: Date) {
+  public set start_at(startAt: Date | undefined) {
     this.props.start_at = startAt;
   }
 
@@ -104,7 +102,7 @@ export class ContractOutsourcedDriver extends Entity {
     return this.props.start_at;
   }
 
-  public set end_at(endAt: Date | undefined) {
+  public set end_at(endAt: Date | undefined | undefined) {
     this.props.end_at = endAt;
   }
 
@@ -112,16 +110,16 @@ export class ContractOutsourcedDriver extends Entity {
     return this.props.end_at;
   }
 
-  public set created_at(createdAt: Date) {
-    this.props.created_at = createdAt;
+  public set created_at(created_at: Date | undefined) {
+    this.props.created_at = created_at;
   }
 
   public get created_at(): Date {
     return this.props.created_at;
   }
 
-  public set updated_at(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
+  public set updated_at(update_at: Date | undefined) {
+    this.props.updated_at = update_at;
   }
 
   public get updated_at(): Date {

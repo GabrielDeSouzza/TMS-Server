@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  type VehicleBodywork,
-  type IVehicleBodywork,
-} from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
+import { type VehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
 import { type VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 
 import { PrismaService } from '../prisma.service';
 import { VehicleBodyworkPrismaDto } from './prismaDTO/VehicleBodyworkPrismaDto';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleBodyworkService implements VehicleBodyworkRepository {
   constructor(private prisma: PrismaService) {}
   async findVehicleBodyworkById(id: string): Promise<VehicleBodywork> {
@@ -21,7 +17,7 @@ export class VehicleBodyworkService implements VehicleBodyworkRepository {
     );
   }
   async createVehicleBodywork(
-    vehicleBodywork: IVehicleBodywork,
+    vehicleBodywork: VehicleBodywork,
   ): Promise<VehicleBodywork> {
     const bodyworkPrisma = await this.prisma.vehicleBodywork.create({
       data: VehicleBodyworkPrismaDto.EntityToPrisma(vehicleBodywork),
@@ -31,7 +27,7 @@ export class VehicleBodyworkService implements VehicleBodyworkRepository {
   }
   async updateVehicleBodywork(
     id: string,
-    vehicleBodywork: IVehicleBodywork,
+    vehicleBodywork: VehicleBodywork,
   ): Promise<VehicleBodywork> {
     const bodyworkPrisma = await this.prisma.vehicleBodywork.update({
       data: VehicleBodyworkPrismaDto.EntityToPrismaUpdate(vehicleBodywork),

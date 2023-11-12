@@ -1,0 +1,20 @@
+import { Module } from '@nestjs/common';
+
+import { {{entityName}}Repository } from 'domain/repositories/{{entityName}}Repository';
+
+
+
+import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { {{entityName}}Resolver } from './{{entityName}}.resolver';
+
+@Module({
+  imports: [GraphqlCenterModule],
+  providers: [
+    {
+      provide: {{entityName}}Repository,
+      useClass: {{entityName}}ServicePrisma,
+    },
+    {{entityName}}Resolver,
+  ],
+})
+export class {{entityName}}Module {}

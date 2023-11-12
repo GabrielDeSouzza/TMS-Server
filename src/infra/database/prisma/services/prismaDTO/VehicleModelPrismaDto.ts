@@ -29,7 +29,7 @@ export class VehicleModelPrismaDTO {
   }
 
   public static EntityToPrisma(
-    vehicleModelEntity: IVehicleModel,
+    vehicleModelEntity: VehicleModel,
   ): VehicleModelPrisma {
     const vehicleModelPrisma: VehicleModelPrisma = {
       name: vehicleModelEntity.name,

@@ -12,6 +12,8 @@ import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandReposito
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
+import { VehicleModelGraphDTO } from 'infra/graphql/DTO/VehicleModel';
+
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
@@ -40,8 +42,11 @@ export class VehicleModelResolver {
   async createVehicleModel(
     @Args('vehicleModelInput') vehicleModelInput: VehicleModelInput,
   ) {
+    const vehicleModelEntity =
+      VehicleModelGraphDTO.createInputToEntity(vehicleModelInput);
+
     return await this.vehicleModelRepository.createVehicleModel(
-      vehicleModelInput,
+      vehicleModelEntity,
     );
   }
   @Mutation(() => VehicleModelGraphql)
@@ -49,9 +54,12 @@ export class VehicleModelResolver {
     @Args('id') id: string,
     @Args('vehicleModelUpdate') vehicleModelUpdate: VehicleModelInput,
   ) {
+    const vehicleModelEntity =
+      VehicleModelGraphDTO.updateInputToEntity(vehicleModelUpdate);
+
     return await this.vehicleModelRepository.updateVehicleModel(
       id,
-      vehicleModelUpdate,
+      vehicleModelEntity,
     );
   }
   @ResolveField(() => UserModelRefereces)
