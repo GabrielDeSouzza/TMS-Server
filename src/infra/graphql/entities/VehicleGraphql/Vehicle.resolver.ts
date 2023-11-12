@@ -43,8 +43,7 @@ export class VehicleGraphqlResolver {
   }
   @Mutation(() => VehicleCarModel)
   async createVehicle(@Args('vehicleInput') vehicleInput: VehicleInput) {
-    const vehicleEntity =
-      VehicleGraphDTO.createcreateInputToEntity(vehicleInput);
+    const vehicleEntity = VehicleGraphDTO.createInputToEntity(vehicleInput);
 
     return this.vehicleRepository.createVehicle(vehicleEntity);
   }

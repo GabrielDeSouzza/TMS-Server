@@ -1,0 +1,19 @@
+
+
+export class {{entityName}}GraphDTO {
+  public static createcreateInputToEntity(createInput: {{entityName}}Input) {
+    return new {{entityName}}({
+
+    });
+  }
+
+  public static updateInputToEntity(
+    updateInput: {{entityName}}UpdateInput | undefined,
+  ) {
+    return updateInput
+      ? new {{entityName}}({
+        
+        })
+      : undefined;
+  }
+}

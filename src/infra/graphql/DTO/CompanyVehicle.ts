@@ -6,7 +6,7 @@ import {
 } from '../entities/CompanyVehicle/CompanyVehicle.input';
 
 export class CompanyVehicleGraphDTO {
-  public static createcreateInputToEntity(createInput: CompanyVehicleInput) {
+  public static createInputToEntity(createInput: CompanyVehicleInput) {
     return new CompanyVehicle({
       created_by: createInput.created_by,
       updated_by: createInput.updated_by,

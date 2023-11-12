@@ -79,7 +79,7 @@ export class OutsourcedDriverResolver {
       );
     const outsourcedVehicleEntity =
       OutsourcedVehicleGraphDTO.createcreateInputToEntity(outsourcedVehicle);
-    const vehicleEntity = VehicleGraphDTO.createcreateInputToEntity(
+    const vehicleEntity = VehicleGraphDTO.createInputToEntity(
       outsourcedVehicle.Vehicle,
     );
 

@@ -3,7 +3,6 @@ import {
   type {{entityName}} as {{entityName}}Prisma,
 } from '@prisma/client';
 
-import { type I{{entityName}} } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
 
 
 export class {{entityName}}PrismaDTO {
@@ -13,7 +12,7 @@ export class {{entityName}}PrismaDTO {
     });
   }
   public static EntityToCreatePrisma(
-    {{camelCase entityName}}: I{{entityName}},
+    {{camelCase entityName}}: {{entityName}},
   ) {
     const {{camelCase entityName}}Prisma: Prisma.{{entityName}}CreateInput = {
 
@@ -23,7 +22,7 @@ export class {{entityName}}PrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    {{camelCase entityName}}: Partial<I{{entityName}}>,
+    {{camelCase entityName}}: {{entityName}},
   ) {
     const {{camelCase entityName}}Uptade: Prisma.{{entityName}}UpdateInput = {
 

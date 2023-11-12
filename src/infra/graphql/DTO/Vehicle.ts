@@ -6,7 +6,7 @@ import {
 } from '../entities/VehicleGraphql/Vehicle.input';
 
 export class VehicleGraphDTO {
-  public static createcreateInputToEntity(createInput: VehicleInput) {
+  public static createInputToEntity(createInput: VehicleInput) {
     return new Vehicle({
       color: createInput.color,
       model_id: createInput.model_id,

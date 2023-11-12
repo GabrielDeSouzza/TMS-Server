@@ -52,7 +52,7 @@ export class OutsourcedVehicleResolver {
     outsoucedVehicle.updated_by = user.id;
     const outsourcedVehicleEntity =
       OutsourcedVehicleGraphDTO.createcreateInputToEntity(outsoucedVehicle);
-    const vehicleEntity = VehicleGraphDTO.createcreateInputToEntity(
+    const vehicleEntity = VehicleGraphDTO.createInputToEntity(
       outsoucedVehicle.Vehicle,
     );
 

@@ -6,7 +6,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -32,16 +32,25 @@ export class {{entityName}}Resolver {
   @Mutation(() => {{entityName}}Model)
   async create{{entityName}}(
     @Args('{{camelCase entityName}}Input') {{camelCase entityName}}Input: {{entityName}}Input,
+    @CurrentUser() user: User
   ) {
+    {{camelCase entityName}}Input.created_by = user.id;
+    {{camelCase entityName}}Input.updated_by = user.id;
+    const {{camelCase entityName}}Entity =
+      {{entityName}}GraphqlDTO.createInputToEntity({{camelCase entityName}}Input)
     return this.{{camelCase entityName}}Repository.create{{entityName}}(
-      {{camelCase entityName}}Input,
+      {{camelCase entityName}}Entity,
     );
   }
   @Mutation(() => {{entityName}}Model)
   async update{{camelCase entityName}}(
     @Args('id') id: string,
     @Args('{{camelCase entityName}}Input') {{camelCase entityName}}Input: {{entityName}}Input,
+    @CurrentUser() user: User
   ) {
+    {{camelCase entityName}}Input.updated_by = user.id;
+    const {{camelCase entityName}}Entity =
+      {{entityName}}GraphqlDTO.updateInputToEntity({{camelCase entityName}}Input)
     return this.{{camelCase entityName}}Repository.update{{entityName}}(
       id,
       {{camelCase entityName}}Input,

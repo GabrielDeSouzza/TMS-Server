@@ -51,8 +51,8 @@ export class CompanyVehicleResolver {
     companyVehicle.created_by = user.id;
     companyVehicle.updated_by = user.id;
     const companydVehicleEntity =
-      CompanyVehicleGraphDTO.createcreateInputToEntity(companyVehicle);
-    const vehicleEntity = VehicleGraphDTO.createcreateInputToEntity(
+      CompanyVehicleGraphDTO.createInputToEntity(companyVehicle);
+    const vehicleEntity = VehicleGraphDTO.createInputToEntity(
       companyVehicle.Vehicle,
     );
 

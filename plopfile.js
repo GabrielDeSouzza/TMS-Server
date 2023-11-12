@@ -12,8 +12,33 @@ module.exports = function (propTools) {
     actions: [
       {
         type: 'add',
-        path: 'src/infra/database/prisma/prismaDTO/{{entityName}}.ts',
-        templateFile: 'prop-templates/PrismaDTOTemplate/prismaDTO.template.hbs',
+        path: 'src/infra/database/prisma/services/prismaDTO/{{entityName}}PrismaDto.ts',
+        templateFile: 'prop-templates/PrismaDTOTemplates/prismaDTO.template.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/infra/graphql/DTO/{{entityName}}.ts',
+        templateFile: 'prop-templates/graphqlDTOTemplate/graphqlDTO.template.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.input.ts',
+        templateFile: 'prop-templates/graphqlTemplates/input.template.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.model.ts',
+        templateFile: 'prop-templates/graphqlTemplates/model.template.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.module.ts',
+        templateFile: 'prop-templates/graphqlTemplates/module.template.hbs',
+      },
+      {
+        type: 'add',
+        path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.resolver.ts',
+        templateFile: 'prop-templates/graphqlTemplates/resolver.template.hbs',
       },
     ],
   });

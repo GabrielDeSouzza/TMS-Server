@@ -4,7 +4,7 @@ import { Field, InputType} from '@nestjs/graphql';
 
 @InputType()
 export class {{entityName}}Input
-  implements Omit<IVehicleBodywork, 'id' | 'created_at' | 'updated_at'>
+  implements Omit<I{{entityName}}, 'id' | 'created_at' | 'updated_at'>
 {
   @Field()
 
