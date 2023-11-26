@@ -6,7 +6,7 @@ import {
 } from '../entities/UserGraphql/user.input';
 
 export class UserGraphDTO {
-  public static createcreateInputToEntity(createInput: UserInput) {
+  public static createInputToEntity(createInput: UserInput) {
     return new User({
       name: createInput.name,
       username: createInput.username,

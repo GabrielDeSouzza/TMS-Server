@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface ILegalClient {
+export interface ILegalClient {
   id?: string;
   branch: string;
   legal_person_id: string;

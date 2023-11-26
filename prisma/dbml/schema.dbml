@@ -363,6 +363,8 @@ Table legal_people {
   second_phone String
   third_phone String
   email String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
   CorporateClient legal_clients [not null]
   MaintenanceCompany maintenance_companies
   CarrierCompany carrier_companies [not null]

@@ -1,7 +1,7 @@
 
 
-export class {{entityName}}GraphDTO {
-  public static createcreateInputToEntity(createInput: {{entityName}}Input) {
+export class {{entityName}}GraphqlDTO {
+  public static createInputToEntity(createInput: {{entityName}}Input) {
     return new {{entityName}}({
 
     });
@@ -12,7 +12,7 @@ export class {{entityName}}GraphDTO {
   ) {
     return updateInput
       ? new {{entityName}}({
-        
+
         })
       : undefined;
   }

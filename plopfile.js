@@ -13,51 +13,56 @@ module.exports = function (propTools) {
       {
         type: 'add',
         path: 'src/infra/database/prisma/services/prismaDTO/{{entityName}}PrismaDto.ts',
-        templateFile: 'prop-templates/PrismaDTOTemplates/prismaDTO.template.hbs',
+        templateFile: 'prop-templates/PrismaTemplates/PrismaDTO/prismaDTO.template.hbs',
       },
       {
         type: 'add',
-        path: 'src/infra/graphql/DTO/{{entityName}}.ts',
-        templateFile: 'prop-templates/graphqlDTOTemplate/graphqlDTO.template.hbs',
+        path: 'src/infra/graphql/DTO/{{entityName}}GraphqlDTO.ts',
+        templateFile: 'prop-templates/GraphqlTemplates/GraphqlDTO/graphqlDTO.template.hbs',
       },
       {
         type: 'add',
         path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.input.ts',
-        templateFile: 'prop-templates/graphqlTemplates/input.template.hbs',
+        templateFile: 'prop-templates/GraphqlTemplates/GraphqlEntity/input.template.hbs',
       },
       {
         type: 'add',
         path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.model.ts',
-        templateFile: 'prop-templates/graphqlTemplates/model.template.hbs',
+        templateFile: 'prop-templates/GraphqlTemplates/GraphqlEntity/model.template.hbs',
       },
       {
         type: 'add',
         path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.module.ts',
-        templateFile: 'prop-templates/graphqlTemplates/module.template.hbs',
+        templateFile: 'prop-templates/GraphqlTemplates/GraphqlEntity/module.template.hbs',
       },
       {
         type: 'add',
         path: 'src/infra/graphql/entities/{{entityName}}Graphql/{{entityName}}.resolver.ts',
-        templateFile: 'prop-templates/graphqlTemplates/resolver.template.hbs',
+        templateFile: 'prop-templates/GraphqlTemplates/GraphqlEntity/resolver.template.hbs',
       },
+      {
+        type: 'add',
+        path: 'src/domain/repositories/{{entityName}}.repository.ts',
+        templateFile: 'prop-templates/repositoryTemplate/repository.template.hbs',
+      },
+      {type: 'add',
+        path: 'src/infra/database/prisma/services/{{entityName}}.service.ts',
+        templateFile: 'prop-templates/PrismaTemplates/PrismaService/prisma-service.hbs'
+    }
     ],
   });
 }
 
 function camelCaseString(inputString) {
-  if (inputString === '' || inputString.toLowerCase() === inputString) {
+  if (inputString === '') {
     return inputString;
   }
 
   const words = inputString.split(/(?=[A-Z])/);
 
-  const camelCaseWords = words.map((word, index) =>
-    index === 0
-      ? word.toLowerCase()
-      : word.charAt(0).toLowerCase() + word.slice(1),
-  );
-
-  const camelCaseString = camelCaseWords.join('');
+  const camelCaseString = words
+    .map((word, index) => (index === 0 ? word.toLowerCase() : word.charAt(0).toLowerCase() + word.slice(1)))
+    .join('');
 
   return camelCaseString;
 }

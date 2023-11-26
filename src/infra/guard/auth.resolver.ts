@@ -1,5 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
+import { hashSync } from 'bcrypt';
+
 import { AuthRepository } from 'domain/repositories/AuthRepository';
 
 import { AuthInput } from './auth.input';
@@ -11,6 +13,7 @@ export class AuthResolver {
   constructor(private authRepository: AuthRepository) {}
   @Mutation(() => AuthModel)
   async login(@Args('loginData') userData: AuthInput) {
+    console.log(hashSync('1234', 10));
     const response = await this.authRepository.signIn(userData);
 
     const resolver: IJWTResolver = {

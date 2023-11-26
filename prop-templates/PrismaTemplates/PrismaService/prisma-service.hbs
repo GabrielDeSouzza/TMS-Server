@@ -1,0 +1,49 @@
+import { Injectable } from '@nestjs/common';
+
+import { type{{entityName}}Repository } from 'domain/repositories/{{entityName}}Repositoy';
+
+import { PrismaService } from '../prisma.service';
+import { {{entityName}}PrismaDTO } from './prismaDTO/{{entityName}}PrismaDto';
+
+@Injectable()
+export class {{entityName}}PrismaService implements {{entityName}}Repository {
+  constructor(private prisma: PrismaService) {}
+  async find{{entityName}}ById(id: string): Promise<{{entityName}}> {
+    const {{camelCase entityName}} = await this.prisma.{{camelCase entityName}}.findFirstOrThrow({
+      where: { id },
+    });
+
+    return {{entityName}}PrismaDTO.PrismaToEntity({{camelCase entityName}});
+  }
+  async create{{entityName}}(
+    {{camelCase entityName}}: {{entityName}},
+  ): Promise<{{entityName}}> {
+    const {{camelCase entityName}}Prisma = await this.prisma.{{camelCase entityName}}.create({
+      data: {{entityName}}PrismaDTO.EntityToCreatePrisma(
+
+         ),
+    });
+
+    return {{entityName}}PrismaDTO.PrismaToEntity({{camelCase entityName}}Prisma);
+  }
+  async update{{entityName}}(
+    id: string,
+   {{camelCase entityName}}?: {{entityName}},
+  ): Promise<{{entityName}}> {
+
+    const {{camelCase entityName}}Prisma = await this.prisma.{{camelCase entityName}}.update({
+      data: {{entityName}}PrismaDTO.EntityToPrismaUpdate({{camelCase entityName}}),
+      where: { id },
+    });
+
+    return {{entityName}}PrismaDTO.PrismaToEntity({{camelCase entityName}}Prisma);
+  }
+
+  async getAll{{entityName}}(): Promise<{{entityName}}[]> {
+    const {{camelCase entityName}}s = await this.prisma.{{camelCase entityName}}.findMany();
+
+    return {{camelCase entityName}}s.map({{camelCase entityName}} =>
+      {{entityName}}PrismaDTO.PrismaToEntity({{camelCase entityName}}),
+    );
+  }
+}

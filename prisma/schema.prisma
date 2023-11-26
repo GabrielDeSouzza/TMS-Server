@@ -430,10 +430,10 @@ model CiotForPhysicalClient {
 }
 
 model LegalPerson {
-  id                 String  @id @default(uuid())
+  id                 String              @id @default(uuid())
   fantasy_name       String
-  cnpj               String  @unique
-  state_registration String  @unique
+  cnpj               String              @unique
+  state_registration String              @unique
   corporate_name     String
   public_place       String
   address_number     String
@@ -445,7 +445,8 @@ model LegalPerson {
   second_phone       String?
   third_phone        String?
   email              String
-
+  created_at         DateTime            @default(now())
+  updated_at         DateTime            @default(now())
   CorporateClient    LegalClient[]
   MaintenanceCompany MaintenanceCompany?
   CarrierCompany     CarrierCompany[]

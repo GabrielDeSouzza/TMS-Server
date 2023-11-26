@@ -65,8 +65,87 @@ input ContractOutsourcedDriverReferecesInput {
   type: String!
 }
 
+input LegalClientInput {
+  LegalPerson: LegalPersonInput!
+  branch: String!
+}
+
+type LegalClientModel {
+  CreatedUser: UserModelRefereces!
+  LegalPerson: LegalPersonModel!
+  UpdatedUser: UserModelRefereces!
+  branch: String!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  legal_person_id: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input LegalClientUpdateInput {
+  LegalPerson: LegalPersonUpdateInput!
+  branch: String
+}
+
+input LegalPersonInput {
+  address_number: String!
+  city: String!
+  cnpj: String!
+  complement: String
+  corporate_name: String!
+  email: String!
+  fantasy_name: String!
+  first_phone: String!
+  neighborhood: String!
+  public_place: String!
+  second_phone: String
+  state_registration: String!
+  third_phone: String
+  uf: String!
+}
+
+type LegalPersonModel {
+  address_number: String!
+  city: String!
+  complement: String
+  corporate_name: String!
+  created_at: Timestamp!
+  email: String!
+  fantasy_name: String!
+  first_phone: String!
+  id: String!
+  neighborhood: String!
+  public_place: String!
+  second_phone: String
+  state_registration: String!
+  third_phone: String
+  uf: String!
+  updated_at: Timestamp!
+}
+
+input LegalPersonUpdateInput {
+  address_number: String
+  city: String
+  cnpj: String
+  complement: String
+  corporate_name: String
+  email: String
+  fantasy_name: String
+  first_phone: String
+  neighborhood: String
+  public_place: String
+  second_phone: String
+  state_registration: String
+  third_phone: String
+  uf: String
+}
+
 type Mutation {
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
+  createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
@@ -87,6 +166,7 @@ type Mutation {
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
+  updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
 }
 
 input NaturalPersonInput {
@@ -248,6 +328,7 @@ input OwnDriverUpdate {
 
 type Query {
   getAllCompanyVehicle: [CompanyVehicleIModel!]!
+  getAllLegalClient: [LegalClientModel!]
   getAllOutsourcedDriver: [OutsourcedDriverModel!]!
   getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
   getAllOwnDriver: [OwnDriverModel!]!
@@ -257,6 +338,7 @@ type Query {
   getAllVehicleModel: [VehicleModelGraphql!]
   getAllVehicleTypes: [VehicleTypeModel!]
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
+  getLegalClientModel(id: String!): LegalClientModel!
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!
   getOwnDriver(id: String!): OwnDriverModel!

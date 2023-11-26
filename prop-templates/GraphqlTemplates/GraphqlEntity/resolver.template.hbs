@@ -8,10 +8,17 @@ import {
 } from '@nestjs/graphql';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 
+import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
+import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
+import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
+
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
-
+@UseGuards(GraphQLAuthGuard)
+@UseInterceptors(RoleInterceptor)
+@AcessAllowed(ROLE.)
 @Resolver(() => {{entityName}}Model)
 export class {{entityName}}Resolver {
   constructor(

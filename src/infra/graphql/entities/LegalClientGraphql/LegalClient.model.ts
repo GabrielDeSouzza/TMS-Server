@@ -1,0 +1,30 @@
+import { Field, ObjectType } from '@nestjs/graphql';
+
+import { type ILegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
+
+import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
+import { UserModelRefereces } from '../UserGraphql/user.model';
+
+@ObjectType()
+export class LegalClientModel implements ILegalClient {
+  @Field()
+  id?: string;
+  @Field()
+  branch: string;
+  @Field()
+  legal_person_id: string;
+  @Field(() => LegalPersonModel)
+  LegalPerson: LegalPersonModel;
+  @Field(() => Date)
+  updated_at: Date;
+  @Field(() => Date)
+  created_at?: Date;
+  @Field()
+  created_by: string;
+  @Field()
+  updated_by: string;
+  @Field(() => UserModelRefereces)
+  CreatedUser: UserModelRefereces;
+  @Field(() => UserModelRefereces)
+  UpdatedUser: UserModelRefereces;
+}

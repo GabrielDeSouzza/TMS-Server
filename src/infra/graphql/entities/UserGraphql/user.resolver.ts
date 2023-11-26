@@ -42,7 +42,7 @@ export class UserResolver {
   @Mutation(() => UserModel)
   async createUSer(@Args('createUserInput') createUserInput: UserInput) {
     createUserInput.password = hashSync(createUserInput.password, 10);
-    const user = UserGraphDTO.createcreateInputToEntity(createUserInput);
+    const user = UserGraphDTO.createInputToEntity(createUserInput);
 
     return await this.userRepository.createUSer(user);
   }

@@ -7,8 +7,6 @@ import { PrismaService } from '../prisma.service';
 import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 
 @Injectable()
-
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class UserService implements UserRepository {
   constructor(private prisma: PrismaService) {}
 
@@ -49,9 +47,6 @@ export class UserService implements UserRepository {
       const user = await this.prisma.user.findUniqueOrThrow({
         where: { email },
       });
-
-      console.log(user);
-      console.log('fsdfds');
 
       return UserPrismaDTO.PrismaToEntity(user);
     } catch (error) {
