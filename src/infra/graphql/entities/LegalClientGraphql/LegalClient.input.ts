@@ -15,13 +15,15 @@ import {
 
 @InputType()
 export class LegalClientInput
-  implements Omit<ILegalClient, 'id' | 'created_at' | 'updated_at'>
+  implements
+    Omit<ILegalClient, 'id' | 'created_at' | 'updated_at' | 'legal_person_id'>
 {
-  legal_person_id: string;
+  @Field({ nullable: true })
+  legal_person_id?: string;
   @Field()
   branch: string;
-  @Field(() => LegalPersonInput)
-  LegalPerson: LegalPersonInput;
+  @Field(() => LegalPersonInput, { nullable: true })
+  LegalPerson?: LegalPersonInput;
   @HideField()
   updated_by: string;
   @HideField()

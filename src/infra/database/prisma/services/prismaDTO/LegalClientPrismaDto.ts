@@ -21,31 +21,35 @@ export class LegalClientPrismaDTO {
     legalPerson?: LegalPerson,
     idLegalPerson?: string | '',
   ) {
+    if (idLegalPerson) {
+      return this.createLegalClientWithLegalPersonExist(
+        legalClient,
+        idLegalPerson,
+      );
+    }
+
     const legalClientPrisma: Prisma.LegalClientCreateInput = {
       branch: legalClient.branch,
       CreatedBy: { connect: { id: legalClient.created_by } },
       UpdatedBy: { connect: { id: legalClient.created_by } },
       LegalPerson: {
-        connectOrCreate: {
-          where: { id: idLegalPerson },
-          create: {
-            address_number: legalPerson.address_number,
-            city: legalPerson.city,
-            cnpj: legalPerson.cnpj,
-            corporate_name: legalPerson.corporate_name,
-            email: legalPerson.email,
-            fantasy_name: legalPerson.fantasy_name,
-            first_phone: legalPerson.first_phone,
-            neighborhood: legalPerson.neighborhood,
-            public_place: legalPerson.public_place,
-            state_registration: legalPerson.state_registration,
-            uf: legalPerson.uf,
-            complement: legalPerson.complement,
-            second_phone: legalPerson.second_phone,
-            third_phone: legalPerson.third_phone,
-            created_at: legalPerson.created_at,
-            updated_at: legalClient.updated_at,
-          },
+        create: {
+          address_number: legalPerson.address_number,
+          city: legalPerson.city,
+          cnpj: legalPerson.cnpj,
+          corporate_name: legalPerson.corporate_name,
+          email: legalPerson.email,
+          fantasy_name: legalPerson.fantasy_name,
+          first_phone: legalPerson.first_phone,
+          neighborhood: legalPerson.neighborhood,
+          public_place: legalPerson.public_place,
+          state_registration: legalPerson.state_registration,
+          uf: legalPerson.uf,
+          complement: legalPerson.complement,
+          second_phone: legalPerson.second_phone,
+          third_phone: legalPerson.third_phone,
+          created_at: legalPerson.created_at,
+          updated_at: legalClient.updated_at,
         },
       },
     };
@@ -84,5 +88,19 @@ export class LegalClientPrismaDTO {
     };
 
     return legalclientUptade;
+  }
+
+  private static createLegalClientWithLegalPersonExist(
+    legalClient: LegalClient,
+    legalPersonId: string,
+  ) {
+    const createLegalClient: Prisma.LegalClientCreateInput = {
+      branch: legalClient.branch,
+      CreatedBy: { connect: { id: legalClient.created_by } },
+      UpdatedBy: { connect: { id: legalClient.updated_by } },
+      LegalPerson: { connect: { id: legalPersonId } },
+    };
+
+    return createLegalClient;
   }
 }

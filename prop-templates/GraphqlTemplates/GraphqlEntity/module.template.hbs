@@ -10,7 +10,7 @@ import { {{entityName}}Resolver } from './{{entityName}}.resolver';
   providers: [
     {
       provide: {{entityName}}Repository,
-      useClass: {{entityName}}ServicePrisma,
+      useClass: {{entityName}}PrismaService,
     },
     {{entityName}}Resolver,
   ],

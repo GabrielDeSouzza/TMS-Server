@@ -5,18 +5,17 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type LegalPerson } from '../legalPerson/LegalPerson';
 
-interface ICarrierCompany {
+export interface ICarrierCompany {
   id?: string;
-  cnpj?: string;
-  LegalPerson: LegalPerson;
+  legalPersonId: string;
   updated_at: Date;
   created_at: Date;
+  updated_by: string;
+  created_by: string;
 }
 
 export class CarrierCompany extends Entity {
-  private _id: string;
   private props: ICarrierCompany;
 
   constructor(
@@ -43,13 +42,10 @@ export class CarrierCompany extends Entity {
     const fieldsValidation: Array<IValidationField> =
       new Array<IValidationField>();
     fieldsValidation.push({
-      field: this.props.cnpj,
-      fieldName: 'CNPJ',
-      maxLength: 14,
-      minLength: 14,
-      isNullAble: true,
+      field: this.props.legalPersonId,
+      fieldName: 'legalPersonId',
+      maxLength: 1000,
     });
-    this.props.LegalPerson.validate();
     this.notification.requiredField('CarrierCompany', fieldsValidation);
   }
 
@@ -60,21 +56,14 @@ export class CarrierCompany extends Entity {
     this.props.id = id;
   }
 
-  public set cnpj(cnpj: string) {
-    this.props.cnpj = cnpj;
+  public set legalPersonId(legalPersonId: string) {
+    this.props.legalPersonId = legalPersonId;
   }
 
-  public get cnpj(): string {
-    return this.props.cnpj;
+  public get legalPersonId(): string {
+    return this.props.legalPersonId;
   }
 
-  public set LegalPerson(legalPerson: LegalPerson) {
-    this.props.LegalPerson = legalPerson;
-  }
-
-  public get legalPerson(): LegalPerson {
-    return this.props.LegalPerson;
-  }
   public set updated_at(updatedAt: Date) {
     this.props.updated_at = updatedAt;
   }
@@ -89,5 +78,20 @@ export class CarrierCompany extends Entity {
 
   public get created_at(): Date {
     return this.props.created_at;
+  }
+  get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  get created_by(): string {
+    return this.props.created_by;
+  }
+
+  set created_by(created_by: string) {
+    this.props.created_by = created_by;
   }
 }

@@ -62,6 +62,7 @@ export class LegalClientResolver {
     return await this.legalclientRepository.createLegalClient(
       legalclientEntity,
       legalPersonEntity,
+      legalclientInput.legal_person_id,
     );
   }
   @Mutation(() => LegalClientModel)

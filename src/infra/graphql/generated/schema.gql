@@ -15,6 +15,30 @@ type AuthModel {
   username: String!
 }
 
+input CarrierCompanyInput {
+  LegalPerson: LegalPersonInput
+  legalPersonId: String
+}
+
+type CarrierCompanyModel {
+  CreatedUser: UserModelRefereces!
+  LegalPerson: LegalPersonModel!
+  UpdatedUser: UserModelRefereces!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  legalPersonId: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input CarrierCompanyUpdateInput {
+  LegalPerson: LegalPersonUpdateInput!
+  legalPersonId: String
+}
+
 type CompanyVehicleIModel {
   Vehicle: VehicleCarModel!
   created_at: Timestamp!
@@ -66,8 +90,9 @@ input ContractOutsourcedDriverReferecesInput {
 }
 
 input LegalClientInput {
-  LegalPerson: LegalPersonInput!
+  LegalPerson: LegalPersonInput
   branch: String!
+  legal_person_id: String
 }
 
 type LegalClientModel {
@@ -88,6 +113,7 @@ type LegalClientModel {
 input LegalClientUpdateInput {
   LegalPerson: LegalPersonUpdateInput!
   branch: String
+  legal_person_id: String
 }
 
 input LegalPersonInput {
@@ -144,6 +170,7 @@ input LegalPersonUpdateInput {
 }
 
 type Mutation {
+  createCarrierCompany(carrierCompanyInput: CarrierCompanyInput!): CarrierCompanyModel!
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
@@ -156,6 +183,7 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   login(loginData: AuthInput!): AuthModel!
+  updateCarriercompany(carrierCompanyInput: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
@@ -327,6 +355,7 @@ input OwnDriverUpdate {
 }
 
 type Query {
+  getAllCarrierCompany: [CarrierCompanyModel!]
   getAllCompanyVehicle: [CompanyVehicleIModel!]!
   getAllLegalClient: [LegalClientModel!]
   getAllOutsourcedDriver: [OutsourcedDriverModel!]!
@@ -337,6 +366,7 @@ type Query {
   getAllVehicleBrand: [VehicleBrandModel!]!
   getAllVehicleModel: [VehicleModelGraphql!]
   getAllVehicleTypes: [VehicleTypeModel!]
+  getCarrierCompanyModel(id: String!): CarrierCompanyModel!
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
   getLegalClientModel(id: String!): LegalClientModel!
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!

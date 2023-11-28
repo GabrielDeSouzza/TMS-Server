@@ -19,7 +19,7 @@ export class LegalClientPrismaService implements LegalClientRepository {
   }
   async createLegalClient(
     legalClient: LegalClient,
-    legalPerson: LegalPerson,
+    legalPerson?: LegalPerson,
     idLegalPerson?: string,
   ): Promise<LegalClient> {
     const legalClientPrisma = await this.prisma.legalClient.create({

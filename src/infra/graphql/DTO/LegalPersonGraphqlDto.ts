@@ -7,22 +7,24 @@ import {
 
 export class LegalPersonGraphqlDTO {
   public static createInputToEntity(createInput: LegalPersonInput) {
-    return new LegalPerson({
-      fantasy_name: createInput.fantasy_name,
-      cnpj: createInput.cnpj,
-      state_registration: createInput.state_registration,
-      corporate_name: createInput.corporate_name,
-      public_place: createInput.public_place,
-      address_number: createInput.address_number,
-      neighborhood: createInput.neighborhood,
-      complement: createInput.complement,
-      city: createInput.city,
-      uf: createInput.uf,
-      first_phone: createInput.first_phone,
-      second_phone: createInput.second_phone,
-      third_phone: createInput.third_phone,
-      email: createInput.email,
-    });
+    return createInput
+      ? new LegalPerson({
+          fantasy_name: createInput.fantasy_name,
+          cnpj: createInput.cnpj,
+          state_registration: createInput.state_registration,
+          corporate_name: createInput.corporate_name,
+          public_place: createInput.public_place,
+          address_number: createInput.address_number,
+          neighborhood: createInput.neighborhood,
+          complement: createInput.complement,
+          city: createInput.city,
+          uf: createInput.uf,
+          first_phone: createInput.first_phone,
+          second_phone: createInput.second_phone,
+          third_phone: createInput.third_phone,
+          email: createInput.email,
+        })
+      : undefined;
   }
 
   public static updateInputToEntity(

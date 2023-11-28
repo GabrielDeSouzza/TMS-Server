@@ -61,7 +61,7 @@ function camelCaseString(inputString) {
   const words = inputString.split(/(?=[A-Z])/);
 
   const camelCaseString = words
-    .map((word, index) => (index === 0 ? word.toLowerCase() : word.charAt(0).toLowerCase() + word.slice(1)))
+    .map((word, index) => (index === 0 ? word.toLowerCase() : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()))
     .join('');
 
   return camelCaseString;
