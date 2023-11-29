@@ -1,4 +1,11 @@
-import { Field, Float, InputType, Int, PartialType } from '@nestjs/graphql';
+import {
+  Field,
+  Float,
+  HideField,
+  InputType,
+  Int,
+  PartialType,
+} from '@nestjs/graphql';
 
 import { type IVehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
 
@@ -14,9 +21,9 @@ export class VehicleBodyworkInput
   mass: number;
   @Field(() => Float)
   volume: number;
-  @Field()
+  @HideField()
   created_by: string;
-  @Field()
+  @HideField()
   updated_by: string;
 }
 @InputType()

@@ -9,9 +9,11 @@ import { UserService } from 'infra/database/prisma/services/user.service';
 import { VehicleBrandService } from 'infra/database/prisma/services/vehicle-brand.service';
 import { VehicleModelService } from 'infra/database/prisma/services/vehicle-model.service';
 
+import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { VehicleBrandResolver } from './vehicle-brand.resolver';
 
 @Module({
+  imports: [GraphqlCenterModule],
   providers: [
     { provide: VehicleBrandRepository, useClass: VehicleBrandService },
     { provide: UserRepository, useClass: UserService },

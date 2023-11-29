@@ -1,4 +1,4 @@
-import { Field, InputType, PartialType } from '@nestjs/graphql';
+import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
 import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 
@@ -10,9 +10,9 @@ export class VehicleTypeInput
   name: string;
   @Field()
   bodyWork: boolean;
-  @Field()
+  @HideField()
   created_by: string;
-  @Field()
+  @HideField()
   updated_by: string;
   @Field(() => [String], { nullable: true })
   body_work_id: string[];

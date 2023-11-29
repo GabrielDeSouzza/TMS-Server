@@ -87,6 +87,8 @@ model User {
   LegalClientCreatedBy              LegalClient[]              @relation("created_by")
   InvoiceForPhysicalClientUpdatedBy InvoiceForPhysicalClient[] @relation("updated_by")
   InvoiceForPhysicalClientCreatedBy InvoiceForPhysicalClient[] @relation("created_by")
+  LegalContractCreatedBy            LegalContract[]            @relation("created_by")
+  LegalContractUpdatedBy            LegalContract[]            @relation("updated_by")
 
   @@map("users")
 }
@@ -469,30 +471,43 @@ model CarrierCompany {
   legal_person_id          String                     @unique
   CiotForLegalClient       CiotForLegalClient[]
   InvoiceForPhysicalClient InvoiceForPhysicalClient[]
+  LegalContract            LegalContract[]
 
   @@map("carrier_companies")
 }
 
 model LegalClient {
-  id              String         @id @default(uuid())
+  id              String          @id @default(uuid())
   branch          String
-  LegalPerson     LegalPerson    @relation(fields: [legal_person_id], references: [id])
-  legal_person_id String         @unique
-  LegalContract   LegalContract?
-  CreatedBy       User           @relation("created_by", fields: [created_by], references: [id])
+  LegalPerson     LegalPerson     @relation(fields: [legal_person_id], references: [id])
+  legal_person_id String          @unique
+  CreatedBy       User            @relation("created_by", fields: [created_by], references: [id])
   created_by      String
-  UpdatedBy       User           @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy       User            @relation("updated_by", fields: [updated_by], references: [id])
   updated_by      String
+  LegalContract   LegalContract[]
 
   @@map("legal_clients")
 }
 
 model LegalContract {
-  id               String               @id @default(uuid())
-  LegalClient      LegalClient          @relation(fields: [legal_client_id], references: [id])
-  legal_client_id  String               @unique
-  LegalClientOrder LegalClientOrder[]
-  Ciot             CiotForLegalClient[]
+  id                  String               @id @default(uuid())
+  contract_number     String               @unique
+  LegalClient         LegalClient          @relation(fields: [legal_client_id], references: [id])
+  legal_client_id     String
+  CarrierCompany      CarrierCompany       @relation(fields: [carrier_company_id], references: [id])
+  carrier_company_id  String
+  observations        String?              @db.VarChar(500)
+  delivery_conditions String               @db.VarChar(500)
+  effective_date      DateTime
+  LegalClientOrder    LegalClientOrder[]
+  Ciot                CiotForLegalClient[]
+  created_at          DateTime             @default(now())
+  updated_at          DateTime             @default(now())
+  CreatedBy           User                 @relation("created_by", fields: [created_by], references: [id])
+  created_by          String
+  UpdatedBy           User                 @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by          String
 
   @@map("legal_Contracts")
 }

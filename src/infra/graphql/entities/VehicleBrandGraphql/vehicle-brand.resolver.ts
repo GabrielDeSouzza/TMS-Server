@@ -1,3 +1,4 @@
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -7,11 +8,16 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
+import { ROLE, User } from 'domain/entities/user/User';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
 import { VehicleBrandGraphDTO } from 'infra/graphql/DTO/VehicleBrand';
+import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
+import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
+import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import {
   VehicleBrandInput,
@@ -19,6 +25,9 @@ import {
 } from './vehicle-brand.input';
 import { VehicleBrandModel } from './vehicle-brand.model';
 
+@UseGuards(GraphQLAuthGuard)
+@UseInterceptors(RoleInterceptor)
+@AcessAllowed(ROLE.USER)
 @Resolver(() => VehicleBrandModel)
 export class VehicleBrandResolver {
   constructor(
@@ -41,7 +50,10 @@ export class VehicleBrandResolver {
   @Mutation(() => VehicleBrandModel)
   async createVehicleBrand(
     @Args('vehicleBrandInput') vehicleBrandInput: VehicleBrandInput,
+    @CurrentUser() user: User,
   ) {
+    vehicleBrandInput.created_by = user.id;
+    vehicleBrandInput.updated_by = user.id;
     const vehicleBrandEntity =
       VehicleBrandGraphDTO.createcreateInputToEntity(vehicleBrandInput);
 
@@ -54,7 +66,9 @@ export class VehicleBrandResolver {
   async updatedVehicleBrand(
     @Args('id') id: string,
     @Args('vehicleBrandUpdate') vehicleBrandUpdate: VehicleBrandUpdateInput,
+    @CurrentUser() user: User,
   ) {
+    vehicleBrandUpdate.updated_by = user.id;
     const vehicleBrandEntity =
       VehicleBrandGraphDTO.updateInputToEntity(vehicleBrandUpdate);
 

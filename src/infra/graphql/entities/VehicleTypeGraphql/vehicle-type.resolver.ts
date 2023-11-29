@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable unicorn/consistent-destructuring */
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
   Resolver,
@@ -9,17 +10,26 @@ import {
   Parent,
 } from '@nestjs/graphql';
 
+import { ROLE, User } from 'domain/entities/user/User';
 import { VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
 import { VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
+import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
+import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
+import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
+
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleTypeContainsBodyModel } from '../VehicleTypeContainsBodyGraphql/VehicleTypeContainsBody.model';
 import { VehicleTypeInput, VehicleTypeUpdateInput } from './vehicle-type.input';
 import { VehicleTypeModel } from './vehicle-type.model';
 
+@UseGuards(GraphQLAuthGuard)
+@UseInterceptors(RoleInterceptor)
+@AcessAllowed(ROLE.USER)
 @Resolver(() => VehicleTypeModel)
 export class VehicleTypeResolver {
   constructor(
@@ -41,7 +51,10 @@ export class VehicleTypeResolver {
   @Mutation(() => VehicleTypeModel)
   async createVehicleType(
     @Args('vehicleTypeCreate') vehicleTypeInput: VehicleTypeInput,
+    @CurrentUser() user: User,
   ) {
+    vehicleTypeInput.created_by = user.id;
+    vehicleTypeInput.updated_by = user.id;
     const { bodyWork: containsBody } = vehicleTypeInput;
     const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
     const type = await this.vehicleTypeRepository.createVehicleType(
@@ -68,7 +81,9 @@ export class VehicleTypeResolver {
   async updatedVehicleType(
     @Args('id') id: string,
     @Args('vehicleTypeInput') vehicleTypeInput: VehicleTypeUpdateInput,
+    @CurrentUser() user: User,
   ) {
+    vehicleTypeInput.updated_by = user.id;
     const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
     const type = await this.vehicleTypeRepository.updateVehicleType(
       id,

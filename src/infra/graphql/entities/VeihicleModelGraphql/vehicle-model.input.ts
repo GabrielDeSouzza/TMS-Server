@@ -1,4 +1,11 @@
-import { Field, Float, InputType, Int, PartialType } from '@nestjs/graphql';
+import {
+  Field,
+  Float,
+  HideField,
+  InputType,
+  Int,
+  PartialType,
+} from '@nestjs/graphql';
 
 import { type IVehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
 
@@ -20,9 +27,9 @@ export class VehicleModelInput
   brand_id: string;
   @Field()
   type_id: string;
-  @Field()
+  @HideField()
   created_by: string;
-  @Field()
+  @HideField()
   updated_by: string;
 }
 

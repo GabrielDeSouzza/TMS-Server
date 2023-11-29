@@ -6,9 +6,14 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface ILegalContract {
+export interface ILegalContract {
   id?: string;
+  contract_number: string;
   legal_client_id: string;
+  carrier_company_id: string;
+  observations?: string;
+  effective_date: Date;
+  delivery_conditions: string;
   updated_at: Date;
   created_at?: Date;
   updated_by: string;
@@ -83,20 +88,52 @@ export class LegalContract extends Entity {
     this.props.legal_client_id = legal_client_id;
   }
 
+  get carrier_company_id(): string {
+    return this.props.carrier_company_id;
+  }
+
+  set carrier_company_id(carrier_company_id: string) {
+    this.props.carrier_company_id = carrier_company_id;
+  }
+
+  get contract_number(): string {
+    return this.props.contract_number;
+  }
+
+  set contract_number(contract_number: string) {
+    this.props.contract_number = contract_number;
+  }
+
+  get observations(): string | undefined {
+    return this.props.observations;
+  }
+
+  set observations(observations: string | undefined) {
+    this.props.observations = observations;
+  }
+
+  get effective_date(): Date {
+    return this.props.effective_date;
+  }
+
+  set effective_date(effective_date: Date) {
+    this.props.effective_date = effective_date;
+  }
+
+  get delivery_conditions(): string {
+    return this.props.delivery_conditions;
+  }
+
+  set delivery_conditions(delivery_conditions: string) {
+    this.props.delivery_conditions = delivery_conditions;
+  }
+
   get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  set updated_at(updated_at: Date) {
-    this.props.updated_at = updated_at;
-  }
-
-  get created_at(): Date {
+  get created_at(): Date | undefined {
     return this.props.created_at;
-  }
-
-  set created_at(created_at: Date) {
-    this.props.created_at = created_at;
   }
 
   get updated_by(): string {
@@ -107,11 +144,11 @@ export class LegalContract extends Entity {
     this.props.updated_by = updated_by;
   }
 
-  get created_by(): string {
+  get created_by(): string | undefined {
     return this.props.created_by;
   }
 
-  set created_by(created_by: string) {
+  set created_by(created_by: string | undefined) {
     this.props.created_by = created_by;
   }
 }

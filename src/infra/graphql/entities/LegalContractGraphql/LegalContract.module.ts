@@ -2,31 +2,34 @@ import { Module } from '@nestjs/common';
 
 import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
-import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
+import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
 import { CarrierCompanyPrismaService } from 'infra/database/prisma/services/CarrierCompany.service';
 import { LegalClientPrismaService } from 'infra/database/prisma/services/legal-client.service';
-import { LegalPersonPrismaService } from 'infra/database/prisma/services/legal-person.service';
+import { LegalContractPrismaService } from 'infra/database/prisma/services/LegalContract.service';
 import { UserService } from 'infra/database/prisma/services/user.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
-import { LegalClientResolver } from './LegalClient.resolver';
+import { LegalContractResolver } from './LegalContract.resolver';
 
 @Module({
   imports: [GraphqlCenterModule],
   providers: [
     {
-      provide: LegalClientRepository,
-      useClass: LegalClientPrismaService,
+      provide: LegalContractRepository,
+      useClass: LegalContractPrismaService,
     },
-    { provide: UserRepository, useClass: UserService },
-    { provide: LegalPersonRepository, useClass: LegalPersonPrismaService },
     {
       provide: CarrierCompanyRepository,
       useClass: CarrierCompanyPrismaService,
     },
-    LegalClientResolver,
+    {
+      provide: LegalClientRepository,
+      useClass: LegalClientPrismaService,
+    },
+    { provide: UserRepository, useClass: UserService },
+    LegalContractResolver,
   ],
 })
-export class LegalClientModule {}
+export class LegalContractModule {}

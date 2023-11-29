@@ -31,17 +31,17 @@ import { LegalClientModel } from './LegalClient.model';
 @Resolver(() => LegalClientModel)
 export class LegalClientResolver {
   constructor(
-    private legalclientRepository: LegalClientRepository,
+    private legalClientRepository: LegalClientRepository,
     private userRepository: UserRepository,
     private legalPersonRepository: LegalPersonRepository,
   ) {}
   @Query(() => LegalClientModel)
   async getLegalClientModel(@Args('id') id: string) {
-    return await this.legalclientRepository.findLegalClientById(id);
+    return await this.legalClientRepository.findLegalClientById(id);
   }
   @Query(() => [LegalClientModel], { nullable: true })
   async getAllLegalClient() {
-    const legalclient = await this.legalclientRepository.getAllLegalClient();
+    const legalclient = await this.legalClientRepository.getAllLegalClient();
 
     return legalclient.length > 0 ? legalclient : null;
   }
@@ -59,7 +59,7 @@ export class LegalClientResolver {
     );
     console.log('tess');
 
-    return await this.legalclientRepository.createLegalClient(
+    return await this.legalClientRepository.createLegalClient(
       legalclientEntity,
       legalPersonEntity,
       legalclientInput.legal_person_id,
@@ -78,7 +78,7 @@ export class LegalClientResolver {
       legalclientInput.LegalPerson,
     );
 
-    return this.legalclientRepository.updateLegalClient(
+    return await this.legalClientRepository.updateLegalClient(
       id,
       legalclientEntity,
       legalPersonEntity,

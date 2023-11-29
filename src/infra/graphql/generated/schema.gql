@@ -116,6 +116,35 @@ input LegalClientUpdateInput {
   legal_person_id: String
 }
 
+input LegalContractInput {
+  carrier_company_id: String!
+  contract_number: String!
+  delivery_conditions: String!
+  effective_date: Timestamp!
+  legal_client_id: String!
+  observations: String
+}
+
+type LegalContractModel {
+  CarrierCompany: CarrierCompanyModel!
+  CreatedUser: UserModelRefereces!
+  LegalClient: LegalClientModel!
+  UpdatedUser: UserModelRefereces!
+  carrier_company_id: String!
+  contract_number: String!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  delivery_conditions: String!
+  effective_date: Timestamp!
+  id: String!
+  legal_client_id: String!
+  observations: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
 input LegalPersonInput {
   address_number: String!
   city: String!
@@ -173,6 +202,7 @@ type Mutation {
   createCarrierCompany(carrierCompanyInput: CarrierCompanyInput!): CarrierCompanyModel!
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
+  createLegalContract(legalContractInput: LegalContractInput!): LegalContractModel!
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
@@ -194,6 +224,7 @@ type Mutation {
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
+  updatelegalContract(id: String!, legalContractInput: LegalContractInput!): LegalContractModel!
   updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
 }
 
@@ -358,6 +389,7 @@ type Query {
   getAllCarrierCompany: [CarrierCompanyModel!]
   getAllCompanyVehicle: [CompanyVehicleIModel!]!
   getAllLegalClient: [LegalClientModel!]
+  getAllLegalContract: [LegalContractModel!]
   getAllOutsourcedDriver: [OutsourcedDriverModel!]!
   getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
   getAllOwnDriver: [OwnDriverModel!]!
@@ -369,6 +401,7 @@ type Query {
   getCarrierCompanyModel(id: String!): CarrierCompanyModel!
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
   getLegalClientModel(id: String!): LegalClientModel!
+  getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!
   getOwnDriver(id: String!): OwnDriverModel!
@@ -428,10 +461,8 @@ input UserUpdateInput {
 
 input VehicleBodyworkInput {
   axles: Int!
-  created_by: String!
   mass: Float!
   name: String!
-  updated_by: String!
   volume: Float!
 }
 
@@ -461,9 +492,7 @@ type VehicleBodyworkModelReferences {
 }
 
 input VehicleBrandInput {
-  created_by: String!
   name: String!
-  updated_by: String!
 }
 
 type VehicleBrandModel {
@@ -484,9 +513,7 @@ type VehicleBrandReferences {
 }
 
 input VehicleBrandUpdateInput {
-  created_by: String
   name: String
-  updated_by: String
 }
 
 type VehicleCarModel {
@@ -515,7 +542,7 @@ input VehicleInput {
 
 type VehicleModelGraphql {
   VehicleBrand: VehicleBrandReferences!
-  VehicleType: VehicleTypeReferences!
+  VehicleType: VehicleTypeModel!
   axles: Int!
   brand_id: String!
   capacity_max: Float!
@@ -537,10 +564,8 @@ input VehicleModelInput {
   brand_id: String!
   capacity_max: Float!
   capacity_per_axle: Int!
-  created_by: String!
   name: String!
   type_id: String!
-  updated_by: String!
   weight: Float!
 }
 
@@ -569,9 +594,7 @@ type VehicleTypeContainsBodyModel {
 input VehicleTypeInput {
   bodyWork: Boolean!
   body_work_id: [String!]
-  created_by: String!
   name: String!
-  updated_by: String!
 }
 
 type VehicleTypeModel {
@@ -598,7 +621,6 @@ type VehicleTypeReferences {
 input VehicleTypeUpdateInput {
   bodyWork: Boolean
   body_work_id: [String!]
-  created_by: String
   del_body_id: [String!]
   name: String
   updated_by: String!

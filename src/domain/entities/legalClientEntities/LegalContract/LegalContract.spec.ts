@@ -9,6 +9,11 @@ describe('LegalContractor', () => {
       created_by: '123',
       id: '131',
       updated_at: new Date(),
+      carrier_company_id: '4548',
+      contract_number: '478',
+      delivery_conditions: '54797',
+      effective_date: new Date(),
+      observations: 'tteee',
     });
 
     expect(legalContractor).toBeTruthy();

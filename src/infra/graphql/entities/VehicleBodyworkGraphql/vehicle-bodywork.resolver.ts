@@ -1,3 +1,4 @@
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -7,15 +8,23 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
+import { ROLE, User } from 'domain/entities/user/User';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 
 import { VehicleBodyworkGraphDTO } from 'infra/graphql/DTO/VehicleBodywork';
+import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
+import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
+import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBodyworkInput } from './vehicle-bodywork.input';
 import { VehicleBodyworkModel } from './vehicle-bodywork.model';
 
+@UseGuards(GraphQLAuthGuard)
+@UseInterceptors(RoleInterceptor)
+@AcessAllowed(ROLE.USER)
 @Resolver(() => VehicleBodyworkModel)
 export class VehicleBodyworkResolver {
   constructor(
@@ -36,7 +45,10 @@ export class VehicleBodyworkResolver {
   @Mutation(() => VehicleBodyworkModel)
   async createVehicleBodywork(
     @Args('vehicleBodyworkInput') vehicleBodyworkInput: VehicleBodyworkInput,
+    @CurrentUser() user: User,
   ) {
+    vehicleBodyworkInput.created_by = user.id;
+    vehicleBodyworkInput.updated_by = user.id;
     const vehicleBodyworkEntity =
       VehicleBodyworkGraphDTO.createcreateInputToEntity(vehicleBodyworkInput);
 
@@ -49,7 +61,9 @@ export class VehicleBodyworkResolver {
     @Args('id') id: string,
     @Args('vehicleBodyworkIUpdate')
     vehicleBodyworkUpdated: VehicleBodyworkInput,
+    @CurrentUser() user: User,
   ) {
+    vehicleBodyworkUpdated.updated_by = user.id;
     const vehicleBodyworkEntity = VehicleBodyworkGraphDTO.updateInputToEntity(
       vehicleBodyworkUpdated,
     );
