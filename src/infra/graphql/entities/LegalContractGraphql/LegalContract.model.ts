@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
 import { type ILegalContract } from 'domain/entities/legalClientEntities/LegalContract/LegalContract';
 
@@ -45,3 +45,12 @@ export class LegalContractModel implements ILegalContract {
   @Field(() => UserModelRefereces)
   UpdatedUser: UserModelRefereces;
 }
+@ObjectType()
+export class LegalContractReferences extends OmitType(LegalClientModel, [
+  'CreatedUser',
+  'UpdatedUser',
+  'created_at',
+  'created_by',
+  'updated_at',
+  'updated_by',
+]) {}

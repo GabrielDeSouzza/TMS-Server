@@ -10,16 +10,22 @@ import { LegalContractPrismaDTO } from './prismaDTO/LegalContractPrismaDto';
 export class LegalContractPrismaService implements LegalContractRepository {
   constructor(private prisma: PrismaService) {}
   async findLegalContractById(
-    id?: string,
-    contract_number?: string,
+    id?: string | '',
+    contract_number?: string | '',
   ): Promise<LegalContract> {
+    let legalContract;
+
     if (!id && !contract_number) {
       throw new Error('ID OR CONTRACT NUMBER IS REQUIRED');
+    } else if (id) {
+      legalContract = await this.prisma.legalContract.findFirst({
+        where: { id },
+      });
+    } else {
+      legalContract = await this.prisma.legalContract.findFirst({
+        where: { contract_number },
+      });
     }
-
-    const legalContract = await this.prisma.legalContract.findFirstOrThrow({
-      where: { OR: { contract_number: contract_number, id } },
-    });
 
     return LegalContractPrismaDTO.PrismaToEntity(legalContract);
   }

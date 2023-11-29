@@ -110,6 +110,26 @@ type LegalClientModel {
   updated_by: String!
 }
 
+input LegalClientOrderInput {
+  legal_contract_id: String!
+  order: String!
+}
+
+type LegalClientOrderModel {
+  CreatedUser: UserModelRefereces!
+  LegalContract: LegalContractModel!
+  UpdatedUser: UserModelRefereces!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  legal_contract_id: String!
+  order: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
 input LegalClientUpdateInput {
   LegalPerson: LegalPersonUpdateInput!
   branch: String
@@ -202,6 +222,7 @@ type Mutation {
   createCarrierCompany(carrierCompanyInput: CarrierCompanyInput!): CarrierCompanyModel!
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
+  createLegalClientOrder(legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
   createLegalContract(legalContractInput: LegalContractInput!): LegalContractModel!
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
@@ -224,6 +245,7 @@ type Mutation {
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
+  updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
   updatelegalContract(id: String!, legalContractInput: LegalContractInput!): LegalContractModel!
   updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
 }
@@ -389,6 +411,7 @@ type Query {
   getAllCarrierCompany: [CarrierCompanyModel!]
   getAllCompanyVehicle: [CompanyVehicleIModel!]!
   getAllLegalClient: [LegalClientModel!]
+  getAllLegalClientOrder: [LegalClientOrderModel!]
   getAllLegalContract: [LegalContractModel!]
   getAllOutsourcedDriver: [OutsourcedDriverModel!]!
   getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
@@ -401,6 +424,7 @@ type Query {
   getCarrierCompanyModel(id: String!): CarrierCompanyModel!
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
   getLegalClientModel(id: String!): LegalClientModel!
+  getLegalClientOrderModel(id: String!): LegalClientOrderModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!

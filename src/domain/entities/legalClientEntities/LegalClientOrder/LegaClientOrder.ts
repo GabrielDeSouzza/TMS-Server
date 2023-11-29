@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface ILegalClientOrder {
+export interface ILegalClientOrder {
   id?: string;
   order: string;
   legal_contract_id: string;
@@ -16,7 +16,7 @@ interface ILegalClientOrder {
   updated_by: string;
 }
 
-export class LegalClientOrderForLegalPerson extends Entity {
+export class LegalClientOrder extends Entity {
   private props: ILegalClientOrder;
 
   constructor(
@@ -61,29 +61,47 @@ export class LegalClientOrderForLegalPerson extends Entity {
   public get id(): string {
     return this.props.id;
   }
-  public set id(id: string) {
-    this.props.id = id;
+  public get legal_contract_id(): string {
+    return this.props.legal_contract_id;
   }
-
+  public set legal_contract_id(legal_contract_id: string) {
+    this.props.legal_contract_id = legal_contract_id;
+  }
   public set order(order: string) {
     this.props.order = order;
   }
   public get order(): string {
     return this.props.order;
   }
-  public set updated_at(updatedAt: Date) {
-    this.props.updated_at = updatedAt;
+  public set updated_at(updated_at: Date) {
+    this.props.updated_at = updated_at;
   }
 
   public get updated_at(): Date {
     return this.props.updated_at;
   }
 
-  public set created_at(createdAt: Date) {
-    this.props.created_at = createdAt;
+  public set created_at(created_at: Date) {
+    this.props.created_at = created_at;
   }
 
   public get created_at(): Date {
     return this.props.created_at;
+  }
+
+  public set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  public get created_by(): string {
+    return this.props.created_by;
+  }
+
+  public set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  public get updated_by(): string {
+    return this.props.updated_by;
   }
 }
