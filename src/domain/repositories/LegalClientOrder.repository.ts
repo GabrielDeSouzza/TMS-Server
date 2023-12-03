@@ -2,6 +2,9 @@ import { type LegalClientOrder } from 'domain/entities/legalClientEntities/Legal
 
 export abstract class LegalClientOrderRepository {
   abstract findLegalClientOrderById(id: string): Promise<LegalClientOrder>;
+  abstract findOrdersByLegalClient(
+    legalClientId: string,
+  ): Promise<LegalClientOrder[]>;
   abstract createLegalClientOrder(
     legalClientOrder: LegalClientOrder,
   ): Promise<LegalClientOrder>;

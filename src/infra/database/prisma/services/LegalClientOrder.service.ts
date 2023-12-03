@@ -11,6 +11,15 @@ export class LegalClientOrderPrismaService
   implements LegalClientOrderRepository
 {
   constructor(private prisma: PrismaService) {}
+  async findOrdersByLegalClient(
+    legalClientId: string,
+  ): Promise<LegalClientOrder[]> {
+    const orders = await this.prisma.legalClientOrder.findMany({
+      where: { LegalContract: { legal_client_id: legalClientId } },
+    });
+
+    return orders.map(order => LegalClientOrderPrismaDTO.PrismaToEntity(order));
+  }
   async findLegalClientOrderById(id: string): Promise<LegalClientOrder> {
     const legalClientOrder =
       await this.prisma.legalClientOrder.findFirstOrThrow({

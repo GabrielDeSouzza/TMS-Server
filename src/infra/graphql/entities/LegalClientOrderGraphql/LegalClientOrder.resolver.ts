@@ -9,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/user/User';
+import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
@@ -19,6 +20,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { LegalClientOrderInput } from './LegalClientOrder.input';
@@ -33,6 +35,7 @@ export class LegalClientOrderResolver {
     private legalClientOrderRepository: LegalClientOrderRepository,
     private userRepository: UserRepository,
     private legalContract: LegalContractRepository,
+    private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args('id') id: string) {
@@ -80,6 +83,14 @@ export class LegalClientOrderResolver {
 
     return await this.legalContract.findLegalContractById(
       order.legal_contract_id,
+    );
+  }
+  @ResolveField(() => [LegalClientMerchandiseModel])
+  async LegalClientMerchandise(@Parent() order: LegalClientOrderModel) {
+    const { id } = order;
+
+    return this.legalClientMerchandiseRepository.findLegalClientMerchandisesByOrder(
+      id,
     );
   }
   @ResolveField(() => UserModelRefereces)

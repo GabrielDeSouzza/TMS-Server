@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type ILegalClientOrder } from 'domain/entities/legalClientEntities/LegalClientOrder/LegaClientOrder';
 
+import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import {
   LegalContractModel,
   type LegalContractReferences,
@@ -24,6 +25,8 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   created_by: string;
   @Field()
   updated_by: string;
+  @Field(() => [LegalClientMerchandiseModel])
+  Merchandises: [LegalClientMerchandiseModel];
   @Field(() => LegalContractModel)
   LegalContract: LegalContractReferences;
   @Field(() => UserModelRefereces)

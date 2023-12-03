@@ -11,6 +11,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { CarrierCompanyModule } from 'infra/graphql/entities/CarrierCompanyGraphql/CarrierCompany.module';
 import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/CompanyVehicle.module';
 import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/LegalClient.module';
+import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/LegalClientMerchandise.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriver/OutsourcedDriver.module';
@@ -53,6 +54,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     CarrierCompanyModule,
     LegalContractModule,
     LegalClientOrderModule,
+    LegalClientMerchandiseModule,
   ],
 })
 export class AppModule {}

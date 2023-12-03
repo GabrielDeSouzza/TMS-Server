@@ -9,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/user/User';
+import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
@@ -20,6 +21,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { LegalClientInput, LegalClientUpdateInput } from './LegalClient.input';
@@ -34,6 +36,7 @@ export class LegalClientResolver {
     private legalClientRepository: LegalClientRepository,
     private userRepository: UserRepository,
     private legalPersonRepository: LegalPersonRepository,
+    private legalClientOrderRepository: LegalClientOrderRepository,
   ) {}
   @Query(() => LegalClientModel)
   async getLegalClientModel(@Args('id') id: string) {
@@ -95,7 +98,12 @@ export class LegalClientResolver {
 
     return LegalPersonGraphqlDTO.createInputToEntity(legalPerson);
   }
+  @ResolveField(() => [LegalClientOrderModel])
+  async Orders(@Parent() legalClient: LegalClientModel) {
+    const { id } = legalClient;
 
+    return this.legalClientOrderRepository.findOrdersByLegalClient(id);
+  }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: LegalClientInput) {
     const { created_by: createdBy } = user;

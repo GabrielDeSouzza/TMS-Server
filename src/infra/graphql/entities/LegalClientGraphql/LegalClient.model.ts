@@ -2,6 +2,7 @@ import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
 import { type ILegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
 
+import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
@@ -15,6 +16,7 @@ export class LegalClientModel implements ILegalClient {
   legal_person_id: string;
   @Field(() => LegalPersonModel)
   LegalPerson: LegalPersonModel;
+
   @Field(() => Date)
   updated_at: Date;
   @Field(() => Date)
@@ -23,6 +25,8 @@ export class LegalClientModel implements ILegalClient {
   created_by: string;
   @Field()
   updated_by: string;
+  @Field(() => [LegalClientOrderModel])
+  Orders: [LegalClientOrderModel];
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)
