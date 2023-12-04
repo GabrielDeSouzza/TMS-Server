@@ -9,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/user/User';
+import { InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForLegalClient.repository';
 import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
@@ -20,6 +21,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { InvoiceForLegalClientModel } from '../InvoiceForLegalClientGraphql/InvoiceForLegalClient.model';
 import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -36,6 +38,7 @@ export class LegalClientOrderResolver {
     private userRepository: UserRepository,
     private legalContract: LegalContractRepository,
     private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
+    private invoicesLegalClientRepository: InvoiceForLegalClientRepository,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args('id') id: string) {
@@ -92,6 +95,12 @@ export class LegalClientOrderResolver {
     return this.legalClientMerchandiseRepository.findLegalClientMerchandisesByOrder(
       id,
     );
+  }
+  @ResolveField(() => [InvoiceForLegalClientModel])
+  async Invoices(@Parent() order: LegalClientOrderModel) {
+    const { id } = order;
+
+    return await this.invoicesLegalClientRepository.findInvoicesByOrder(id);
   }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: LegalClientOrderInput) {

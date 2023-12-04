@@ -377,7 +377,6 @@ Table carrier_companies {
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   Ciot ciots_for_physical_clients [not null]
-  Invoice invoices_legal_client [not null]
   CreatedBy users
   created_by String [not null]
   UpdatedBy users
@@ -462,10 +461,8 @@ Table invoices_legal_client {
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users [not null]
   created_by String [not null]
-  UpdatedBy users
+  UpdatedBy users [not null]
   updated_by String [not null]
-  CarrierCompany carrier_companies [not null]
-  carrier_id String [not null]
   LegalClientOrder legal_orders [not null]
   legalClientrOrderId String [not null]
 }
@@ -716,8 +713,6 @@ Ref: legal_orders.legal_contract_id > legal_Contracts.id
 Ref: invoices_legal_client.created_by > users.id
 
 Ref: invoices_legal_client.updated_by > users.id
-
-Ref: invoices_legal_client.carrier_id > carrier_companies.id
 
 Ref: invoices_legal_client.legalClientrOrderId > legal_orders.id
 

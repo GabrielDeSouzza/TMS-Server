@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IInvoiceForLegalPerson {
+export interface IInvoiceForLegalClient {
   id?: string;
   emission_date: Date;
   nature_invoice: string;
@@ -14,19 +14,20 @@ interface IInvoiceForLegalPerson {
   form_payment: string;
   additional_data: string;
   digital_signature: string;
-  invoice_taxes: string;
+  invoice_taxes: number;
   legal_client_order_id: string;
-  carrier_company_id: string;
   updated_at: Date;
   created_at: Date;
+  created_by: string;
+  updated_by: string;
 }
 
-export class InvoiceForLegalPerson extends Entity {
-  private props: IInvoiceForLegalPerson;
+export class InvoiceForLegalClient extends Entity {
+  private props: IInvoiceForLegalClient;
 
   constructor(
     props: Replace<
-      IInvoiceForLegalPerson,
+      IInvoiceForLegalClient,
       { created_at?: Date; updated_at?: Date }
     >,
   ) {
@@ -91,11 +92,6 @@ export class InvoiceForLegalPerson extends Entity {
         fieldName: 'Legal Client Order',
         maxLength: 999,
       },
-      {
-        field: this.props.carrier_company_id,
-        fieldName: 'Carrier Company',
-        maxLength: 999,
-      },
     );
 
     this.notification.requiredField('TypeOfMaintenance', fieldsValidation);
@@ -156,11 +152,11 @@ export class InvoiceForLegalPerson extends Entity {
     this.props.digital_signature = digital_signature;
   }
 
-  get invoice_taxes(): string {
+  get invoice_taxes(): number {
     return this.props.invoice_taxes;
   }
 
-  set invoice_taxes(invoice_taxes: string) {
+  set invoice_taxes(invoice_taxes: number) {
     this.props.invoice_taxes = invoice_taxes;
   }
 
@@ -172,12 +168,20 @@ export class InvoiceForLegalPerson extends Entity {
     this.props.legal_client_order_id = legal_client_order_id;
   }
 
-  get carrier_company_id(): string {
-    return this.props.carrier_company_id;
+  get updated_by(): string {
+    return this.props.updated_by;
   }
 
-  set carrier_company_id(carrier_company_id: string) {
-    this.props.carrier_company_id = carrier_company_id;
+  set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  get created_by(): string {
+    return this.props.created_by;
+  }
+
+  set created_by(created_by: string) {
+    this.props.created_by = created_by;
   }
 
   get updated_at(): Date {

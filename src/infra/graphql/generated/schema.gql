@@ -89,6 +89,38 @@ input ContractOutsourcedDriverReferecesInput {
   type: String!
 }
 
+input InvoiceForLegalClientInput {
+  additional_data: String!
+  digital_signature: String!
+  emission_date: Timestamp!
+  form_payment: String!
+  invoice_taxes: Float!
+  invoice_total: Float!
+  legal_client_order_id: String!
+  nature_invoice: String!
+}
+
+type InvoiceForLegalClientModel {
+  CreatedUser: UserModelRefereces!
+  LegalClientOrder: LegalClientOrderModel!
+  UpdatedUser: UserModelRefereces!
+  additional_data: String!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  digital_signature: String!
+  emission_date: Float!
+  form_payment: String!
+  id: String!
+  invoice_taxes: Float!
+  invoice_total: Float!
+  legal_client_order_id: String!
+  nature_invoice: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
 input LegalClientInput {
   LegalPerson: LegalPersonInput
   branch: String!
@@ -140,6 +172,7 @@ input LegalClientOrderInput {
 
 type LegalClientOrderModel {
   CreatedUser: UserModelRefereces!
+  Invoices: [InvoiceForLegalClientModel!]!
   LegalClientMerchandise: [LegalClientMerchandiseModel!]!
   LegalContract: LegalContractModel!
   Merchandises: [LegalClientMerchandiseModel!]!
@@ -246,6 +279,7 @@ input LegalPersonUpdateInput {
 type Mutation {
   createCarrierCompany(carrierCompanyInput: CarrierCompanyInput!): CarrierCompanyModel!
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
+  createInvoiceForLegalClient(invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createLegalClientMerchandise(legalClientMerchandiseInput: LegalClientMerchandiseInput!): LegalClientMerchandiseModel!
   createLegalClientOrder(legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
@@ -271,6 +305,7 @@ type Mutation {
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
+  updateinvoiceForLegalClient(id: String!, invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
   updatelegalClientMerchandise(id: String!, legalClientMerchandiseInput: LegalClientMerchandiseInput!): LegalClientMerchandiseModel!
   updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
   updatelegalContract(id: String!, legalContractInput: LegalContractInput!): LegalContractModel!
@@ -437,6 +472,7 @@ input OwnDriverUpdate {
 type Query {
   getAllCarrierCompany: [CarrierCompanyModel!]
   getAllCompanyVehicle: [CompanyVehicleIModel!]!
+  getAllInvoiceForLegalClient: [InvoiceForLegalClientModel!]
   getAllLegalClient: [LegalClientModel!]
   getAllLegalClientMerchandise: [LegalClientMerchandiseModel!]
   getAllLegalClientOrder: [LegalClientOrderModel!]
@@ -451,6 +487,7 @@ type Query {
   getAllVehicleTypes: [VehicleTypeModel!]
   getCarrierCompanyModel(id: String!): CarrierCompanyModel!
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
+  getInvoiceForLegalClientModel(id: String!): InvoiceForLegalClientModel!
   getLegalClientMerchandiseModel(id: String!): LegalClientMerchandiseModel!
   getLegalClientModel(id: String!): LegalClientModel!
   getLegalClientOrderModel(id: String!): LegalClientOrderModel

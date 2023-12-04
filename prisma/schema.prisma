@@ -461,7 +461,6 @@ model CarrierCompany {
   created_at DateTime                @default(now())
   updated_at DateTime                @default(now())
   Ciot       CiotForPhysicalClient[]
-  Invoice    InvoiceForLegalClient[]
 
   CreatedBy                User?                      @relation("created_by", fields: [created_by], references: [id])
   created_by               String
@@ -545,23 +544,20 @@ model LegalClientOrder {
 }
 
 model InvoiceForLegalClient {
-  id                String   @id @default(uuid())
-  emission_date     DateTime @default(now())
-  nature_invoice    String
-  invoice_total     Float
-  form_payment      String
-  additional_data   String
-  digital_signature String   @unique
-  invoice_taxes     Float
-  created_at        DateTime @default(now())
-  updated_at        DateTime @default(now())
-
+  id                  String           @id @default(uuid())
+  emission_date       DateTime         @default(now())
+  nature_invoice      String
+  invoice_total       Float
+  form_payment        String
+  additional_data     String
+  digital_signature   String           @unique
+  invoice_taxes       Float
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @default(now())
   CreatedBy           User             @relation("created_by", fields: [created_by], references: [id])
   created_by          String
-  UpdatedBy           User?            @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy           User            @relation("updated_by", fields: [updated_by], references: [id])
   updated_by          String
-  CarrierCompany      CarrierCompany   @relation(fields: [carrier_id], references: [id])
-  carrier_id          String
   LegalClientOrder    LegalClientOrder @relation(fields: [legalClientrOrderId], references: [id])
   legalClientrOrderId String
 
