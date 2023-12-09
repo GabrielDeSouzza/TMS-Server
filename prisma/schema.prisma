@@ -81,21 +81,28 @@ model User {
   LegalClientCustomerOrderCreatedBy LegalClientOrder[]         @relation("created_by")
   LegalClientCustomerOrderUpdatedBy LegalClientOrder[]         @relation("updated_by")
 
-  CiotForLegalUpdatedByClient       CiotForLegalClient[]       @relation("updated_by")
-  CiotForLegalCreatedByClient       CiotForLegalClient[]       @relation("created_by")
-  LegalClientUpdatedBy              LegalClient[]              @relation("updated_by")
-  LegalClientCreatedBy              LegalClient[]              @relation("created_by")
-  InvoiceForPhysicalClientUpdatedBy InvoiceForPhysicalClient[] @relation("updated_by")
-  InvoiceForPhysicalClientCreatedBy InvoiceForPhysicalClient[] @relation("created_by")
-  LegalContractCreatedBy            LegalContract[]            @relation("created_by")
-  LegalContractUpdatedBy            LegalContract[]            @relation("updated_by")
+  CiotForLegalUpdatedByClient         CiotForLegalClient[]         @relation("updated_by")
+  CiotForLegalCreatedByClient         CiotForLegalClient[]         @relation("created_by")
+  LegalClientUpdatedBy                LegalClient[]                @relation("updated_by")
+  LegalClientCreatedBy                LegalClient[]                @relation("created_by")
+  InvoiceForPhysicalClientUpdatedBy   InvoiceForPhysicalClient[]   @relation("updated_by")
+  InvoiceForPhysicalClientCreatedBy   InvoiceForPhysicalClient[]   @relation("created_by")
+  LegalContractCreatedBy              LegalContract[]              @relation("created_by")
+  LegalContractUpdatedBy              LegalContract[]              @relation("updated_by")
+  OutsourcedTransportCompanyUpdatedBy OutsourcedTransportCompany[] @relation("updated_by")
+  OutsourcedTransportCompanyCreatedBy OutsourcedTransportCompany[] @relation("created_by")
+
+  OutsourcedTransportVehicleCreatedBy       OutsourcedTransportVehicle[]       @relation("created_by")
+  OutsourcedTransportVehicleUpdatedBy       OutsourcedTransportVehicle[]       @relation("updated_by")
+  OutsourcedTransportCompanyDriverCreatedBy OutsourcedTransportCompanyDriver[] @relation("created_by")
+  OutsourcedTransportCompanyDriverUpdatedBy OutsourcedTransportCompanyDriver[] @relation("updated_by")
 
   @@map("users")
 }
 
 model Vehicle {
-  id                String              @id @default(uuid())
-  plate             String              @unique
+  id                String             @id @default(uuid())
+  plate             String             @unique
   year              String
   color             String
   renavam           String
@@ -103,10 +110,11 @@ model Vehicle {
   CompanyVehicle    CompanyVehicle?
   OrderProcessing   OrderProcessing?
   Maintenance       Maintenance[]
-  OutsourcedVehicle OutsourcedVehicle[]
+  OutsourcedVehicle OutsourcedVehicle?
 
-  Model    VehicleModel @relation(fields: [model_id], references: [id])
-  model_id String
+  Model                      VehicleModel                @relation(fields: [model_id], references: [id])
+  model_id                   String
+  OutsourcedTransportVehicle OutsourcedTransportVehicle?
 
   @@map("vehicles")
 }
@@ -207,28 +215,29 @@ model VehicleTypeContainsBody {
 }
 
 model OutsourcedVehicle {
-  id               String             @id @default(uuid())
-  created_at       DateTime           @default(now())
-  updated_at       DateTime           @default(now())
-  OutsourcedDriver OutsourcedDriver[]
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 
-  CreatedBy           User?            @relation("created_by", fields: [created_by], references: [id])
+  CreatedBy           User?             @relation("created_by", fields: [created_by], references: [id])
   created_by          String
-  UpdatedBy           User?            @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy           User?             @relation("updated_by", fields: [updated_by], references: [id])
   updated_by          String
-  Vehicle             Vehicle          @relation(fields: [vehicle_id], references: [id])
-  vehicle_id          String
-  OrderProcessing     OrderProcessing? @relation(fields: [order_processing_id], references: [id])
+  Vehicle             Vehicle           @relation(fields: [vehicle_id], references: [id])
+  vehicle_id          String            @unique
+  OrderProcessing     OrderProcessing?  @relation(fields: [order_processing_id], references: [id])
   order_processing_id String?
+  OutsourcedDriver    OutsourcedDriver?
 
   @@map("outsourced_vehicles")
 }
 
 model CompanyVehicle {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
+  id                  String           @id @default(uuid())
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @default(now())
+  company_id          String
+  CarrierCompany      CarrierCompany   @relation(fields: [company_id], references: [id])
   CreatedBy           User?            @relation("created_by", fields: [created_by], references: [id])
   created_by          String
   UpdatedBy           User?            @relation("updated_by", fields: [updated_by], references: [id])
@@ -239,6 +248,25 @@ model CompanyVehicle {
   order_processing_id String?
 
   @@map("company_vehicles")
+}
+
+model OutsourcedTransportVehicle {
+  id String @id @default(uuid())
+
+  outsourced_company_id String
+  CarrierCompany        OutsourcedTransportCompany @relation(fields: [outsourced_company_id], references: [id])
+
+  Vehicle    Vehicle @relation(fields: [vehicle_id], references: [id])
+  vehicle_id String  @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  CreatedBy  User?    @relation("created_by", fields: [created_by], references: [id])
+  created_by String
+  UpdatedBy  User?    @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by String
+
+  @@map("outsourced_transport_vehicle")
 }
 
 model OutsourcedDriver {
@@ -264,21 +292,44 @@ model OutsourcedDriver {
   @@map("outsourced_drivers")
 }
 
+model OutsourcedTransportCompanyDriver {
+  id                              String                     @id @default(uuid())
+  cnh                             String                     @unique
+  cnh_category                    CNH
+  cnh_expiration                  DateTime
+  course_mopp                     Boolean                    @default(false)
+  ContractOutsourcedDriver        ContractOutsourcedDriver[]
+  created_at                      DateTime                   @default(now())
+  updated_at                      DateTime                   @default(now())
+  CreatedBy                       User?                      @relation("created_by", fields: [created_by], references: [id])
+  created_by                      String
+  UpdatedBy                       User?                      @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                      String
+  NaturalPerson                   NaturalPerson              @relation(fields: [natural_person_id], references: [id])
+  natural_person_id               String                     @unique
+  outsourced_transport_company_id String
+  OutsourcedTransportCompany      OutsourcedTransportCompany @relation(fields: [outsourced_transport_company_id], references: [id])
+
+  @@map("outsourcedT_transport_company_driver")
+}
+
 model ContractOutsourcedDriver {
-  id                   String           @id @default(uuid())
-  type                 String
-  situation            String
-  start_at             DateTime
-  end_at               DateTime?
-  created_at           DateTime         @default(now())
-  updated_at           DateTime         @default(now())
-  cpf                  String
-  CreatedBy            User?            @relation("created_by", fields: [created_by], references: [id])
-  created_by           String
-  UpdatedBy            User?            @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by           String
-  OutsourcedDriver     OutsourcedDriver @relation(fields: [outsourced_driver_id], references: [id])
-  outsourced_driver_id String
+  id                                 String                            @id @default(uuid())
+  type                               String
+  situation                          String
+  start_at                           DateTime
+  end_at                             DateTime?
+  created_at                         DateTime                          @default(now())
+  updated_at                         DateTime                          @default(now())
+  cpf                                String
+  CreatedBy                          User?                             @relation("created_by", fields: [created_by], references: [id])
+  created_by                         String
+  UpdatedBy                          User?                             @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                         String
+  OutsourcedDriver                   OutsourcedDriver                  @relation(fields: [outsourced_driver_id], references: [id])
+  outsourced_driver_id               String
+  OutsourcedTransportCompanyDriver   OutsourcedTransportCompanyDriver? @relation(fields: [outsourcedTransportCompanyDriverId], references: [id])
+  outsourcedTransportCompanyDriverId String?
 
   @@map("contract_outsourced_drivers")
 }
@@ -323,9 +374,10 @@ model NaturalPerson {
   email          String
   nationality    String
 
-  OwnDriver        OwnDriver[]
-  OutsourcedDriver OutsourcedDriver[]
-  PhysicalCustomer PhysicalCustomer[]
+  OwnDriver                        OwnDriver[]
+  OutsourcedDriver                 OutsourcedDriver[]
+  PhysicalCustomer                 PhysicalCustomer[]
+  OutsourcedTransportCompanyDriver OutsourcedTransportCompanyDriver?
 
   @@map("natural_people")
 }
@@ -390,17 +442,16 @@ model PhysicalCustomerOrder {
 }
 
 model InvoiceForPhysicalClient {
-  id                String   @id @default(uuid())
-  emission_date     DateTime @default(now())
-  nature_invoice    String
-  invoice_total     Float
-  form_payment      String
-  additional_data   String
-  digital_signature String   @unique
-  invoice_taxes     Float
-  created_at        DateTime @default(now())
-  updated_at        DateTime @default(now())
-
+  id                      String                @id @default(uuid())
+  emission_date           DateTime              @default(now())
+  nature_invoice          String
+  invoice_total           Float
+  form_payment            String
+  additional_data         String
+  digital_signature       String                @unique
+  invoice_taxes           Float
+  created_at              DateTime              @default(now())
+  updated_at              DateTime              @default(now())
   CreatedBy               User                  @relation("created_by", fields: [created_by], references: [id])
   created_by              String
   UpdatedBy               User                  @relation("updated_by", fields: [updated_by], references: [id])
@@ -432,47 +483,74 @@ model CiotForPhysicalClient {
 }
 
 model LegalPerson {
-  id                 String              @id @default(uuid())
-  fantasy_name       String
-  cnpj               String              @unique
-  state_registration String              @unique
-  corporate_name     String
-  public_place       String
-  address_number     String
-  neighborhood       String
-  complement         String?
-  city               String
-  uf                 String
-  first_phone        String
-  second_phone       String?
-  third_phone        String?
-  email              String
-  created_at         DateTime            @default(now())
-  updated_at         DateTime            @default(now())
-  CorporateClient    LegalClient[]
-  MaintenanceCompany MaintenanceCompany?
-  CarrierCompany     CarrierCompany[]
+  id                         String                       @id @default(uuid())
+  fantasy_name               String
+  cnpj                       String                       @unique
+  state_registration         String                       @unique
+  corporate_name             String
+  public_place               String
+  address_number             String
+  neighborhood               String
+  complement                 String?
+  city                       String
+  uf                         String
+  first_phone                String
+  second_phone               String?
+  third_phone                String?
+  email                      String
+  created_at                 DateTime                     @default(now())
+  updated_at                 DateTime                     @default(now())
+  CorporateClient            LegalClient[]
+  MaintenanceCompany         MaintenanceCompany?
+  CarrierCompany             CarrierCompany[]
+  OutsourcedTransportCompany OutsourcedTransportCompany[]
 
   @@map("legal_people")
 }
 
 model CarrierCompany {
-  id         String                  @id @default(uuid())
-  created_at DateTime                @default(now())
-  updated_at DateTime                @default(now())
-  Ciot       CiotForPhysicalClient[]
-
-  CreatedBy                User?                      @relation("created_by", fields: [created_by], references: [id])
-  created_by               String
-  UpdatedBy                User?                      @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by               String
+  id                       String                     @id @default(uuid())
+  Ciot                     CiotForPhysicalClient[]
   LegalPerson              LegalPerson                @relation(fields: [legal_person_id], references: [id])
   legal_person_id          String                     @unique
-  CiotForLegalClient       CiotForLegalClient[]
   InvoiceForPhysicalClient InvoiceForPhysicalClient[]
   LegalContract            LegalContract[]
+  CompanyVehicle           CompanyVehicle[]
+
+  created_at                         DateTime                             @default(now())
+  updated_at                         DateTime                             @default(now())
+  CreatedBy                          User?                                @relation("created_by", fields: [created_by], references: [id])
+  created_by                         String
+  UpdatedBy                          User?                                @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                         String
+  OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract[]
 
   @@map("carrier_companies")
+}
+
+model OutsourcedTransportCompany {
+  id                                 String                               @id @default(uuid())
+  legal_person_id                    String                               @unique
+  LegalPerson                        LegalPerson                          @relation(fields: [legal_person_id], references: [id])
+  created_at                         DateTime                             @default(now())
+  updated_at                         DateTime                             @default(now())
+  CreatedBy                          User?                                @relation("created_by", fields: [created_by], references: [id])
+  created_by                         String
+  UpdatedBy                          User                                 @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                         String
+  OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract[]
+  OutsourcedCompanyVehicle           OutsourcedTransportVehicle[]
+  OutsourcedTransportCompanyDriver   OutsourcedTransportCompanyDriver[]
+}
+
+model OutsourcedTransportCompanyContract {
+  id                              String                     @id @default(uuid())
+  outsourced_transport_company_id String
+  OutsourcedTransportCompany      OutsourcedTransportCompany @relation(fields: [outsourced_transport_company_id], references: [id])
+  carrier_company_id              String
+  CarrierCompany                  CarrierCompany             @relation(fields: [carrier_company_id], references: [id])
+  legal_client_order_id           String                     @unique
+  LegalClientOrder                LegalClientOrder           @relation(fields: [legal_client_order_id], references: [id])
 }
 
 model LegalClient {
@@ -526,19 +604,20 @@ model LegalClientMerchandise {
 }
 
 model LegalClientOrder {
-  id                     String                   @id @default(uuid())
-  order                  String                   @unique
-  LegalClientMerchandise LegalClientMerchandise[]
-  RouteForLegalClient    Routes[]
-  created_at             DateTime                 @default(now())
-  updated_at             DateTime                 @default(now())
-  CreatedBy              User                     @relation("created_by", fields: [created_by], references: [id])
-  created_by             String
-  UpdatedBy              User                     @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by             String
-  LegalContract          LegalContract            @relation(fields: [legal_contract_id], references: [id])
-  legal_contract_id      String
-  InvoiceForLegalClient  InvoiceForLegalClient[]
+  id                                 String                              @id @default(uuid())
+  order                              String                              @unique
+  LegalClientMerchandise             LegalClientMerchandise[]
+  RouteForLegalClient                Routes[]
+  created_at                         DateTime                            @default(now())
+  updated_at                         DateTime                            @default(now())
+  CreatedBy                          User                                @relation("created_by", fields: [created_by], references: [id])
+  created_by                         String
+  UpdatedBy                          User                                @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                         String
+  LegalContract                      LegalContract                       @relation(fields: [legal_contract_id], references: [id])
+  legal_contract_id                  String
+  InvoiceForLegalClient              InvoiceForLegalClient[]
+  OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
 
   @@map("legal_orders")
 }
@@ -556,7 +635,7 @@ model InvoiceForLegalClient {
   updated_at          DateTime         @default(now())
   CreatedBy           User             @relation("created_by", fields: [created_by], references: [id])
   created_by          String
-  UpdatedBy           User            @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy           User             @relation("updated_by", fields: [updated_by], references: [id])
   updated_by          String
   LegalClientOrder    LegalClientOrder @relation(fields: [legalClientrOrderId], references: [id])
   legalClientrOrderId String
@@ -565,18 +644,16 @@ model InvoiceForLegalClient {
 }
 
 model CiotForLegalClient {
-  id                String         @id @default(uuid())
-  ciot              String         @unique
-  emission_date     DateTime       @default(now())
-  CarrierCompany    CarrierCompany @relation(fields: [carrier_id], references: [id])
-  carrier_id        String
-  PhysycalContract  LegalContract  @relation(fields: [legal_contract_id], references: [id])
+  id                String        @id @default(uuid())
+  ciot              String        @unique
+  emission_date     DateTime      @default(now())
+  PhysycalContract  LegalContract @relation(fields: [legal_contract_id], references: [id])
   legal_contract_id String
-  created_at        DateTime       @default(now())
-  updated_at        DateTime       @default(now())
-  CreatedBy         User?          @relation("created_by", fields: [created_by], references: [id])
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @default(now())
+  CreatedBy         User?         @relation("created_by", fields: [created_by], references: [id])
   created_by        String
-  UpdatedBy         User?          @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy         User?         @relation("updated_by", fields: [updated_by], references: [id])
   updated_by        String
 
   @@map("ciots_for_legal_clients")

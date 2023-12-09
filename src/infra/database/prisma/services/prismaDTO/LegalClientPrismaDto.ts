@@ -6,6 +6,8 @@ import {
 import { LegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
 import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
 
+import { LegalPersonPrismaDTO } from './LegalPersonPrismaDto';
+
 export class LegalClientPrismaDTO {
   public static PrismaToEntity(legalclientPrisma: LegalClientPrisma) {
     return new LegalClient({
@@ -33,24 +35,7 @@ export class LegalClientPrismaDTO {
       CreatedBy: { connect: { id: legalClient.created_by } },
       UpdatedBy: { connect: { id: legalClient.created_by } },
       LegalPerson: {
-        create: {
-          address_number: legalPerson.address_number,
-          city: legalPerson.city,
-          cnpj: legalPerson.cnpj,
-          corporate_name: legalPerson.corporate_name,
-          email: legalPerson.email,
-          fantasy_name: legalPerson.fantasy_name,
-          first_phone: legalPerson.first_phone,
-          neighborhood: legalPerson.neighborhood,
-          public_place: legalPerson.public_place,
-          state_registration: legalPerson.state_registration,
-          uf: legalPerson.uf,
-          complement: legalPerson.complement,
-          second_phone: legalPerson.second_phone,
-          third_phone: legalPerson.third_phone,
-          created_at: legalPerson.created_at,
-          updated_at: legalClient.updated_at,
-        },
+        create: LegalPersonPrismaDTO.EntityToCreatePrisma(legalPerson),
       },
     };
 
@@ -66,23 +51,7 @@ export class LegalClientPrismaDTO {
       UpdatedBy: { connect: { id: legalclient.updated_by } },
       LegalPerson: {
         update: legalPerson
-          ? {
-              address_number: legalPerson.address_number,
-              city: legalPerson.city,
-              cnpj: legalPerson.cnpj,
-              corporate_name: legalPerson.corporate_name,
-              email: legalPerson.email,
-              fantasy_name: legalPerson.fantasy_name,
-              first_phone: legalPerson.first_phone,
-              neighborhood: legalPerson.neighborhood,
-              public_place: legalPerson.public_place,
-              state_registration: legalPerson.state_registration,
-              uf: legalPerson.uf,
-              complement: legalPerson.complement,
-              second_phone: legalPerson.second_phone,
-              third_phone: legalPerson.third_phone,
-              updated_at: legalPerson.updated_at,
-            }
+          ? LegalPersonPrismaDTO.EntityToPrismaUpdate(legalPerson)
           : undefined,
       },
     };

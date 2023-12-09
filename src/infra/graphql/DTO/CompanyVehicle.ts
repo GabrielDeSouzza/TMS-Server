@@ -11,6 +11,7 @@ export class CompanyVehicleGraphDTO {
       created_by: createInput.created_by,
       updated_by: createInput.updated_by,
       vehicle_id: createInput.vehicle_id,
+      carrier_company_id: createInput.carrier_company_id,
     });
   }
 
@@ -22,6 +23,7 @@ export class CompanyVehicleGraphDTO {
           created_by: updateInput.created_by,
           updated_by: updateInput.updated_by,
           vehicle_id: updateInput.vehicle_id,
+          carrier_company_id: updateInput.carrier_company_id,
         })
       : undefined;
   }

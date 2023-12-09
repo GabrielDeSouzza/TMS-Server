@@ -11,6 +11,7 @@ export class CompanyVehiclePrismaDTO {
     return new CompanyVehicle({
       id: companyVehiclePrisma.id,
       created_by: companyVehiclePrisma.created_by,
+      carrier_company_id: companyVehiclePrisma.company_id,
       updated_by: companyVehiclePrisma.updated_by,
       vehicle_id: companyVehiclePrisma.vehicle_id,
       created_at: companyVehiclePrisma.created_at,
@@ -24,6 +25,7 @@ export class CompanyVehiclePrismaDTO {
     const companyVehiclePrisma: Prisma.CompanyVehicleCreateInput = {
       created_at: companyVehicle.created_at,
       id: companyVehicle.id,
+      CarrierCompany: { connect: { id: companyVehicle.carrier_company_id } },
       UpdatedBy: { connect: { id: companyVehicle.updated_by } },
       CreatedBy: { connect: { id: companyVehicle.created_by } },
       updated_at: companyVehicle.updated_at,

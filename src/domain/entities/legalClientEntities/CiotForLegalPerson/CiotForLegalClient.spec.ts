@@ -1,9 +1,8 @@
-import { CiotForCorporateClient } from './CiotForLegalPerson';
+import { CiotForLegalClient } from './CiotForLegalClient';
 
 describe('User', () => {
   it('should create ciot for legal person', () => {
-    const ciot = new CiotForCorporateClient({
-      carrier_company_id: '123',
+    const ciot = new CiotForLegalClient({
       ciot: '123',
       emission_date: new Date(),
       legal_contract_id: '123',

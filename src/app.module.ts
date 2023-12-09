@@ -9,6 +9,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { CarrierCompanyModule } from 'infra/graphql/entities/CarrierCompanyGraphql/CarrierCompany.module';
+import { CiotForLegalClientModule } from 'infra/graphql/entities/CiotForLegalClientGraphql/CiotForLegalClient.module';
 import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/CompanyVehicle.module';
 import { InvoiceForLegalClientModule } from 'infra/graphql/entities/InvoiceForLegalClientGraphql/InvoiceForLegalClient.module';
 import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/LegalClient.module';
@@ -16,6 +17,7 @@ import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClient
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriver/OutsourcedDriver.module';
+import { OutsourcedTransportCompanyModule } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.module';
 import { OutsourcedVehicleModule } from 'infra/graphql/entities/OutsourcedVehicle/OutsourcedVehicle.module';
 import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriver.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
@@ -57,6 +59,8 @@ import { AuthModule } from 'infra/guard/auth.module';
     LegalClientOrderModule,
     LegalClientMerchandiseModule,
     InvoiceForLegalClientModule,
+    CiotForLegalClientModule,
+    OutsourcedTransportCompanyModule,
   ],
 })
 export class AppModule {}

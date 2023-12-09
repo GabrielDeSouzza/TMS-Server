@@ -6,11 +6,10 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface ICiotForCorporateClient {
+export interface ICiotForLegalClient {
   id?: string;
   ciot: string;
   emission_date: Date;
-  carrier_company_id: string;
   legal_contract_id: string;
   updated_at: Date;
   created_at: Date;
@@ -18,12 +17,12 @@ interface ICiotForCorporateClient {
   created_by?: string;
 }
 
-export class CiotForCorporateClient extends Entity {
-  private props: ICiotForCorporateClient;
+export class CiotForLegalClient extends Entity {
+  private props: ICiotForLegalClient;
 
   constructor(
     props: Replace<
-      ICiotForCorporateClient,
+      ICiotForLegalClient,
       { created_at?: Date; updated_at?: Date }
     >,
   ) {
@@ -79,14 +78,6 @@ export class CiotForCorporateClient extends Entity {
 
   set emission_date(emission_date: Date) {
     this.props.emission_date = emission_date;
-  }
-
-  get carrier_company_id(): string {
-    return this.props.carrier_company_id;
-  }
-
-  set carrier_company_id(carrier_company_id: string) {
-    this.props.carrier_company_id = carrier_company_id;
   }
 
   get legal_contract_id(): string {

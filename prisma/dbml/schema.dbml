@@ -59,6 +59,12 @@ Table users {
   InvoiceForPhysicalClientCreatedBy invoices_physical_client [not null]
   LegalContractCreatedBy legal_Contracts [not null]
   LegalContractUpdatedBy legal_Contracts [not null]
+  OutsourcedTransportCompanyUpdatedBy OutsourcedTransportCompany [not null]
+  OutsourcedTransportCompanyCreatedBy OutsourcedTransportCompany [not null]
+  OutsourcedTransportVehicleCreatedBy outsourced_transport_vehicle [not null]
+  OutsourcedTransportVehicleUpdatedBy outsourced_transport_vehicle [not null]
+  OutsourcedTransportCompanyDriverCreatedBy outsourcedT_transport_company_driver [not null]
+  OutsourcedTransportCompanyDriverUpdatedBy outsourcedT_transport_company_driver [not null]
 }
 
 Table vehicles {
@@ -71,9 +77,10 @@ Table vehicles {
   CompanyVehicle company_vehicles
   OrderProcessing order_processing
   Maintenance maintenance [not null]
-  OutsourcedVehicle outsourced_vehicles [not null]
+  OutsourcedVehicle outsourced_vehicles
   Model vehicle_models [not null]
   model_id String [not null]
+  OutsourcedTransportVehicle outsourced_transport_vehicle
 }
 
 Table vehicle_models {
@@ -159,21 +166,6 @@ Table outsourced_vehicles {
   id String [pk]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-  OutsourcedDriver outsourced_drivers [not null]
-  CreatedBy users
-  created_by String [not null]
-  UpdatedBy users
-  updated_by String [not null]
-  Vehicle vehicles [not null]
-  vehicle_id String [not null]
-  OrderProcessing order_processing
-  order_processing_id String
-}
-
-Table company_vehicles {
-  id String [pk]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
   UpdatedBy users
@@ -182,6 +174,37 @@ Table company_vehicles {
   vehicle_id String [unique, not null]
   OrderProcessing order_processing
   order_processing_id String
+  OutsourcedDriver outsourced_drivers
+}
+
+Table company_vehicles {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  company_id String [not null]
+  CarrierCompany carrier_companies [not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdatedBy users
+  updated_by String [not null]
+  Vehicle vehicles [not null]
+  vehicle_id String [unique, not null]
+  OrderProcessing order_processing
+  order_processing_id String
+}
+
+Table outsourced_transport_vehicle {
+  id String [pk]
+  outsourced_company_id String [not null]
+  CarrierCompany OutsourcedTransportCompany [not null]
+  Vehicle vehicles [not null]
+  vehicle_id String [unique, not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdatedBy users
+  updated_by String [not null]
 }
 
 Table outsourced_drivers {
@@ -204,6 +227,25 @@ Table outsourced_drivers {
   outsourced_vehicle_id String [unique, not null]
 }
 
+Table outsourcedT_transport_company_driver {
+  id String [pk]
+  cnh String [unique, not null]
+  cnh_category CNH [not null]
+  cnh_expiration DateTime [not null]
+  course_mopp Boolean [not null, default: false]
+  ContractOutsourcedDriver contract_outsourced_drivers [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdatedBy users
+  updated_by String [not null]
+  NaturalPerson natural_people [not null]
+  natural_person_id String [unique, not null]
+  outsourced_transport_company_id String [not null]
+  OutsourcedTransportCompany OutsourcedTransportCompany [not null]
+}
+
 Table contract_outsourced_drivers {
   id String [pk]
   type String [not null]
@@ -219,6 +261,8 @@ Table contract_outsourced_drivers {
   updated_by String [not null]
   OutsourcedDriver outsourced_drivers [not null]
   outsourced_driver_id String [not null]
+  OutsourcedTransportCompanyDriver outsourcedT_transport_company_driver
+  outsourcedTransportCompanyDriverId String
 }
 
 Table own_drivers {
@@ -260,6 +304,7 @@ Table natural_people {
   OwnDriver own_drivers [not null]
   OutsourcedDriver outsourced_drivers [not null]
   PhysicalCustomer physical_customers [not null]
+  OutsourcedTransportCompanyDriver outsourcedT_transport_company_driver
 }
 
 Table physical_customers {
@@ -370,22 +415,49 @@ Table legal_people {
   CorporateClient legal_clients [not null]
   MaintenanceCompany maintenance_companies
   CarrierCompany carrier_companies [not null]
+  OutsourcedTransportCompany OutsourcedTransportCompany [not null]
 }
 
 Table carrier_companies {
   id String [pk]
+  Ciot ciots_for_physical_clients [not null]
+  LegalPerson legal_people [not null]
+  legal_person_id String [unique, not null]
+  InvoiceForPhysicalClient invoices_physical_client [not null]
+  LegalContract legal_Contracts [not null]
+  CompanyVehicle company_vehicles [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-  Ciot ciots_for_physical_clients [not null]
   CreatedBy users
   created_by String [not null]
   UpdatedBy users
   updated_by String [not null]
+  OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract [not null]
+}
+
+Table OutsourcedTransportCompany {
+  id String [pk]
+  legal_person_id String [not null]
   LegalPerson legal_people [not null]
-  legal_person_id String [unique, not null]
-  CiotForLegalClient ciots_for_legal_clients [not null]
-  InvoiceForPhysicalClient invoices_physical_client [not null]
-  LegalContract legal_Contracts [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdatedBy users [not null]
+  updated_by String [not null]
+  OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract [not null]
+  OutsourcedCompanyVehicle outsourced_transport_vehicle [not null]
+  OutsourcedTransportCompanyDriver outsourcedT_transport_company_driver [not null]
+}
+
+Table OutsourcedTransportCompanyContract {
+  id String [pk]
+  outsourced_transport_company_id String [not null]
+  OutsourcedTransportCompany OutsourcedTransportCompany [not null]
+  carrier_company_id String [not null]
+  CarrierCompany carrier_companies [not null]
+  legal_client_order_id String [unique, not null]
+  LegalClientOrder legal_orders [not null]
 }
 
 Table legal_clients {
@@ -446,6 +518,7 @@ Table legal_orders {
   LegalContract legal_Contracts [not null]
   legal_contract_id String [not null]
   InvoiceForLegalClient invoices_legal_client [not null]
+  OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract
 }
 
 Table invoices_legal_client {
@@ -471,8 +544,6 @@ Table ciots_for_legal_clients {
   id String [pk]
   ciot String [unique, not null]
   emission_date DateTime [default: `now()`, not null]
-  CarrierCompany carrier_companies [not null]
-  carrier_id String [not null]
   PhysycalContract legal_Contracts [not null]
   legal_contract_id String [not null]
   created_at DateTime [default: `now()`, not null]
@@ -618,9 +689,11 @@ Ref: outsourced_vehicles.created_by > users.id
 
 Ref: outsourced_vehicles.updated_by > users.id
 
-Ref: outsourced_vehicles.vehicle_id > vehicles.id
+Ref: outsourced_vehicles.vehicle_id - vehicles.id
 
 Ref: outsourced_vehicles.order_processing_id > order_processing.id
+
+Ref: company_vehicles.company_id > carrier_companies.id
 
 Ref: company_vehicles.created_by > users.id
 
@@ -630,19 +703,37 @@ Ref: company_vehicles.vehicle_id - vehicles.id
 
 Ref: company_vehicles.order_processing_id > order_processing.id
 
+Ref: outsourced_transport_vehicle.outsourced_company_id > OutsourcedTransportCompany.id
+
+Ref: outsourced_transport_vehicle.vehicle_id - vehicles.id
+
+Ref: outsourced_transport_vehicle.created_by > users.id
+
+Ref: outsourced_transport_vehicle.updated_by > users.id
+
 Ref: outsourced_drivers.created_by > users.id
 
 Ref: outsourced_drivers.updated_by > users.id
 
 Ref: outsourced_drivers.natural_person_id > natural_people.id
 
-Ref: outsourced_drivers.outsourced_vehicle_id > outsourced_vehicles.id
+Ref: outsourced_drivers.outsourced_vehicle_id - outsourced_vehicles.id
+
+Ref: outsourcedT_transport_company_driver.created_by > users.id
+
+Ref: outsourcedT_transport_company_driver.updated_by > users.id
+
+Ref: outsourcedT_transport_company_driver.natural_person_id - natural_people.id
+
+Ref: outsourcedT_transport_company_driver.outsourced_transport_company_id > OutsourcedTransportCompany.id
 
 Ref: contract_outsourced_drivers.created_by > users.id
 
 Ref: contract_outsourced_drivers.updated_by > users.id
 
 Ref: contract_outsourced_drivers.outsourced_driver_id > outsourced_drivers.id
+
+Ref: contract_outsourced_drivers.outsourcedTransportCompanyDriverId > outsourcedT_transport_company_driver.id
 
 Ref: own_drivers.created_by > users.id
 
@@ -682,11 +773,23 @@ Ref: ciots_for_physical_clients.created_by > users.id
 
 Ref: ciots_for_physical_clients.updated_by > users.id
 
+Ref: carrier_companies.legal_person_id > legal_people.id
+
 Ref: carrier_companies.created_by > users.id
 
 Ref: carrier_companies.updated_by > users.id
 
-Ref: carrier_companies.legal_person_id > legal_people.id
+Ref: OutsourcedTransportCompany.legal_person_id > legal_people.id
+
+Ref: OutsourcedTransportCompany.created_by > users.id
+
+Ref: OutsourcedTransportCompany.updated_by > users.id
+
+Ref: OutsourcedTransportCompanyContract.outsourced_transport_company_id > OutsourcedTransportCompany.id
+
+Ref: OutsourcedTransportCompanyContract.carrier_company_id > carrier_companies.id
+
+Ref: OutsourcedTransportCompanyContract.legal_client_order_id - legal_orders.id
 
 Ref: legal_clients.legal_person_id > legal_people.id
 
@@ -715,8 +818,6 @@ Ref: invoices_legal_client.created_by > users.id
 Ref: invoices_legal_client.updated_by > users.id
 
 Ref: invoices_legal_client.legalClientrOrderId > legal_orders.id
-
-Ref: ciots_for_legal_clients.carrier_id > carrier_companies.id
 
 Ref: ciots_for_legal_clients.legal_contract_id > legal_Contracts.id
 

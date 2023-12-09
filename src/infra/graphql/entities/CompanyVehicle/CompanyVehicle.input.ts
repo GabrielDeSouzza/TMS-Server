@@ -17,6 +17,8 @@ import {
 export class CompanyVehicleInput
   implements Omit<ICompanyVehicle, 'id' | 'created_at' | 'updated_at'>
 {
+  @Field()
+  carrier_company_id: string;
   @HideField()
   vehicle_id: string;
   @Field(() => VehicleInput)
