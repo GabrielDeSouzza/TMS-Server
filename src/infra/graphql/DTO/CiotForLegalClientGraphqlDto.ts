@@ -1,4 +1,4 @@
-import { CiotForLegalClient } from 'domain/entities/legalClientEntities/CiotForLegalPerson/CiotForLegalClient';
+import { CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 
 import {
   type CiotForLegalClientInput,

@@ -6,7 +6,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { type ICompanyVehicle } from 'domain/entities/vehicle/companyVehicle/CompanyVehicle';
+import { type ICompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 
 import {
   VehicleUpdateInput,

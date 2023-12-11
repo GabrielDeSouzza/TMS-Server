@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type LegalContract } from 'domain/entities/legalClientEntities/LegalContract/LegalContract';
+import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 import { type LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 
 import { PrismaService } from '../prisma.service';

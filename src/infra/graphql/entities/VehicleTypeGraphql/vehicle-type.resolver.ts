@@ -10,9 +10,9 @@ import {
   Parent,
 } from '@nestjs/graphql';
 
-import { ROLE, User } from 'domain/entities/user/User';
-import { VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
-import { VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { ROLE, User } from 'domain/entities/User/User';
+import { VehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
+import { VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';

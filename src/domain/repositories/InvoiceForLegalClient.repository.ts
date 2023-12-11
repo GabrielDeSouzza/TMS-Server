@@ -1,4 +1,4 @@
-import { type InvoiceForLegalClient } from 'domain/entities/legalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
+import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
 export abstract class InvoiceForLegalClientRepository {
   abstract findInvoiceForLegalClientById(

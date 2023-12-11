@@ -3,8 +3,8 @@ import {
   type LegalClient as LegalClientPrisma,
 } from '@prisma/client';
 
-import { LegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 import { LegalPersonPrismaDTO } from './LegalPersonPrismaDto';
 

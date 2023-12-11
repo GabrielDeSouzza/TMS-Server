@@ -1,4 +1,4 @@
-import { NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 import {
   type NaturalPersonUpdate,

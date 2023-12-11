@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { type OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 
 import { PrismaService } from '../prisma.service';

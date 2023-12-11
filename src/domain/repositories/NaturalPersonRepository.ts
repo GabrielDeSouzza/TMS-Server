@@ -1,4 +1,4 @@
-import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export abstract class NaturalPersonRepository {
   abstract findNaturalPersonByIdOrCpf(

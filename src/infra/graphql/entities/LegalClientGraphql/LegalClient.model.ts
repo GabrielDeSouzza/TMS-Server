@@ -1,6 +1,6 @@
 import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
-import { type ILegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
+import { type ILegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';

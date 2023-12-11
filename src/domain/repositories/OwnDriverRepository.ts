@@ -1,5 +1,5 @@
-import { type OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { type OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export abstract class OwnDriverRepository {
   abstract findOwnDriverById(id: string): Promise<OwnDriver>;

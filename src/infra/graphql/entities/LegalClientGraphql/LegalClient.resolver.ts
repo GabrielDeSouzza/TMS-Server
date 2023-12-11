@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/graphql';
 
-import { ROLE, User } from 'domain/entities/user/User';
+import { ROLE, User } from 'domain/entities/User/User';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';

@@ -1,4 +1,4 @@
-import { LegalClientOrder } from 'domain/entities/legalClientEntities/LegalClientOrder/LegaClientOrder';
+import { LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 import {
   type LegalClientOrderInput,

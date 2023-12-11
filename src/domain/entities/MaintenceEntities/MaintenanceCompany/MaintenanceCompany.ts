@@ -5,7 +5,7 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type LegalPerson } from '../../legalPerson/legalPerson/LegalPerson';
+import { type LegalPerson } from '../../LegalPerson/LegalPerson';
 
 interface IMaintenanceCompany {
   id?: string;

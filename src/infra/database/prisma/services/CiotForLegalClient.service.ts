@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type CiotForLegalClient } from 'domain/entities/legalClientEntities/CiotForLegalPerson/CiotForLegalClient';
+import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 import { type CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 
 import { PrismaService } from '../prisma.service';

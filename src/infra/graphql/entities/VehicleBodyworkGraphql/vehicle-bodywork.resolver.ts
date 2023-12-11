@@ -8,7 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
-import { ROLE, User } from 'domain/entities/user/User';
+import { ROLE, User } from 'domain/entities/User/User';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 

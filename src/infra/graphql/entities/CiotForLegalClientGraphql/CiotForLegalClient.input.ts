@@ -1,6 +1,6 @@
 import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
-import { type ICiotForLegalClient } from 'domain/entities/legalClientEntities/CiotForLegalPerson/CiotForLegalClient';
+import { type ICiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 
 @InputType()
 export class CiotForLegalClientInput

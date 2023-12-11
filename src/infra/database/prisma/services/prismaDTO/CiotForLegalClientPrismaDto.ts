@@ -3,7 +3,7 @@ import {
   type CiotForLegalClient as CiotForLegalClientPrisma,
 } from '@prisma/client';
 
-import { CiotForLegalClient } from 'domain/entities/legalClientEntities/CiotForLegalPerson/CiotForLegalClient';
+import { CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 
 export class CiotForLegalClientPrismaDTO {
   public static PrismaToEntity(

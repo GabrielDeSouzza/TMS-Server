@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { type ILegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { type ILegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 @ObjectType()
 export class LegalPersonModel implements ILegalPerson {

@@ -8,7 +8,7 @@ import {
   Parent,
 } from '@nestjs/graphql';
 
-import { ROLE, User } from 'domain/entities/user/User';
+import { ROLE, User } from 'domain/entities/User/User';
 import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 

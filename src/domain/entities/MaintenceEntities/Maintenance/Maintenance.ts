@@ -5,7 +5,7 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type Vehicle } from '../../vehicle/vehicle/Vehicle';
+import { type Vehicle } from '../../VehicleEntities/vehicle/Vehicle';
 import { type MaintenanceCompany } from '../MaintenanceCompany/MaintenanceCompany';
 import { type TypeOfMaintenance } from '../MaintenanceProcess/TypeOfMaintenance';
 

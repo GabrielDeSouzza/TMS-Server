@@ -1,5 +1,5 @@
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
-import { type OutsourcedTransportCompany } from 'domain/entities/legalPerson/outsourcedTransportCompany/OutsourcedTransportCompany';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
+import { type OutsourcedTransportCompany } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompany/OutsourcedTransportCompany';
 
 export abstract class OutsourcedTransportCompanyRepository {
   abstract findOutsourcedTransportCompanyById(

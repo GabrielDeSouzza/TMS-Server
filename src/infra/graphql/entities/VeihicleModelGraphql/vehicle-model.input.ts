@@ -7,7 +7,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { type IVehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import { type IVehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
 
 @InputType()
 export class VehicleModelInput

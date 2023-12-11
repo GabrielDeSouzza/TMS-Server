@@ -6,8 +6,8 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { type IOutsourcedDriver } from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
-import { CNH } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { type IOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
 
 import {
   ContractOutsoucedDriverUpdateInput,

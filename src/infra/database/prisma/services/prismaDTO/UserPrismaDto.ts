@@ -1,6 +1,6 @@
 import { type Prisma, Role, type User as UserPrisma } from '@prisma/client';
 
-import { ROLE, User } from 'domain/entities/user/User';
+import { ROLE, User } from 'domain/entities/User/User';
 
 export class UserPrismaDTO {
   public static PrismaToEntity(userPrisma: UserPrisma) {

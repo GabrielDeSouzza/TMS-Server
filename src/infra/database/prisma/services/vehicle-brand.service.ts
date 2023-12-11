@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type VehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
+import { type VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 import { type VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 
 import { PrismaService } from '../prisma.service';

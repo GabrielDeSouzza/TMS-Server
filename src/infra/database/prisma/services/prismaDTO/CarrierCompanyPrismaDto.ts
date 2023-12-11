@@ -3,8 +3,8 @@ import {
   type CarrierCompany as CarrierCompanyPrisma,
 } from '@prisma/client';
 
-import { CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export class CarrierCompanyPrismaDTO {
   public static PrismaToEntity(carriercompanyPrisma: CarrierCompanyPrisma) {

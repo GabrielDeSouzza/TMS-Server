@@ -1,9 +1,9 @@
-import { CNH } from '../ownDriver/OwnDriver';
-import { OutsourcedDriver } from './OutsourcedTransportCompany';
+import { CNH } from '../../CompanyEntities/ownDriver/OwnDriver';
+import { OutsourcedTransportCompanyDriver } from './OutsourcedTransportCompany';
 
 describe('Outsourced Driver', () => {
   it('should create outsourced driver', () => {
-    const outsourcedDriver = new OutsourcedDriver({
+    const outsourcedDriver = new OutsourcedTransportCompanyDriver({
       cnh: '48848878781',
       cnh_category: CNH.AD,
       cnh_expiration: new Date(),
@@ -11,7 +11,6 @@ describe('Outsourced Driver', () => {
       course_mopp: true,
       created_by: 'test',
       natural_person_id: 'test',
-
       updated_by: 'test',
     });
     expect(outsourcedDriver).toBeTruthy();

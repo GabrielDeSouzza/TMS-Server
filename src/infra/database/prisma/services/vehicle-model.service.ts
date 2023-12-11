@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { type VehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
-import { type VehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
-import { type VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { type VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
+import { type VehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
+import { type VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 import { type VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
 import { PrismaService } from '../prisma.service';

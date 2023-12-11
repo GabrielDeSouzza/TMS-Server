@@ -1,7 +1,7 @@
 import { type Vehicle as VehiclePrisma, type Prisma } from '@prisma/client';
 
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
-import { Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type IVehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
+import { Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 export class VehiclePrismaDto {
   public static PrismaToEntity(vehicle: VehiclePrisma): Vehicle {
     return new Vehicle({

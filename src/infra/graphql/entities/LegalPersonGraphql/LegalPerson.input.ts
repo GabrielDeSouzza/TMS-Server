@@ -1,6 +1,6 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
 
-import { type ILegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { type ILegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 @InputType()
 export class LegalPersonInput

@@ -1,4 +1,4 @@
-import { type LegalClientMerchandise } from 'domain/entities/legalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
+import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 
 export abstract class LegalClientMerchandiseRepository {
   abstract findLegalClientMerchandiseById(

@@ -12,7 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { type Request } from 'express';
 import { GraphQLError } from 'graphql';
 
-import { type User } from 'domain/entities/user/User';
+import { type User } from 'domain/entities/User/User';
 
 @Injectable()
 export class GraphQLAuthGuard extends AuthGuard('jwt') implements CanActivate {

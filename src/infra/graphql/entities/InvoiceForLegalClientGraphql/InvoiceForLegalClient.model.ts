@@ -1,6 +1,6 @@
 import { Field, Float, ObjectType } from '@nestjs/graphql';
 
-import { type IInvoiceForLegalClient } from 'domain/entities/legalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
+import { type IInvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';

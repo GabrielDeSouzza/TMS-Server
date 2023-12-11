@@ -6,7 +6,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { type ICarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
+import { type ICarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 
 import {
   LegalPersonInput,

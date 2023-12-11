@@ -2,18 +2,16 @@ import { randomUUID } from 'node:crypto';
 
 import { type Replace } from 'helpers/Replace';
 
-import { Entity } from '../../../shared/entities/Entity';
-import { type IValidationField } from '../../../shared/notification/Notification';
-import { NotificationError } from '../../../shared/notification/NotificationError';
+import { Entity } from '../../shared/entities/Entity';
+import { type IValidationField } from '../../shared/notification/Notification';
+import { NotificationError } from '../../shared/notification/NotificationError';
 
-export interface INaturalPerson {
+export interface ILegalPerson {
   id?: string;
-  name: string;
-  date_birth: Date;
-  gender: string;
-  cpf: string;
-  rg: string;
-  cep: string;
+  fantasy_name: string;
+  cnpj: string;
+  state_registration: string;
+  corporate_name: string;
   public_place: string;
   address_number: string;
   neighborhood: string;
@@ -24,24 +22,25 @@ export interface INaturalPerson {
   second_phone?: string;
   third_phone?: string;
   email: string;
-  nationality: string;
+  updated_at: Date;
+  created_at: Date;
 }
-export class NaturalPerson extends Entity {
-  private props: INaturalPerson | Partial<INaturalPerson>;
+
+export class LegalPerson extends Entity {
+  private props: ILegalPerson;
 
   constructor(
-    props: Replace<
-      INaturalPerson | Partial<INaturalPerson>,
-      { created_at?: Date; updated_at?: Date }
-    >,
+    props: Replace<ILegalPerson, { created_at?: Date; updated_at?: Date }>,
   ) {
     super();
-    console.log('test');
+
     this.props = {
       ...props,
       id: props.id ?? randomUUID(),
+      updated_at: new Date(),
+      created_at: props.created_at ?? new Date(),
     };
-    console.log('test5');
+    this.validate();
 
     if (this.notification.hasErrors()) {
       const errors = this.notification.getErrors();
@@ -55,145 +54,123 @@ export class NaturalPerson extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.props.name,
-        fieldName: 'Name',
+        field: this.fantasy_name,
+        fieldName: 'Fantasy Name',
+        maxLength: 100,
+      },
+      {
+        field: this.cnpj,
+        fieldName: 'CNPJ',
+        maxLength: 14,
+        minLength: 14,
+      },
+      {
+        field: this.state_registration,
+        fieldName: 'State Registration',
+        maxLength: 15,
+        minLength: 8,
+      },
+      {
+        field: this.corporate_name,
+        fieldName: 'Corporate Name',
         maxLength: 80,
       },
       {
-        field: this.props.date_birth,
-        fieldName: 'Date of Birth',
-        maxLength: 10,
-      },
-      {
-        field: this.props.gender,
-        fieldName: 'Gender',
-        maxLength: 10,
-      },
-      {
-        field: this.props.cpf,
-        fieldName: 'CPF',
-        maxLength: 99_999_999_999,
-      },
-      {
-        field: this.props.rg,
-        fieldName: 'RG',
-        maxLength: 9_999_999_999,
-      },
-      {
-        field: this.props.cep,
-        fieldName: 'CEP',
-        maxLength: 99_999_999,
-      },
-      {
-        field: this.props.public_place,
+        field: this.public_place,
         fieldName: 'Public Place',
         maxLength: 80,
       },
       {
-        field: this.props.address_number,
+        field: this.address_number,
         fieldName: 'Address Number',
         maxLength: 10,
       },
       {
-        field: this.props.neighborhood,
+        field: this.neighborhood,
         fieldName: 'Neighborhood',
         maxLength: 80,
       },
       {
-        field: this.props.complement,
+        field: this.complement,
         fieldName: 'Complement',
         maxLength: 80,
       },
       {
-        field: this.props.city,
+        field: this.city,
         fieldName: 'City',
         maxLength: 80,
       },
       {
-        field: this.props.uf,
+        field: this.uf,
         fieldName: 'UF',
         maxLength: 2,
+        minLength: 2,
       },
       {
-        field: this.props.first_phone,
+        field: this.first_phone,
         fieldName: 'First Phone',
         maxLength: 20,
+        minLength: 11,
       },
       {
-        field: this.props.second_phone,
+        field: this.second_phone,
         fieldName: 'Second Phone',
         maxLength: 20,
+        minLength: 11,
         isNullAble: true,
       },
       {
-        field: this.props.third_phone,
+        field: this.third_phone,
         fieldName: 'Third Phone',
         maxLength: 20,
+        minLength: 11,
         isNullAble: true,
       },
       {
-        field: this.props.email,
+        field: this.email,
         fieldName: 'Email',
         maxLength: 80,
       },
-      {
-        field: this.props.nationality,
-        fieldName: 'Nationality',
-        maxLength: 80,
-      },
     );
-    this.notification.requiredField('NaturalPerson', fieldsValidation);
+    this.notification.requiredField('LegalPerson', fieldsValidation);
   }
+
   public get id(): string {
     return this.props.id;
   }
-
-  public set name(name: string) {
-    this.props.name = name;
+  public set id(id: string) {
+    this.props.id = id;
+  }
+  public set fantasy_name(fantasyName: string) {
+    this.props.fantasy_name = fantasyName;
   }
 
-  public get name(): string {
-    return this.props.name;
+  public get fantasy_name(): string {
+    return this.props.fantasy_name;
   }
 
-  public set date_birth(dateOfBirth: Date) {
-    this.props.date_birth = dateOfBirth;
+  public set cnpj(cnpj: string) {
+    this.props.cnpj = cnpj;
   }
 
-  public get date_birth(): Date {
-    return this.props.date_birth;
+  public get cnpj(): string {
+    return this.props.cnpj;
   }
 
-  public set gender(gender: string) {
-    this.props.gender = gender;
+  public set state_registration(stateRegistration: string) {
+    this.props.state_registration = stateRegistration;
   }
 
-  public get gender(): string {
-    return this.props.gender;
+  public get state_registration(): string {
+    return this.props.state_registration;
   }
 
-  public set cpf(cpf: string) {
-    this.props.cpf = cpf;
+  public set corporate_name(corporateName: string) {
+    this.props.corporate_name = corporateName;
   }
 
-  public get cpf(): string {
-    return this.props.cpf;
-  }
-
-  public set rg(rg: string) {
-    this.props.rg = rg;
-  }
-
-  public get rg(): string {
-    return this.props.rg;
-  }
-
-  public set cep(cep: string) {
-    this.props.cep = cep;
-  }
-
-  public get cep(): string {
-    return this.props.cep;
+  public get corporate_name(): string {
+    return this.props.corporate_name;
   }
 
   public set public_place(publicPlace: string) {
@@ -220,11 +197,11 @@ export class NaturalPerson extends Entity {
     return this.props.neighborhood;
   }
 
-  public set complement(complement: string) {
+  public set complement(complement: string | undefined) {
     this.props.complement = complement;
   }
 
-  public get complement(): string {
+  public get complement(): string | undefined {
     return this.props.complement;
   }
 
@@ -252,19 +229,19 @@ export class NaturalPerson extends Entity {
     return this.props.first_phone;
   }
 
-  public set second_phone(secondPhone: string | null) {
+  public set second_phone(secondPhone: string | undefined) {
     this.props.second_phone = secondPhone;
   }
 
-  public get second_phone(): string | null {
+  public get second_phone(): string | undefined {
     return this.props.second_phone;
   }
 
-  public set third_phone(thirdPhone: string) {
+  public set third_phone(thirdPhone: string | undefined) {
     this.props.third_phone = thirdPhone;
   }
 
-  public get third_phone(): string | null {
+  public get third_phone(): string | undefined {
     return this.props.third_phone;
   }
 
@@ -276,11 +253,19 @@ export class NaturalPerson extends Entity {
     return this.props.email;
   }
 
-  public set nationality(nationality: string) {
-    this.props.nationality = nationality;
+  public set updated_at(updatedAt: Date) {
+    this.props.updated_at = updatedAt;
   }
 
-  public get nationality(): string {
-    return this.props.nationality;
+  public get updated_at(): Date {
+    return this.props.updated_at;
+  }
+
+  public set created_at(createdAt: Date) {
+    this.props.created_at = createdAt;
+  }
+
+  public get created_at(): Date {
+    return this.props.created_at;
   }
 }

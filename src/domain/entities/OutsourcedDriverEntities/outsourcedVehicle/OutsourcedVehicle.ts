@@ -1,16 +1,14 @@
 import { randomUUID } from 'node:crypto';
 
+import { Entity } from 'domain/shared/entities/Entity';
 import { type IValidationField } from 'domain/shared/notification/Notification';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
 import { type Replace } from 'helpers/Replace';
-
-import { Entity } from '../../../shared/entities/Entity';
-import { NotificationError } from '../../../shared/notification/NotificationError';
 
 export interface IOutsourcedVehicle {
   id?: string;
   vehicle_id: string;
-  outsourced_company_id: string;
   created_at: Date;
   updated_at: Date;
   created_by: string;
@@ -46,22 +44,12 @@ export class OutsourcedVehicle extends Entity {
   validate() {
     const fieldsValidation: Array<IValidationField> =
       new Array<IValidationField>();
-    fieldsValidation.push(
-      {
-        field: this.vehicle_id,
-        fieldName: 'Vehicle ID',
-        maxLength: 1000,
-      },
-      {
-        field: this.outsourced_company_id,
-        fieldName: 'Outsourced Transport Vehicle',
-        maxLength: 1000,
-      },
-    );
-    this.notification.requiredField(
-      'OutsourcedTransportVehicle',
-      fieldsValidation,
-    );
+    fieldsValidation.push({
+      field: this.vehicle_id,
+      fieldName: 'Vehicle ID',
+      maxLength: 1000,
+    });
+    this.notification.requiredField('OutsourcedDriver', fieldsValidation);
   }
 
   public get id(): string {
@@ -76,12 +64,6 @@ export class OutsourcedVehicle extends Entity {
   }
   public set vehicle_id(vehicle_id: string) {
     this.props.vehicle_id = vehicle_id;
-  }
-  public set outsourced_company_id(outsourced_company_id: string) {
-    this.props.outsourced_company_id = outsourced_company_id;
-  }
-  public get outsourced_company_id(): string {
-    return this.props.outsourced_company_id;
   }
   public set created_at(createdAt: Date) {
     this.props.created_at = createdAt;

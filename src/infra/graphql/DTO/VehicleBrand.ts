@@ -1,4 +1,4 @@
-import { VehicleBrand } from 'domain/entities/vehicle/vehicleBrand/VehicleBrand';
+import { VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 
 import {
   type VehicleBrandInput,

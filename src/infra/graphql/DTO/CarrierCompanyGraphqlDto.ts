@@ -1,4 +1,4 @@
-import { CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
+import { CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 
 import {
   type CarrierCompanyInput,

@@ -6,7 +6,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { type ILegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
+import { type ILegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 
 import {
   LegalPersonUpdateInput,

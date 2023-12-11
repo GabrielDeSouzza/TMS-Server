@@ -3,8 +3,8 @@ import {
   type VehicleTypeContainsBody as VehicleTypeContainsBodyPrisma,
 } from '@prisma/client';
 
-import { type IVehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
-import { VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { type IVehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
+import { VehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
 
 export class VehicleTypeContainsBodyPrismaDTO {
   public static PrismaToEntity(

@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
 
-import { type Replace } from 'helpers/Replace';
+import { Entity } from 'domain/shared/entities/Entity';
+import { type IValidationField } from 'domain/shared/notification/Notification';
+import { NotificationError } from 'domain/shared/notification/NotificationError';
 
-import { Entity } from '../../../shared/entities/Entity';
-import { type IValidationField } from '../../../shared/notification/Notification';
-import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type Replace } from 'helpers/Replace';
 
 export interface IContractOutsourcedDriver {
   id?: string;

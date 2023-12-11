@@ -1,4 +1,4 @@
-import { VehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import { VehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
 
 import {
   type VehicleModelInput,

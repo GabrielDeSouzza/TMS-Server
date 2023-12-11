@@ -1,4 +1,4 @@
-import { LegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
+import { LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 
 import {
   type LegalClientUpdateInput,

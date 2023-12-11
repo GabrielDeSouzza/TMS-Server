@@ -1,4 +1,4 @@
-import { OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
+import { OutsourcedVehicle } from 'domain/entities/OutsourcedDriverEntities/outsourcedVehicle/OutsourcedVehicle';
 
 import {
   type OutsourcedVehicleUpdateInput,

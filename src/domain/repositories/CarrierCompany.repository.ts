@@ -1,5 +1,5 @@
-import { type CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export abstract class CarrierCompanyRepository {
   abstract findCarrierCompanyById(id: string): Promise<CarrierCompany>;

@@ -1,4 +1,4 @@
-import { type CiotForLegalClient } from 'domain/entities/legalClientEntities/CiotForLegalPerson/CiotForLegalClient';
+import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 
 export abstract class CiotForLegalClientRepository {
   abstract findCiotForLegalClientById(id: string): Promise<CiotForLegalClient>;

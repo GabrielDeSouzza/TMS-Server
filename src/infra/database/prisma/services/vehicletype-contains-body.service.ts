@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { type VehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
 import { type VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 
 import { PrismaService } from '../prisma.service';

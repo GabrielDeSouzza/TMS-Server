@@ -8,7 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
-import { ROLE } from 'domain/entities/user/User';
+import { ROLE } from 'domain/entities/User/User';
 import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 

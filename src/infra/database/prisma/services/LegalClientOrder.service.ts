@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type LegalClientOrder } from 'domain/entities/legalClientEntities/LegalClientOrder/LegaClientOrder';
+import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { type LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 
 import { PrismaService } from '../prisma.service';

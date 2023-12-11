@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { type LegalClient } from 'domain/entities/legalClientEntities/LegalClient/LegalClient';
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { type LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 
 import { PrismaService } from '../prisma.service';

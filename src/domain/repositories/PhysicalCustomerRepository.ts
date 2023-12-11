@@ -1,6 +1,6 @@
-import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
-import { type PhysicalContract } from 'domain/entities/physicalClientEntities/physicalContract/PhysicalContract';
-import { type PhysicalCustomer } from 'domain/entities/physicalClientEntities/physicalCustomer/PhysicalCustomer';
+import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
+import { type PhysicalContract } from 'domain/entities/PhysicalClientEntities/physicalContract/PhysicalContract';
+import { type PhysicalCustomer } from 'domain/entities/PhysicalClientEntities/physicalCustomer/PhysicalCustomer';
 
 export abstract class PhysicalCustomerRepository {
   abstract findPhysicalCustomer(id: string): Promise<PhysicalCustomer>;

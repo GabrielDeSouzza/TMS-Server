@@ -1,4 +1,5 @@
-import { CNH } from '../ownDriver/OwnDriver';
+import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+
 import { OutsourcedDriver } from './OutsourcedDriver';
 
 describe('Outsourced Driver', () => {

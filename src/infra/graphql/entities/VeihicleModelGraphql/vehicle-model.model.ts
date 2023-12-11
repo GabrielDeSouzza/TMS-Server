@@ -1,6 +1,6 @@
 import { Field, Float, Int, ObjectType, OmitType } from '@nestjs/graphql';
 
-import { type IVehicleModel } from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+import { type IVehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
 
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import {

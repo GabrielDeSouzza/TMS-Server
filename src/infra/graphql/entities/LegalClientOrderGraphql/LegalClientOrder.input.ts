@@ -1,6 +1,6 @@
 import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
-import { type ILegalClientOrder } from 'domain/entities/legalClientEntities/LegalClientOrder/LegaClientOrder';
+import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 @InputType()
 export class LegalClientOrderInput

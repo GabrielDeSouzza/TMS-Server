@@ -3,7 +3,7 @@ import {
   type Prisma,
 } from '@prisma/client';
 
-import { VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 
 export class VehicleTypePrismaDTO {
   public static PrismaToEntity(

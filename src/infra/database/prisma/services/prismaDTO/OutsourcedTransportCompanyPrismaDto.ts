@@ -3,8 +3,8 @@ import {
   type OutsourcedTransportCompany as OutsourcedTransportCompanyPrisma,
 } from '@prisma/client';
 
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
-import { OutsourcedTransportCompany } from 'domain/entities/legalPerson/outsourcedTransportCompany/OutsourcedTransportCompany';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
+import { OutsourcedTransportCompany } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompany/OutsourcedTransportCompany';
 
 import { LegalPersonPrismaDTO } from './LegalPersonPrismaDto';
 

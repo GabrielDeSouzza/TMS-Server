@@ -4,13 +4,12 @@ import {
   type OutsourcedDriver as OutsourcedDriverPrisma,
 } from '@prisma/client';
 
-import { type ContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
-import { type IOutsourcedDriver } from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
-import { OutsourcedDriver } from 'domain/entities/driverEntities/outsourcedDriver/OutsourcedDriver';
-import { CNH } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
-import { type OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
+import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { OutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
+import { type OutsourcedVehicle } from 'domain/entities/OutsourcedDriverEntities/outsourcedVehicle/OutsourcedVehicle';
+import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 import { NaturalPersonPrismaDTO } from './NaturalPersonPrismaDto';
 import { OutsourcedVehiclePrismaDTO } from './OwnsourcedVehiclePrisma.Dto';
@@ -99,7 +98,7 @@ export class OutsourcedDriverPrismaDTO {
   }
 
   public static EntityToPrismaUpdate(
-    outsourcedDriver: IOutsourcedDriver,
+    outsourcedDriver: OutsourcedDriver,
     naturalPerson?: NaturalPerson,
     contractOutsourced?: ContractOutsourcedDriver,
     outsourcedVehicle?: OutsourcedVehicle,

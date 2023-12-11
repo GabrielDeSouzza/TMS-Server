@@ -1,4 +1,4 @@
-import { type VehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
+import { type VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
 export abstract class VehicleBodyworkRepository {
   abstract findVehicleBodyworkById(id: string): Promise<VehicleBodywork>;

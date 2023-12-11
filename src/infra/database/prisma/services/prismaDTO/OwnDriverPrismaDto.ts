@@ -7,8 +7,8 @@ import {
 import {
   CNH,
   OwnDriver,
-} from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { type NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+} from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export class OwnDriverPrismaDTO {
   public static PrismaToEntity(ownDriverPrisma: OwnDriverPrisma) {

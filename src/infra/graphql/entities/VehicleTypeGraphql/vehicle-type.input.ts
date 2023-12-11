@@ -1,6 +1,6 @@
 import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
-import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { type IVehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 
 @InputType()
 export class VehicleTypeInput

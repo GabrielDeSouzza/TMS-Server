@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type IVehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';

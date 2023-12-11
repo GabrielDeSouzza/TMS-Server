@@ -1,4 +1,4 @@
-import { LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 import {
   type LegalPersonInput,

@@ -1,4 +1,4 @@
-import { type LegalContract } from 'domain/entities/legalClientEntities/LegalContract/LegalContract';
+import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 
 export abstract class LegalContractRepository {
   abstract findLegalContractById(

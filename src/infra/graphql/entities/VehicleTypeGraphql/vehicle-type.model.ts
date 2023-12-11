@@ -1,6 +1,6 @@
 import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
-import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { type IVehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleTypeContainsBodyModel } from '../VehicleTypeContainsBodyGraphql/VehicleTypeContainsBody.model';

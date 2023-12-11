@@ -1,4 +1,4 @@
-import { type ROLE } from 'domain/entities/user/User';
+import { type ROLE } from 'domain/entities/User/User';
 
 export interface ISignInRequestDTO {
   email: string;

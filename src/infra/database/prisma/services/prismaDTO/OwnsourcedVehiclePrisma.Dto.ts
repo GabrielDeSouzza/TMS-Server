@@ -3,8 +3,8 @@ import {
   type OutsourcedVehicle as OutsourcedVehiclePrisma,
 } from '@prisma/client';
 
-import { OutsourcedVehicle } from 'domain/entities/vehicle/outsourcedVehicle/OutsourcedVehicle';
-import { type Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { OutsourcedVehicle } from 'domain/entities/OutsourcedDriverEntities/outsourcedVehicle/OutsourcedVehicle';
+import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export class OutsourcedVehiclePrismaDTO {
   public static PrismaToEntity(

@@ -1,4 +1,4 @@
-import { type VehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { type VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 
 export abstract class VehicleTypeRepository {
   abstract findVehicleTypeById(id: string): Promise<VehicleType>;

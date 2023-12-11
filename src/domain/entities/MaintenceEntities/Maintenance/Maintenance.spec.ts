@@ -1,5 +1,5 @@
-import { LegalPerson } from '../../legalPerson/legalPerson/LegalPerson';
-import { Vehicle } from '../../vehicle/vehicle/Vehicle';
+import { LegalPerson } from '../../LegalPerson/LegalPerson';
+import { Vehicle } from '../../VehicleEntities/vehicle/Vehicle';
 import { MaintenanceCompany } from '../MaintenanceCompany/MaintenanceCompany';
 import { TypeOfMaintenance } from '../MaintenanceProcess/TypeOfMaintenance';
 import { Maintenance } from './Maintenance';

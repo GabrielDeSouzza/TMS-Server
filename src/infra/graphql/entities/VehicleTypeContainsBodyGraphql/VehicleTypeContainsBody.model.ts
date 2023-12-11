@@ -1,8 +1,8 @@
 import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
-import { type IVehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
-import { type IVehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
-import { type IVehicleType } from 'domain/entities/vehicle/vehicleTypes/VehicleTypes';
+import { type IVehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
+import { type IVehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
+import { type IVehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 
 import { VehicleBodyworkModelReferences } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
 import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';

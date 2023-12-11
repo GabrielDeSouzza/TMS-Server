@@ -1,4 +1,4 @@
-import { Vehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 import {
   type VehicleUpdateInput,

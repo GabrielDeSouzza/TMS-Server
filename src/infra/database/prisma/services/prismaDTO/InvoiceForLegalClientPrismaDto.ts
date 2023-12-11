@@ -3,7 +3,7 @@ import {
   type InvoiceForLegalClient as InvoiceForLegalClientPrisma,
 } from '@prisma/client';
 
-import { InvoiceForLegalClient } from 'domain/entities/legalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
+import { InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
 export class InvoiceForLegalClientPrismaDTO {
   public static PrismaToEntity(

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type User } from '../../../../domain/entities/user/User';
+import { type User } from '../../../../domain/entities/User/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';
 import { NotificationErrorsDatabase } from '../NotificationErrorsDatabase.ts';
 import { PrismaService } from '../prisma.service';

@@ -8,8 +8,8 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 
-import { type IOwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
-import { CNH } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { type IOwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

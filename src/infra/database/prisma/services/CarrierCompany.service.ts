@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { type CarrierCompany } from 'domain/entities/legalPerson/carrierCompany/CarrierCompany';
-import { type LegalPerson } from 'domain/entities/legalPerson/legalPerson/LegalPerson';
+import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
+import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 
 import { PrismaService } from '../prisma.service';

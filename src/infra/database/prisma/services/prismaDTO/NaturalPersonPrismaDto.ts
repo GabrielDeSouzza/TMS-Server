@@ -3,7 +3,7 @@ import {
   type NaturalPerson as NaturalPersonPrisma,
 } from '@prisma/client';
 
-import { NaturalPerson } from 'domain/entities/personEntities/naturalPerson/NaturalPerson';
+import { NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export class NaturalPersonPrismaDTO {
   public static PrismaToEntity(naturalPersonPrisma: NaturalPersonPrisma) {

@@ -1,6 +1,6 @@
 import { type Prisma } from '@prisma/client';
 
-import { ContractOutsourcedDriver } from 'domain/entities/driverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
+import { ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
 export class ContractOutsourcedDriverPrismaDto {
   public static PrismaToEntity(

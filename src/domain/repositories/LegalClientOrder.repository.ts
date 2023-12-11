@@ -1,4 +1,4 @@
-import { type LegalClientOrder } from 'domain/entities/legalClientEntities/LegalClientOrder/LegaClientOrder';
+import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 export abstract class LegalClientOrderRepository {
   abstract findLegalClientOrderById(id: string): Promise<LegalClientOrder>;

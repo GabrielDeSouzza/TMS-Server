@@ -1,6 +1,6 @@
 import { Field, Float, InputType, Int, PartialType } from '@nestjs/graphql';
 
-import { type ILegalClientMerchandise } from 'domain/entities/legalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
+import { type ILegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 
 @InputType()
 export class LegalClientMerchandiseInput

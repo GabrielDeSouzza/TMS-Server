@@ -3,7 +3,7 @@ import {
   type VehicleBodywork as VehicleBodyworkPrisma,
 } from '@prisma/client';
 
-import { VehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
+import { VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
 export class VehicleBodyworkPrismaDto {
   public static PrismaToEntity(

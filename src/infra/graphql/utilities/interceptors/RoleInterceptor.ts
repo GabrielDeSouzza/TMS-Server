@@ -9,7 +9,7 @@ import { Reflector } from '@nestjs/core';
 
 import { GraphQLError } from 'graphql';
 
-import { type User } from 'domain/entities/user/User';
+import { type User } from 'domain/entities/User/User';
 
 import {} from 'rxjs';
 @Injectable()

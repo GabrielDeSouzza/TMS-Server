@@ -1,6 +1,6 @@
 import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 
-import { type ILegalContract } from 'domain/entities/legalClientEntities/LegalContract/LegalContract';
+import { type ILegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 
 import {
   CarrierCompanyModel,

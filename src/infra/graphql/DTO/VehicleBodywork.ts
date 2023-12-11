@@ -1,4 +1,4 @@
-import { VehicleBodywork } from 'domain/entities/vehicle/vehicleBodywork/VehicleBodywork';
+import { VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
 import {
   type VehicleBodyworkInput,

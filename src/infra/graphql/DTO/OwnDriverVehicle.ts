@@ -1,4 +1,4 @@
-import { OwnDriver } from 'domain/entities/driverEntities/ownDriver/OwnDriver';
+import { OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 
 import {
   type OwnDriverUpdate,

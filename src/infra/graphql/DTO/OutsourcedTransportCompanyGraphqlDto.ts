@@ -1,4 +1,4 @@
-import { OutsourcedTransportCompany } from 'domain/entities/legalPerson/outsourcedTransportCompany/OutsourcedTransportCompany';
+import { OutsourcedTransportCompany } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompany/OutsourcedTransportCompany';
 
 import {
   type OutsourcedTransportCompanyUpdateInput,

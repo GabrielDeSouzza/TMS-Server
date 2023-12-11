@@ -6,7 +6,7 @@ import {
 import {
   VehicleModel,
   type IVehicleModel,
-} from 'domain/entities/vehicle/vehicleModel/VehicleModel';
+} from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
 
 export class VehicleModelPrismaDTO {
   public static PrismaToEntity(

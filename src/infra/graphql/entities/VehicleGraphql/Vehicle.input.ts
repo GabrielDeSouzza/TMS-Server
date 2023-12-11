@@ -1,6 +1,6 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
 
-import { type IVehicle } from 'domain/entities/vehicle/vehicle/Vehicle';
+import { type IVehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 @InputType()
 export class VehicleInput implements Omit<IVehicle, 'id'> {

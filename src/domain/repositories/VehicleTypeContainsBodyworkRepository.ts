@@ -1,4 +1,4 @@
-import { type VehicleTypeContainsBody } from 'domain/entities/vehicle/vehicleTypeContainsBody/VehicleContainsBody';
+import { type VehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
 
 export abstract class VehicleTypeContainsBodyRepository {
   abstract findVehicleTypeContainsBodyById(
