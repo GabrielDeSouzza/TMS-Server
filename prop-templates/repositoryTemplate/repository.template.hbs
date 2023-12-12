@@ -1,8 +1,8 @@
 
 
 export abstract class {{entityName}}Repository {
-  abstract find{{camelCase entityName}}ById(id: string): Promise<{{entityName}}>;
-  abstract create{{camelCase entityName}}( {{camelCase entityName}}: {{entityName}}): Promise<{{entityName}}>;
+  abstract find{{ entityName}}ById(id: string): Promise<{{entityName}}>;
+  abstract create{{ entityName}}( {{camelCase entityName}}: {{entityName}}): Promise<{{entityName}}>;
   abstract update{{entityName}}(
     id: string,
      {{camelCase entityName}}: {{entityName}},

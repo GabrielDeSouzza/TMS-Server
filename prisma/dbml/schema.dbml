@@ -65,6 +65,8 @@ Table users {
   OutsourcedTransportVehicleUpdatedBy outsourced_transport_vehicle [not null]
   OutsourcedTransportCompanyDriverCreatedBy outsourcedT_transport_company_driver [not null]
   OutsourcedTransportCompanyDriverUpdatedBy outsourcedT_transport_company_driver [not null]
+  OutsourcedTransportCompanyContractCreatedBy OutsourcedTransportCompanyContract [not null]
+  OutsourcedTransportCompanyContractUpdatedBy OutsourcedTransportCompanyContract [not null]
 }
 
 Table vehicles {
@@ -233,7 +235,6 @@ Table outsourcedT_transport_company_driver {
   cnh_category CNH [not null]
   cnh_expiration DateTime [not null]
   course_mopp Boolean [not null, default: false]
-  ContractOutsourcedDriver contract_outsourced_drivers [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users
@@ -261,8 +262,6 @@ Table contract_outsourced_drivers {
   updated_by String [not null]
   OutsourcedDriver outsourced_drivers [not null]
   outsourced_driver_id String [not null]
-  OutsourcedTransportCompanyDriver outsourcedT_transport_company_driver
-  outsourcedTransportCompanyDriverId String
 }
 
 Table own_drivers {
@@ -437,7 +436,7 @@ Table carrier_companies {
 
 Table OutsourcedTransportCompany {
   id String [pk]
-  legal_person_id String [not null]
+  legal_person_id String [unique, not null]
   LegalPerson legal_people [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
@@ -458,6 +457,12 @@ Table OutsourcedTransportCompanyContract {
   CarrierCompany carrier_companies [not null]
   legal_client_order_id String [unique, not null]
   LegalClientOrder legal_orders [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users
+  created_by String [not null]
+  UpdatedBy users [not null]
+  updated_by String [not null]
 }
 
 Table legal_clients {
@@ -733,8 +738,6 @@ Ref: contract_outsourced_drivers.updated_by > users.id
 
 Ref: contract_outsourced_drivers.outsourced_driver_id > outsourced_drivers.id
 
-Ref: contract_outsourced_drivers.outsourcedTransportCompanyDriverId > outsourcedT_transport_company_driver.id
-
 Ref: own_drivers.created_by > users.id
 
 Ref: own_drivers.updated_by > users.id
@@ -790,6 +793,10 @@ Ref: OutsourcedTransportCompanyContract.outsourced_transport_company_id > Outsou
 Ref: OutsourcedTransportCompanyContract.carrier_company_id > carrier_companies.id
 
 Ref: OutsourcedTransportCompanyContract.legal_client_order_id - legal_orders.id
+
+Ref: OutsourcedTransportCompanyContract.created_by > users.id
+
+Ref: OutsourcedTransportCompanyContract.updated_by > users.id
 
 Ref: legal_clients.legal_person_id > legal_people.id
 

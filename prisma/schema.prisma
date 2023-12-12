@@ -40,62 +40,62 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  VehicleModelCreatedBy             VehicleModel[]             @relation("created_by")
-  VehicleModelUpdatedBy             VehicleModel[]             @relation("updated_by")
-  VehicleBrandCreatedBy             VehicleBrand[]             @relation("created_by")
-  VehicleBrandUpdatedBy             VehicleBrand[]             @relation("updated_by")
-  VehicleTypeCreatedBy              VehicleType[]              @relation("created_by")
-  VehicleTypeUpdatedBy              VehicleType[]              @relation("updated_by")
-  VehicleBodyworkCreatedBy          VehicleBodywork[]          @relation("created_by")
-  VehicleBodyworkUpdatedBy          VehicleBodywork[]          @relation("updated_by")
-  VehicleTypeContainsBodyCreatedBy  VehicleTypeContainsBody[]  @relation("created_by")
-  VehicleTypeContainsBodyUpdatedBy  VehicleTypeContainsBody[]  @relation("updated_by")
-  OutsourcedVehicleCreatedBy        OutsourcedVehicle[]        @relation("created_by")
-  OutsourcedVehicleUpdatedBy        OutsourcedVehicle[]        @relation("updated_by")
-  CompanyVehicleCreatedBy           CompanyVehicle[]           @relation("created_by")
-  CompanyVehicleUpdatedBy           CompanyVehicle[]           @relation("updated_by")
-  OutsourcedDriverCreatedBy         OutsourcedDriver[]         @relation("created_by")
-  OutsourcedDriverUpdatedBy         OutsourcedDriver[]         @relation("updated_by")
-  ContractOutsourcedDriverCreatedBy ContractOutsourcedDriver[] @relation("created_by")
-  ContractOutsourcedDriverUpdatedBy ContractOutsourcedDriver[] @relation("updated_by")
-  OwnDriverCreatedBy                OwnDriver[]                @relation("created_by")
-  OwnDriverUpdatedBy                OwnDriver[]                @relation("updated_by")
-  CarrierCompanyCreatedBt           CarrierCompany[]           @relation("created_by")
-  CarrierCompanyUpdatedBy           CarrierCompany[]           @relation("updated_by")
-  PhysicalCustomerCreatedBy         PhysicalCustomer[]         @relation("created_by")
-  PhysicalCustomerUpdatedBy         PhysicalCustomer[]         @relation("updated_by")
-  InvoiceForLegalClientCreatedBy    InvoiceForLegalClient[]    @relation("created_by")
-  InvoiceForLegalClientUpdatedBy    InvoiceForLegalClient[]    @relation("updated_by")
-  CiotForPhysicalClientCreatedBy    CiotForPhysicalClient[]    @relation("created_by")
-  CiotForPhysicalClientUpdatedBy    CiotForPhysicalClient[]    @relation("updated_by")
-  OrderProcessingCreatedBy          OrderProcessing[]          @relation("created_by")
-  OrderProcessingUpdatedBy          OrderProcessing[]          @relation("updated_by")
-  MaintenanceCreatedBy              Maintenance[]              @relation("created_by")
-  MaintenanceUpdatedBy              Maintenance[]              @relation("updated_by")
-  MaintenanceCompanyCreatedBy       MaintenanceCompany[]       @relation("created_by")
-  MaintenanceCompanyUpdatedBy       MaintenanceCompany[]       @relation("updated_by")
-  TypeOfMaintenanceCreatedBy        TypeOfMaintenance[]        @relation("created_by")
-  TypeOfMaintenanceUpdatedBy        TypeOfMaintenance[]        @relation("updated_by")
-  PhysicalCustomerOrderUpdatedBy    PhysicalCustomerOrder[]    @relation("updated_by")
-  PhysicalCustomerOrderCreatedBy    PhysicalCustomerOrder[]    @relation("created_by")
-  LegalClientCustomerOrderCreatedBy LegalClientOrder[]         @relation("created_by")
-  LegalClientCustomerOrderUpdatedBy LegalClientOrder[]         @relation("updated_by")
-
-  CiotForLegalUpdatedByClient         CiotForLegalClient[]         @relation("updated_by")
-  CiotForLegalCreatedByClient         CiotForLegalClient[]         @relation("created_by")
-  LegalClientUpdatedBy                LegalClient[]                @relation("updated_by")
-  LegalClientCreatedBy                LegalClient[]                @relation("created_by")
-  InvoiceForPhysicalClientUpdatedBy   InvoiceForPhysicalClient[]   @relation("updated_by")
-  InvoiceForPhysicalClientCreatedBy   InvoiceForPhysicalClient[]   @relation("created_by")
-  LegalContractCreatedBy              LegalContract[]              @relation("created_by")
-  LegalContractUpdatedBy              LegalContract[]              @relation("updated_by")
-  OutsourcedTransportCompanyUpdatedBy OutsourcedTransportCompany[] @relation("updated_by")
-  OutsourcedTransportCompanyCreatedBy OutsourcedTransportCompany[] @relation("created_by")
-
-  OutsourcedTransportVehicleCreatedBy       OutsourcedTransportVehicle[]       @relation("created_by")
-  OutsourcedTransportVehicleUpdatedBy       OutsourcedTransportVehicle[]       @relation("updated_by")
-  OutsourcedTransportCompanyDriverCreatedBy OutsourcedTransportCompanyDriver[] @relation("created_by")
-  OutsourcedTransportCompanyDriverUpdatedBy OutsourcedTransportCompanyDriver[] @relation("updated_by")
+  VehicleModelCreatedBy                       VehicleModel[]                       @relation("created_by")
+  VehicleModelUpdatedBy                       VehicleModel[]                       @relation("updated_by")
+  VehicleBrandCreatedBy                       VehicleBrand[]                       @relation("created_by")
+  VehicleBrandUpdatedBy                       VehicleBrand[]                       @relation("updated_by")
+  VehicleTypeCreatedBy                        VehicleType[]                        @relation("created_by")
+  VehicleTypeUpdatedBy                        VehicleType[]                        @relation("updated_by")
+  VehicleBodyworkCreatedBy                    VehicleBodywork[]                    @relation("created_by")
+  VehicleBodyworkUpdatedBy                    VehicleBodywork[]                    @relation("updated_by")
+  VehicleTypeContainsBodyCreatedBy            VehicleTypeContainsBody[]            @relation("created_by")
+  VehicleTypeContainsBodyUpdatedBy            VehicleTypeContainsBody[]            @relation("updated_by")
+  OutsourcedVehicleCreatedBy                  OutsourcedVehicle[]                  @relation("created_by")
+  OutsourcedVehicleUpdatedBy                  OutsourcedVehicle[]                  @relation("updated_by")
+  CompanyVehicleCreatedBy                     CompanyVehicle[]                     @relation("created_by")
+  CompanyVehicleUpdatedBy                     CompanyVehicle[]                     @relation("updated_by")
+  OutsourcedDriverCreatedBy                   OutsourcedDriver[]                   @relation("created_by")
+  OutsourcedDriverUpdatedBy                   OutsourcedDriver[]                   @relation("updated_by")
+  ContractOutsourcedDriverCreatedBy           ContractOutsourcedDriver[]           @relation("created_by")
+  ContractOutsourcedDriverUpdatedBy           ContractOutsourcedDriver[]           @relation("updated_by")
+  OwnDriverCreatedBy                          OwnDriver[]                          @relation("created_by")
+  OwnDriverUpdatedBy                          OwnDriver[]                          @relation("updated_by")
+  CarrierCompanyCreatedBt                     CarrierCompany[]                     @relation("created_by")
+  CarrierCompanyUpdatedBy                     CarrierCompany[]                     @relation("updated_by")
+  PhysicalCustomerCreatedBy                   PhysicalCustomer[]                   @relation("created_by")
+  PhysicalCustomerUpdatedBy                   PhysicalCustomer[]                   @relation("updated_by")
+  InvoiceForLegalClientCreatedBy              InvoiceForLegalClient[]              @relation("created_by")
+  InvoiceForLegalClientUpdatedBy              InvoiceForLegalClient[]              @relation("updated_by")
+  CiotForPhysicalClientCreatedBy              CiotForPhysicalClient[]              @relation("created_by")
+  CiotForPhysicalClientUpdatedBy              CiotForPhysicalClient[]              @relation("updated_by")
+  OrderProcessingCreatedBy                    OrderProcessing[]                    @relation("created_by")
+  OrderProcessingUpdatedBy                    OrderProcessing[]                    @relation("updated_by")
+  MaintenanceCreatedBy                        Maintenance[]                        @relation("created_by")
+  MaintenanceUpdatedBy                        Maintenance[]                        @relation("updated_by")
+  MaintenanceCompanyCreatedBy                 MaintenanceCompany[]                 @relation("created_by")
+  MaintenanceCompanyUpdatedBy                 MaintenanceCompany[]                 @relation("updated_by")
+  TypeOfMaintenanceCreatedBy                  TypeOfMaintenance[]                  @relation("created_by")
+  TypeOfMaintenanceUpdatedBy                  TypeOfMaintenance[]                  @relation("updated_by")
+  PhysicalCustomerOrderUpdatedBy              PhysicalCustomerOrder[]              @relation("updated_by")
+  PhysicalCustomerOrderCreatedBy              PhysicalCustomerOrder[]              @relation("created_by")
+  LegalClientCustomerOrderCreatedBy           LegalClientOrder[]                   @relation("created_by")
+  LegalClientCustomerOrderUpdatedBy           LegalClientOrder[]                   @relation("updated_by")
+  CiotForLegalUpdatedByClient                 CiotForLegalClient[]                 @relation("updated_by")
+  CiotForLegalCreatedByClient                 CiotForLegalClient[]                 @relation("created_by")
+  LegalClientUpdatedBy                        LegalClient[]                        @relation("updated_by")
+  LegalClientCreatedBy                        LegalClient[]                        @relation("created_by")
+  InvoiceForPhysicalClientUpdatedBy           InvoiceForPhysicalClient[]           @relation("updated_by")
+  InvoiceForPhysicalClientCreatedBy           InvoiceForPhysicalClient[]           @relation("created_by")
+  LegalContractCreatedBy                      LegalContract[]                      @relation("created_by")
+  LegalContractUpdatedBy                      LegalContract[]                      @relation("updated_by")
+  OutsourcedTransportCompanyUpdatedBy         OutsourcedTransportCompany[]         @relation("updated_by")
+  OutsourcedTransportCompanyCreatedBy         OutsourcedTransportCompany[]         @relation("created_by")
+  OutsourcedTransportVehicleCreatedBy         OutsourcedTransportVehicle[]         @relation("created_by")
+  OutsourcedTransportVehicleUpdatedBy         OutsourcedTransportVehicle[]         @relation("updated_by")
+  OutsourcedTransportCompanyDriverCreatedBy   OutsourcedTransportCompanyDriver[]   @relation("created_by")
+  OutsourcedTransportCompanyDriverUpdatedBy   OutsourcedTransportCompanyDriver[]   @relation("updated_by")
+  OutsourcedTransportCompanyContractCreatedBy OutsourcedTransportCompanyContract[] @relation("created_by")
+  OutsourcedTransportCompanyContractUpdatedBy OutsourcedTransportCompanyContract[] @relation("updated_by")
 
   @@map("users")
 }
@@ -298,7 +298,6 @@ model OutsourcedTransportCompanyDriver {
   cnh_category                    CNH
   cnh_expiration                  DateTime
   course_mopp                     Boolean                    @default(false)
-  ContractOutsourcedDriver        ContractOutsourcedDriver[]
   created_at                      DateTime                   @default(now())
   updated_at                      DateTime                   @default(now())
   CreatedBy                       User?                      @relation("created_by", fields: [created_by], references: [id])
@@ -314,22 +313,20 @@ model OutsourcedTransportCompanyDriver {
 }
 
 model ContractOutsourcedDriver {
-  id                                 String                            @id @default(uuid())
-  type                               String
-  situation                          String
-  start_at                           DateTime
-  end_at                             DateTime?
-  created_at                         DateTime                          @default(now())
-  updated_at                         DateTime                          @default(now())
-  cpf                                String
-  CreatedBy                          User?                             @relation("created_by", fields: [created_by], references: [id])
-  created_by                         String
-  UpdatedBy                          User?                             @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by                         String
-  OutsourcedDriver                   OutsourcedDriver                  @relation(fields: [outsourced_driver_id], references: [id])
-  outsourced_driver_id               String
-  OutsourcedTransportCompanyDriver   OutsourcedTransportCompanyDriver? @relation(fields: [outsourcedTransportCompanyDriverId], references: [id])
-  outsourcedTransportCompanyDriverId String?
+  id                   String           @id @default(uuid())
+  type                 String
+  situation            String
+  start_at             DateTime
+  end_at               DateTime?
+  created_at           DateTime         @default(now())
+  updated_at           DateTime         @default(now())
+  cpf                  String
+  CreatedBy            User?            @relation("created_by", fields: [created_by], references: [id])
+  created_by           String
+  UpdatedBy            User?            @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by           String
+  OutsourcedDriver     OutsourcedDriver @relation(fields: [outsourced_driver_id], references: [id])
+  outsourced_driver_id String
 
   @@map("contract_outsourced_drivers")
 }
@@ -551,6 +548,12 @@ model OutsourcedTransportCompanyContract {
   CarrierCompany                  CarrierCompany             @relation(fields: [carrier_company_id], references: [id])
   legal_client_order_id           String                     @unique
   LegalClientOrder                LegalClientOrder           @relation(fields: [legal_client_order_id], references: [id])
+  created_at                      DateTime                   @default(now())
+  updated_at                      DateTime                   @default(now())
+  CreatedBy                       User?                      @relation("created_by", fields: [created_by], references: [id])
+  created_by                      String
+  UpdatedBy                       User                       @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                      String
 }
 
 model LegalClient {

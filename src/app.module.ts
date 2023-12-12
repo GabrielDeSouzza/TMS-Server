@@ -17,6 +17,7 @@ import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClient
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriver/OutsourcedDriver.module';
+import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
 import { OutsourcedTransportCompanyModule } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.module';
 import { OutsourcedVehicleModule } from 'infra/graphql/entities/OutsourcedVehicle/OutsourcedVehicle.module';
 import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriver.module';
@@ -61,6 +62,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     InvoiceForLegalClientModule,
     CiotForLegalClientModule,
     OutsourcedTransportCompanyModule,
+    OutsourcedTransportCompanyContractModule,
   ],
 })
 export class AppModule {}

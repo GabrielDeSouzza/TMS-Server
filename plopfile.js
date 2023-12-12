@@ -17,7 +17,7 @@ module.exports = function (propTools) {
       },
       {
         type: 'add',
-        path: 'src/infra/graphql/DTO/{{entityName}}GraphqlDTO.ts',
+        path: 'src/infra/graphql/DTO/{{entityName}}GraphqlDto.ts',
         templateFile: 'prop-templates/GraphqlTemplates/GraphqlDTO/graphqlDTO.template.hbs',
       },
       {
