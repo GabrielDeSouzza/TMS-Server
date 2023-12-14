@@ -40,10 +40,14 @@ export class LegalContractPrismaDTO {
 
   public static EntityToPrismaUpdate(legalContract: LegalContract) {
     const legalContractUptade: Prisma.LegalContractUpdateInput = {
-      CarrierCompany: { connect: { id: legalContract.carrier_company_id } },
+      CarrierCompany: legalContract.carrier_company_id
+        ? { connect: { id: legalContract.carrier_company_id } }
+        : undefined,
       delivery_conditions: legalContract.delivery_conditions,
       effective_date: legalContract.effective_date,
-      LegalClient: { connect: { id: legalContract.legal_client_id } },
+      LegalClient: legalContract.legal_client_id
+        ? { connect: { id: legalContract.legal_client_id } }
+        : undefined,
       UpdatedBy: { connect: { id: legalContract.updated_by } },
       observations: legalContract.observations,
       updated_at: legalContract.updated_at,

@@ -22,7 +22,10 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientModelRefereces } from '../LegalClientGraphql/LegalClient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { LegalContractInput } from './LegalContract.input';
+import {
+  LegalContractInput,
+  LegalContractUpdateInput,
+} from './LegalContract.input';
 import { LegalContractModel } from './LegalContract.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -70,7 +73,7 @@ export class LegalContractResolver {
   @Mutation(() => LegalContractModel)
   async updatelegalContract(
     @Args('id') id: string,
-    @Args('legalContractInput') legalContractInput: LegalContractInput,
+    @Args('legalContractInput') legalContractInput: LegalContractUpdateInput,
     @CurrentUser() user: User,
   ) {
     legalContractInput.updated_by = user.id;

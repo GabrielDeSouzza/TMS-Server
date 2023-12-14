@@ -21,7 +21,10 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { CiotForLegalClientInput } from './CiotForLegalClient.input';
+import {
+  CiotForLegalClientInput,
+  CiotForLegalClientUpdateInput,
+} from './CiotForLegalClient.input';
 import { CiotForLegalClientModel } from './CiotForLegalClient.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -64,7 +67,7 @@ export class CiotForLegalClientResolver {
   async updateciotForLegalClient(
     @Args('id') id: string,
     @Args('ciotForLegalClientInput')
-    ciotForLegalClientInput: CiotForLegalClientInput,
+    ciotForLegalClientInput: CiotForLegalClientUpdateInput,
     @CurrentUser() user: User,
   ) {
     ciotForLegalClientInput.updated_by = user.id;

@@ -41,12 +41,12 @@ export class CiotForLegalClientPrismaDTO {
     const ciotForLegalClientUptade: Prisma.CiotForLegalClientUpdateInput = {
       ciot: ciotForLegalClient.ciot,
       emission_date: ciotForLegalClient.emission_date,
-
-      id: ciotForLegalClient.id,
       updated_at: ciotForLegalClient.updated_at,
-      PhysycalContract: {
-        connect: { id: ciotForLegalClient.legal_contract_id },
-      },
+      PhysycalContract: ciotForLegalClient.legal_contract_id
+        ? {
+            connect: { id: ciotForLegalClient.legal_contract_id },
+          }
+        : undefined,
       UpdatedBy: { connect: { id: ciotForLegalClient.updated_by } },
     };
 

@@ -60,8 +60,6 @@ export class VehicleModelPrismaDTO {
       capacity_per_axle: vehicleModel.capacity_per_axle,
       brand_id: vehicleModel.brand_id,
       type_id: vehicleModel.type_id,
-      created_at: vehicleModel.created_at,
-      created_by: vehicleModel.created_by,
       updated_at: vehicleModel.updated_at,
       updated_by: vehicleModel.updated_by,
     };

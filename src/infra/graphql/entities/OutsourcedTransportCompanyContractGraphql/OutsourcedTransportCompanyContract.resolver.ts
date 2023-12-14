@@ -25,7 +25,10 @@ import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.mod
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { OutsourcedTransportCompanyModel } from '../OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { OutsourcedTransportCompanyContractInput } from './OutsourcedTransportCompanyContract.input';
+import {
+  OutsourcedTransportCompanyContractInput,
+  OutsourcedTransportCompanyContractUpdateInput,
+} from './OutsourcedTransportCompanyContract.input';
 import { OutsourcedTransportCompanyContractModel } from './OutsourcedTransportCompanyContract.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -76,7 +79,7 @@ export class OutsourcedTransportCompanyContractResolver {
   async updateoutsourcedTransportCompanyContract(
     @Args('id') id: string,
     @Args('outsourcedTransportCompanyContractInput')
-    outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractInput,
+    outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput,
     @CurrentUser() user: User,
   ) {
     outsourcedTransportCompanyContractInput.updated_by = user.id;
@@ -121,7 +124,9 @@ export class OutsourcedTransportCompanyContractResolver {
     return await this.userRepository.findUserById(createdBy);
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: OutsourcedTransportCompanyContractInput) {
+  async updatedUser(
+    @Parent() user: OutsourcedTransportCompanyContractUpdateInput,
+  ) {
     const { updated_by: updatedBy } = user;
 
     return await this.userRepository.findUserById(updatedBy);

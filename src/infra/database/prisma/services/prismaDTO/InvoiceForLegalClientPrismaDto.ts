@@ -60,9 +60,11 @@ export class InvoiceForLegalClientPrismaDTO {
         form_payment: invoiceForLegalClient.form_payment,
         invoice_taxes: invoiceForLegalClient.invoice_taxes,
         invoice_total: invoiceForLegalClient.invoice_total,
-        LegalClientOrder: {
-          connect: { id: invoiceForLegalClient.legalClientOrderId },
-        },
+        LegalClientOrder: invoiceForLegalClient.legalClientOrderId
+          ? {
+              connect: { id: invoiceForLegalClient.legalClientOrderId },
+            }
+          : undefined,
         nature_invoice: invoiceForLegalClient.nature_invoice,
         UpdatedBy: { connect: { id: invoiceForLegalClient.updated_by } },
         emission_date: invoiceForLegalClient.emission_date,

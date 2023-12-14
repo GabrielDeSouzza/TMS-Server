@@ -53,9 +53,11 @@ export class OutsourcedTransportCompanyPrismaDTO {
   ) {
     const outsourcedTransportCompanyUptade: Prisma.OutsourcedTransportCompanyUpdateInput =
       {
-        LegalPerson: {
-          update: LegalPersonPrismaDTO.EntityToPrismaUpdate(legalPerson),
-        },
+        LegalPerson: legalPerson
+          ? {
+              update: LegalPersonPrismaDTO.EntityToPrismaUpdate(legalPerson),
+            }
+          : undefined,
         UpdatedBy: { connect: { id: outsourcedTransportCompany.updated_by } },
         updated_at: outsourcedTransportCompany.updated_at,
       };

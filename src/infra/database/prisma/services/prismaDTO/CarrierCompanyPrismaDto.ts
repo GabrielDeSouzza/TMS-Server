@@ -66,26 +66,28 @@ export class CarrierCompanyPrismaDTO {
     const carriercompanyUptade: Prisma.CarrierCompanyUpdateInput = {
       updated_at: carriercompany.updated_at,
       UpdatedBy: { connect: { id: carriercompany.updated_by } },
-      LegalPerson: {
-        update: {
-          address_number: legalPerson.address_number,
-          city: legalPerson.city,
-          cnpj: legalPerson.cnpj,
-          corporate_name: legalPerson.corporate_name,
-          email: legalPerson.email,
-          fantasy_name: legalPerson.fantasy_name,
-          first_phone: legalPerson.first_phone,
-          neighborhood: legalPerson.neighborhood,
-          public_place: legalPerson.public_place,
-          state_registration: legalPerson.state_registration,
-          uf: legalPerson.uf,
-          complement: legalPerson.complement,
-          created_at: legalPerson.created_at,
-          second_phone: legalPerson.second_phone,
-          third_phone: legalPerson.third_phone,
-          updated_at: legalPerson.updated_at,
-        },
-      },
+      LegalPerson: legalPerson
+        ? {
+            update: {
+              address_number: legalPerson.address_number,
+              city: legalPerson.city,
+              cnpj: legalPerson.cnpj,
+              corporate_name: legalPerson.corporate_name,
+              email: legalPerson.email,
+              fantasy_name: legalPerson.fantasy_name,
+              first_phone: legalPerson.first_phone,
+              neighborhood: legalPerson.neighborhood,
+              public_place: legalPerson.public_place,
+              state_registration: legalPerson.state_registration,
+              uf: legalPerson.uf,
+              complement: legalPerson.complement,
+              created_at: legalPerson.created_at,
+              second_phone: legalPerson.second_phone,
+              third_phone: legalPerson.third_phone,
+              updated_at: legalPerson.updated_at,
+            },
+          }
+        : undefined,
     };
 
     return carriercompanyUptade;

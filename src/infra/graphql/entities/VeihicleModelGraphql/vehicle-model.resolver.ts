@@ -23,7 +23,10 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';
-import { VehicleModelInput } from './vehicle-model.input';
+import {
+  VehicleModelInput,
+  VehicleModelUpdateInput,
+} from './vehicle-model.input';
 import { VehicleModelGraphql } from './vehicle-model.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -64,7 +67,7 @@ export class VehicleModelResolver {
   @Mutation(() => VehicleModelGraphql)
   async updatedVehicleModel(
     @Args('id') id: string,
-    @Args('vehicleModelUpdate') vehicleModelUpdate: VehicleModelInput,
+    @Args('vehicleModelUpdate') vehicleModelUpdate: VehicleModelUpdateInput,
     @CurrentUser() user: User,
   ) {
     vehicleModelUpdate.updated_by = user.id;

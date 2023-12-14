@@ -109,11 +109,11 @@ export class OutsourcedDriverPrismaDTO {
       cnh: outsourcedDriver.cnh,
       cnh_category: CNHPrisma[outsourcedDriver.cnh_category],
       cnh_expiration: outsourcedDriver.cnh_expiration,
-      NaturalPerson: {
-        update: naturalPerson
-          ? NaturalPersonPrismaDTO.EntityToPrismaUpdate(naturalPerson)
-          : undefined,
-      },
+      NaturalPerson: naturalPerson
+        ? {
+            update: NaturalPersonPrismaDTO.EntityToPrismaUpdate(naturalPerson),
+          }
+        : undefined,
       course_mopp: outsourcedDriver.course_mopp,
       UpdatedBy: { connect: { id: outsourcedDriver.updated_by } },
       updated_at: outsourcedDriver.updated_at,

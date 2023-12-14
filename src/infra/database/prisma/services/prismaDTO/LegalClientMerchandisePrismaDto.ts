@@ -46,9 +46,11 @@ export class LegalClientMerchandisePrismaDTO {
         amount: legalClientMerchandise.amount,
         codMerchandise: legalClientMerchandise.codMerchandise,
         description: legalClientMerchandise.description,
-        LegalClientOrder: {
-          connect: { id: legalClientMerchandise.legalClientOrderId },
-        },
+        LegalClientOrder: legalClientMerchandise.legalClientOrderId
+          ? {
+              connect: { id: legalClientMerchandise.legalClientOrderId },
+            }
+          : undefined,
         mass: legalClientMerchandise.mass,
         value: legalClientMerchandise.value,
         volume: legalClientMerchandise.volume,

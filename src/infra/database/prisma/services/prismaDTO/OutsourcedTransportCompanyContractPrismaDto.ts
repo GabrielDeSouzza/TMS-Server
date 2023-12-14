@@ -60,24 +60,32 @@ export class OutsourcedTransportCompanyContractPrismaDTO {
   ) {
     const outsourcedTransportCompanyContractUptade: Prisma.OutsourcedTransportCompanyContractUpdateInput =
       {
-        CarrierCompany: {
-          connect: { id: outsourcedTransportCompanyContract.carrierCompanyId },
-        },
-        LegalClientOrder: {
-          connect: {
-            id: outsourcedTransportCompanyContract.legalClientOrderId,
-          },
-        },
-        OutsourcedTransportCompany: {
-          connect: {
-            id: outsourcedTransportCompanyContract.outSourcedTransportCompanyId,
-          },
-        },
+        CarrierCompany: outsourcedTransportCompanyContract.carrierCompanyId
+          ? {
+              connect: {
+                id: outsourcedTransportCompanyContract.carrierCompanyId,
+              },
+            }
+          : undefined,
+        LegalClientOrder: outsourcedTransportCompanyContract.legalClientOrderId
+          ? {
+              connect: {
+                id: outsourcedTransportCompanyContract.legalClientOrderId,
+              },
+            }
+          : undefined,
+        OutsourcedTransportCompany:
+          outsourcedTransportCompanyContract.outSourcedTransportCompanyId
+            ? {
+                connect: {
+                  id: outsourcedTransportCompanyContract.outSourcedTransportCompanyId,
+                },
+              }
+            : undefined,
         UpdatedBy: {
           connect: { id: outsourcedTransportCompanyContract.updated_by },
         },
         updated_at: outsourcedTransportCompanyContract.updated_at,
-        id: outsourcedTransportCompanyContract.id,
       };
 
     return outsourcedTransportCompanyContractUptade;

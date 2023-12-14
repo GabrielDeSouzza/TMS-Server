@@ -34,9 +34,11 @@ export class LegalClientPrismaDTO {
       branch: legalClient.branch,
       CreatedBy: { connect: { id: legalClient.created_by } },
       UpdatedBy: { connect: { id: legalClient.created_by } },
-      LegalPerson: {
-        create: LegalPersonPrismaDTO.EntityToCreatePrisma(legalPerson),
-      },
+      LegalPerson: legalPerson
+        ? {
+            create: LegalPersonPrismaDTO.EntityToCreatePrisma(legalPerson),
+          }
+        : undefined,
     };
 
     return legalClientPrisma;

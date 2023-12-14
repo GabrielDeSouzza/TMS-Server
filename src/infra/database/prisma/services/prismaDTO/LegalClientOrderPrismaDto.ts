@@ -32,7 +32,9 @@ export class LegalClientOrderPrismaDTO {
 
   public static EntityToPrismaUpdate(legalClientOrder: LegalClientOrder) {
     const legalClientOrderUptade: Prisma.LegalClientOrderUpdateInput = {
-      LegalContract: { connect: { id: legalClientOrder.legal_contract_id } },
+      LegalContract: legalClientOrder.legal_contract_id
+        ? { connect: { id: legalClientOrder.legal_contract_id } }
+        : undefined,
       order: legalClientOrder.order,
       UpdatedBy: { connect: { id: legalClientOrder.updated_by } },
       updated_at: legalClientOrder.updated_at,

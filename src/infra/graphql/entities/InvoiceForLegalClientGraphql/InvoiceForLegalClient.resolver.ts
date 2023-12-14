@@ -21,7 +21,10 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { InvoiceForLegalClientInput } from './InvoiceForLegalClient.input';
+import {
+  InvoiceForLegalClientInput,
+  InvoiceForLegalClientUpdateInput,
+} from './InvoiceForLegalClient.input';
 import { InvoiceForLegalClientModel } from './InvoiceForLegalClient.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -68,7 +71,7 @@ export class InvoiceForLegalClientResolver {
   async updateinvoiceForLegalClient(
     @Args('id') id: string,
     @Args('invoiceForLegalClientInput')
-    invoiceForLegalClientInput: InvoiceForLegalClientInput,
+    invoiceForLegalClientInput: InvoiceForLegalClientUpdateInput,
     @CurrentUser() user: User,
   ) {
     invoiceForLegalClientInput.updated_by = user.id;

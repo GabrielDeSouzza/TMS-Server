@@ -18,7 +18,10 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
-import { LegalClientMerchandiseInput } from './LegalClientMerchandise.input';
+import {
+  LegalClientMerchandiseInput,
+  LegalClientMerchandiseUpdateInput,
+} from './LegalClientMerchandise.input';
 import { LegalClientMerchandiseModel } from './LegalClientMerchandise.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -61,7 +64,7 @@ export class LegalClientMerchandiseResolver {
   async updatelegalClientMerchandise(
     @Args('id') id: string,
     @Args('legalClientMerchandiseInput')
-    legalClientMerchandiseInput: LegalClientMerchandiseInput,
+    legalClientMerchandiseInput: LegalClientMerchandiseUpdateInput,
   ) {
     const legalClientMerchandiseEntity =
       LegalClientMerchandiseGraphqlDTO.updateInputToEntity(

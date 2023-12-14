@@ -8,6 +8,7 @@ import {
 export class VehicleGraphDTO {
   public static createInputToEntity(createInput: VehicleInput) {
     return new Vehicle({
+      year: createInput.year,
       color: createInput.color,
       model_id: createInput.model_id,
       plate: createInput.plate,
@@ -21,6 +22,7 @@ export class VehicleGraphDTO {
   ) {
     return updateInput
       ? new Vehicle({
+          year: updateInput.year,
           color: updateInput.color,
           model_id: updateInput.model_id,
           plate: updateInput.plate,

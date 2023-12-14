@@ -41,8 +41,6 @@ export class VehicleBodyworkPrismaDto {
   ): Prisma.VehicleBodyworkUncheckedUpdateInput {
     return {
       axles: vehicleBodywork.axles,
-      created_at: vehicleBodywork.created_at,
-      created_by: vehicleBodywork.created_by,
       id: vehicleBodywork.id,
       mass: vehicleBodywork.mass,
       name: vehicleBodywork.name,

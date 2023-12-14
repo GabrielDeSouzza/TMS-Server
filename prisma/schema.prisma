@@ -253,8 +253,8 @@ model CompanyVehicle {
 model OutsourcedTransportVehicle {
   id String @id @default(uuid())
 
-  outsourced_company_id String
-  CarrierCompany        OutsourcedTransportCompany @relation(fields: [outsourced_company_id], references: [id])
+  outsourced_company_id      String
+  OutsourcedTransportCompany OutsourcedTransportCompany @relation(fields: [outsourced_company_id], references: [id])
 
   Vehicle    Vehicle @relation(fields: [vehicle_id], references: [id])
   vehicle_id String  @unique

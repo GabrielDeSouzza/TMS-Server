@@ -42,11 +42,8 @@ export class VehicleTypePrismaDTO {
     const vehicleBrandUpdate: Prisma.VehicleTypeUncheckedUpdateInput = {
       name: vehicleType.name,
       bodywork: vehicleType.bodyWork,
-      created_at: vehicleType.created_at,
       updated_at: vehicleType.updated_at,
-      created_by: vehicleType.created_by,
       updated_by: vehicleType.updated_by,
-      id: vehicleType.id,
     };
 
     return vehicleBrandUpdate;

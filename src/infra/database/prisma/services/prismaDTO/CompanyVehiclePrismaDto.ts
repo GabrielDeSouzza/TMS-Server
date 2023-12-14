@@ -50,19 +50,20 @@ export class CompanyVehiclePrismaDTO {
   ) {
     const companyVehicleUptade: Prisma.CompanyVehicleUpdateInput = {
       created_at: companyVehicle.created_at,
-      id: companyVehicle.id,
       updated_at: companyVehicle.updated_at,
       UpdatedBy: { connect: { id: companyVehicle.updated_by } },
-      Vehicle: {
-        update: {
-          color: vehicle.color,
-          plate: vehicle.plate,
-          renavam: vehicle.renavam,
-          rntrc_expiration: vehicle.rntrc_expiration,
-          year: vehicle.year,
-          model_id: vehicle.model_id,
-        },
-      },
+      Vehicle: vehicle
+        ? {
+            update: {
+              color: vehicle.color,
+              plate: vehicle.plate,
+              renavam: vehicle.renavam,
+              rntrc_expiration: vehicle.rntrc_expiration,
+              year: vehicle.year,
+              model_id: vehicle.model_id,
+            },
+          }
+        : undefined,
     };
 
     return companyVehicleUptade;

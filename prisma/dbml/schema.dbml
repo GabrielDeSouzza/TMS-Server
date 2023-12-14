@@ -198,7 +198,7 @@ Table company_vehicles {
 Table outsourced_transport_vehicle {
   id String [pk]
   outsourced_company_id String [not null]
-  CarrierCompany OutsourcedTransportCompany [not null]
+  OutsourcedTransportCompany OutsourcedTransportCompany [not null]
   Vehicle vehicles [not null]
   vehicle_id String [unique, not null]
   created_at DateTime [default: `now()`, not null]

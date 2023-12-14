@@ -79,27 +79,29 @@ export class OwnDriverPrismaDTO {
       created_at: ownDriver.created_at,
       updated_at: ownDriver.updated_at,
       UpdatedBy: { connect: { id: ownDriver.updated_by } },
-      NaturalPerson: {
-        update: {
-          address_number: naturalPerson.address_number,
-          cep: naturalPerson.cep,
-          city: naturalPerson.city,
-          complement: naturalPerson.complement,
-          cpf: naturalPerson.cpf,
-          date_birth: naturalPerson.date_birth,
-          email: naturalPerson.email,
-          first_phone: naturalPerson.first_phone,
-          gender: naturalPerson.gender,
-          name: naturalPerson.name,
-          nationality: naturalPerson.nationality,
-          neighborhood: naturalPerson.neighborhood,
-          public_place: naturalPerson.public_place,
-          rg: naturalPerson.rg,
-          uf: naturalPerson.uf,
-          second_phone: naturalPerson.second_phone,
-          third_phone: naturalPerson.third_phone,
-        },
-      },
+      NaturalPerson: naturalPerson
+        ? {
+            update: {
+              address_number: naturalPerson.address_number,
+              cep: naturalPerson.cep,
+              city: naturalPerson.city,
+              complement: naturalPerson.complement,
+              cpf: naturalPerson.cpf,
+              date_birth: naturalPerson.date_birth,
+              email: naturalPerson.email,
+              first_phone: naturalPerson.first_phone,
+              gender: naturalPerson.gender,
+              name: naturalPerson.name,
+              nationality: naturalPerson.nationality,
+              neighborhood: naturalPerson.neighborhood,
+              public_place: naturalPerson.public_place,
+              rg: naturalPerson.rg,
+              uf: naturalPerson.uf,
+              second_phone: naturalPerson.second_phone,
+              third_phone: naturalPerson.third_phone,
+            },
+          }
+        : undefined,
     };
 
     return ownDriverUptade;

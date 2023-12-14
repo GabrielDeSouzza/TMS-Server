@@ -41,10 +41,7 @@ export class VehicleTypeContainsBodyPrismaDTO {
   ) {
     const vehicleTypeContainsBodyUpdate: Prisma.VehicleTypeContainsBodyUncheckedUpdateInput =
       {
-        created_at: vehicleTypeContainsBody.created_at,
         bodywork_id: vehicleTypeContainsBody.vehicle_bodywork_id,
-        created_by: vehicleTypeContainsBody.created_by,
-        id: vehicleTypeContainsBody.id,
         type_id: vehicleTypeContainsBody.vehicle_type_id,
         updated_at: vehicleTypeContainsBody.updated_at,
         updated_by: vehicleTypeContainsBody.updated_by,

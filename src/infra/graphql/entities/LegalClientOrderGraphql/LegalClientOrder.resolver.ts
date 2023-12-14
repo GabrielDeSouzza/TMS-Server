@@ -25,7 +25,10 @@ import { InvoiceForLegalClientModel } from '../InvoiceForLegalClientGraphql/Invo
 import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { LegalClientOrderInput } from './LegalClientOrder.input';
+import {
+  LegalClientOrderInput,
+  LegalClientOrderUpdateInput,
+} from './LegalClientOrder.input';
 import { LegalClientOrderModel } from './LegalClientOrder.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -68,7 +71,8 @@ export class LegalClientOrderResolver {
   @Mutation(() => LegalClientOrderModel)
   async updatelegalClientOrder(
     @Args('id') id: string,
-    @Args('legalClientOrderInput') legalClientOrderInput: LegalClientOrderInput,
+    @Args('legalClientOrderInput')
+    legalClientOrderInput: LegalClientOrderUpdateInput,
     @CurrentUser() user: User,
   ) {
     legalClientOrderInput.updated_by = user.id;

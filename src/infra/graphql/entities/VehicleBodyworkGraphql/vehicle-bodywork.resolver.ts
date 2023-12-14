@@ -19,7 +19,10 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { VehicleBodyworkInput } from './vehicle-bodywork.input';
+import {
+  VehicleBodyworkInput,
+  VehicleBodyworkUpdateInput,
+} from './vehicle-bodywork.input';
 import { VehicleBodyworkModel } from './vehicle-bodywork.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -60,7 +63,7 @@ export class VehicleBodyworkResolver {
   async updateVehicleBodywork(
     @Args('id') id: string,
     @Args('vehicleBodyworkIUpdate')
-    vehicleBodyworkUpdated: VehicleBodyworkInput,
+    vehicleBodyworkUpdated: VehicleBodyworkUpdateInput,
     @CurrentUser() user: User,
   ) {
     vehicleBodyworkUpdated.updated_by = user.id;

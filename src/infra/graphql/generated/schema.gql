@@ -61,6 +61,12 @@ type CiotForLegalClientModel {
   updated_by: String!
 }
 
+input CiotForLegalClientUpdateInput {
+  ciot: String
+  emission_date: Timestamp
+  legal_contract_id: String
+}
+
 type CompanyVehicleIModel {
   CarrierCompany: CarrierCompanyModel!
   Vehicle: VehicleCarModel!
@@ -147,6 +153,17 @@ type InvoiceForLegalClientModel {
   updated_by: String!
 }
 
+input InvoiceForLegalClientUpdateInput {
+  additional_data: String
+  digital_signature: String
+  emission_date: Timestamp
+  form_payment: String
+  invoice_taxes: Float
+  invoice_total: Float
+  legal_client_order_id: String
+  nature_invoice: String
+}
+
 input LegalClientInput {
   LegalPerson: LegalPersonInput
   branch: String!
@@ -173,6 +190,16 @@ type LegalClientMerchandiseModel {
   mass: Float!
   value: Float!
   volume: Float!
+}
+
+input LegalClientMerchandiseUpdateInput {
+  amount: Int
+  codMerchandise: String
+  description: String
+  legalClientOrderId: String
+  mass: Float
+  value: Float
+  volume: Float
 }
 
 type LegalClientModel {
@@ -214,6 +241,11 @@ type LegalClientOrderModel {
   updated_by: String!
 }
 
+input LegalClientOrderUpdateInput {
+  legal_contract_id: String
+  order: String
+}
+
 input LegalClientUpdateInput {
   LegalPerson: LegalPersonUpdateInput!
   branch: String
@@ -247,6 +279,15 @@ type LegalContractModel {
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
+}
+
+input LegalContractUpdateInput {
+  carrier_company_id: String
+  contract_number: String
+  delivery_conditions: String
+  effective_date: Timestamp
+  legal_client_id: String
+  observations: String
 }
 
 input LegalPersonInput {
@@ -314,6 +355,7 @@ type Mutation {
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedTransportCompany(outsourcedTransportCompanyInput: OutsourcedTransportCompanyInput!): OutsourcedTransportCompanyModel!
   createOutsourcedTransportCompanyContract(outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractInput!): OutsourcedTransportCompanyContractModel!
+  createOutsourcedTransportVehicle(outsourcedTransportVehicleInput: OutsourcedTransportVehicleInput!): OutsourcedTransportVehicleModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createUSer(createUserInput: UserInput!): UserModel!
@@ -328,20 +370,21 @@ type Mutation {
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
-  updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkInput!): VehicleBodyworkModel!
-  updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientInput!, id: String!): CiotForLegalClientModel!
+  updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
+  updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
   updatedCompanyVehicle(id: String!, outsourced: CompanyVehicleUpdateInput!): CompanyVehicleIModel!
   updatedOutsourcedVehicle(id: String!, outsourced: OutsourcedVehicleUpdateInput!): OutsourcedVehicleIModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
-  updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelInput!): VehicleModelGraphql!
+  updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelUpdateInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
-  updateinvoiceForLegalClient(id: String!, invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
-  updatelegalClientMerchandise(id: String!, legalClientMerchandiseInput: LegalClientMerchandiseInput!): LegalClientMerchandiseModel!
-  updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
-  updatelegalContract(id: String!, legalContractInput: LegalContractInput!): LegalContractModel!
+  updateinvoiceForLegalClient(id: String!, invoiceForLegalClientInput: InvoiceForLegalClientUpdateInput!): InvoiceForLegalClientModel!
+  updatelegalClientMerchandise(id: String!, legalClientMerchandiseInput: LegalClientMerchandiseUpdateInput!): LegalClientMerchandiseModel!
+  updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderUpdateInput!): LegalClientOrderModel!
+  updatelegalContract(id: String!, legalContractInput: LegalContractUpdateInput!): LegalContractModel!
   updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
   updateoutsourcedTransportCompany(id: String!, outsourcedTransportCompanyInput: OutsourcedTransportCompanyUpdateInput!): OutsourcedTransportCompanyModel!
-  updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractInput!): OutsourcedTransportCompanyContractModel!
+  updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
+  updateoutsourcedTransportVehicle(id: String!, outsourcedTransportVehicleInput: OutsourcedTransportVehicleUpdateInput!): OutsourcedTransportVehicleModel!
 }
 
 input NaturalPersonInput {
@@ -471,6 +514,12 @@ type OutsourcedTransportCompanyContractModel {
   updated_by: String!
 }
 
+input OutsourcedTransportCompanyContractUpdateInput {
+  carrierCompanyId: String
+  legalClientOrderId: String
+  outSourcedTransportCompanyId: String
+}
+
 input OutsourcedTransportCompanyInput {
   LegalPerson: LegalPersonInput
   legalPersonId: String
@@ -492,6 +541,32 @@ type OutsourcedTransportCompanyModel {
 
 input OutsourcedTransportCompanyUpdateInput {
   legalPersonId: String
+}
+
+input OutsourcedTransportVehicleInput {
+  Vehicle: VehicleInput!
+  outsourced_company_id: String!
+}
+
+type OutsourcedTransportVehicleModel {
+  CreatedUser: UserModelRefereces!
+  OutsourcedTransportCompany: OutsourcedTransportCompanyModel!
+  UpdatedUser: UserModelRefereces!
+  Vehicle: VehicleCarModel!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  outsourced_company_id: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+  vehicle_id: String!
+}
+
+input OutsourcedTransportVehicleUpdateInput {
+  Vehicle: VehicleUpdateInput
+  outsourced_company_id: String
 }
 
 type OutsourcedVehicleIModel {
@@ -560,6 +635,7 @@ type Query {
   getAllOutsourcedDriver: [OutsourcedDriverModel!]!
   getAllOutsourcedTransportCompany: [OutsourcedTransportCompanyModel!]
   getAllOutsourcedTransportCompanyContract: [OutsourcedTransportCompanyContractModel!]
+  getAllOutsourcedTransportVehicle: [OutsourcedTransportVehicleModel!]
   getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
   getAllOwnDriver: [OwnDriverModel!]!
   getAllVehicle: [VehicleCarModel!]!
@@ -578,6 +654,7 @@ type Query {
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedTransportCompanyContractModel(id: String!): OutsourcedTransportCompanyContractModel!
   getOutsourcedTransportCompanyModel(id: String!): OutsourcedTransportCompanyModel!
+  getOutsourcedTransportVehicleModel(id: String!): OutsourcedTransportVehicleModel!
   getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!
   getOwnDriver(id: String!): OwnDriverModel!
   getVehicle(id: String, plate: String): VehicleCarModel!
@@ -664,6 +741,13 @@ type VehicleBodyworkModelReferences {
   mass: Float!
   name: String!
   volume: Float!
+}
+
+input VehicleBodyworkUpdateInput {
+  axles: Int
+  mass: Float
+  name: String
+  volume: Float
 }
 
 input VehicleBrandInput {
@@ -753,6 +837,16 @@ type VehicleModelReferences {
   name: String!
   type_id: String!
   weight: Float!
+}
+
+input VehicleModelUpdateInput {
+  axles: Float
+  brand_id: String
+  capacity_max: Float
+  capacity_per_axle: Int
+  name: String
+  type_id: String
+  weight: Float
 }
 
 type VehicleTypeContainsBodyModel {
