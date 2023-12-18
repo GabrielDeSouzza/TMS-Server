@@ -55,9 +55,9 @@ export class OwnDriverResolver {
 
     const { NaturalPerson: naturalPerson } = ownDriverInput;
     const ownDriverEntity =
-      OwnDriverGraphDTO.createcreateInputToEntity(ownDriverInput);
+      OwnDriverGraphDTO.createInputToEntity(ownDriverInput);
     const naturalPersonEntity =
-      NaturalPersonGraphDTO.createcreateInputToEntity(naturalPerson);
+      NaturalPersonGraphDTO.createInputToEntity(naturalPerson);
 
     return await this.ownDriverRepository.createOwnDriver(
       ownDriverEntity,

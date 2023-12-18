@@ -2,10 +2,16 @@ import { Injectable } from '@nestjs/common';
 
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type OutsourcedTransportCompany } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompany/OutsourcedTransportCompany';
+import { type OutsourcedTransportCompanyContract } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyContract/OutsourcedTransportCompanyContract';
+import { type OutsourcedTransportCompanyDriver } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyDriver/OutsourcedTransportCompany';
+import { type OutsourcedTransportVehicle } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportVehicle/OutsourcedTransportVehicle';
 import { type OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
 
 import { PrismaService } from '../prisma.service';
+import { OutsourcedTransportCompanyContractPrismaDTO } from './prismaDTO/OutsourcedTransportCompanyContractPrismaDto';
+import { OutsourcedTransportCompanyDriverPrismaDTO } from './prismaDTO/OutsourcedTransportCompanyDriverPrismaDto';
 import { OutsourcedTransportCompanyPrismaDTO } from './prismaDTO/OutsourcedTransportCompanyPrismaDto';
+import { OutsourcedTransportVehiclePrismaDTO } from './prismaDTO/OutsourcedTransportVehiclePrismaDto';
 
 @Injectable()
 export class OutsourcedTransportCompanyPrismaService
@@ -71,6 +77,42 @@ export class OutsourcedTransportCompanyPrismaService
       OutsourcedTransportCompanyPrismaDTO.PrismaToEntity(
         outsourcedTransportCompany,
       ),
+    );
+  }
+  async getAllOutsourcedTransportCompanyContracts(
+    outsourcedCompanyId: string,
+  ): Promise<OutsourcedTransportCompanyContract[]> {
+    const contracts = await this.prisma.outsourcedTransportCompany.findUnique({
+      select: { OutsourcedTransportCompanyContract: true },
+      where: { id: outsourcedCompanyId },
+    });
+
+    return contracts.OutsourcedTransportCompanyContract.map(contract =>
+      OutsourcedTransportCompanyContractPrismaDTO.PrismaToEntity(contract),
+    );
+  }
+  async getAllOutsourcedTransportCompanyVehicles(
+    outsourcedCompanyId: string,
+  ): Promise<OutsourcedTransportVehicle[]> {
+    const vehicles = await this.prisma.outsourcedTransportCompany.findUnique({
+      select: { OutsourcedCompanyVehicle: true },
+      where: { id: outsourcedCompanyId },
+    });
+
+    return vehicles.OutsourcedCompanyVehicle.map(vehicle =>
+      OutsourcedTransportVehiclePrismaDTO.PrismaToEntity(vehicle),
+    );
+  }
+  async getAllOutsourcedTransportCompanyDrivers(
+    outsourcedCompanyId: string,
+  ): Promise<OutsourcedTransportCompanyDriver[]> {
+    const drivers = await this.prisma.outsourcedTransportCompany.findUnique({
+      where: { id: outsourcedCompanyId },
+      select: { OutsourcedTransportCompanyDriver: true },
+    });
+
+    return drivers.OutsourcedTransportCompanyDriver.map(driver =>
+      OutsourcedTransportCompanyDriverPrismaDTO.PrismaToEntity(driver),
     );
   }
 }

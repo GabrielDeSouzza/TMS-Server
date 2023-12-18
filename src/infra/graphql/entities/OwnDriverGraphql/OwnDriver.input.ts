@@ -5,7 +5,6 @@ import {
   InputType,
   OmitType,
   PartialType,
-  registerEnumType,
 } from '@nestjs/graphql';
 
 import { type IOwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
@@ -53,4 +52,3 @@ export class OwnDriverUpdate extends PartialType(
   @Field(() => NaturalPersonUpdate)
   NaturalPersonUpdate: NaturalPersonUpdate;
 }
-registerEnumType(CNH, { name: 'ROLEdfd' });

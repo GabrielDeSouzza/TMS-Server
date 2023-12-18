@@ -6,7 +6,7 @@ import {
 } from '../entities/OutsourcedDriver/OutsourcedDriver.input';
 
 export class OutsourcedDriverGraphDTO {
-  public static createcreateInputToEntity(createInput: OutsourcedDriverInput) {
+  public static createInputToEntity(createInput: OutsourcedDriverInput) {
     return new OutsourcedDriver({
       outsourced_vehicle_id: createInput.outsourced_vehicle_id,
       natural_person_id: createInput.natural_person_id,

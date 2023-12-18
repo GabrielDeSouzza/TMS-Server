@@ -70,15 +70,15 @@ export class OutsourcedDriverResolver {
     outsourcedVehicle.created_by = user.id;
     outsourcedVehicle.updated_by = user.id;
     const outsourcedDriverEntity =
-      OutsourcedDriverGraphDTO.createcreateInputToEntity(outsourcedDriver);
+      OutsourcedDriverGraphDTO.createInputToEntity(outsourcedDriver);
     const naturalPersonEntity =
-      NaturalPersonGraphDTO.createcreateInputToEntity(naturalPerson);
+      NaturalPersonGraphDTO.createInputToEntity(naturalPerson);
     const contractOutsourcedDriverEntity =
       ContractOutsourcedDriverGraphDTO.inputReferencesToEntity(
         contractOutsourcedDriver,
       );
     const outsourcedVehicleEntity =
-      OutsourcedVehicleGraphDTO.createcreateInputToEntity(outsourcedVehicle);
+      OutsourcedVehicleGraphDTO.createInputToEntity(outsourcedVehicle);
     const vehicleEntity = VehicleGraphDTO.createInputToEntity(
       outsourcedVehicle.Vehicle,
     );

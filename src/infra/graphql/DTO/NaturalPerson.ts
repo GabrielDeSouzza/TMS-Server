@@ -6,7 +6,7 @@ import {
 } from '../entities/NaturalPersonGraphql/NaturalPerson.Input';
 
 export class NaturalPersonGraphDTO {
-  public static createcreateInputToEntity(createInput: NaturalPersonInput) {
+  public static createInputToEntity(createInput: NaturalPersonInput) {
     return new NaturalPerson({
       name: createInput.name,
       date_birth: createInput.date_birth,

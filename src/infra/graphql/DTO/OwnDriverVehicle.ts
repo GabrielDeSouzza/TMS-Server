@@ -6,7 +6,7 @@ import {
 } from '../entities/OwnDriverGraphql/OwnDriver.input';
 
 export class OwnDriverGraphDTO {
-  public static createcreateInputToEntity(createInput: OwnDriverInput) {
+  public static createInputToEntity(createInput: OwnDriverInput) {
     return new OwnDriver({
       cnh: createInput.cnh,
       cnh_category: createInput.cnh_category,

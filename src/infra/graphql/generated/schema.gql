@@ -15,6 +15,18 @@ type AuthModel {
   username: String!
 }
 
+enum CNH {
+  A
+  AB
+  AC
+  AD
+  AE
+  B
+  C
+  D
+  E
+}
+
 input CarrierCompanyInput {
   LegalPerson: LegalPersonInput
   legalPersonId: String
@@ -355,6 +367,7 @@ type Mutation {
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedTransportCompany(outsourcedTransportCompanyInput: OutsourcedTransportCompanyInput!): OutsourcedTransportCompanyModel!
   createOutsourcedTransportCompanyContract(outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractInput!): OutsourcedTransportCompanyContractModel!
+  createOutsourcedTransportCompanyDriver(outsourcedTransportCompanyDriverInput: OutsourcedTransportCompanyDriverInput!): OutsourcedTransportCompanyDriverModel!
   createOutsourcedTransportVehicle(outsourcedTransportVehicleInput: OutsourcedTransportVehicleInput!): OutsourcedTransportVehicleModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
@@ -384,6 +397,7 @@ type Mutation {
   updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
   updateoutsourcedTransportCompany(id: String!, outsourcedTransportCompanyInput: OutsourcedTransportCompanyUpdateInput!): OutsourcedTransportCompanyModel!
   updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
+  updateoutsourcedTransportCompanyDriver(id: String!, outsourcedTransportCompanyDriverInput: OutsourcedTransportCompanyDriverUpdateInput!): OutsourcedTransportCompanyDriverModel!
   updateoutsourcedTransportVehicle(id: String!, outsourcedTransportVehicleInput: OutsourcedTransportVehicleUpdateInput!): OutsourcedTransportVehicleModel!
 }
 
@@ -520,15 +534,58 @@ input OutsourcedTransportCompanyContractUpdateInput {
   outSourcedTransportCompanyId: String
 }
 
+input OutsourcedTransportCompanyDriverInput {
+  NaturalPerson: NaturalPersonInput
+  cnh: String!
+  cnh_category: CNH!
+  cnh_expiration: Timestamp!
+  course_mopp: Boolean!
+  natural_person_id: String
+  outsourced_transport_company_id: String!
+}
+
+type OutsourcedTransportCompanyDriverModel {
+  CreatedUser: UserModelRefereces!
+  NaturalPerson: NaturalPersonModel!
+  OutsourcedTransportCompany: OutsourcedTransportCompanyModel!
+  UpdatedUser: UserModelRefereces!
+  cnh: String!
+  cnh_category: String!
+  cnh_expiration: Timestamp!
+  course_mopp: Boolean!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  natural_person_id: String!
+  outsourced_transport_company_id: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input OutsourcedTransportCompanyDriverUpdateInput {
+  NaturalPerson: NaturalPersonUpdate!
+  cnh: String
+  cnh_category: CNH
+  cnh_expiration: Timestamp
+  course_mopp: Boolean
+  natural_person_id: String
+  outsourced_transport_company_id: String
+}
+
 input OutsourcedTransportCompanyInput {
   LegalPerson: LegalPersonInput
   legalPersonId: String
 }
 
 type OutsourcedTransportCompanyModel {
+  Contracts: [OutsourcedTransportCompanyContractModel!]
   CreatedUser: UserModelRefereces!
+  Drivers: [OutsourcedTransportCompanyDriverModel!]
   LegalPerson: LegalPersonModel!
   UpdatedUser: UserModelRefereces!
+  Vehicles: [OutsourcedTransportVehicleModel!]
   createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
@@ -599,7 +656,7 @@ input OwnDriverInput {
 type OwnDriverModel {
   NaturalPerson: NaturalPersonModel!
   cnh: String!
-  cnh_category: String!
+  cnh_category: CNH!
   cnh_expiration: Timestamp!
   company_vehicle: Boolean!
   course_mopp: Boolean!
@@ -635,6 +692,7 @@ type Query {
   getAllOutsourcedDriver: [OutsourcedDriverModel!]!
   getAllOutsourcedTransportCompany: [OutsourcedTransportCompanyModel!]
   getAllOutsourcedTransportCompanyContract: [OutsourcedTransportCompanyContractModel!]
+  getAllOutsourcedTransportCompanyDriver: [OutsourcedTransportCompanyDriverModel!]
   getAllOutsourcedTransportVehicle: [OutsourcedTransportVehicleModel!]
   getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
   getAllOwnDriver: [OwnDriverModel!]!
@@ -653,6 +711,7 @@ type Query {
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedTransportCompanyContractModel(id: String!): OutsourcedTransportCompanyContractModel!
+  getOutsourcedTransportCompanyDriverModel(id: String!): OutsourcedTransportCompanyDriverModel!
   getOutsourcedTransportCompanyModel(id: String!): OutsourcedTransportCompanyModel!
   getOutsourcedTransportVehicleModel(id: String!): OutsourcedTransportVehicleModel!
   getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!

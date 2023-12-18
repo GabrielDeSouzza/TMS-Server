@@ -21,6 +21,8 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
+import { OutsourcedTransportCompanyContractModel } from '../OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.model';
+import { OutsourcedTransportCompanyDriverModel } from '../OutsourcedTransportCompanyDriverGraphql/OutsourcedTransportCompanyDriver.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import {
   OutsourcedTransportCompanyInput,
@@ -95,6 +97,30 @@ export class OutsourcedTransportCompanyResolver {
       id,
       outsourcedTransportCompanyEntity,
       legalPersonEntity,
+    );
+  }
+  @ResolveField(() => [OutsourcedTransportCompanyDriverModel])
+  async Drivers(@Parent() outsourd: OutsourcedTransportCompanyModel) {
+    console.log(outsourd.id);
+
+    return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyDrivers(
+      outsourd.id,
+    );
+  }
+  @ResolveField(() => [OutsourcedTransportCompanyContractModel])
+  async Contracts(@Parent() outsourd: OutsourcedTransportCompanyModel) {
+    console.log(outsourd.id);
+
+    return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyContracts(
+      outsourd.id,
+    );
+  }
+  @ResolveField(() => [OutsourcedTransportCompanyContractModel])
+  async Vehicles(@Parent() outsourd: OutsourcedTransportCompanyModel) {
+    console.log(outsourd.id);
+
+    return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyVehicles(
+      outsourd.id,
     );
   }
   @ResolveField(() => LegalPersonModel)

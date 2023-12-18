@@ -13,7 +13,7 @@ export class OwnDriverModel implements IOwnDriver {
   natural_person_id: string;
   @Field()
   cnh: string;
-  @Field()
+  @Field(() => CNH)
   cnh_category: CNH;
   @Field(() => Date)
   cnh_expiration: Date;
@@ -35,4 +35,4 @@ export class OwnDriverModel implements IOwnDriver {
   updated_by: string;
 }
 
-registerEnumType(CNH, { name: 'ROLE' });
+registerEnumType(CNH, { name: 'CNH' });
