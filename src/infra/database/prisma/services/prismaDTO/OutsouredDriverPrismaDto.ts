@@ -1,10 +1,8 @@
 import {
-  CNH as CNHPrisma,
   type Prisma,
   type OutsourcedDriver as OutsourcedDriverPrisma,
 } from '@prisma/client';
 
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { OutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
@@ -19,7 +17,7 @@ export class OutsourcedDriverPrismaDTO {
     return new OutsourcedDriver({
       id: outsourcedDriverPrisma.id,
       cnh: outsourcedDriverPrisma.cnh,
-      cnh_category: CNH[outsourcedDriverPrisma.cnh_category],
+      cnh_category: outsourcedDriverPrisma.cnh_category,
       cnh_expiration: outsourcedDriverPrisma.cnh_expiration,
       company_vehicle: outsourcedDriverPrisma.company_vehicle,
       course_mopp: outsourcedDriverPrisma.course_mopp,
@@ -40,7 +38,7 @@ export class OutsourcedDriverPrismaDTO {
   ) {
     const outsourcedDriverPrisma: Prisma.OutsourcedDriverCreateInput = {
       cnh: outsourcedDriver.cnh,
-      cnh_category: CNHPrisma[outsourcedDriver.cnh_category],
+      cnh_category: outsourcedDriver.cnh_category,
       cnh_expiration: outsourcedDriver.cnh_expiration,
       NaturalPerson: {
         create: {
@@ -107,7 +105,7 @@ export class OutsourcedDriverPrismaDTO {
     console.log(outsourcedDriver.id);
     const outsourcedDriverUptade: Prisma.OutsourcedDriverUpdateInput = {
       cnh: outsourcedDriver.cnh,
-      cnh_category: CNHPrisma[outsourcedDriver.cnh_category],
+      cnh_category: outsourcedDriver.cnh_category,
       cnh_expiration: outsourcedDriver.cnh_expiration,
       NaturalPerson: naturalPerson
         ? {

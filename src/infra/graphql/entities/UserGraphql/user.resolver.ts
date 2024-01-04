@@ -4,6 +4,11 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { hashSync } from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
+import { ROLE } from 'domain/entities/User/User';
+
+import { FindAllUserUseCase } from 'app/useCases/user/FindAllUserUseCase';
+
+import { UserWhereArgs } from 'infra/graphql/args/UserArgs';
 import { UserGraphDTO } from 'infra/graphql/DTO/User';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
@@ -14,11 +19,14 @@ import { UserInput, UserUpdateInput } from './user.input';
 import { UserModel } from './user.model';
 
 @UseGuards(GraphQLAuthGuard)
-@AcessAllowed('ADMIN')
+@AcessAllowed(ROLE.ADMIN)
 @UseInterceptors(RoleInterceptor)
 @Resolver(() => UserModel)
 export class UserResolver {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private findAll: FindAllUserUseCase,
+  ) {}
   @Query(() => UserModel, { name: 'user' })
   async getUserForId(
     @Args('id', { nullable: true }) id?: string,
@@ -35,8 +43,13 @@ export class UserResolver {
     throw new GraphQLError('ID OR EMAIL IS REQUIRED');
   }
   @Query(() => [UserModel], { name: 'users' })
-  async getAllUsers() {
-    return this.userRepository.findAllUsers();
+  async getAllUsers(@Args() args: UserWhereArgs) {
+    return this.findAll.execute({
+      where: args.where,
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+    });
   }
 
   @Mutation(() => UserModel)

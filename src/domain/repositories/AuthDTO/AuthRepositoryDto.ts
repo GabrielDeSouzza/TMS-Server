@@ -1,5 +1,3 @@
-import { type ROLE } from 'domain/entities/User/User';
-
 export interface ISignInRequestDTO {
   email: string;
   password: string;
@@ -10,7 +8,7 @@ export interface ISignInResponseDTO {
   email: string;
   name: string;
   username: string;
-  role: ROLE;
+  role: string;
   created_at: Date;
   updated_at: Date;
   token: string;

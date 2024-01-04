@@ -15,6 +15,11 @@ type AuthModel {
   username: String!
 }
 
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
 enum CNH {
   A
   AB
@@ -32,6 +37,12 @@ input CarrierCompanyInput {
   legalPersonId: String
 }
 
+input CarrierCompanyListRelationFilter {
+  every: CarrierCompanyWhereInput
+  none: CarrierCompanyWhereInput
+  some: CarrierCompanyWhereInput
+}
+
 type CarrierCompanyModel {
   CreatedUser: UserModelRefereces!
   LegalPerson: LegalPersonModel!
@@ -46,15 +57,45 @@ type CarrierCompanyModel {
   updated_by: String!
 }
 
+input CarrierCompanyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input CarrierCompanyUpdateInput {
   LegalPerson: LegalPersonUpdateInput!
   legalPersonId: String
+}
+
+input CarrierCompanyWhereInput {
+  AND: [CarrierCompanyWhereInput!]
+  Ciot: CiotForPhysicalClientListRelationFilter
+  CompanyVehicle: CompanyVehicleListRelationFilter
+  CreatedBy: UserWhereInput
+  InvoiceForPhysicalClient: InvoiceForPhysicalClientListRelationFilter
+  LegalContract: LegalContractListRelationFilter
+  LegalPerson: LegalPersonWhereInput
+  NOT: [CarrierCompanyWhereInput!]
+  OR: [CarrierCompanyWhereInput!]
+  OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractListRelationFilter
+  UpdatedBy: UserWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  legal_person_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 input CiotForLegalClientInput {
   ciot: String!
   emission_date: Timestamp!
   legal_contract_id: String!
+}
+
+input CiotForLegalClientListRelationFilter {
+  every: CiotForLegalClientWhereInput
+  none: CiotForLegalClientWhereInput
+  some: CiotForLegalClientWhereInput
 }
 
 type CiotForLegalClientModel {
@@ -73,10 +114,60 @@ type CiotForLegalClientModel {
   updated_by: String!
 }
 
+input CiotForLegalClientOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input CiotForLegalClientUpdateInput {
   ciot: String
   emission_date: Timestamp
   legal_contract_id: String
+}
+
+input CiotForLegalClientWhereInput {
+  AND: [CiotForLegalClientWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [CiotForLegalClientWhereInput!]
+  OR: [CiotForLegalClientWhereInput!]
+  PhysycalContract: LegalContractWhereInput
+  UpdatedBy: UserWhereInput
+  ciot: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  emission_date: DateTimeFilter
+  id: StringFilter
+  legal_contract_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input CiotForPhysicalClientListRelationFilter {
+  every: CiotForPhysicalClientWhereInput
+  none: CiotForPhysicalClientWhereInput
+  some: CiotForPhysicalClientWhereInput
+}
+
+input CiotForPhysicalClientOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input CiotForPhysicalClientWhereInput {
+  AND: [CiotForPhysicalClientWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
+  CreatedBy: UserWhereInput
+  NOT: [CiotForPhysicalClientWhereInput!]
+  OR: [CiotForPhysicalClientWhereInput!]
+  PhysycalContract: PhysicalContractWhereInput
+  UpdatedBy: UserWhereInput
+  carrier_id: StringFilter
+  ciot: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  emission_date: DateTimeFilter
+  id: StringFilter
+  physycalContractId: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 type CompanyVehicleIModel {
@@ -96,9 +187,38 @@ input CompanyVehicleInput {
   carrier_company_id: String!
 }
 
+input CompanyVehicleListRelationFilter {
+  every: CompanyVehicleWhereInput
+  none: CompanyVehicleWhereInput
+  some: CompanyVehicleWhereInput
+}
+
+input CompanyVehicleOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input CompanyVehicleUpdateInput {
   Vehicle: VehicleUpdateInput!
   carrier_company_id: String
+}
+
+input CompanyVehicleWhereInput {
+  AND: [CompanyVehicleWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
+  CreatedBy: UserWhereInput
+  NOT: [CompanyVehicleWhereInput!]
+  OR: [CompanyVehicleWhereInput!]
+  OrderProcessing: OrderProcessingWhereInput
+  UpdatedBy: UserWhereInput
+  Vehicle: VehicleWhereInput
+  company_id: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  order_processing_id: StringNullableFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+  vehicle_id: StringFilter
 }
 
 input ContractOutsoucedDriverUpdateInput {
@@ -109,6 +229,16 @@ input ContractOutsoucedDriverUpdateInput {
   situation: String
   start_at: Timestamp
   type: String
+}
+
+input ContractOutsourcedDriverListRelationFilter {
+  every: ContractOutsourcedDriverWhereInput
+  none: ContractOutsourcedDriverWhereInput
+  some: ContractOutsourcedDriverWhereInput
+}
+
+input ContractOutsourcedDriverOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 type ContractOutsourcedDriverRefencesModel {
@@ -133,6 +263,95 @@ input ContractOutsourcedDriverReferecesInput {
   type: String!
 }
 
+input ContractOutsourcedDriverWhereInput {
+  AND: [ContractOutsourcedDriverWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [ContractOutsourcedDriverWhereInput!]
+  OR: [ContractOutsourcedDriverWhereInput!]
+  OutsourcedDriver: OutsourcedDriverWhereInput
+  UpdatedBy: UserWhereInput
+  cpf: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  end_at: DateTimeNullableFilter
+  id: StringFilter
+  outsourced_driver_id: StringFilter
+  situation: StringFilter
+  start_at: DateTimeFilter
+  type: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input DateTimeFilter {
+  equals: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  in: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  not: NestedDateTimeFilter
+  notIn: [Timestamp!]
+}
+
+input DateTimeNullableFilter {
+  equals: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  in: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  not: NestedDateTimeNullableFilter
+  notIn: [Timestamp!]
+}
+
+input EnumCNHFilter {
+  equals: CNH
+  in: [CNH!]
+  not: NestedEnumCNHFilter
+  notIn: [CNH!]
+}
+
+input EnumRoleFilter {
+  equals: Role
+  in: [Role!]
+  not: NestedEnumRoleFilter
+  notIn: [Role!]
+}
+
+input FloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatFilter
+  notIn: [Float!]
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
 input InvoiceForLegalClientInput {
   additional_data: String!
   digital_signature: String!
@@ -142,6 +361,12 @@ input InvoiceForLegalClientInput {
   invoice_total: Float!
   legal_client_order_id: String!
   nature_invoice: String!
+}
+
+input InvoiceForLegalClientListRelationFilter {
+  every: InvoiceForLegalClientWhereInput
+  none: InvoiceForLegalClientWhereInput
+  some: InvoiceForLegalClientWhereInput
 }
 
 type InvoiceForLegalClientModel {
@@ -165,6 +390,10 @@ type InvoiceForLegalClientModel {
   updated_by: String!
 }
 
+input InvoiceForLegalClientOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input InvoiceForLegalClientUpdateInput {
   additional_data: String
   digital_signature: String
@@ -176,10 +405,72 @@ input InvoiceForLegalClientUpdateInput {
   nature_invoice: String
 }
 
+input InvoiceForLegalClientWhereInput {
+  AND: [InvoiceForLegalClientWhereInput!]
+  CreatedBy: UserWhereInput
+  LegalClientOrder: LegalClientOrderWhereInput
+  NOT: [InvoiceForLegalClientWhereInput!]
+  OR: [InvoiceForLegalClientWhereInput!]
+  UpdatedBy: UserWhereInput
+  additional_data: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  digital_signature: StringFilter
+  emission_date: DateTimeFilter
+  form_payment: StringFilter
+  id: StringFilter
+  invoice_taxes: FloatFilter
+  invoice_total: FloatFilter
+  legalClientrOrderId: StringFilter
+  nature_invoice: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input InvoiceForPhysicalClientListRelationFilter {
+  every: InvoiceForPhysicalClientWhereInput
+  none: InvoiceForPhysicalClientWhereInput
+  some: InvoiceForPhysicalClientWhereInput
+}
+
+input InvoiceForPhysicalClientOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input InvoiceForPhysicalClientWhereInput {
+  AND: [InvoiceForPhysicalClientWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
+  CreatedBy: UserWhereInput
+  NOT: [InvoiceForPhysicalClientWhereInput!]
+  OR: [InvoiceForPhysicalClientWhereInput!]
+  PhysicalCustomerOrder: PhysicalCustomerOrderWhereInput
+  UpdatedBy: UserWhereInput
+  additional_data: StringFilter
+  carrierCompanyId: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  digital_signature: StringFilter
+  emission_date: DateTimeFilter
+  form_payment: StringFilter
+  id: StringFilter
+  invoice_taxes: FloatFilter
+  invoice_total: FloatFilter
+  nature_invoice: StringFilter
+  physicalCustomerOrderId: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input LegalClientInput {
   LegalPerson: LegalPersonInput
   branch: String!
   legal_person_id: String
+}
+
+input LegalClientListRelationFilter {
+  every: LegalClientWhereInput
+  none: LegalClientWhereInput
+  some: LegalClientWhereInput
 }
 
 input LegalClientMerchandiseInput {
@@ -190,6 +481,12 @@ input LegalClientMerchandiseInput {
   mass: Float!
   value: Float!
   volume: Float!
+}
+
+input LegalClientMerchandiseListRelationFilter {
+  every: LegalClientMerchandiseWhereInput
+  none: LegalClientMerchandiseWhereInput
+  some: LegalClientMerchandiseWhereInput
 }
 
 type LegalClientMerchandiseModel {
@@ -214,6 +511,21 @@ input LegalClientMerchandiseUpdateInput {
   volume: Float
 }
 
+input LegalClientMerchandiseWhereInput {
+  AND: [LegalClientMerchandiseWhereInput!]
+  LegalClientOrder: LegalClientOrderWhereInput
+  NOT: [LegalClientMerchandiseWhereInput!]
+  OR: [LegalClientMerchandiseWhereInput!]
+  amount: IntFilter
+  codMerchandise: StringFilter
+  description: StringFilter
+  id: StringFilter
+  legalClientOrderId: StringFilter
+  mass: FloatFilter
+  value: FloatFilter
+  volume: FloatFilter
+}
+
 type LegalClientModel {
   CreatedUser: UserModelRefereces!
   LegalPerson: LegalPersonModel!
@@ -230,9 +542,19 @@ type LegalClientModel {
   updated_by: String!
 }
 
+input LegalClientOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input LegalClientOrderInput {
   legal_contract_id: String!
   order: String!
+}
+
+input LegalClientOrderListRelationFilter {
+  every: LegalClientOrderWhereInput
+  none: LegalClientOrderWhereInput
+  some: LegalClientOrderWhereInput
 }
 
 type LegalClientOrderModel {
@@ -253,15 +575,54 @@ type LegalClientOrderModel {
   updated_by: String!
 }
 
+input LegalClientOrderOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input LegalClientOrderUpdateInput {
   legal_contract_id: String
   order: String
+}
+
+input LegalClientOrderWhereInput {
+  AND: [LegalClientOrderWhereInput!]
+  CreatedBy: UserWhereInput
+  InvoiceForLegalClient: InvoiceForLegalClientListRelationFilter
+  LegalClientMerchandise: LegalClientMerchandiseListRelationFilter
+  LegalContract: LegalContractWhereInput
+  NOT: [LegalClientOrderWhereInput!]
+  OR: [LegalClientOrderWhereInput!]
+  OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractWhereInput
+  RouteForLegalClient: RoutesListRelationFilter
+  UpdatedBy: UserWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  legal_contract_id: StringFilter
+  order: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 input LegalClientUpdateInput {
   LegalPerson: LegalPersonUpdateInput!
   branch: String
   legal_person_id: String
+}
+
+input LegalClientWhereInput {
+  AND: [LegalClientWhereInput!]
+  CreatedBy: UserWhereInput
+  LegalContract: LegalContractListRelationFilter
+  LegalPerson: LegalPersonWhereInput
+  NOT: [LegalClientWhereInput!]
+  OR: [LegalClientWhereInput!]
+  UpdatedBy: UserWhereInput
+  branch: StringFilter
+  created_by: StringFilter
+  id: StringFilter
+  legal_person_id: StringFilter
+  updated_by: StringFilter
 }
 
 input LegalContractInput {
@@ -271,6 +632,12 @@ input LegalContractInput {
   effective_date: Timestamp!
   legal_client_id: String!
   observations: String
+}
+
+input LegalContractListRelationFilter {
+  every: LegalContractWhereInput
+  none: LegalContractWhereInput
+  some: LegalContractWhereInput
 }
 
 type LegalContractModel {
@@ -293,6 +660,10 @@ type LegalContractModel {
   updated_by: String!
 }
 
+input LegalContractOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input LegalContractUpdateInput {
   carrier_company_id: String
   contract_number: String
@@ -300,6 +671,29 @@ input LegalContractUpdateInput {
   effective_date: Timestamp
   legal_client_id: String
   observations: String
+}
+
+input LegalContractWhereInput {
+  AND: [LegalContractWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
+  Ciot: CiotForLegalClientListRelationFilter
+  CreatedBy: UserWhereInput
+  LegalClient: LegalClientWhereInput
+  LegalClientOrder: LegalClientOrderListRelationFilter
+  NOT: [LegalContractWhereInput!]
+  OR: [LegalContractWhereInput!]
+  UpdatedBy: UserWhereInput
+  carrier_company_id: StringFilter
+  contract_number: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  delivery_conditions: StringFilter
+  effective_date: DateTimeFilter
+  id: StringFilter
+  legal_client_id: StringFilter
+  observations: StringNullableFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 input LegalPersonInput {
@@ -353,6 +747,89 @@ input LegalPersonUpdateInput {
   state_registration: String
   third_phone: String
   uf: String
+}
+
+input LegalPersonWhereInput {
+  AND: [LegalPersonWhereInput!]
+  CarrierCompany: CarrierCompanyListRelationFilter
+  CorporateClient: LegalClientListRelationFilter
+  MaintenanceCompany: MaintenanceCompanyWhereInput
+  NOT: [LegalPersonWhereInput!]
+  OR: [LegalPersonWhereInput!]
+  OutsourcedTransportCompany: OutsourcedTransportCompanyListRelationFilter
+  address_number: StringFilter
+  city: StringFilter
+  cnpj: StringFilter
+  complement: StringNullableFilter
+  corporate_name: StringFilter
+  created_at: DateTimeFilter
+  email: StringFilter
+  fantasy_name: StringFilter
+  first_phone: StringFilter
+  id: StringFilter
+  neighborhood: StringFilter
+  public_place: StringFilter
+  second_phone: StringNullableFilter
+  state_registration: StringFilter
+  third_phone: StringNullableFilter
+  uf: StringFilter
+  updated_at: DateTimeFilter
+}
+
+input MaintenanceCompanyListRelationFilter {
+  every: MaintenanceCompanyWhereInput
+  none: MaintenanceCompanyWhereInput
+  some: MaintenanceCompanyWhereInput
+}
+
+input MaintenanceCompanyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input MaintenanceCompanyWhereInput {
+  AND: [MaintenanceCompanyWhereInput!]
+  CreatedBy: UserWhereInput
+  LegalPerson: LegalPersonWhereInput
+  Maintenance: MaintenanceListRelationFilter
+  NOT: [MaintenanceCompanyWhereInput!]
+  OR: [MaintenanceCompanyWhereInput!]
+  UpdatedBy: UserWhereInput
+  cnpj: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  specialty_maintenance: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input MaintenanceListRelationFilter {
+  every: MaintenanceWhereInput
+  none: MaintenanceWhereInput
+  some: MaintenanceWhereInput
+}
+
+input MaintenanceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input MaintenanceWhereInput {
+  AND: [MaintenanceWhereInput!]
+  CreatedBy: UserWhereInput
+  MaintenanceCompany: MaintenanceCompanyWhereInput
+  NOT: [MaintenanceWhereInput!]
+  OR: [MaintenanceWhereInput!]
+  TypeOfMaintenance: TypeOfMaintenanceWhereInput
+  UpdatedBy: UserWhereInput
+  Vehicle: VehicleWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  maintenance_company_cnpj: StringFilter
+  maintenance_process_id: StringFilter
+  plate: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 type Mutation {
@@ -462,6 +939,170 @@ input NaturalPersonUpdate {
   uf: String
 }
 
+input NaturalPersonWhereInput {
+  AND: [NaturalPersonWhereInput!]
+  NOT: [NaturalPersonWhereInput!]
+  OR: [NaturalPersonWhereInput!]
+  OutsourcedDriver: OutsourcedDriverListRelationFilter
+  OutsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriverWhereInput
+  OwnDriver: OwnDriverListRelationFilter
+  PhysicalCustomer: PhysicalCustomerListRelationFilter
+  address_number: StringFilter
+  cep: StringFilter
+  city: StringFilter
+  complement: StringFilter
+  cpf: StringFilter
+  date_birth: DateTimeFilter
+  email: StringFilter
+  first_phone: StringFilter
+  gender: StringFilter
+  id: StringFilter
+  name: StringFilter
+  nationality: StringFilter
+  neighborhood: StringFilter
+  public_place: StringFilter
+  rg: StringFilter
+  second_phone: StringNullableFilter
+  third_phone: StringNullableFilter
+  uf: StringFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedDateTimeFilter {
+  equals: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  in: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  not: NestedDateTimeFilter
+  notIn: [Timestamp!]
+}
+
+input NestedDateTimeNullableFilter {
+  equals: Timestamp
+  gt: Timestamp
+  gte: Timestamp
+  in: [Timestamp!]
+  lt: Timestamp
+  lte: Timestamp
+  not: NestedDateTimeNullableFilter
+  notIn: [Timestamp!]
+}
+
+input NestedEnumCNHFilter {
+  equals: CNH
+  in: [CNH!]
+  not: NestedEnumCNHFilter
+  notIn: [CNH!]
+}
+
+input NestedEnumRoleFilter {
+  equals: Role
+  in: [Role!]
+  not: NestedEnumRoleFilter
+  notIn: [Role!]
+}
+
+input NestedFloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatFilter
+  notIn: [Float!]
+}
+
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input OrderProcessingListRelationFilter {
+  every: OrderProcessingWhereInput
+  none: OrderProcessingWhereInput
+  some: OrderProcessingWhereInput
+}
+
+input OrderProcessingOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input OrderProcessingWhereInput {
+  AND: [OrderProcessingWhereInput!]
+  CompanyVehicle: CompanyVehicleListRelationFilter
+  CreatedBy: UserWhereInput
+  NOT: [OrderProcessingWhereInput!]
+  OR: [OrderProcessingWhereInput!]
+  OutsourcedVehicle: OutsourcedVehicleListRelationFilter
+  Route: RoutesWhereInput
+  UpdatedBy: UserWhereInput
+  Vehicle: VehicleWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  end_at: DateTimeFilter
+  id: StringFilter
+  route_id: StringFilter
+  start_at: DateTimeFilter
+  total_distance: FloatFilter
+  total_spend_liters: IntFilter
+  total_spending_money: FloatFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+  vehicle_id: StringFilter
+}
+
 input OutsourcedDriverInput {
   ContractOutsourcedDriver: ContractOutsourcedDriverReferecesInput!
   NaturalPerson: NaturalPersonInput!
@@ -471,6 +1112,12 @@ input OutsourcedDriverInput {
   cnh_expiration: Timestamp!
   company_vehicle: Boolean!
   course_mopp: Boolean!
+}
+
+input OutsourcedDriverListRelationFilter {
+  every: OutsourcedDriverWhereInput
+  none: OutsourcedDriverWhereInput
+  some: OutsourcedDriverWhereInput
 }
 
 type OutsourcedDriverModel {
@@ -493,6 +1140,10 @@ type OutsourcedDriverModel {
   updated_by: String!
 }
 
+input OutsourcedDriverOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OutsourcedDriverUpdateInput {
   ContractOutsourcedDriver: ContractOutsoucedDriverUpdateInput
   NaturalPerson: NaturalPersonUpdate
@@ -504,10 +1155,39 @@ input OutsourcedDriverUpdateInput {
   course_mopp: Boolean
 }
 
+input OutsourcedDriverWhereInput {
+  AND: [OutsourcedDriverWhereInput!]
+  ContractOutsourcedDriver: ContractOutsourcedDriverListRelationFilter
+  CreatedBy: UserWhereInput
+  NOT: [OutsourcedDriverWhereInput!]
+  NaturalPerson: NaturalPersonWhereInput
+  OR: [OutsourcedDriverWhereInput!]
+  OutsourcedVehicle: OutsourcedVehicleWhereInput
+  UpdatedBy: UserWhereInput
+  cnh: StringFilter
+  cnh_category: EnumCNHFilter
+  cnh_expiration: DateTimeFilter
+  company_vehicle: BoolFilter
+  course_mopp: BoolFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  natural_person_id: StringFilter
+  outsourced_vehicle_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input OutsourcedTransportCompanyContractInput {
   carrierCompanyId: String!
   legalClientOrderId: String!
   outSourcedTransportCompanyId: String!
+}
+
+input OutsourcedTransportCompanyContractListRelationFilter {
+  every: OutsourcedTransportCompanyContractWhereInput
+  none: OutsourcedTransportCompanyContractWhereInput
+  some: OutsourcedTransportCompanyContractWhereInput
 }
 
 type OutsourcedTransportCompanyContractModel {
@@ -528,20 +1208,49 @@ type OutsourcedTransportCompanyContractModel {
   updated_by: String!
 }
 
+input OutsourcedTransportCompanyContractOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OutsourcedTransportCompanyContractUpdateInput {
   carrierCompanyId: String
   legalClientOrderId: String
   outSourcedTransportCompanyId: String
 }
 
+input OutsourcedTransportCompanyContractWhereInput {
+  AND: [OutsourcedTransportCompanyContractWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
+  CreatedBy: UserWhereInput
+  LegalClientOrder: LegalClientOrderWhereInput
+  NOT: [OutsourcedTransportCompanyContractWhereInput!]
+  OR: [OutsourcedTransportCompanyContractWhereInput!]
+  OutsourcedTransportCompany: OutsourcedTransportCompanyWhereInput
+  UpdatedBy: UserWhereInput
+  carrier_company_id: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  legal_client_order_id: StringFilter
+  outsourced_transport_company_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input OutsourcedTransportCompanyDriverInput {
   NaturalPerson: NaturalPersonInput
   cnh: String!
-  cnh_category: CNH!
+  cnh_category: String!
   cnh_expiration: Timestamp!
   course_mopp: Boolean!
   natural_person_id: String
   outsourced_transport_company_id: String!
+}
+
+input OutsourcedTransportCompanyDriverListRelationFilter {
+  every: OutsourcedTransportCompanyDriverWhereInput
+  none: OutsourcedTransportCompanyDriverWhereInput
+  some: OutsourcedTransportCompanyDriverWhereInput
 }
 
 type OutsourcedTransportCompanyDriverModel {
@@ -564,19 +1273,50 @@ type OutsourcedTransportCompanyDriverModel {
   updated_by: String!
 }
 
+input OutsourcedTransportCompanyDriverOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OutsourcedTransportCompanyDriverUpdateInput {
   NaturalPerson: NaturalPersonUpdate!
   cnh: String
-  cnh_category: CNH
+  cnh_category: String
   cnh_expiration: Timestamp
   course_mopp: Boolean
   natural_person_id: String
   outsourced_transport_company_id: String
 }
 
+input OutsourcedTransportCompanyDriverWhereInput {
+  AND: [OutsourcedTransportCompanyDriverWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [OutsourcedTransportCompanyDriverWhereInput!]
+  NaturalPerson: NaturalPersonWhereInput
+  OR: [OutsourcedTransportCompanyDriverWhereInput!]
+  OutsourcedTransportCompany: OutsourcedTransportCompanyWhereInput
+  UpdatedBy: UserWhereInput
+  cnh: StringFilter
+  cnh_category: EnumCNHFilter
+  cnh_expiration: DateTimeFilter
+  course_mopp: BoolFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  natural_person_id: StringFilter
+  outsourced_transport_company_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input OutsourcedTransportCompanyInput {
   LegalPerson: LegalPersonInput
   legalPersonId: String
+}
+
+input OutsourcedTransportCompanyListRelationFilter {
+  every: OutsourcedTransportCompanyWhereInput
+  none: OutsourcedTransportCompanyWhereInput
+  some: OutsourcedTransportCompanyWhereInput
 }
 
 type OutsourcedTransportCompanyModel {
@@ -596,13 +1336,41 @@ type OutsourcedTransportCompanyModel {
   updated_by: String!
 }
 
+input OutsourcedTransportCompanyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OutsourcedTransportCompanyUpdateInput {
   legalPersonId: String
+}
+
+input OutsourcedTransportCompanyWhereInput {
+  AND: [OutsourcedTransportCompanyWhereInput!]
+  CreatedBy: UserWhereInput
+  LegalPerson: LegalPersonWhereInput
+  NOT: [OutsourcedTransportCompanyWhereInput!]
+  OR: [OutsourcedTransportCompanyWhereInput!]
+  OutsourcedCompanyVehicle: OutsourcedTransportVehicleListRelationFilter
+  OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractListRelationFilter
+  OutsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriverListRelationFilter
+  UpdatedBy: UserWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  legal_person_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 input OutsourcedTransportVehicleInput {
   Vehicle: VehicleInput!
   outsourced_company_id: String!
+}
+
+input OutsourcedTransportVehicleListRelationFilter {
+  every: OutsourcedTransportVehicleWhereInput
+  none: OutsourcedTransportVehicleWhereInput
+  some: OutsourcedTransportVehicleWhereInput
 }
 
 type OutsourcedTransportVehicleModel {
@@ -621,9 +1389,30 @@ type OutsourcedTransportVehicleModel {
   vehicle_id: String!
 }
 
+input OutsourcedTransportVehicleOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OutsourcedTransportVehicleUpdateInput {
   Vehicle: VehicleUpdateInput
   outsourced_company_id: String
+}
+
+input OutsourcedTransportVehicleWhereInput {
+  AND: [OutsourcedTransportVehicleWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [OutsourcedTransportVehicleWhereInput!]
+  OR: [OutsourcedTransportVehicleWhereInput!]
+  OutsourcedTransportCompany: OutsourcedTransportCompanyWhereInput
+  UpdatedBy: UserWhereInput
+  Vehicle: VehicleWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  outsourced_company_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+  vehicle_id: StringFilter
 }
 
 type OutsourcedVehicleIModel {
@@ -640,8 +1429,36 @@ input OutsourcedVehicleInput {
   Vehicle: VehicleInput!
 }
 
+input OutsourcedVehicleListRelationFilter {
+  every: OutsourcedVehicleWhereInput
+  none: OutsourcedVehicleWhereInput
+  some: OutsourcedVehicleWhereInput
+}
+
+input OutsourcedVehicleOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OutsourcedVehicleUpdateInput {
   Vehicle: VehicleUpdateInput
+}
+
+input OutsourcedVehicleWhereInput {
+  AND: [OutsourcedVehicleWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [OutsourcedVehicleWhereInput!]
+  OR: [OutsourcedVehicleWhereInput!]
+  OrderProcessing: OrderProcessingWhereInput
+  OutsourcedDriver: OutsourcedDriverWhereInput
+  UpdatedBy: UserWhereInput
+  Vehicle: VehicleWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  order_processing_id: StringNullableFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+  vehicle_id: StringFilter
 }
 
 input OwnDriverInput {
@@ -653,10 +1470,16 @@ input OwnDriverInput {
   course_mopp: Boolean!
 }
 
+input OwnDriverListRelationFilter {
+  every: OwnDriverWhereInput
+  none: OwnDriverWhereInput
+  some: OwnDriverWhereInput
+}
+
 type OwnDriverModel {
   NaturalPerson: NaturalPersonModel!
   cnh: String!
-  cnh_category: CNH!
+  cnh_category: String!
   cnh_expiration: Timestamp!
   company_vehicle: Boolean!
   course_mopp: Boolean!
@@ -671,6 +1494,10 @@ type OwnDriverModel {
   updated_by: String!
 }
 
+input OwnDriverOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input OwnDriverUpdate {
   NaturalPersonUpdate: NaturalPersonUpdate!
   cnh: String
@@ -678,6 +1505,114 @@ input OwnDriverUpdate {
   cnh_expiration: Timestamp
   company_vehicle: Boolean
   course_mopp: Boolean
+}
+
+input OwnDriverWhereInput {
+  AND: [OwnDriverWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [OwnDriverWhereInput!]
+  NaturalPerson: NaturalPersonWhereInput
+  OR: [OwnDriverWhereInput!]
+  UpdatedBy: UserWhereInput
+  cnh: StringFilter
+  cnh_category: EnumCNHFilter
+  cnh_expiration: DateTimeFilter
+  company_vehicle: BoolFilter
+  course_mopp: BoolFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  natural_person_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input PhysicalContractWhereInput {
+  AND: [PhysicalContractWhereInput!]
+  Ciot: CiotForPhysicalClientListRelationFilter
+  NOT: [PhysicalContractWhereInput!]
+  OR: [PhysicalContractWhereInput!]
+  PhysicalCustomer: PhysicalCustomerWhereInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderListRelationFilter
+  id: StringFilter
+  physicalCustomerId: StringFilter
+}
+
+input PhysicalCustomerListRelationFilter {
+  every: PhysicalCustomerWhereInput
+  none: PhysicalCustomerWhereInput
+  some: PhysicalCustomerWhereInput
+}
+
+input PhysicalCustomerMerchandiseListRelationFilter {
+  every: PhysicalCustomerMerchandiseWhereInput
+  none: PhysicalCustomerMerchandiseWhereInput
+  some: PhysicalCustomerMerchandiseWhereInput
+}
+
+input PhysicalCustomerMerchandiseWhereInput {
+  AND: [PhysicalCustomerMerchandiseWhereInput!]
+  NOT: [PhysicalCustomerMerchandiseWhereInput!]
+  OR: [PhysicalCustomerMerchandiseWhereInput!]
+  PhysicalCustomerOrderm: PhysicalCustomerOrderWhereInput
+  amount: IntFilter
+  codMerchandise: StringFilter
+  description: StringFilter
+  id: StringFilter
+  mass: FloatFilter
+  physicalCustomerOrdermId: StringFilter
+  value: FloatFilter
+  volume: FloatFilter
+}
+
+input PhysicalCustomerOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input PhysicalCustomerOrderListRelationFilter {
+  every: PhysicalCustomerOrderWhereInput
+  none: PhysicalCustomerOrderWhereInput
+  some: PhysicalCustomerOrderWhereInput
+}
+
+input PhysicalCustomerOrderOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input PhysicalCustomerOrderWhereInput {
+  AND: [PhysicalCustomerOrderWhereInput!]
+  CreatedBy: UserWhereInput
+  Invoice: InvoiceForPhysicalClientListRelationFilter
+  NOT: [PhysicalCustomerOrderWhereInput!]
+  OR: [PhysicalCustomerOrderWhereInput!]
+  PhysicalContract: PhysicalContractWhereInput
+  PhysicalCustomerMerchandise: PhysicalCustomerMerchandiseListRelationFilter
+  Route: RoutesListRelationFilter
+  UpdatedBy: UserWhereInput
+  contractId: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  order: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input PhysicalCustomerWhereInput {
+  AND: [PhysicalCustomerWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [PhysicalCustomerWhereInput!]
+  NaturalPerson: NaturalPersonWhereInput
+  OR: [PhysicalCustomerWhereInput!]
+  PhysicalContract: PhysicalContractWhereInput
+  UpdatedBy: UserWhereInput
+  branch: StringNullableFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  natural_person_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 type Query {
@@ -722,13 +1657,80 @@ type Query {
   getVehicleModel(id: String!): VehicleModelGraphql!
   getVehicleType(id: String!): VehicleTypeModel!
   user(email: String, id: String): UserModel!
-  users: [UserModel!]!
+  users(limit: Int! = 25, offset: Int! = 0, sort: UserOrderByWithRelationInput, where: UserWhereInput): [UserModel!]!
 }
 
-enum ROLE {
+enum QueryMode {
+  default
+  insensitive
+}
+
+enum Role {
   ADMIN
   CLIENT
   USER
+}
+
+input RoutesListRelationFilter {
+  every: RoutesWhereInput
+  none: RoutesWhereInput
+  some: RoutesWhereInput
+}
+
+input RoutesWhereInput {
+  AND: [RoutesWhereInput!]
+  LegalClientOrder: LegalClientOrderWhereInput
+  NOT: [RoutesWhereInput!]
+  OR: [RoutesWhereInput!]
+  OrderProcessing: OrderProcessingListRelationFilter
+  PhysicalCustomerOrder: PhysicalCustomerOrderWhereInput
+  address_number: StringFilter
+  cep: StringFilter
+  city: StringFilter
+  complement: StringNullableFilter
+  created_at: DateTimeFilter
+  id: StringFilter
+  legalClientOrdermId: StringFilter
+  neighborhood: StringFilter
+  physicalCustomerOrderId: StringNullableFilter
+  public_place: StringFilter
+  uf: StringFilter
+  updated_at: DateTimeFilter
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
 }
 
 """
@@ -736,11 +1738,38 @@ enum ROLE {
 """
 scalar Timestamp
 
+input TypeOfMaintenanceListRelationFilter {
+  every: TypeOfMaintenanceWhereInput
+  none: TypeOfMaintenanceWhereInput
+  some: TypeOfMaintenanceWhereInput
+}
+
+input TypeOfMaintenanceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input TypeOfMaintenanceWhereInput {
+  AND: [TypeOfMaintenanceWhereInput!]
+  CreatedBy: UserWhereInput
+  Maintenance: MaintenanceListRelationFilter
+  NOT: [TypeOfMaintenanceWhereInput!]
+  OR: [TypeOfMaintenanceWhereInput!]
+  UpdatedBy: UserWhereInput
+  corrective: BoolFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  description: StringFilter
+  id: StringFilter
+  preventive: BoolFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input UserInput {
   email: String!
   name: String!
   password: String!
-  role: ROLE!
+  role: String!
   username: String!
 }
 
@@ -750,7 +1779,7 @@ type UserModel {
   id: String!
   name: String!
   password: String!
-  role: ROLE!
+  role: String!
   updated_at: Timestamp
   username: String!
 }
@@ -762,12 +1791,149 @@ type UserModelRefereces {
   username: String!
 }
 
+input UserOrderByWithRelationInput {
+  CarrierCompanyCreatedBt: CarrierCompanyOrderByRelationAggregateInput
+  CarrierCompanyUpdatedBy: CarrierCompanyOrderByRelationAggregateInput
+  CiotForLegalCreatedByClient: CiotForLegalClientOrderByRelationAggregateInput
+  CiotForLegalUpdatedByClient: CiotForLegalClientOrderByRelationAggregateInput
+  CiotForPhysicalClientCreatedBy: CiotForPhysicalClientOrderByRelationAggregateInput
+  CiotForPhysicalClientUpdatedBy: CiotForPhysicalClientOrderByRelationAggregateInput
+  CompanyVehicleCreatedBy: CompanyVehicleOrderByRelationAggregateInput
+  CompanyVehicleUpdatedBy: CompanyVehicleOrderByRelationAggregateInput
+  ContractOutsourcedDriverCreatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
+  ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
+  InvoiceForLegalClientCreatedBy: InvoiceForLegalClientOrderByRelationAggregateInput
+  InvoiceForLegalClientUpdatedBy: InvoiceForLegalClientOrderByRelationAggregateInput
+  InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  InvoiceForPhysicalClientUpdatedBy: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  LegalClientCreatedBy: LegalClientOrderByRelationAggregateInput
+  LegalClientCustomerOrderCreatedBy: LegalClientOrderOrderByRelationAggregateInput
+  LegalClientCustomerOrderUpdatedBy: LegalClientOrderOrderByRelationAggregateInput
+  LegalClientUpdatedBy: LegalClientOrderByRelationAggregateInput
+  LegalContractCreatedBy: LegalContractOrderByRelationAggregateInput
+  LegalContractUpdatedBy: LegalContractOrderByRelationAggregateInput
+  MaintenanceCompanyCreatedBy: MaintenanceCompanyOrderByRelationAggregateInput
+  MaintenanceCompanyUpdatedBy: MaintenanceCompanyOrderByRelationAggregateInput
+  MaintenanceCreatedBy: MaintenanceOrderByRelationAggregateInput
+  MaintenanceUpdatedBy: MaintenanceOrderByRelationAggregateInput
+  OrderProcessingCreatedBy: OrderProcessingOrderByRelationAggregateInput
+  OrderProcessingUpdatedBy: OrderProcessingOrderByRelationAggregateInput
+  OutsourcedDriverCreatedBy: OutsourcedDriverOrderByRelationAggregateInput
+  OutsourcedDriverUpdatedBy: OutsourcedDriverOrderByRelationAggregateInput
+  OutsourcedTransportCompanyContractCreatedBy: OutsourcedTransportCompanyContractOrderByRelationAggregateInput
+  OutsourcedTransportCompanyContractUpdatedBy: OutsourcedTransportCompanyContractOrderByRelationAggregateInput
+  OutsourcedTransportCompanyCreatedBy: OutsourcedTransportCompanyOrderByRelationAggregateInput
+  OutsourcedTransportCompanyDriverCreatedBy: OutsourcedTransportCompanyDriverOrderByRelationAggregateInput
+  OutsourcedTransportCompanyDriverUpdatedBy: OutsourcedTransportCompanyDriverOrderByRelationAggregateInput
+  OutsourcedTransportCompanyUpdatedBy: OutsourcedTransportCompanyOrderByRelationAggregateInput
+  OutsourcedTransportVehicleCreatedBy: OutsourcedTransportVehicleOrderByRelationAggregateInput
+  OutsourcedTransportVehicleUpdatedBy: OutsourcedTransportVehicleOrderByRelationAggregateInput
+  OutsourcedVehicleCreatedBy: OutsourcedVehicleOrderByRelationAggregateInput
+  OutsourcedVehicleUpdatedBy: OutsourcedVehicleOrderByRelationAggregateInput
+  OwnDriverCreatedBy: OwnDriverOrderByRelationAggregateInput
+  OwnDriverUpdatedBy: OwnDriverOrderByRelationAggregateInput
+  PhysicalCustomerCreatedBy: PhysicalCustomerOrderByRelationAggregateInput
+  PhysicalCustomerOrderCreatedBy: PhysicalCustomerOrderOrderByRelationAggregateInput
+  PhysicalCustomerOrderUpdatedBy: PhysicalCustomerOrderOrderByRelationAggregateInput
+  PhysicalCustomerUpdatedBy: PhysicalCustomerOrderByRelationAggregateInput
+  TypeOfMaintenanceCreatedBy: TypeOfMaintenanceOrderByRelationAggregateInput
+  TypeOfMaintenanceUpdatedBy: TypeOfMaintenanceOrderByRelationAggregateInput
+  VehicleBodyworkCreatedBy: VehicleBodyworkOrderByRelationAggregateInput
+  VehicleBodyworkUpdatedBy: VehicleBodyworkOrderByRelationAggregateInput
+  VehicleBrandCreatedBy: VehicleBrandOrderByRelationAggregateInput
+  VehicleBrandUpdatedBy: VehicleBrandOrderByRelationAggregateInput
+  VehicleModelCreatedBy: VehicleModelOrderByRelationAggregateInput
+  VehicleModelUpdatedBy: VehicleModelOrderByRelationAggregateInput
+  VehicleTypeContainsBodyCreatedBy: VehicleTypeContainsBodyOrderByRelationAggregateInput
+  VehicleTypeContainsBodyUpdatedBy: VehicleTypeContainsBodyOrderByRelationAggregateInput
+  VehicleTypeCreatedBy: VehicleTypeOrderByRelationAggregateInput
+  VehicleTypeUpdatedBy: VehicleTypeOrderByRelationAggregateInput
+  created_at: SortOrder
+  email: SortOrder
+  id: SortOrder
+  name: SortOrder
+  password: SortOrder
+  role: SortOrder
+  updated_at: SortOrder
+  username: SortOrder
+}
+
 input UserUpdateInput {
   email: String
   name: String
   password: String
-  role: ROLE
+  role: String
   username: String
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  CarrierCompanyCreatedBt: CarrierCompanyListRelationFilter
+  CarrierCompanyUpdatedBy: CarrierCompanyListRelationFilter
+  CiotForLegalCreatedByClient: CiotForLegalClientListRelationFilter
+  CiotForLegalUpdatedByClient: CiotForLegalClientListRelationFilter
+  CiotForPhysicalClientCreatedBy: CiotForPhysicalClientListRelationFilter
+  CiotForPhysicalClientUpdatedBy: CiotForPhysicalClientListRelationFilter
+  CompanyVehicleCreatedBy: CompanyVehicleListRelationFilter
+  CompanyVehicleUpdatedBy: CompanyVehicleListRelationFilter
+  ContractOutsourcedDriverCreatedBy: ContractOutsourcedDriverListRelationFilter
+  ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverListRelationFilter
+  InvoiceForLegalClientCreatedBy: InvoiceForLegalClientListRelationFilter
+  InvoiceForLegalClientUpdatedBy: InvoiceForLegalClientListRelationFilter
+  InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalClientListRelationFilter
+  InvoiceForPhysicalClientUpdatedBy: InvoiceForPhysicalClientListRelationFilter
+  LegalClientCreatedBy: LegalClientListRelationFilter
+  LegalClientCustomerOrderCreatedBy: LegalClientOrderListRelationFilter
+  LegalClientCustomerOrderUpdatedBy: LegalClientOrderListRelationFilter
+  LegalClientUpdatedBy: LegalClientListRelationFilter
+  LegalContractCreatedBy: LegalContractListRelationFilter
+  LegalContractUpdatedBy: LegalContractListRelationFilter
+  MaintenanceCompanyCreatedBy: MaintenanceCompanyListRelationFilter
+  MaintenanceCompanyUpdatedBy: MaintenanceCompanyListRelationFilter
+  MaintenanceCreatedBy: MaintenanceListRelationFilter
+  MaintenanceUpdatedBy: MaintenanceListRelationFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  OrderProcessingCreatedBy: OrderProcessingListRelationFilter
+  OrderProcessingUpdatedBy: OrderProcessingListRelationFilter
+  OutsourcedDriverCreatedBy: OutsourcedDriverListRelationFilter
+  OutsourcedDriverUpdatedBy: OutsourcedDriverListRelationFilter
+  OutsourcedTransportCompanyContractCreatedBy: OutsourcedTransportCompanyContractListRelationFilter
+  OutsourcedTransportCompanyContractUpdatedBy: OutsourcedTransportCompanyContractListRelationFilter
+  OutsourcedTransportCompanyCreatedBy: OutsourcedTransportCompanyListRelationFilter
+  OutsourcedTransportCompanyDriverCreatedBy: OutsourcedTransportCompanyDriverListRelationFilter
+  OutsourcedTransportCompanyDriverUpdatedBy: OutsourcedTransportCompanyDriverListRelationFilter
+  OutsourcedTransportCompanyUpdatedBy: OutsourcedTransportCompanyListRelationFilter
+  OutsourcedTransportVehicleCreatedBy: OutsourcedTransportVehicleListRelationFilter
+  OutsourcedTransportVehicleUpdatedBy: OutsourcedTransportVehicleListRelationFilter
+  OutsourcedVehicleCreatedBy: OutsourcedVehicleListRelationFilter
+  OutsourcedVehicleUpdatedBy: OutsourcedVehicleListRelationFilter
+  OwnDriverCreatedBy: OwnDriverListRelationFilter
+  OwnDriverUpdatedBy: OwnDriverListRelationFilter
+  PhysicalCustomerCreatedBy: PhysicalCustomerListRelationFilter
+  PhysicalCustomerOrderCreatedBy: PhysicalCustomerOrderListRelationFilter
+  PhysicalCustomerOrderUpdatedBy: PhysicalCustomerOrderListRelationFilter
+  PhysicalCustomerUpdatedBy: PhysicalCustomerListRelationFilter
+  TypeOfMaintenanceCreatedBy: TypeOfMaintenanceListRelationFilter
+  TypeOfMaintenanceUpdatedBy: TypeOfMaintenanceListRelationFilter
+  VehicleBodyworkCreatedBy: VehicleBodyworkListRelationFilter
+  VehicleBodyworkUpdatedBy: VehicleBodyworkListRelationFilter
+  VehicleBrandCreatedBy: VehicleBrandListRelationFilter
+  VehicleBrandUpdatedBy: VehicleBrandListRelationFilter
+  VehicleModelCreatedBy: VehicleModelListRelationFilter
+  VehicleModelUpdatedBy: VehicleModelListRelationFilter
+  VehicleTypeContainsBodyCreatedBy: VehicleTypeContainsBodyListRelationFilter
+  VehicleTypeContainsBodyUpdatedBy: VehicleTypeContainsBodyListRelationFilter
+  VehicleTypeCreatedBy: VehicleTypeListRelationFilter
+  VehicleTypeUpdatedBy: VehicleTypeListRelationFilter
+  created_at: DateTimeFilter
+  email: StringFilter
+  id: StringFilter
+  name: StringFilter
+  password: StringFilter
+  role: EnumRoleFilter
+  updated_at: DateTimeFilter
+  username: StringFilter
 }
 
 input VehicleBodyworkInput {
@@ -775,6 +1941,12 @@ input VehicleBodyworkInput {
   mass: Float!
   name: String!
   volume: Float!
+}
+
+input VehicleBodyworkListRelationFilter {
+  every: VehicleBodyworkWhereInput
+  none: VehicleBodyworkWhereInput
+  some: VehicleBodyworkWhereInput
 }
 
 type VehicleBodyworkModel {
@@ -802,6 +1974,10 @@ type VehicleBodyworkModelReferences {
   volume: Float!
 }
 
+input VehicleBodyworkOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input VehicleBodyworkUpdateInput {
   axles: Int
   mass: Float
@@ -809,8 +1985,32 @@ input VehicleBodyworkUpdateInput {
   volume: Float
 }
 
+input VehicleBodyworkWhereInput {
+  AND: [VehicleBodyworkWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [VehicleBodyworkWhereInput!]
+  OR: [VehicleBodyworkWhereInput!]
+  UpdatedBy: UserWhereInput
+  VehicleTypeContainsBody: VehicleTypeContainsBodyListRelationFilter
+  axles: IntFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  mass: FloatFilter
+  name: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+  volume: FloatFilter
+}
+
 input VehicleBrandInput {
   name: String!
+}
+
+input VehicleBrandListRelationFilter {
+  every: VehicleBrandWhereInput
+  none: VehicleBrandWhereInput
+  some: VehicleBrandWhereInput
 }
 
 type VehicleBrandModel {
@@ -825,6 +2025,10 @@ type VehicleBrandModel {
   updated_by: String!
 }
 
+input VehicleBrandOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 type VehicleBrandReferences {
   id: String!
   name: String!
@@ -832,6 +2036,21 @@ type VehicleBrandReferences {
 
 input VehicleBrandUpdateInput {
   name: String
+}
+
+input VehicleBrandWhereInput {
+  AND: [VehicleBrandWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [VehicleBrandWhereInput!]
+  OR: [VehicleBrandWhereInput!]
+  UpdatedBy: UserWhereInput
+  VehicleModel: VehicleModelListRelationFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  name: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
 }
 
 type VehicleCarModel {
@@ -856,6 +2075,12 @@ input VehicleInput {
   renavam: String!
   rntrc_expiration: String!
   year: String!
+}
+
+input VehicleListRelationFilter {
+  every: VehicleWhereInput
+  none: VehicleWhereInput
+  some: VehicleWhereInput
 }
 
 type VehicleModelGraphql {
@@ -887,6 +2112,16 @@ input VehicleModelInput {
   weight: Float!
 }
 
+input VehicleModelListRelationFilter {
+  every: VehicleModelWhereInput
+  none: VehicleModelWhereInput
+  some: VehicleModelWhereInput
+}
+
+input VehicleModelOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 type VehicleModelReferences {
   axles: Int!
   brand_id: String!
@@ -908,6 +2143,35 @@ input VehicleModelUpdateInput {
   weight: Float
 }
 
+input VehicleModelWhereInput {
+  AND: [VehicleModelWhereInput!]
+  Brand: VehicleBrandWhereInput
+  CreatedBy: UserWhereInput
+  NOT: [VehicleModelWhereInput!]
+  OR: [VehicleModelWhereInput!]
+  UpdatedBy: UserWhereInput
+  Vehicle: VehicleListRelationFilter
+  VehicleType: VehicleTypeWhereInput
+  axles: IntFilter
+  brand_id: StringFilter
+  capacity_max: FloatFilter
+  capacity_per_axle: IntNullableFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  name: StringFilter
+  type_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+  weight: FloatFilter
+}
+
+input VehicleTypeContainsBodyListRelationFilter {
+  every: VehicleTypeContainsBodyWhereInput
+  none: VehicleTypeContainsBodyWhereInput
+  some: VehicleTypeContainsBodyWhereInput
+}
+
 type VehicleTypeContainsBodyModel {
   VehicleBodywork: [VehicleBodyworkModelReferences!]!
   created_at: Timestamp!
@@ -919,10 +2183,37 @@ type VehicleTypeContainsBodyModel {
   vehicle_type_id: String!
 }
 
+input VehicleTypeContainsBodyOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input VehicleTypeContainsBodyWhereInput {
+  AND: [VehicleTypeContainsBodyWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [VehicleTypeContainsBodyWhereInput!]
+  OR: [VehicleTypeContainsBodyWhereInput!]
+  UpdatedBy: UserWhereInput
+  VehicleBodywork: VehicleBodyworkWhereInput
+  VehicleType: VehicleTypeWhereInput
+  bodywork_id: StringFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  type_id: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input VehicleTypeInput {
   bodyWork: Boolean!
   body_work_id: [String!]
   name: String!
+}
+
+input VehicleTypeListRelationFilter {
+  every: VehicleTypeWhereInput
+  none: VehicleTypeWhereInput
+  some: VehicleTypeWhereInput
 }
 
 type VehicleTypeModel {
@@ -937,6 +2228,10 @@ type VehicleTypeModel {
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
+}
+
+input VehicleTypeOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 type VehicleTypeReferences {
@@ -954,6 +2249,23 @@ input VehicleTypeUpdateInput {
   updated_by: String!
 }
 
+input VehicleTypeWhereInput {
+  AND: [VehicleTypeWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [VehicleTypeWhereInput!]
+  OR: [VehicleTypeWhereInput!]
+  UpdatedBy: UserWhereInput
+  VehicleModel: VehicleModelListRelationFilter
+  VehicleTypeContainsBody: VehicleTypeContainsBodyListRelationFilter
+  bodywork: BoolFilter
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  id: StringFilter
+  name: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
 input VehicleUpdateInput {
   color: String
   model_id: String
@@ -961,4 +2273,23 @@ input VehicleUpdateInput {
   renavam: String
   rntrc_expiration: String
   year: String
+}
+
+input VehicleWhereInput {
+  AND: [VehicleWhereInput!]
+  CompanyVehicle: CompanyVehicleWhereInput
+  Maintenance: MaintenanceListRelationFilter
+  Model: VehicleModelWhereInput
+  NOT: [VehicleWhereInput!]
+  OR: [VehicleWhereInput!]
+  OrderProcessing: OrderProcessingWhereInput
+  OutsourcedTransportVehicle: OutsourcedTransportVehicleWhereInput
+  OutsourcedVehicle: OutsourcedVehicleWhereInput
+  color: StringFilter
+  id: StringFilter
+  model_id: StringFilter
+  plate: StringFilter
+  renavam: StringFilter
+  rntrc_expiration: StringFilter
+  year: StringFilter
 }

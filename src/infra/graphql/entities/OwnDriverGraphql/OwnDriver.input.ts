@@ -1,4 +1,3 @@
-import { UseInterceptors } from '@nestjs/common';
 import {
   Field,
   HideField,
@@ -8,18 +7,12 @@ import {
 } from '@nestjs/graphql';
 
 import { type IOwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
-
-import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
-import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 
 import {
   NaturalPersonInput,
   NaturalPersonUpdate,
 } from '../NaturalPersonGraphql/NaturalPerson.Input';
 
-@UseInterceptors(RoleInterceptor)
-@AcessAllowed('ADMIN')
 @InputType()
 export class OwnDriverInput
   implements
@@ -28,7 +21,7 @@ export class OwnDriverInput
   @Field()
   cnh: string;
   @Field()
-  cnh_category: CNH;
+  cnh_category: string;
   @Field(() => Date)
   cnh_expiration: Date;
   @Field()

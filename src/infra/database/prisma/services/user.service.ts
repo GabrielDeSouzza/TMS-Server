@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindUserWhere } from 'domain/dto/repositories/UserRepositoryDto';
+
 import { type User } from '../../../../domain/entities/User/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';
 import { NotificationErrorsDatabase } from '../NotificationErrorsDatabase.ts';
@@ -10,8 +12,13 @@ import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 export class UserService implements UserRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findAllUsers(): Promise<User[]> {
-    const usersPrisma = await this.prisma.user.findMany();
+  async findAllUsers(parameters: FindUserWhere): Promise<User[]> {
+    const usersPrisma = await this.prisma.user.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     const users: User[] = usersPrisma.map(user =>
       UserPrismaDTO.PrismaToEntity(user),

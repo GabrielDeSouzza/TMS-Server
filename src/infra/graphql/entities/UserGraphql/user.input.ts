@@ -1,12 +1,6 @@
-import {
-  Field,
-  InputType,
-  PartialType,
-  registerEnumType,
-} from '@nestjs/graphql';
+import { Field, InputType, PartialType } from '@nestjs/graphql';
 
 import { type IUser } from '../../../../domain/entities/User/User';
-import { ROLE } from '../../../../domain/entities/User/User';
 
 @InputType()
 export class UserInput
@@ -20,11 +14,9 @@ export class UserInput
   email: string;
   @Field()
   password: string;
-  @Field(() => ROLE)
-  role: ROLE;
+  @Field()
+  role: string;
 }
 
 @InputType()
 export class UserUpdateInput extends PartialType(UserInput) {}
-
-registerEnumType(ROLE, { name: 'ROLE' });

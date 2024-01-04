@@ -1,13 +1,6 @@
-import {
-  CNH as CNHPrisma,
-  type Prisma,
-  type OwnDriver as OwnDriverPrisma,
-} from '@prisma/client';
+import { type Prisma, type OwnDriver as OwnDriverPrisma } from '@prisma/client';
 
-import {
-  CNH,
-  OwnDriver,
-} from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
+import { OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export class OwnDriverPrismaDTO {
@@ -15,7 +8,7 @@ export class OwnDriverPrismaDTO {
     return new OwnDriver({
       id: ownDriverPrisma.id,
       cnh: ownDriverPrisma.cnh,
-      cnh_category: CNH[ownDriverPrisma.cnh_category],
+      cnh_category: ownDriverPrisma.cnh_category,
       cnh_expiration: ownDriverPrisma.cnh_expiration,
       company_vehicle: ownDriverPrisma.company_vehicle,
       course_mopp: ownDriverPrisma.course_mopp,
@@ -32,7 +25,7 @@ export class OwnDriverPrismaDTO {
   ) {
     const ownDriverPrisma: Prisma.OwnDriverCreateInput = {
       cnh: ownDriver.cnh,
-      cnh_category: CNHPrisma[ownDriver.cnh_category],
+      cnh_category: ownDriver.cnh_category,
       cnh_expiration: ownDriver.cnh_expiration,
       company_vehicle: ownDriver.company_vehicle,
       course_mopp: ownDriver.course_mopp,
@@ -72,7 +65,7 @@ export class OwnDriverPrismaDTO {
   ) {
     const ownDriverUptade: Prisma.OwnDriverUpdateInput = {
       cnh: ownDriver.cnh,
-      cnh_category: CNHPrisma[ownDriver.cnh_category],
+      cnh_category: ownDriver.cnh_category,
       cnh_expiration: ownDriver.cnh_expiration,
       company_vehicle: ownDriver.company_vehicle,
       course_mopp: ownDriver.course_mopp,

@@ -3,7 +3,6 @@ import {
   type OutsourcedTransportCompanyDriver as OutsourcedTransportCompanyDriverPrisma,
 } from '@prisma/client';
 
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { OutsourcedTransportCompanyDriver } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyDriver/OutsourcedTransportCompany';
 
@@ -13,7 +12,7 @@ export class OutsourcedTransportCompanyDriverPrismaDTO {
   ) {
     return new OutsourcedTransportCompanyDriver({
       cnh: outsourcedTransportCompanyDriverPrisma.cnh,
-      cnh_category: CNH[outsourcedTransportCompanyDriverPrisma.cnh_category],
+      cnh_category: outsourcedTransportCompanyDriverPrisma.cnh_category,
       cnh_expiration: outsourcedTransportCompanyDriverPrisma.cnh_expiration,
       course_mopp: outsourcedTransportCompanyDriverPrisma.course_mopp,
       created_by: outsourcedTransportCompanyDriverPrisma.created_by,

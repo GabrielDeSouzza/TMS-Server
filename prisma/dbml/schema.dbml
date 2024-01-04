@@ -7,7 +7,7 @@ Table users {
   name String [not null]
   username String [unique, not null]
   email String [unique, not null]
-  role Role [not null, default: 'USER']
+  role String [not null]
   password String [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
@@ -212,7 +212,7 @@ Table outsourced_transport_vehicle {
 Table outsourced_drivers {
   id String [pk]
   cnh String [unique, not null]
-  cnh_category CNH [not null]
+  cnh_category String [not null]
   cnh_expiration DateTime [not null]
   company_vehicle Boolean [not null, default: false]
   course_mopp Boolean [not null, default: false]
@@ -232,7 +232,7 @@ Table outsourced_drivers {
 Table outsourcedT_transport_company_driver {
   id String [pk]
   cnh String [unique, not null]
-  cnh_category CNH [not null]
+  cnh_category String [not null]
   cnh_expiration DateTime [not null]
   course_mopp Boolean [not null, default: false]
   created_at DateTime [default: `now()`, not null]
@@ -267,7 +267,7 @@ Table contract_outsourced_drivers {
 Table own_drivers {
   id String [pk]
   cnh String [unique, not null]
-  cnh_category CNH [not null]
+  cnh_category String [not null]
   cnh_expiration DateTime [not null]
   company_vehicle Boolean [not null, default: false]
   course_mopp Boolean [not null, default: false]
@@ -640,24 +640,6 @@ Table maintenance {
   created_by String [not null]
   UpdatedBy users [not null]
   updated_by String [not null]
-}
-
-Enum Role {
-  USER
-  ADMIN
-  CLIENT
-}
-
-Enum CNH {
-  A
-  B
-  C
-  D
-  E
-  AB
-  AC
-  AD
-  AE
 }
 
 Ref: vehicles.model_id > vehicle_models.id

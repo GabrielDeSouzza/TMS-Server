@@ -1,12 +1,10 @@
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
-
 import { OutsourcedDriver } from './OutsourcedDriver';
 
 describe('Outsourced Driver', () => {
   it('should create outsourced driver', () => {
     const outsourcedDriver = new OutsourcedDriver({
       cnh: '48848878781',
-      cnh_category: CNH.AD,
+      cnh_category: 'AD',
       cnh_expiration: new Date(),
       company_vehicle: false,
       course_mopp: true,

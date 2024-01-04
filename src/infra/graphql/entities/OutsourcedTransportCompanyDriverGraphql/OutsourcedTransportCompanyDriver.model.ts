@@ -1,6 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type IOutsourcedTransportCompanyDriver } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyDriver/OutsourcedTransportCompany';
 
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
@@ -22,7 +21,7 @@ export class OutsourcedTransportCompanyDriverModel
   @Field()
   cnh: string;
   @Field()
-  cnh_category: CNH;
+  cnh_category: string;
   @Field()
   cnh_expiration: Date;
   @Field()

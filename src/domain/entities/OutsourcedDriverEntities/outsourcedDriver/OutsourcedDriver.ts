@@ -1,6 +1,5 @@
 import { randomUUID } from 'node:crypto';
 
-import { type CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { Entity } from 'domain/shared/entities/Entity';
 import { type IValidationField } from 'domain/shared/notification/Notification';
 import { NotificationError } from 'domain/shared/notification/NotificationError';
@@ -11,7 +10,7 @@ export interface IOutsourcedDriver {
   id?: string;
   natural_person_id: string;
   cnh: string;
-  cnh_category: CNH;
+  cnh_category: string;
   cnh_expiration: Date;
   company_vehicle: boolean | false;
   course_mopp: boolean;
@@ -103,11 +102,11 @@ export class OutsourcedDriver extends Entity {
     return this.props.cnh;
   }
 
-  public set cnh_category(cnhCategory: CNH) {
+  public set cnh_category(cnhCategory: string) {
     this.props.cnh_category = cnhCategory;
   }
 
-  public get cnh_category(): CNH {
+  public get cnh_category(): string {
     return this.props.cnh_category;
   }
 

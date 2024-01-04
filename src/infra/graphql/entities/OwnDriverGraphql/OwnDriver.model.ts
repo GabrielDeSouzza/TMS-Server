@@ -1,7 +1,6 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IOwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 
@@ -13,8 +12,8 @@ export class OwnDriverModel implements IOwnDriver {
   natural_person_id: string;
   @Field()
   cnh: string;
-  @Field(() => CNH)
-  cnh_category: CNH;
+  @Field()
+  cnh_category: string;
   @Field(() => Date)
   cnh_expiration: Date;
   @Field()
@@ -34,5 +33,3 @@ export class OwnDriverModel implements IOwnDriver {
   @Field()
   updated_by: string;
 }
-
-registerEnumType(CNH, { name: 'CNH' });

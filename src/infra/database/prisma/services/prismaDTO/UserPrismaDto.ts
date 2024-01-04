@@ -1,6 +1,6 @@
-import { type Prisma, Role, type User as UserPrisma } from '@prisma/client';
+import { type Prisma, type User as UserPrisma } from '@prisma/client';
 
-import { ROLE, User } from 'domain/entities/User/User';
+import { User } from 'domain/entities/User/User';
 
 export class UserPrismaDTO {
   public static PrismaToEntity(userPrisma: UserPrisma) {
@@ -9,7 +9,7 @@ export class UserPrismaDTO {
       email: userPrisma.email,
       name: userPrisma.name,
       password: userPrisma.password,
-      role: ROLE[userPrisma.role],
+      role: userPrisma.role,
       username: userPrisma.username,
       created_at: userPrisma.created_at,
       updated_at: userPrisma.updated_at,
@@ -22,7 +22,7 @@ export class UserPrismaDTO {
       id: userEntity.id,
       name: userEntity.name,
       password: userEntity.password,
-      role: Role[userEntity.role],
+      role: userEntity.role,
       updated_at: userEntity.updated_at,
       username: userEntity.username,
     };
@@ -35,7 +35,7 @@ export class UserPrismaDTO {
       created_at: user.created_at,
       email: user.email,
       name: user.name,
-      role: Role[user.role],
+      role: user.role,
       updated_at: user.updated_at,
       password: user.password,
       username: user.username,

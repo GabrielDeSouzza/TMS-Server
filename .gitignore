@@ -38,4 +38,7 @@ tsconfig.build.tsbuildinfo
 # Env
 .env
 
+#genered
+src/infra/graphql/prisma-generated/
+
 

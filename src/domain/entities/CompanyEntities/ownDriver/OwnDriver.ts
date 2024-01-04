@@ -6,23 +6,11 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-export enum CNH {
-  A = 'A',
-  B = 'B',
-  C = 'C',
-  D = 'D',
-  E = 'E',
-  AB = 'AB',
-  AC = 'AC',
-  AD = 'AD',
-  AE = 'AE',
-}
-
 export interface IOwnDriver {
   id?: string;
   natural_person_id: string;
   cnh: string;
-  cnh_category: CNH;
+  cnh_category: string;
   cnh_expiration: Date;
   company_vehicle: boolean | false;
   course_mopp: boolean;
@@ -113,11 +101,11 @@ export class OwnDriver extends Entity {
     return this.props.cnh;
   }
 
-  public set cnh_category(cnhCategory: CNH) {
+  public set cnh_category(cnhCategory: string) {
     this.props.cnh_category = cnhCategory;
   }
 
-  public get cnh_category(): CNH {
+  public get cnh_category(): string {
     return this.props.cnh_category;
   }
 

@@ -1,5 +1,4 @@
 import {
-  CNH as CNHPrisma,
   type Prisma,
   type PhysicalCustomer as PhysicalCustomerPrisma,
 } from '@prisma/client';
@@ -34,7 +33,7 @@ export class PhysicalContractorPrismaDTO {
   ) {
     const outsourcedDriverPrisma: Prisma.OutsourcedDriverCreateInput = {
       cnh: outsourcedDriver.cnh,
-      cnh_category: CNHPrisma[outsourcedDriver.cnh_category],
+      cnh_category: outsourcedDriver.cnh_category,
       cnh_expiration: outsourcedDriver.cnh_expiration,
       NaturalPerson: {
         create: {
@@ -101,7 +100,7 @@ export class PhysicalContractorPrismaDTO {
     console.log(outsourcedDriver.id);
     const outsourcedDriverUptade: Prisma.OutsourcedDriverUpdateInput = {
       cnh: outsourcedDriver.cnh,
-      cnh_category: CNHPrisma[outsourcedDriver.cnh_category],
+      cnh_category: outsourcedDriver.cnh_category,
       cnh_expiration: outsourcedDriver.cnh_expiration,
       NaturalPerson: {
         update: naturalPerson

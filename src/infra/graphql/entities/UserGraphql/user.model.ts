@@ -14,8 +14,8 @@ export class UserModel implements IUser {
   email: string;
   @Field()
   password: string;
-  @Field(() => ROLE)
-  role: ROLE;
+  @Field()
+  role: string;
   @Field(() => Date, { nullable: true })
   created_at: Date;
   @Field(() => Date, { nullable: true })

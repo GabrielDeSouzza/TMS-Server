@@ -5,13 +5,12 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type CNH } from '../../CompanyEntities/ownDriver/OwnDriver';
 
 export interface IOutsourcedTransportCompanyDriver {
   id?: string;
   natural_person_id: string;
   cnh: string;
-  cnh_category: CNH;
+  cnh_category: string;
   cnh_expiration: Date;
   course_mopp: boolean;
   outsourced_transport_company_id: string;
@@ -105,11 +104,11 @@ export class OutsourcedTransportCompanyDriver extends Entity {
     return this.props.cnh;
   }
 
-  public set cnh_category(cnhCategory: CNH) {
+  public set cnh_category(cnhCategory: string) {
     this.props.cnh_category = cnhCategory;
   }
 
-  public get cnh_category(): CNH {
+  public get cnh_category(): string {
     return this.props.cnh_category;
   }
 

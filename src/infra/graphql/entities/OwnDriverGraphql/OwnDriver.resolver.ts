@@ -8,8 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
-import { Role, User } from '@prisma/client';
-
+import { ROLE, User } from 'domain/entities/User/User';
 import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 import { UserRepository } from 'domain/repositories/UserRepository';
@@ -27,7 +26,7 @@ import { OwnDriverInput, OwnDriverUpdate } from './OwnDriver.input';
 import { OwnDriverModel } from './OwnDriver.model';
 
 @UseGuards(GraphQLAuthGuard)
-@AcessAllowed(Role.USER)
+@AcessAllowed(ROLE.USER)
 @UseInterceptors(RoleInterceptor)
 @Resolver(OwnDriverModel)
 export class OwnDriverResolver {

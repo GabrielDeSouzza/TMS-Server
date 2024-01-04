@@ -1,11 +1,11 @@
-import { CNH, OwnDriver } from './OwnDriver';
+import { OwnDriver } from './OwnDriver';
 
 describe('Ownsourced Driver', () => {
   it('should create ownsourced driver', () => {
     const ownsourcedDriver = new OwnDriver({
       natural_person_id: 'testId',
       cnh: '48848878781',
-      cnh_category: CNH.A,
+      cnh_category: 'A',
       cnh_expiration: new Date(),
       company_vehicle: false,
       course_mopp: true,

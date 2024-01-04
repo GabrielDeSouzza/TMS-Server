@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable unicorn/consistent-destructuring */
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
@@ -55,17 +54,22 @@ export class VehicleTypeResolver {
   ) {
     vehicleTypeInput.created_by = user.id;
     vehicleTypeInput.updated_by = user.id;
-    const { bodyWork: containsBody } = vehicleTypeInput;
+    const {
+      bodyWork: containsBody,
+      body_work_id,
+      created_by,
+      updated_by,
+    } = vehicleTypeInput;
     const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
     const type = await this.vehicleTypeRepository.createVehicleType(
       vehicleTypeEntity,
     );
 
-    if (containsBody && vehicleTypeInput.body_work_id) {
-      vehicleTypeInput.body_work_id.map(async vehicleContains => {
+    if (containsBody && body_work_id) {
+      body_work_id.map(async vehicleContains => {
         const body = new VehicleTypeContainsBody({
-          created_by: vehicleTypeInput.created_by,
-          updated_by: vehicleTypeInput.updated_by,
+          created_by: created_by,
+          updated_by: updated_by,
           vehicle_bodywork_id: vehicleContains,
           vehicle_type_id: type.id,
         });

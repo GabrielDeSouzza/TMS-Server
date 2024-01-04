@@ -1,3 +1,5 @@
+import { type FindUserWhere } from 'domain/dto/repositories/UserRepositoryDto';
+
 import { type User } from '../entities/User/User';
 
 export abstract class UserRepository {
@@ -5,5 +7,5 @@ export abstract class UserRepository {
   abstract createUSer(user: User): Promise<User>;
   abstract findUserByEmail(email: string): Promise<User>;
   abstract updateUser(id: string, user: User): Promise<User>;
-  abstract findAllUsers(): Promise<User[]>;
+  abstract findAllUsers(where: FindUserWhere): Promise<User[]>;
 }

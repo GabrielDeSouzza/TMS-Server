@@ -16,20 +16,15 @@ export abstract class IUser {
   username: string;
   email: string;
   password: string;
-  role: ROLE;
+  role: string;
   created_at: Date;
   updated_at: Date;
 }
 
 export class User extends Entity {
-  private props: IUser | Partial<IUser>;
+  private props: IUser;
 
-  constructor(
-    props: Replace<
-      IUser | Partial<IUser>,
-      { created_at?: Date; updated_at?: Date }
-    >,
-  ) {
+  constructor(props: Replace<IUser, { created_at?: Date; updated_at?: Date }>) {
     super();
     this.props = {
       ...props,
@@ -100,7 +95,7 @@ export class User extends Entity {
     this.props.role = role;
   }
 
-  public get role(): ROLE {
+  public get role(): string {
     return this.props.role;
   }
 

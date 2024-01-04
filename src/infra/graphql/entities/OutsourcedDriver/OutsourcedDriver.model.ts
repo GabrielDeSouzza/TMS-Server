@@ -1,6 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type IOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
 
 import { ContractOutsourcedDriverRefencesModel } from '../ContractOutsourcedDriverGraphql/ContractOutsourcedDriver.model';
@@ -24,7 +23,7 @@ export class OutsourcedDriverModel
   @Field()
   cnh: string;
   @Field()
-  cnh_category: CNH;
+  cnh_category: string;
   @Field()
   cnh_expiration: Date;
   @Field()

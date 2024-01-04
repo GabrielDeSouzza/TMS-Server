@@ -6,7 +6,6 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { CNH } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type IOutsourcedTransportCompanyDriver } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyDriver/OutsourcedTransportCompany';
 
 import {
@@ -23,8 +22,8 @@ export class OutsourcedTransportCompanyDriverInput
   natural_person_id: string;
   @Field()
   cnh: string;
-  @Field(() => CNH)
-  cnh_category: CNH;
+  @Field()
+  cnh_category: string;
   @Field()
   cnh_expiration: Date;
   @Field()
