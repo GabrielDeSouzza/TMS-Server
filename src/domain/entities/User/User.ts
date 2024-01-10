@@ -10,7 +10,7 @@ export enum ROLE {
   ADMIN = 'ADMIN',
   CLIENT = 'CLIENT',
 }
-export abstract class IUser {
+export interface IUser {
   id?: string;
   name: string;
   username: string;

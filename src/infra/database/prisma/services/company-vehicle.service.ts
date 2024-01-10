@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllCompanyVehicleWhereRequestDTO } from 'domain/dto/repositories/CompanyVehicleRepositoryDto';
 import { type CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 import { type CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
@@ -44,8 +45,15 @@ export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
       }),
     );
   }
-  async findAllCompanyVehicle(): Promise<CompanyVehicle[]> {
-    const companyVehiclePrisma = await this.prisma.companyVehicle.findMany();
+  async findAllCompanyVehicle(
+    parameters: FindAllCompanyVehicleWhereRequestDTO,
+  ): Promise<CompanyVehicle[]> {
+    const companyVehiclePrisma = await this.prisma.companyVehicle.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return companyVehiclePrisma.map(companyVehicle =>
       CompanyVehiclePrismaDTO.PrismaToEntity(companyVehicle),

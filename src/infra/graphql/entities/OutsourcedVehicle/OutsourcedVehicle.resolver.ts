@@ -12,6 +12,7 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/args/OutsourcedTransportVehicleArgs';
 import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -40,8 +41,15 @@ export class OutsourcedVehicleResolver {
     return await this.outsourcedReposity.findOutsourcedVehicle(id);
   }
   @Query(() => [OutsourcedVehicleIModel])
-  async getAllOutsourcedVehicle() {
-    return await this.outsourcedReposity.findAllOutsourcedVehicle();
+  async getAllOutsourcedVehicle(
+    @Args() args: OutsourcedTransportVehicleWhereArgs,
+  ) {
+    return await this.outsourcedReposity.findAllOutsourcedVehicle({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
   }
   @Mutation(() => OutsourcedVehicleIModel)
   async createOutsourcedVehicle(

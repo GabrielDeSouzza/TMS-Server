@@ -14,6 +14,7 @@ import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy'
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { LegalContractWhereArgs } from 'infra/graphql/args/LegalContractArgs';
 import { LegalContractGraphqlDTO } from 'infra/graphql/DTO/LegalContractGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -50,9 +51,14 @@ export class LegalContractResolver {
     );
   }
   @Query(() => [LegalContractModel], { nullable: true })
-  async getAllLegalContract() {
+  async getAllLegalContract(@Args() args: LegalContractWhereArgs) {
     const legalContract =
-      await this.legalContractRepository.getAllLegalContract();
+      await this.legalContractRepository.getAllLegalContract({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return legalContract.length > 0 ? legalContract : null;
   }

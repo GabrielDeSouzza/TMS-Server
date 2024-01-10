@@ -5,13 +5,11 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import { type LegalPerson } from '../../LegalPerson/LegalPerson';
 
 interface IMaintenanceCompany {
   id?: string;
   specialty_maintenance: string;
-  LegalPerson: LegalPerson;
-  cnpj?: string;
+  legal_person_id?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -48,11 +46,9 @@ export class MaintenanceCompany extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.props.cnpj,
+        field: this.props.legal_person_id,
         fieldName: 'CNPJ',
-        maxLength: 14,
-        minLength: 14,
-        isNullAble: true,
+        maxLength: 300,
       },
       {
         field: this.props.specialty_maintenance,
@@ -60,7 +56,7 @@ export class MaintenanceCompany extends Entity {
         maxLength: 80,
       },
     );
-    this.props.LegalPerson.validate();
+
     this.notification.requiredField('MaintenanceCompany', fieldsValidation);
   }
   public get id(): string {
@@ -78,20 +74,12 @@ export class MaintenanceCompany extends Entity {
     return this.props.specialty_maintenance;
   }
 
-  public set LegalPerson(legalPerson: LegalPerson) {
-    this.props.LegalPerson = legalPerson;
+  public set LegalPerson(legal_person_id: string) {
+    this.props.legal_person_id = legal_person_id;
   }
 
-  public get LegalPerson(): LegalPerson {
-    return this.props.LegalPerson;
-  }
-
-  public set cnpj(cnpj: string | undefined) {
-    this.props.cnpj = cnpj;
-  }
-
-  public get cnpj(): string | undefined {
-    return this.props.cnpj;
+  public get legal_person_id(): string {
+    return this.props.legal_person_id;
   }
 
   public set created_at(createdAt: Date) {

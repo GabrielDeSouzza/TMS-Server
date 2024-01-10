@@ -16,7 +16,7 @@ import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/Leg
 import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/LegalClientMerchandise.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
-import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriver/OutsourcedDriver.module';
+import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
 import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
 import { OutsourcedTransportCompanyDriverModule } from 'infra/graphql/entities/OutsourcedTransportCompanyDriverGraphql/OutsourcedTransportCompanyDriver.module';
 import { OutsourcedTransportCompanyModule } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.module';

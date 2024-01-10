@@ -9,6 +9,8 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 export interface IPhysicalContract {
   id?: string;
   physical_customer_id: string;
+  clause: string;
+  observations?: string;
 }
 
 export class PhysicalContract extends Entity {

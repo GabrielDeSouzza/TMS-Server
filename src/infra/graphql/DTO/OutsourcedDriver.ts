@@ -3,7 +3,7 @@ import { OutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outso
 import {
   type OutsourcedDriverInput,
   type OutsourcedDriverUpdateInput,
-} from '../entities/OutsourcedDriver/OutsourcedDriver.input';
+} from '../entities/OutsourcedDriverGraphql/OutsourcedDriver.input';
 
 export class OutsourcedDriverGraphDTO {
   public static createInputToEntity(createInput: OutsourcedDriverInput) {

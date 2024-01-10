@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IInvoicePhysicalCustomer {
+export interface IInvoicePhysicalCustomer {
   id?: string;
   emission_date: Date;
   nature_invoice: string;

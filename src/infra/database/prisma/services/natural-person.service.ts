@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllNaturalPersonWhereRequestDTO } from 'domain/dto/repositories/NaturalPersonRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 
@@ -9,6 +10,7 @@ import { NaturalPersonPrismaDTO } from './prismaDTO/NaturalPersonPrismaDto';
 @Injectable()
 export class NaturalPersonPrismaService implements NaturalPersonRepository {
   constructor(private prisma: PrismaService) {}
+
   async findNaturalPersonByIdOrCpf(
     id?: string,
     cpf?: string,
@@ -41,5 +43,17 @@ export class NaturalPersonPrismaService implements NaturalPersonRepository {
         where: { id },
       }),
     );
+  }
+  async getAllNaturalPerson(
+    parameters: FindAllNaturalPersonWhereRequestDTO,
+  ): Promise<NaturalPerson[]> {
+    const persons = await this.prisma.naturalPerson.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
+
+    return persons.map(person => NaturalPersonPrismaDTO.PrismaToEntity(person));
   }
 }

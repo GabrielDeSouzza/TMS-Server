@@ -1,3 +1,4 @@
+import { type FindAllVehicleBodyworkWhereRequestDTO } from 'domain/dto/repositories/VehicleBodyworkRepositoryDto';
 import { type VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
 export abstract class VehicleBodyworkRepository {
@@ -9,5 +10,7 @@ export abstract class VehicleBodyworkRepository {
     id: string,
     vehicleBodywork: VehicleBodywork,
   ): Promise<VehicleBodywork>;
-  abstract getAllVehicleBodywork(): Promise<VehicleBodywork[]>;
+  abstract getAllVehicleBodywork(
+    parameters: FindAllVehicleBodyworkWhereRequestDTO,
+  ): Promise<VehicleBodywork[]>;
 }

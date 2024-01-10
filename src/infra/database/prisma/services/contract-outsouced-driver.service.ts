@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllContractOutsourcedDriverWhereRequestDTO } from 'domain/dto/repositories/ContractOutsourcedDriverRepositoryDto';
 import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { type ContractOutsourcedDriverRepository } from 'domain/repositories/ContractOutsourcedDriverResitory';
 
@@ -11,39 +12,15 @@ export class ContractOutsourcedDriverPrismaService
   implements ContractOutsourcedDriverRepository
 {
   constructor(private prisma: PrismaService) {}
-  async findAllContracOutsourcedDriverByOutsourcedDriverId(
-    outsoucedDriverId: string,
+  async findAllContracOutsourcedDriver(
+    parameters: FindAllContractOutsourcedDriverWhereRequestDTO,
   ): Promise<ContractOutsourcedDriver[]> {
     const contracts = await this.prisma.contractOutsourcedDriver.findMany({
-      where: { outsourced_driver_id: outsoucedDriverId },
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
     });
-
-    return contracts.map(contract =>
-      ContractOutsourcedDriverPrismaDto.PrismaToEntity(contract),
-    );
-  }
-  async findContractOutsourcedDriverById(
-    id: string,
-  ): Promise<ContractOutsourcedDriver> {
-    return ContractOutsourcedDriverPrismaDto.PrismaToEntity(
-      await this.prisma.contractOutsourcedDriver.findFirstOrThrow({
-        where: { id },
-      }),
-    );
-  }
-  async findAllContracOutsourcedDriverByCpf(
-    cpf: string,
-  ): Promise<ContractOutsourcedDriver[]> {
-    const contracts = await this.prisma.contractOutsourcedDriver.findMany({
-      where: { cpf },
-    });
-
-    return contracts.map(contract =>
-      ContractOutsourcedDriverPrismaDto.PrismaToEntity(contract),
-    );
-  }
-  async findAllContracOutsourcedDriver(): Promise<ContractOutsourcedDriver[]> {
-    const contracts = await this.prisma.contractOutsourcedDriver.findMany();
 
     return contracts.map(contract =>
       ContractOutsourcedDriverPrismaDto.PrismaToEntity(contract),

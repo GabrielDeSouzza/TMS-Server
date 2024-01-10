@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllCiotForLegalClientWhereRequestDTO } from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
 import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 import { type CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 
@@ -47,8 +48,15 @@ export class CiotForLegalClientPrismaService
     return CiotForLegalClientPrismaDTO.PrismaToEntity(ciotForLegalClientPrisma);
   }
 
-  async getAllCiotForLegalClient(): Promise<CiotForLegalClient[]> {
-    const ciotForLegalClients = await this.prisma.ciotForLegalClient.findMany();
+  async getAllCiotForLegalClient(
+    parameters: FindAllCiotForLegalClientWhereRequestDTO,
+  ): Promise<CiotForLegalClient[]> {
+    const ciotForLegalClients = await this.prisma.ciotForLegalClient.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return ciotForLegalClients.map(ciotForLegalClient =>
       CiotForLegalClientPrismaDTO.PrismaToEntity(ciotForLegalClient),

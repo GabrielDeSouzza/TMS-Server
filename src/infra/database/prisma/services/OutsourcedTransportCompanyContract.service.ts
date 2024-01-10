@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllOutsourcedTransportCompanyContractWhereRequestDTO } from 'domain/dto/repositories/OutsourcedTransportCompanyContractRepositoryDto';
 import { type OutsourcedTransportCompanyContract } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyContract/OutsourcedTransportCompanyContract';
 import { type OutsourcedTransportCompanyContractRepository } from 'domain/repositories/OutsourcedTransportCompanyContract.repository';
 
@@ -54,11 +55,16 @@ export class OutsourcedTransportCompanyContractPrismaService
     );
   }
 
-  async getAllOutsourcedTransportCompanyContract(): Promise<
-    OutsourcedTransportCompanyContract[]
-  > {
+  async getAllOutsourcedTransportCompanyContract(
+    parameters: FindAllOutsourcedTransportCompanyContractWhereRequestDTO,
+  ): Promise<OutsourcedTransportCompanyContract[]> {
     const outsourcedTransportCompanyContracts =
-      await this.prisma.outsourcedTransportCompanyContract.findMany();
+      await this.prisma.outsourcedTransportCompanyContract.findMany({
+        take: parameters.limit,
+        skip: parameters.offset,
+        where: parameters.where,
+        orderBy: parameters.sort,
+      });
 
     return outsourcedTransportCompanyContracts.map(
       outsourcedTransportCompanyContract =>

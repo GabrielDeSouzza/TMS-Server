@@ -27,6 +27,7 @@ model User {
   username   String   @unique
   email      String   @unique
   role       String
+  /// @HideField({ input: true, output: true })
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())

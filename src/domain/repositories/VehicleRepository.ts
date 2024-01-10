@@ -1,3 +1,4 @@
+import { type FindAllVehicleWhereRequestDTO } from 'domain/dto/repositories/VehicleRepositoryDto';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export abstract class VehicleRepository {
@@ -6,5 +7,7 @@ export abstract class VehicleRepository {
     vehicleBrand: Omit<Vehicle, 'id' | 'updated_at' | 'created_at'>,
   ): Promise<Vehicle>;
   abstract updateVehicle(id: string, vehicleBrand: Vehicle): Promise<Vehicle>;
-  abstract getAllVehicle(): Promise<Vehicle[]>;
+  abstract getAllVehicle(
+    parameters: FindAllVehicleWhereRequestDTO,
+  ): Promise<Vehicle[]>;
 }

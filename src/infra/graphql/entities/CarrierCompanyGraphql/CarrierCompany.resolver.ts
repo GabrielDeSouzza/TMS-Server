@@ -13,6 +13,7 @@ import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.rep
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { CarrierCompanyWhereArgs } from 'infra/graphql/args/CarrierCompanyArgs';
 import { CarrierCompanyGraphqlDTO } from 'infra/graphql/DTO/CarrierCompanyGraphqlDto';
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -43,9 +44,14 @@ export class CarrierCompanyResolver {
     return this.carrierCompanyRepository.findCarrierCompanyById(id);
   }
   @Query(() => [CarrierCompanyModel], { nullable: true })
-  async getAllCarrierCompany() {
+  async getAllCarrierCompany(@Args() args: CarrierCompanyWhereArgs) {
     const carrierCompany =
-      await this.carrierCompanyRepository.getAllCarrierCompany();
+      await this.carrierCompanyRepository.getAllCarrierCompany({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return carrierCompany.length > 0 ? carrierCompany : null;
   }

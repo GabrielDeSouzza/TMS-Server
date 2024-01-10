@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllOutsourcedTransportVehicleWhereRequestDTO } from 'domain/dto/repositories/OutsourcedTransportVehicleRepositoryDto';
 import { type OutsourcedTransportVehicle } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportVehicle/OutsourcedTransportVehicle';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 import { type OutsourcedTransportVehicleRepository } from 'domain/repositories/OutsourcedTransportVehicle.repository';
@@ -45,7 +46,6 @@ export class OutsourcedTransportVehiclePrismaService
     outsourcedTransportVehicle?: OutsourcedTransportVehicle,
     vehicle?: Vehicle,
   ): Promise<OutsourcedTransportVehicle> {
-    console.error('test', vehicle.year);
     const outsourcedTransportVehiclePrisma =
       await this.prisma.outsourcedTransportVehicle.update({
         data: OutsourcedTransportVehiclePrismaDTO.EntityToPrismaUpdate(
@@ -60,11 +60,16 @@ export class OutsourcedTransportVehiclePrismaService
     );
   }
 
-  async getAllOutsourcedTransportVehicle(): Promise<
-    OutsourcedTransportVehicle[]
-  > {
+  async getAllOutsourcedTransportVehicle(
+    parameters: FindAllOutsourcedTransportVehicleWhereRequestDTO,
+  ): Promise<OutsourcedTransportVehicle[]> {
     const outsourcedTransportVehicles =
-      await this.prisma.outsourcedTransportVehicle.findMany();
+      await this.prisma.outsourcedTransportVehicle.findMany({
+        take: parameters.limit,
+        skip: parameters.offset,
+        where: parameters.where,
+        orderBy: parameters.sort,
+      });
 
     return outsourcedTransportVehicles.map(outsourcedTransportVehicle =>
       OutsourcedTransportVehiclePrismaDTO.PrismaToEntity(

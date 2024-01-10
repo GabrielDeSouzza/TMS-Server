@@ -1,5 +1,4 @@
 import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
-import { type SortOrderInputDTO } from 'domain/shared/dtos/SortOrderInputDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
@@ -24,7 +23,6 @@ abstract class SortByAddressTypeDTO {
   name?: 'asc' | 'desc';
   role?: 'asc' | 'desc';
   username?: 'asc' | 'desc';
-  deleted_at?: SortOrderInputDTO;
 }
 
 export abstract class FindUserWhere {

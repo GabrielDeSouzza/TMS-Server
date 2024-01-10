@@ -9,12 +9,12 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { ContractOutsourcedDriverRepository } from 'domain/repositories/ContractOutsourcedDriverResitory';
 import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 import { OutsourcedDriverRepository } from 'domain/repositories/OutsourcedDriverRepository';
 import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { OutsourcedDriverWhereArgs } from 'infra/graphql/args/OutsourcedDriverArgs';
 import { ContractOutsourcedDriverGraphDTO } from 'infra/graphql/DTO/ContractOutsourcedDriver';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
 import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
@@ -25,7 +25,6 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { ContractOutsourcedDriverModel } from '../ContractOutsourcedDriverGraphql/ContractOutsourcedDriver.model';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import { OutsourcedVehicleRecefencesModel } from '../OutsourcedVehicle/OutsourcedVehicle.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -45,15 +44,19 @@ export class OutsourcedDriverResolver {
     private userRepository: UserRepository,
     private naturalPersonRepository: NaturalPersonRepository,
     private outsourcedVehicleRepository: OutsourcedVehicleRepository,
-    private contractOutsourcedDriverRepository: ContractOutsourcedDriverRepository,
   ) {}
   @Query(() => OutsourcedDriverModel)
   async getOutsourcedDriver(@Args('id') id: string) {
     return await this.outsourcedDriverRepository.findOutsourcedDriver(id);
   }
   @Query(() => [OutsourcedDriverModel])
-  async getAllOutsourcedDriver() {
-    return await this.outsourcedDriverRepository.findAllOutsourcedDriver();
+  async getAllOutsourcedDriver(@Args() args: OutsourcedDriverWhereArgs) {
+    return await this.outsourcedDriverRepository.findAllOutsourcedDriver({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
   }
   @Mutation(() => OutsourcedDriverModel)
   async createOutsourcedDriver(
@@ -165,16 +168,6 @@ export class OutsourcedDriverResolver {
 
     return await this.outsourcedVehicleRepository.findOutsourcedVehicle(
       outsourcedVehicleId,
-    );
-  }
-  @ResolveField(() => [ContractOutsourcedDriverModel])
-  async ContractOutsourcedDriver(
-    @Parent() outsourcedDriverInput: OutsourcedDriverModel,
-  ) {
-    const { id } = outsourcedDriverInput;
-
-    return await this.contractOutsourcedDriverRepository.findAllContracOutsourcedDriverByOutsourcedDriverId(
-      id,
     );
   }
 }

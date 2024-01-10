@@ -1,3 +1,4 @@
+import { type FindAllCompanyVehicleWhereRequestDTO } from 'domain/dto/repositories/CompanyVehicleRepositoryDto';
 import { type CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
@@ -12,5 +13,7 @@ export abstract class CompanyVehicleRepository {
     CompanyVehicle: CompanyVehicle,
     vehicle: Vehicle,
   ): Promise<CompanyVehicle>;
-  abstract findAllCompanyVehicle(): Promise<CompanyVehicle[]>;
+  abstract findAllCompanyVehicle(
+    parameters: FindAllCompanyVehicleWhereRequestDTO,
+  ): Promise<CompanyVehicle[]>;
 }

@@ -13,6 +13,7 @@ import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonReposi
 import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { OwnDriverWhereArgs } from 'infra/graphql/args/OwnDriverArgs';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
 import { OwnDriverGraphDTO } from 'infra/graphql/DTO/OwnDriverVehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -40,8 +41,13 @@ export class OwnDriverResolver {
     return await this.ownDriverRepository.findOwnDriverById(id);
   }
   @Query(() => [OwnDriverModel])
-  async getAllOwnDriver() {
-    return await this.ownDriverRepository.findAllOwnDrivers();
+  async getAllOwnDriver(@Args() args: OwnDriverWhereArgs) {
+    return await this.ownDriverRepository.findAllOwnDrivers({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
   }
   @Mutation(() => OwnDriverModel)
   async createOwnDriver(

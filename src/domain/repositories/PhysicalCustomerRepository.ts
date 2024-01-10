@@ -1,3 +1,4 @@
+import { type FindAllPhysicalCustomerWhereRequestDTO } from 'domain/dto/repositories/PhysicalCustomerRepositoryDts';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type PhysicalContract } from 'domain/entities/PhysicalClientEntities/physicalContract/PhysicalContract';
 import { type PhysicalCustomer } from 'domain/entities/PhysicalClientEntities/physicalCustomer/PhysicalCustomer';
@@ -15,5 +16,7 @@ export abstract class PhysicalCustomerRepository {
     naturalPerson?: NaturalPerson,
     physicalContractor?: PhysicalContract,
   ): Promise<PhysicalCustomer>;
-  abstract findAllPhysicalCustomer(): Promise<PhysicalCustomer[]>;
+  abstract findAllPhysicalCustomer(
+    parameters: FindAllPhysicalCustomerWhereRequestDTO,
+  ): Promise<PhysicalCustomer[]>;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllLegalContractWhereRequestDTO } from 'domain/dto/repositories/LegalContractRepositoryDto';
 import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 import { type LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 
@@ -50,8 +51,15 @@ export class LegalContractPrismaService implements LegalContractRepository {
     return LegalContractPrismaDTO.PrismaToEntity(legalContractPrisma);
   }
 
-  async getAllLegalContract(): Promise<LegalContract[]> {
-    const legalContracts = await this.prisma.legalContract.findMany();
+  async getAllLegalContract(
+    parameters: FindAllLegalContractWhereRequestDTO,
+  ): Promise<LegalContract[]> {
+    const legalContracts = await this.prisma.legalContract.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return legalContracts.map(legalContract =>
       LegalContractPrismaDTO.PrismaToEntity(legalContract),

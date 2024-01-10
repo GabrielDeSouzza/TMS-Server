@@ -14,6 +14,7 @@ import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandReposito
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
+import { VehicleModelWhereArgs } from 'infra/graphql/args/VeihicleModelArgs';
 import { VehicleModelGraphDTO } from 'infra/graphql/DTO/VehicleModel';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -45,8 +46,13 @@ export class VehicleModelResolver {
     return await this.vehicleModelRepository.findVehicleModelById(id);
   }
   @Query(() => [VehicleModelGraphql], { nullable: true })
-  async getAllVehicleModel() {
-    const models = await this.vehicleModelRepository.getAllVehicleModel();
+  async getAllVehicleModel(@Args() args: VehicleModelWhereArgs) {
+    const models = await this.vehicleModelRepository.getAllVehicleModel({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
 
     return models.length > 0 ? models : null;
   }

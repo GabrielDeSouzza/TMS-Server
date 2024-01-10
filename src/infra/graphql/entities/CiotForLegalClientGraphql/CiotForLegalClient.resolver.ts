@@ -13,6 +13,7 @@ import { CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalCl
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { CiotForLegalClientWhereArgs } from 'infra/graphql/args/CiotForLegalClientArgs';
 import { CiotForLegalClientGraphqlDTO } from 'infra/graphql/DTO/CiotForLegalClientGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -42,9 +43,14 @@ export class CiotForLegalClientResolver {
     return this.ciotForLegalClientRepository.findCiotForLegalClientById(id);
   }
   @Query(() => [CiotForLegalClientModel], { nullable: true })
-  async getAllCiotForLegalClient() {
+  async getAllCiotForLegalClient(@Args() args: CiotForLegalClientWhereArgs) {
     const ciotForLegalClient =
-      await this.ciotForLegalClientRepository.getAllCiotForLegalClient();
+      await this.ciotForLegalClientRepository.getAllCiotForLegalClient({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return ciotForLegalClient.length > 0 ? ciotForLegalClient : null;
   }

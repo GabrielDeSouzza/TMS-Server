@@ -1,4 +1,4 @@
-export abstract class IntNullableFilterDTO {
+export abstract class NumberFilterDTO {
   not?: this;
   lt?: number;
   gt?: number;

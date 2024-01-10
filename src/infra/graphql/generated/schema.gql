@@ -20,18 +20,6 @@ input BoolFilter {
   not: NestedBoolFilter
 }
 
-enum CNH {
-  A
-  AB
-  AC
-  AD
-  AE
-  B
-  C
-  D
-  E
-}
-
 input CarrierCompanyInput {
   LegalPerson: LegalPersonInput
   legalPersonId: String
@@ -59,6 +47,23 @@ type CarrierCompanyModel {
 
 input CarrierCompanyOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input CarrierCompanyOrderByWithRelationInput {
+  Ciot: CiotForPhysicalClientOrderByRelationAggregateInput
+  CompanyVehicle: CompanyVehicleOrderByRelationAggregateInput
+  CreatedBy: UserOrderByWithRelationInput
+  InvoiceForPhysicalClient: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  LegalContract: LegalContractOrderByRelationAggregateInput
+  LegalPerson: LegalPersonOrderByWithRelationInput
+  OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByRelationAggregateInput
+  UpdatedBy: UserOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  legal_person_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input CarrierCompanyUpdateInput {
@@ -116,6 +121,20 @@ type CiotForLegalClientModel {
 
 input CiotForLegalClientOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input CiotForLegalClientOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  PhysycalContract: LegalContractOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  ciot: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  emission_date: SortOrder
+  id: SortOrder
+  legal_contract_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input CiotForLegalClientUpdateInput {
@@ -195,6 +214,22 @@ input CompanyVehicleListRelationFilter {
 
 input CompanyVehicleOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input CompanyVehicleOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByWithRelationInput
+  CreatedBy: UserOrderByWithRelationInput
+  OrderProcessing: OrderProcessingOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  Vehicle: VehicleOrderByWithRelationInput
+  company_id: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  order_processing_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+  vehicle_id: SortOrder
 }
 
 input CompanyVehicleUpdateInput {
@@ -303,20 +338,6 @@ input DateTimeNullableFilter {
   lte: Timestamp
   not: NestedDateTimeNullableFilter
   notIn: [Timestamp!]
-}
-
-input EnumCNHFilter {
-  equals: CNH
-  in: [CNH!]
-  not: NestedEnumCNHFilter
-  notIn: [CNH!]
-}
-
-input EnumRoleFilter {
-  equals: Role
-  in: [Role!]
-  not: NestedEnumRoleFilter
-  notIn: [Role!]
 }
 
 input FloatFilter {
@@ -501,6 +522,22 @@ type LegalClientMerchandiseModel {
   volume: Float!
 }
 
+input LegalClientMerchandiseOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input LegalClientMerchandiseOrderByWithRelationInput {
+  LegalClientOrder: LegalClientOrderOrderByWithRelationInput
+  amount: SortOrder
+  codMerchandise: SortOrder
+  description: SortOrder
+  id: SortOrder
+  legalClientOrderId: SortOrder
+  mass: SortOrder
+  value: SortOrder
+  volume: SortOrder
+}
+
 input LegalClientMerchandiseUpdateInput {
   amount: Int
   codMerchandise: String
@@ -546,6 +583,18 @@ input LegalClientOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input LegalClientOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  LegalContract: LegalContractOrderByRelationAggregateInput
+  LegalPerson: LegalPersonOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  branch: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  legal_person_id: SortOrder
+  updated_by: SortOrder
+}
+
 input LegalClientOrderInput {
   legal_contract_id: String!
   order: String!
@@ -577,6 +626,23 @@ type LegalClientOrderModel {
 
 input LegalClientOrderOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input LegalClientOrderOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  InvoiceForLegalClient: InvoiceForLegalClientOrderByRelationAggregateInput
+  LegalClientMerchandise: LegalClientMerchandiseOrderByRelationAggregateInput
+  LegalContract: LegalContractOrderByWithRelationInput
+  OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByWithRelationInput
+  RouteForLegalClient: RoutesOrderByRelationAggregateInput
+  UpdatedBy: UserOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  legal_contract_id: SortOrder
+  order: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input LegalClientOrderUpdateInput {
@@ -664,6 +730,26 @@ input LegalContractOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input LegalContractOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByWithRelationInput
+  Ciot: CiotForLegalClientOrderByRelationAggregateInput
+  CreatedBy: UserOrderByWithRelationInput
+  LegalClient: LegalClientOrderByWithRelationInput
+  LegalClientOrder: LegalClientOrderOrderByRelationAggregateInput
+  UpdatedBy: UserOrderByWithRelationInput
+  carrier_company_id: SortOrder
+  contract_number: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  delivery_conditions: SortOrder
+  effective_date: SortOrder
+  id: SortOrder
+  legal_client_id: SortOrder
+  observations: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
 input LegalContractUpdateInput {
   carrier_company_id: String
   contract_number: String
@@ -732,6 +818,30 @@ type LegalPersonModel {
   updated_at: Timestamp!
 }
 
+input LegalPersonOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByRelationAggregateInput
+  CorporateClient: LegalClientOrderByRelationAggregateInput
+  MaintenanceCompany: MaintenanceCompanyOrderByWithRelationInput
+  OutsourcedTransportCompany: OutsourcedTransportCompanyOrderByRelationAggregateInput
+  address_number: SortOrder
+  city: SortOrder
+  cnpj: SortOrder
+  complement: SortOrder
+  corporate_name: SortOrder
+  created_at: SortOrder
+  email: SortOrder
+  fantasy_name: SortOrder
+  first_phone: SortOrder
+  id: SortOrder
+  neighborhood: SortOrder
+  public_place: SortOrder
+  second_phone: SortOrder
+  state_registration: SortOrder
+  third_phone: SortOrder
+  uf: SortOrder
+  updated_at: SortOrder
+}
+
 input LegalPersonUpdateInput {
   address_number: String
   city: String
@@ -784,6 +894,20 @@ input MaintenanceCompanyListRelationFilter {
 
 input MaintenanceCompanyOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input MaintenanceCompanyOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  LegalPerson: LegalPersonOrderByWithRelationInput
+  Maintenance: MaintenanceOrderByRelationAggregateInput
+  UpdatedBy: UserOrderByWithRelationInput
+  cnpj: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  specialty_maintenance: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input MaintenanceCompanyWhereInput {
@@ -919,6 +1043,31 @@ type NaturalPersonModel {
   uf: String!
 }
 
+input NaturalPersonOrderByWithRelationInput {
+  OutsourcedDriver: OutsourcedDriverOrderByRelationAggregateInput
+  OutsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriverOrderByWithRelationInput
+  OwnDriver: OwnDriverOrderByRelationAggregateInput
+  PhysicalCustomer: PhysicalCustomerOrderByRelationAggregateInput
+  address_number: SortOrder
+  cep: SortOrder
+  city: SortOrder
+  complement: SortOrder
+  cpf: SortOrder
+  date_birth: SortOrder
+  email: SortOrder
+  first_phone: SortOrder
+  gender: SortOrder
+  id: SortOrder
+  name: SortOrder
+  nationality: SortOrder
+  neighborhood: SortOrder
+  public_place: SortOrder
+  rg: SortOrder
+  second_phone: SortOrder
+  third_phone: SortOrder
+  uf: SortOrder
+}
+
 input NaturalPersonUpdate {
   address_number: String
   cep: String
@@ -994,20 +1143,6 @@ input NestedDateTimeNullableFilter {
   notIn: [Timestamp!]
 }
 
-input NestedEnumCNHFilter {
-  equals: CNH
-  in: [CNH!]
-  not: NestedEnumCNHFilter
-  notIn: [CNH!]
-}
-
-input NestedEnumRoleFilter {
-  equals: Role
-  in: [Role!]
-  not: NestedEnumRoleFilter
-  notIn: [Role!]
-}
-
 input NestedFloatFilter {
   equals: Float
   gt: Float
@@ -1079,6 +1214,27 @@ input OrderProcessingOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input OrderProcessingOrderByWithRelationInput {
+  CompanyVehicle: CompanyVehicleOrderByRelationAggregateInput
+  CreatedBy: UserOrderByWithRelationInput
+  OutsourcedVehicle: OutsourcedVehicleOrderByRelationAggregateInput
+  Route: RoutesOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  Vehicle: VehicleOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  end_at: SortOrder
+  id: SortOrder
+  route_id: SortOrder
+  start_at: SortOrder
+  total_distance: SortOrder
+  total_spend_liters: SortOrder
+  total_spending_money: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+  vehicle_id: SortOrder
+}
+
 input OrderProcessingWhereInput {
   AND: [OrderProcessingWhereInput!]
   CompanyVehicle: CompanyVehicleListRelationFilter
@@ -1144,6 +1300,26 @@ input OutsourcedDriverOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input OutsourcedDriverOrderByWithRelationInput {
+  ContractOutsourcedDriver: ContractOutsourcedDriverOrderByRelationAggregateInput
+  CreatedBy: UserOrderByWithRelationInput
+  NaturalPerson: NaturalPersonOrderByWithRelationInput
+  OutsourcedVehicle: OutsourcedVehicleOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  cnh: SortOrder
+  cnh_category: SortOrder
+  cnh_expiration: SortOrder
+  company_vehicle: SortOrder
+  course_mopp: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  natural_person_id: SortOrder
+  outsourced_vehicle_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
 input OutsourcedDriverUpdateInput {
   ContractOutsourcedDriver: ContractOutsoucedDriverUpdateInput
   NaturalPerson: NaturalPersonUpdate
@@ -1165,7 +1341,7 @@ input OutsourcedDriverWhereInput {
   OutsourcedVehicle: OutsourcedVehicleWhereInput
   UpdatedBy: UserWhereInput
   cnh: StringFilter
-  cnh_category: EnumCNHFilter
+  cnh_category: StringFilter
   cnh_expiration: DateTimeFilter
   company_vehicle: BoolFilter
   course_mopp: BoolFilter
@@ -1210,6 +1386,22 @@ type OutsourcedTransportCompanyContractModel {
 
 input OutsourcedTransportCompanyContractOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input OutsourcedTransportCompanyContractOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByWithRelationInput
+  CreatedBy: UserOrderByWithRelationInput
+  LegalClientOrder: LegalClientOrderOrderByWithRelationInput
+  OutsourcedTransportCompany: OutsourcedTransportCompanyOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  carrier_company_id: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  legal_client_order_id: SortOrder
+  outsourced_transport_company_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input OutsourcedTransportCompanyContractUpdateInput {
@@ -1277,6 +1469,24 @@ input OutsourcedTransportCompanyDriverOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input OutsourcedTransportCompanyDriverOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  NaturalPerson: NaturalPersonOrderByWithRelationInput
+  OutsourcedTransportCompany: OutsourcedTransportCompanyOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  cnh: SortOrder
+  cnh_category: SortOrder
+  cnh_expiration: SortOrder
+  course_mopp: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  natural_person_id: SortOrder
+  outsourced_transport_company_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
 input OutsourcedTransportCompanyDriverUpdateInput {
   NaturalPerson: NaturalPersonUpdate!
   cnh: String
@@ -1296,7 +1506,7 @@ input OutsourcedTransportCompanyDriverWhereInput {
   OutsourcedTransportCompany: OutsourcedTransportCompanyWhereInput
   UpdatedBy: UserWhereInput
   cnh: StringFilter
-  cnh_category: EnumCNHFilter
+  cnh_category: StringFilter
   cnh_expiration: DateTimeFilter
   course_mopp: BoolFilter
   created_at: DateTimeFilter
@@ -1338,6 +1548,21 @@ type OutsourcedTransportCompanyModel {
 
 input OutsourcedTransportCompanyOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input OutsourcedTransportCompanyOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  LegalPerson: LegalPersonOrderByWithRelationInput
+  OutsourcedCompanyVehicle: OutsourcedTransportVehicleOrderByRelationAggregateInput
+  OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByRelationAggregateInput
+  OutsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriverOrderByRelationAggregateInput
+  UpdatedBy: UserOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  legal_person_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input OutsourcedTransportCompanyUpdateInput {
@@ -1393,6 +1618,20 @@ input OutsourcedTransportVehicleOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input OutsourcedTransportVehicleOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  OutsourcedTransportCompany: OutsourcedTransportCompanyOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  Vehicle: VehicleOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  outsourced_company_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+  vehicle_id: SortOrder
+}
+
 input OutsourcedTransportVehicleUpdateInput {
   Vehicle: VehicleUpdateInput
   outsourced_company_id: String
@@ -1437,6 +1676,21 @@ input OutsourcedVehicleListRelationFilter {
 
 input OutsourcedVehicleOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input OutsourcedVehicleOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  OrderProcessing: OrderProcessingOrderByWithRelationInput
+  OutsourcedDriver: OutsourcedDriverOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  Vehicle: VehicleOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  order_processing_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+  vehicle_id: SortOrder
 }
 
 input OutsourcedVehicleUpdateInput {
@@ -1498,6 +1752,23 @@ input OwnDriverOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input OwnDriverOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  NaturalPerson: NaturalPersonOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  cnh: SortOrder
+  cnh_category: SortOrder
+  cnh_expiration: SortOrder
+  company_vehicle: SortOrder
+  course_mopp: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  natural_person_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
 input OwnDriverUpdate {
   NaturalPersonUpdate: NaturalPersonUpdate!
   cnh: String
@@ -1515,7 +1786,7 @@ input OwnDriverWhereInput {
   OR: [OwnDriverWhereInput!]
   UpdatedBy: UserWhereInput
   cnh: StringFilter
-  cnh_category: EnumCNHFilter
+  cnh_category: StringFilter
   cnh_expiration: DateTimeFilter
   company_vehicle: BoolFilter
   course_mopp: BoolFilter
@@ -1525,6 +1796,14 @@ input OwnDriverWhereInput {
   natural_person_id: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
+}
+
+input PhysicalContractOrderByWithRelationInput {
+  Ciot: CiotForPhysicalClientOrderByRelationAggregateInput
+  PhysicalCustomer: PhysicalCustomerOrderByWithRelationInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByRelationAggregateInput
+  id: SortOrder
+  physicalCustomerId: SortOrder
 }
 
 input PhysicalContractWhereInput {
@@ -1550,6 +1829,10 @@ input PhysicalCustomerMerchandiseListRelationFilter {
   some: PhysicalCustomerMerchandiseWhereInput
 }
 
+input PhysicalCustomerMerchandiseOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
 input PhysicalCustomerMerchandiseWhereInput {
   AND: [PhysicalCustomerMerchandiseWhereInput!]
   NOT: [PhysicalCustomerMerchandiseWhereInput!]
@@ -1569,6 +1852,20 @@ input PhysicalCustomerOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input PhysicalCustomerOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  NaturalPerson: NaturalPersonOrderByWithRelationInput
+  PhysicalContract: PhysicalContractOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  branch: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  natural_person_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
 input PhysicalCustomerOrderListRelationFilter {
   every: PhysicalCustomerOrderWhereInput
   none: PhysicalCustomerOrderWhereInput
@@ -1577,6 +1874,22 @@ input PhysicalCustomerOrderListRelationFilter {
 
 input PhysicalCustomerOrderOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input PhysicalCustomerOrderOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  Invoice: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  PhysicalContract: PhysicalContractOrderByWithRelationInput
+  PhysicalCustomerMerchandise: PhysicalCustomerMerchandiseOrderByRelationAggregateInput
+  Route: RoutesOrderByRelationAggregateInput
+  UpdatedBy: UserOrderByWithRelationInput
+  contractId: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  order: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 input PhysicalCustomerOrderWhereInput {
@@ -1616,26 +1929,26 @@ input PhysicalCustomerWhereInput {
 }
 
 type Query {
-  getAllCarrierCompany: [CarrierCompanyModel!]
-  getAllCiotForLegalClient: [CiotForLegalClientModel!]
-  getAllCompanyVehicle: [CompanyVehicleIModel!]!
-  getAllInvoiceForLegalClient: [InvoiceForLegalClientModel!]
-  getAllLegalClient: [LegalClientModel!]
-  getAllLegalClientMerchandise: [LegalClientMerchandiseModel!]
-  getAllLegalClientOrder: [LegalClientOrderModel!]
-  getAllLegalContract: [LegalContractModel!]
-  getAllOutsourcedDriver: [OutsourcedDriverModel!]!
-  getAllOutsourcedTransportCompany: [OutsourcedTransportCompanyModel!]
-  getAllOutsourcedTransportCompanyContract: [OutsourcedTransportCompanyContractModel!]
-  getAllOutsourcedTransportCompanyDriver: [OutsourcedTransportCompanyDriverModel!]
-  getAllOutsourcedTransportVehicle: [OutsourcedTransportVehicleModel!]
-  getAllOutsourcedVehicle: [OutsourcedVehicleIModel!]!
-  getAllOwnDriver: [OwnDriverModel!]!
-  getAllVehicle: [VehicleCarModel!]!
-  getAllVehicleBodywork: [VehicleBodyworkModel!]
-  getAllVehicleBrand: [VehicleBrandModel!]!
-  getAllVehicleModel: [VehicleModelGraphql!]
-  getAllVehicleTypes: [VehicleTypeModel!]
+  getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]
+  getAllCiotForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: CiotForLegalClientOrderByWithRelationInput, where: CiotForLegalClientWhereInput): [CiotForLegalClientModel!]
+  getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!
+  getAllInvoiceForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [InvoiceForLegalClientModel!]
+  getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
+  getAllLegalClientMerchandise(limit: Int! = 25, offset: Int! = 0, sort: LegalClientMerchandiseOrderByWithRelationInput, where: LegalClientMerchandiseWhereInput): [LegalClientMerchandiseModel!]
+  getAllLegalClientOrder(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderOrderByWithRelationInput, where: LegalClientOrderWhereInput): [LegalClientOrderModel!]
+  getAllLegalContract(limit: Int! = 25, offset: Int! = 0, sort: LegalContractOrderByWithRelationInput, where: LegalContractWhereInput): [LegalContractModel!]
+  getAllOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedDriverOrderByWithRelationInput, where: OutsourcedDriverWhereInput): [OutsourcedDriverModel!]!
+  getAllOutsourcedTransportCompany(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportCompanyOrderByWithRelationInput, where: OutsourcedTransportCompanyWhereInput): [OutsourcedTransportCompanyModel!]
+  getAllOutsourcedTransportCompanyContract(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportCompanyOrderByWithRelationInput, where: OutsourcedTransportCompanyWhereInput): [OutsourcedTransportCompanyContractModel!]
+  getAllOutsourcedTransportCompanyDriver(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportCompanyDriverOrderByWithRelationInput, where: OutsourcedTransportCompanyDriverWhereInput): [OutsourcedTransportCompanyDriverModel!]
+  getAllOutsourcedTransportVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedTransportVehicleModel!]
+  getAllOutsourcedVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedVehicleIModel!]!
+  getAllOwnDriver(limit: Int! = 25, offset: Int! = 0, sort: OwnDriverOrderByWithRelationInput, where: OwnDriverWhereInput): [OwnDriverModel!]!
+  getAllVehicle(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleCarModel!]!
+  getAllVehicleBodywork(limit: Int! = 25, offset: Int! = 0, sort: VehicleBodyworkOrderByWithRelationInput, where: VehicleBodyworkWhereInput): [VehicleBodyworkModel!]
+  getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
+  getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
+  getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
   getCarrierCompanyModel(id: String!): CarrierCompanyModel!
   getCiotForLegalClientModel(id: String!): CiotForLegalClientModel!
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
@@ -1665,16 +1978,32 @@ enum QueryMode {
   insensitive
 }
 
-enum Role {
-  ADMIN
-  CLIENT
-  USER
-}
-
 input RoutesListRelationFilter {
   every: RoutesWhereInput
   none: RoutesWhereInput
   some: RoutesWhereInput
+}
+
+input RoutesOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input RoutesOrderByWithRelationInput {
+  LegalClientOrder: LegalClientOrderOrderByWithRelationInput
+  OrderProcessing: OrderProcessingOrderByRelationAggregateInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByWithRelationInput
+  address_number: SortOrder
+  cep: SortOrder
+  city: SortOrder
+  complement: SortOrder
+  created_at: SortOrder
+  id: SortOrder
+  legalClientOrdermId: SortOrder
+  neighborhood: SortOrder
+  physicalCustomerOrderId: SortOrder
+  public_place: SortOrder
+  uf: SortOrder
+  updated_at: SortOrder
 }
 
 input RoutesWhereInput {
@@ -1852,7 +2181,6 @@ input UserOrderByWithRelationInput {
   email: SortOrder
   id: SortOrder
   name: SortOrder
-  password: SortOrder
   role: SortOrder
   updated_at: SortOrder
   username: SortOrder
@@ -1930,8 +2258,7 @@ input UserWhereInput {
   email: StringFilter
   id: StringFilter
   name: StringFilter
-  password: StringFilter
-  role: EnumRoleFilter
+  role: StringFilter
   updated_at: DateTimeFilter
   username: StringFilter
 }
@@ -1976,6 +2303,21 @@ type VehicleBodyworkModelReferences {
 
 input VehicleBodyworkOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input VehicleBodyworkOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  VehicleTypeContainsBody: VehicleTypeContainsBodyOrderByRelationAggregateInput
+  axles: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  mass: SortOrder
+  name: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+  volume: SortOrder
 }
 
 input VehicleBodyworkUpdateInput {
@@ -2027,6 +2369,18 @@ type VehicleBrandModel {
 
 input VehicleBrandOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input VehicleBrandOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  VehicleModel: VehicleModelOrderByRelationAggregateInput
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  name: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 type VehicleBrandReferences {
@@ -2122,6 +2476,26 @@ input VehicleModelOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input VehicleModelOrderByWithRelationInput {
+  Brand: VehicleBrandOrderByWithRelationInput
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  Vehicle: VehicleOrderByRelationAggregateInput
+  VehicleType: VehicleTypeOrderByWithRelationInput
+  axles: SortOrder
+  brand_id: SortOrder
+  capacity_max: SortOrder
+  capacity_per_axle: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  name: SortOrder
+  type_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+  weight: SortOrder
+}
+
 type VehicleModelReferences {
   axles: Int!
   brand_id: String!
@@ -2164,6 +2538,26 @@ input VehicleModelWhereInput {
   updated_at: DateTimeFilter
   updated_by: StringFilter
   weight: FloatFilter
+}
+
+input VehicleOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input VehicleOrderByWithRelationInput {
+  CompanyVehicle: CompanyVehicleOrderByWithRelationInput
+  Maintenance: MaintenanceOrderByRelationAggregateInput
+  Model: VehicleModelOrderByWithRelationInput
+  OrderProcessing: OrderProcessingOrderByWithRelationInput
+  OutsourcedTransportVehicle: OutsourcedTransportVehicleOrderByWithRelationInput
+  OutsourcedVehicle: OutsourcedVehicleOrderByWithRelationInput
+  color: SortOrder
+  id: SortOrder
+  model_id: SortOrder
+  plate: SortOrder
+  renavam: SortOrder
+  rntrc_expiration: SortOrder
+  year: SortOrder
 }
 
 input VehicleTypeContainsBodyListRelationFilter {
@@ -2232,6 +2626,20 @@ type VehicleTypeModel {
 
 input VehicleTypeOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input VehicleTypeOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  VehicleModel: VehicleModelOrderByRelationAggregateInput
+  VehicleTypeContainsBody: VehicleTypeContainsBodyOrderByRelationAggregateInput
+  bodywork: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  id: SortOrder
+  name: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
 }
 
 type VehicleTypeReferences {

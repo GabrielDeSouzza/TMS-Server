@@ -15,6 +15,7 @@ import { OutsourcedTransportCompanyRepository } from 'domain/repositories/Outsou
 import { OutsourcedTransportCompanyContractRepository } from 'domain/repositories/OutsourcedTransportCompanyContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/args/OutsourcedTransportCompanyArgs';
 import { OutsourcedTransportCompanyContractGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyContractGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -50,9 +51,18 @@ export class OutsourcedTransportCompanyContractResolver {
     );
   }
   @Query(() => [OutsourcedTransportCompanyContractModel], { nullable: true })
-  async getAllOutsourcedTransportCompanyContract() {
+  async getAllOutsourcedTransportCompanyContract(
+    @Args() args: OutsourcedTransportCompanyWhereArgs,
+  ) {
     const outsourcedTransportCompanyContract =
-      await this.outsourcedTransportCompanyContractRepository.getAllOutsourcedTransportCompanyContract();
+      await this.outsourcedTransportCompanyContractRepository.getAllOutsourcedTransportCompanyContract(
+        {
+          limit: args.limit,
+          offset: args.offset,
+          sort: args.sort,
+          where: args.where,
+        },
+      );
 
     return outsourcedTransportCompanyContract.length > 0
       ? outsourcedTransportCompanyContract

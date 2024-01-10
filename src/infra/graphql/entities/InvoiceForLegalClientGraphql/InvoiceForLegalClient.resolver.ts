@@ -13,6 +13,7 @@ import { InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForL
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { LegalClientWhereArgs } from 'infra/graphql/args/LegalClientArgs';
 import { InvoiceForLegalClientGraphqlDTO } from 'infra/graphql/DTO/InvoiceForLegalClientGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -44,9 +45,14 @@ export class InvoiceForLegalClientResolver {
     );
   }
   @Query(() => [InvoiceForLegalClientModel], { nullable: true })
-  async getAllInvoiceForLegalClient() {
+  async getAllInvoiceForLegalClient(@Args() args: LegalClientWhereArgs) {
     const invoiceForLegalClient =
-      await this.invoiceForLegalClientRepository.getAllInvoiceForLegalClient();
+      await this.invoiceForLegalClientRepository.getAllInvoiceForLegalClient({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return invoiceForLegalClient.length > 0 ? invoiceForLegalClient : null;
   }

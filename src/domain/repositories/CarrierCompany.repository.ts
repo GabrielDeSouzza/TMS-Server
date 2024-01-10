@@ -1,3 +1,4 @@
+import { type FindAllWhereCarrierCompanyRequestType } from 'domain/dto/repositories/CarrierRepositoryDto';
 import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
@@ -13,5 +14,7 @@ export abstract class CarrierCompanyRepository {
     carrierCompany?: CarrierCompany,
     legalPerson?: LegalPerson,
   ): Promise<CarrierCompany>;
-  abstract getAllCarrierCompany(): Promise<CarrierCompany[]>;
+  abstract getAllCarrierCompany(
+    where: FindAllWhereCarrierCompanyRequestType,
+  ): Promise<CarrierCompany[]>;
 }

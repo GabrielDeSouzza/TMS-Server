@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllVehicleModelWhereRequestDTO } from 'domain/dto/repositories/VehicleModelRepositoryDto';
 import { type VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 import { type VehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
 import { type VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
@@ -41,8 +42,15 @@ export class VehicleModelService implements VehicleModelRepository {
 
     return VehicleModelPrismaDTO.PrismaToEntity(vehicleModelPrisma);
   }
-  async getAllVehicleModel(): Promise<VehicleModel[]> {
-    const models = await this.prisma.vehicleModel.findMany();
+  async getAllVehicleModel(
+    parameters: FindAllVehicleModelWhereRequestDTO,
+  ): Promise<VehicleModel[]> {
+    const models = await this.prisma.vehicleModel.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return models.map(model => VehicleModelPrismaDTO.PrismaToEntity(model));
   }

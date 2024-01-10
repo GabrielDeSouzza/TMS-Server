@@ -12,6 +12,7 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { CompanyVehicleWhereArgs } from 'infra/graphql/args/CompanyVehicleArgs';
 import { CompanyVehicleGraphDTO } from 'infra/graphql/DTO/CompanyVehicle';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -40,8 +41,13 @@ export class CompanyVehicleResolver {
     return this.companyRespository.findCompanyVehicle(id);
   }
   @Query(() => [CompanyVehicleIModel])
-  async getAllCompanyVehicle() {
-    return await this.companyRespository.findAllCompanyVehicle();
+  async getAllCompanyVehicle(@Args() args: CompanyVehicleWhereArgs) {
+    return await this.companyRespository.findAllCompanyVehicle({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
   }
   @Mutation(() => CompanyVehicleIModel)
   async createCompanyVehicle(

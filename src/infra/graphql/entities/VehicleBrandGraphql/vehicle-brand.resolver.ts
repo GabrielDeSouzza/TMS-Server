@@ -11,8 +11,8 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
-import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
+import { VehicleBrandWhereArgs } from 'infra/graphql/args/VehicleBrandArgs';
 import { VehicleBrandGraphDTO } from 'infra/graphql/DTO/VehicleBrand';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -33,7 +33,6 @@ export class VehicleBrandResolver {
   constructor(
     private vehicleBrandRepository: VehicleBrandRepository,
     private userRepository: UserRepository,
-    private vehicleModelRepository: VehicleModelRepository,
   ) {}
 
   @Query(() => VehicleBrandModel)
@@ -41,8 +40,13 @@ export class VehicleBrandResolver {
     return await this.vehicleBrandRepository.findVehicleBrandById(id);
   }
   @Query(() => [VehicleBrandModel])
-  async getAllVehicleBrand() {
-    const brands = await this.vehicleBrandRepository.getAllVehicleBrand();
+  async getAllVehicleBrand(@Args() args: VehicleBrandWhereArgs) {
+    const brands = await this.vehicleBrandRepository.getAllVehicleBrand({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
     console.log(brands);
 
     return brands.length > 0 ? brands : null;
@@ -88,12 +92,5 @@ export class VehicleBrandResolver {
     const { updated_by: updatedBy } = user;
 
     return this.userRepository.findUserById(updatedBy);
-  }
-
-  @ResolveField()
-  async VehicleModels() {
-    const models = await this.vehicleModelRepository.getAllVehicleModel();
-
-    return models.length > 0 ? models : null;
   }
 }

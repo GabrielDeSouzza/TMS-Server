@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllLegalPersonWhereRequestDTO } from 'domain/dto/repositories/LegalPersonRepository';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
@@ -16,8 +17,15 @@ export class LegalPersonPrismaService implements LegalPersonRepository {
 
     return LegalPersonPrismaDTO.PrismaToEntity(legalPersonPrisma);
   }
-  async getAllLegalPerson(): Promise<LegalPerson[]> {
-    const legalPerson = await this.prisma.legalPerson.findMany();
+  async getAllLegalPerson(
+    parameters: FindAllLegalPersonWhereRequestDTO,
+  ): Promise<LegalPerson[]> {
+    const legalPerson = await this.prisma.legalPerson.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return legalPerson.map(legalPerson =>
       LegalPersonPrismaDTO.PrismaToEntity(legalPerson),

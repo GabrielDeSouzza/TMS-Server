@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllOutsourcedDriverWhereRequestDTO } from 'domain/dto/repositories/OutsourcedDriverRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { type OutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
@@ -61,9 +62,15 @@ export class OutsourcedDriverPrismaService
       }),
     );
   }
-  async findAllOutsourcedDriver(): Promise<OutsourcedDriver[]> {
-    const outsourcedDrivesPrisma =
-      await this.prisma.outsourcedDriver.findMany();
+  async findAllOutsourcedDriver(
+    parameters: FindAllOutsourcedDriverWhereRequestDTO,
+  ): Promise<OutsourcedDriver[]> {
+    const outsourcedDrivesPrisma = await this.prisma.outsourcedDriver.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return outsourcedDrivesPrisma.map(outDriver =>
       OutsourcedDriverPrismaDTO.PrismaToEntity(outDriver),

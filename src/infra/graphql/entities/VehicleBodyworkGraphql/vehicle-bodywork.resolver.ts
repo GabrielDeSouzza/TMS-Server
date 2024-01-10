@@ -12,6 +12,7 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 
+import { VehicleBodyworkWhereArgs } from 'infra/graphql/args/VehicleBodyworkArgs';
 import { VehicleBodyworkGraphDTO } from 'infra/graphql/DTO/VehicleBodywork';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -39,9 +40,14 @@ export class VehicleBodyworkResolver {
     return this.vehicleBodyworkRepository.findVehicleBodyworkById(id);
   }
   @Query(() => [VehicleBodyworkModel], { nullable: true })
-  async getAllVehicleBodywork() {
+  async getAllVehicleBodywork(@Args() args: VehicleBodyworkWhereArgs) {
     const bodyworks =
-      await this.vehicleBodyworkRepository.getAllVehicleBodywork();
+      await this.vehicleBodyworkRepository.getAllVehicleBodywork({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return bodyworks.length > 0 ? bodyworks : null;
   }

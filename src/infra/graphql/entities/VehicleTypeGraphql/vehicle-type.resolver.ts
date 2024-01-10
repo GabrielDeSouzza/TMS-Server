@@ -16,6 +16,7 @@ import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
+import { VehicleTypeWhereArgs } from 'infra/graphql/args/VehicleTypeArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -42,8 +43,13 @@ export class VehicleTypeResolver {
     return this.vehicleTypeRepository.findVehicleTypeById(id);
   }
   @Query(() => [VehicleTypeModel], { nullable: true })
-  async getAllVehicleTypes() {
-    const vehicleTypes = await this.vehicleTypeRepository.getAllVehicleType();
+  async getAllVehicleTypes(@Args() args: VehicleTypeWhereArgs) {
+    const vehicleTypes = await this.vehicleTypeRepository.getAllVehicleType({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
 
     return vehicleTypes.length > 0 ? vehicleTypes : null;
   }

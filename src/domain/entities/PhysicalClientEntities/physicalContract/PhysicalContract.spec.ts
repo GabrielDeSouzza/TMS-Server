@@ -7,6 +7,8 @@ describe('Merchandise', () => {
       created_at: new Date(),
       id: '13213',
       updated_at: new Date(),
+      clause: '494',
+      observations: 'TEsadasd',
     });
 
     expect(physicalContractor).toBeTruthy();

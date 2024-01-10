@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllLegalClientMerchandiseWhereRequestDTO } from 'domain/dto/repositories/LegalClientMerchandiseRepositoryDto';
 import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 import { type LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 
@@ -65,9 +66,16 @@ export class LegalClientMerchandisePrismaService
     );
   }
 
-  async getAllLegalClientMerchandise(): Promise<LegalClientMerchandise[]> {
+  async getAllLegalClientMerchandise(
+    parameters: FindAllLegalClientMerchandiseWhereRequestDTO,
+  ): Promise<LegalClientMerchandise[]> {
     const legalClientMerchandises =
-      await this.prisma.legalClientMerchandise.findMany();
+      await this.prisma.legalClientMerchandise.findMany({
+        take: parameters.limit,
+        skip: parameters.offset,
+        where: parameters.where,
+        orderBy: parameters.sort,
+      });
 
     return legalClientMerchandises.map(legalClientMerchandise =>
       LegalClientMerchandisePrismaDTO.PrismaToEntity(legalClientMerchandise),

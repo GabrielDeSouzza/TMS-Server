@@ -6,7 +6,7 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IPhysicalCustomerOrder {
+export interface IPhysicalCustomerOrder {
   id?: string;
   order: string;
   physical_contract_id: string;

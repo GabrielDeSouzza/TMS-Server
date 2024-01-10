@@ -1,3 +1,4 @@
+import { type FindAllOutsourcedTransportCompanyWhereRequestDTO } from 'domain/dto/repositories/OutsourcedTransportCompanyRepositoryDto';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type OutsourcedTransportCompany } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompany/OutsourcedTransportCompany';
 import { type OutsourcedTransportCompanyContract } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyContract/OutsourcedTransportCompanyContract';
@@ -18,9 +19,9 @@ export abstract class OutsourcedTransportCompanyRepository {
     outsourcedTransportCompany: OutsourcedTransportCompany,
     legalPerson: LegalPerson,
   ): Promise<OutsourcedTransportCompany>;
-  abstract getAllOutsourcedTransportCompany(): Promise<
-    OutsourcedTransportCompany[]
-  >;
+  abstract getAllOutsourcedTransportCompany(
+    parameters: FindAllOutsourcedTransportCompanyWhereRequestDTO,
+  ): Promise<OutsourcedTransportCompany[]>;
   abstract getAllOutsourcedTransportCompanyContracts(
     outsourcedCompanyId: string,
   ): Promise<OutsourcedTransportCompanyContract[]>;

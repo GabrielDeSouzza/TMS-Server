@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 import { type InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForLegalClient.repository';
 
@@ -53,23 +54,19 @@ export class InvoiceForLegalClientPrismaService
     );
   }
 
-  async getAllInvoiceForLegalClient(): Promise<InvoiceForLegalClient[]> {
+  async getAllInvoiceForLegalClient(
+    parameters: FindAllInvoiceForLegalClientWhereRequestDTO,
+  ): Promise<InvoiceForLegalClient[]> {
     const invoiceForLegalClients =
-      await this.prisma.invoiceForLegalClient.findMany();
+      await this.prisma.invoiceForLegalClient.findMany({
+        take: parameters.limit,
+        skip: parameters.offset,
+        where: parameters.where,
+        orderBy: parameters.sort,
+      });
 
     return invoiceForLegalClients.map(invoiceForLegalClient =>
       InvoiceForLegalClientPrismaDTO.PrismaToEntity(invoiceForLegalClient),
-    );
-  }
-  async findInvoicesByOrder(
-    legalCLientID: string,
-  ): Promise<InvoiceForLegalClient[]> {
-    const invoices = await this.prisma.invoiceForLegalClient.findMany({
-      where: { legalClientrOrderId: legalCLientID },
-    });
-
-    return invoices.map(invoice =>
-      InvoiceForLegalClientPrismaDTO.PrismaToEntity(invoice),
     );
   }
 }

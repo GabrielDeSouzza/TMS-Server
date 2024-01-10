@@ -12,6 +12,7 @@ import { ROLE } from 'domain/entities/User/User';
 import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 
+import { LegalClientMerchandiseWhereArgs } from 'infra/graphql/args/LegalClientMerchandiseArgs';
 import { LegalClientMerchandiseGraphqlDTO } from 'infra/graphql/DTO/LegalClientMerchandiseGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -40,9 +41,16 @@ export class LegalClientMerchandiseResolver {
     );
   }
   @Query(() => [LegalClientMerchandiseModel], { nullable: true })
-  async getAllLegalClientMerchandise() {
+  async getAllLegalClientMerchandise(
+    @Args() args: LegalClientMerchandiseWhereArgs,
+  ) {
     const legalClientMerchandise =
-      await this.legalClientMerchandiseRepository.getAllLegalClientMerchandise();
+      await this.legalClientMerchandiseRepository.getAllLegalClientMerchandise({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return legalClientMerchandise.length > 0 ? legalClientMerchandise : null;
   }

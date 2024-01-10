@@ -1,3 +1,4 @@
+import { type FindAllLegalClientMerchandiseWhereRequestDTO } from 'domain/dto/repositories/LegalClientMerchandiseRepositoryDto';
 import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 
 export abstract class LegalClientMerchandiseRepository {
@@ -11,7 +12,9 @@ export abstract class LegalClientMerchandiseRepository {
     id: string,
     legalClientMerchandise: LegalClientMerchandise,
   ): Promise<LegalClientMerchandise>;
-  abstract getAllLegalClientMerchandise(): Promise<LegalClientMerchandise[]>;
+  abstract getAllLegalClientMerchandise(
+    parameters: FindAllLegalClientMerchandiseWhereRequestDTO,
+  ): Promise<LegalClientMerchandise[]>;
   abstract findLegalClientMerchandisesByOrder(
     legalClientOrderId: string,
   ): Promise<LegalClientMerchandise[]>;

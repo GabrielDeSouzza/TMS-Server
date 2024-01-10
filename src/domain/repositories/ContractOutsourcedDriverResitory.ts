@@ -1,16 +1,8 @@
+import { type FindAllContractOutsourcedDriverWhereRequestDTO } from 'domain/dto/repositories/ContractOutsourcedDriverRepositoryDto';
 import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
 export abstract class ContractOutsourcedDriverRepository {
-  abstract findContractOutsourcedDriverById(
-    id: string,
-  ): Promise<ContractOutsourcedDriver>;
-  abstract findAllContracOutsourcedDriverByCpf(
-    cpf: string,
-  ): Promise<ContractOutsourcedDriver[]>;
-  abstract findAllContracOutsourcedDriver(): Promise<
-    ContractOutsourcedDriver[]
-  >;
-  abstract findAllContracOutsourcedDriverByOutsourcedDriverId(
-    outsoucedDriverId: string,
+  abstract findAllContracOutsourcedDriver(
+    parameters: FindAllContractOutsourcedDriverWhereRequestDTO,
   ): Promise<ContractOutsourcedDriver[]>;
 }

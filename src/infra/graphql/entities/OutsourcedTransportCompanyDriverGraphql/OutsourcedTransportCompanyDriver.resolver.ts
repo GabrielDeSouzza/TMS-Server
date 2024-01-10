@@ -16,6 +16,7 @@ import { OutsourcedTransportCompanyRepository } from 'domain/repositories/Outsou
 import { OutsourcedTransportCompanyDriverRepository } from 'domain/repositories/OutsourcedTransportCompanyDriver.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { OutsourcedTransportCompanyDriverWhereArgs } from 'infra/graphql/args/OutsourcedTransportCompanyDriverArgs';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
 import { OutsourcedTransportCompanyDriverGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyDriverGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -50,9 +51,18 @@ export class OutsourcedTransportCompanyDriverResolver {
     );
   }
   @Query(() => [OutsourcedTransportCompanyDriverModel], { nullable: true })
-  async getAllOutsourcedTransportCompanyDriver() {
+  async getAllOutsourcedTransportCompanyDriver(
+    @Args() args: OutsourcedTransportCompanyDriverWhereArgs,
+  ) {
     const outsourcedTransportCompanyDriver =
-      await this.outsourcedTransportCompanyDriverRepository.getAllOutsourcedTransportCompanyDriver();
+      await this.outsourcedTransportCompanyDriverRepository.getAllOutsourcedTransportCompanyDriver(
+        {
+          limit: args.limit,
+          offset: args.offset,
+          sort: args.sort,
+          where: args.where,
+        },
+      );
 
     return outsourcedTransportCompanyDriver.length > 0
       ? outsourcedTransportCompanyDriver

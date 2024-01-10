@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllOutsourcedTransportCompanyDriverWhereRequestDTO } from 'domain/dto/repositories/OutsourcedTransportCompanyDriverRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type OutsourcedTransportCompanyDriver } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyDriver/OutsourcedTransportCompany';
 import { type OutsourcedTransportCompanyDriverRepository } from 'domain/repositories/OutsourcedTransportCompanyDriver.repository';
@@ -59,11 +60,16 @@ export class OutsourcedTransportCompanyDriverPrismaService
     );
   }
 
-  async getAllOutsourcedTransportCompanyDriver(): Promise<
-    OutsourcedTransportCompanyDriver[]
-  > {
+  async getAllOutsourcedTransportCompanyDriver(
+    parameters: FindAllOutsourcedTransportCompanyDriverWhereRequestDTO,
+  ): Promise<OutsourcedTransportCompanyDriver[]> {
     const outsourcedTransportCompanyDrivers =
-      await this.prisma.outsourcedTransportCompanyDriver.findMany();
+      await this.prisma.outsourcedTransportCompanyDriver.findMany({
+        take: parameters.limit,
+        skip: parameters.offset,
+        where: parameters.where,
+        orderBy: parameters.sort,
+      });
 
     return outsourcedTransportCompanyDrivers.map(
       outsourcedTransportCompanyDriver =>

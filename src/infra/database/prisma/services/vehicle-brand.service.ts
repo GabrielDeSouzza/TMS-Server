@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllVehicleBrandWhereRequestDTO } from 'domain/dto/repositories/VehicleBrandRepositoryDto';
 import { type VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 import { type VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 
@@ -7,7 +8,6 @@ import { PrismaService } from '../prisma.service';
 import { VehicleBrandPrismaDTO } from './prismaDTO/VehicleBrandPrismaDto';
 
 @Injectable()
-// eslint-disable-next-line @darraghor/nestjs-typed/injectable-should-be-provided
 export class VehicleBrandService implements VehicleBrandRepository {
   constructor(private prisma: PrismaService) {}
   async findVehicleBrandById(id: string): Promise<VehicleBrand> {
@@ -38,8 +38,15 @@ export class VehicleBrandService implements VehicleBrandRepository {
 
     return vehicleBrandReturn;
   }
-  async getAllVehicleBrand(): Promise<VehicleBrand[]> {
-    const brands = await this.prisma.vehicleBrand.findMany();
+  async getAllVehicleBrand(
+    parameters: FindAllVehicleBrandWhereRequestDTO,
+  ): Promise<VehicleBrand[]> {
+    const brands = await this.prisma.vehicleBrand.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
     const vehicleBrands = brands.map(brand =>
       VehicleBrandPrismaDTO.PrismaToEntity(brand),
     );

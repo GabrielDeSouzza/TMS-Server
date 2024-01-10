@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type FindAllVehicleBodyworkWhereRequestDTO } from 'domain/dto/repositories/VehicleBodyworkRepositoryDto';
 import { type VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 import { type VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 
@@ -36,8 +37,15 @@ export class VehicleBodyworkService implements VehicleBodyworkRepository {
 
     return VehicleBodyworkPrismaDto.PrismaToEntity(bodyworkPrisma);
   }
-  async getAllVehicleBodywork(): Promise<VehicleBodywork[]> {
-    const bodyworks = await this.prisma.vehicleBodywork.findMany();
+  async getAllVehicleBodywork(
+    parameters: FindAllVehicleBodyworkWhereRequestDTO,
+  ): Promise<VehicleBodywork[]> {
+    const bodyworks = await this.prisma.vehicleBodywork.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
 
     return bodyworks.map(bodywork =>
       VehicleBodyworkPrismaDto.PrismaToEntity(bodywork),

@@ -9,19 +9,18 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForLegalClient.repository';
 import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { LegalClientOrderWhereArgs } from 'infra/graphql/args/LegalClientOrderArgs';
 import { LegalClientOrderGraphqlDTO } from 'infra/graphql/DTO/LegalClientOrderGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { InvoiceForLegalClientModel } from '../InvoiceForLegalClientGraphql/InvoiceForLegalClient.model';
 import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -41,16 +40,20 @@ export class LegalClientOrderResolver {
     private userRepository: UserRepository,
     private legalContract: LegalContractRepository,
     private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
-    private invoicesLegalClientRepository: InvoiceForLegalClientRepository,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args('id') id: string) {
     return this.legalClientOrderRepository.findLegalClientOrderById(id);
   }
   @Query(() => [LegalClientOrderModel], { nullable: true })
-  async getAllLegalClientOrder() {
+  async getAllLegalClientOrder(@Args() args: LegalClientOrderWhereArgs) {
     const legalClientOrder =
-      await this.legalClientOrderRepository.getAllLegalClientOrder();
+      await this.legalClientOrderRepository.getAllLegalClientOrder({
+        limit: args.limit,
+        offset: args.offset,
+        sort: args.sort,
+        where: args.where,
+      });
 
     return legalClientOrder.length > 0 ? legalClientOrder : null;
   }
@@ -100,12 +103,7 @@ export class LegalClientOrderResolver {
       id,
     );
   }
-  @ResolveField(() => [InvoiceForLegalClientModel])
-  async Invoices(@Parent() order: LegalClientOrderModel) {
-    const { id } = order;
 
-    return await this.invoicesLegalClientRepository.findInvoicesByOrder(id);
-  }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: LegalClientOrderInput) {
     const { created_by: createdBy } = user;

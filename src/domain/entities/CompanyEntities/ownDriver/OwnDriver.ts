@@ -12,13 +12,14 @@ export interface IOwnDriver {
   cnh: string;
   cnh_category: string;
   cnh_expiration: Date;
-  company_vehicle: boolean | false;
+  company_vehicle: boolean;
   course_mopp: boolean;
   created_at: Date;
   updated_at: Date;
   created_by: string;
   updated_by: string;
 }
+
 export class OwnDriver extends Entity {
   private props: IOwnDriver | Partial<IOwnDriver>;
 

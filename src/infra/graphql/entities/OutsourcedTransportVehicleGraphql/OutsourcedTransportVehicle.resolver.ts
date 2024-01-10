@@ -14,6 +14,7 @@ import { OutsourcedTransportVehicleRepository } from 'domain/repositories/Outsou
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/args/OutsourcedTransportVehicleArgs';
 import { OutsourcedTransportVehicleGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportVehicleGraphqlDto';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -48,9 +49,18 @@ export class OutsourcedTransportVehicleResolver {
     );
   }
   @Query(() => [OutsourcedTransportVehicleModel], { nullable: true })
-  async getAllOutsourcedTransportVehicle() {
+  async getAllOutsourcedTransportVehicle(
+    @Args() args: OutsourcedTransportVehicleWhereArgs,
+  ) {
     const outsourcedTransportVehicle =
-      await this.outsourcedTransportVehicleRepository.getAllOutsourcedTransportVehicle();
+      await this.outsourcedTransportVehicleRepository.getAllOutsourcedTransportVehicle(
+        {
+          limit: args.limit,
+          offset: args.offset,
+          sort: args.sort,
+          where: args.where,
+        },
+      );
 
     return outsourcedTransportVehicle.length > 0
       ? outsourcedTransportVehicle

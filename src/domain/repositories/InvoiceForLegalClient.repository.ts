@@ -1,3 +1,4 @@
+import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
 export abstract class InvoiceForLegalClientRepository {
@@ -11,8 +12,7 @@ export abstract class InvoiceForLegalClientRepository {
     id: string,
     invoiceForLegalClient: InvoiceForLegalClient,
   ): Promise<InvoiceForLegalClient>;
-  abstract getAllInvoiceForLegalClient(): Promise<InvoiceForLegalClient[]>;
-  abstract findInvoicesByOrder(
-    legalClient: string,
+  abstract getAllInvoiceForLegalClient(
+    parameters: FindAllInvoiceForLegalClientWhereRequestDTO,
   ): Promise<InvoiceForLegalClient[]>;
 }

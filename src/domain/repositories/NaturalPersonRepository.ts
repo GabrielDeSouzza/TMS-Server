@@ -1,3 +1,4 @@
+import { type FindAllNaturalPersonWhereRequestDTO } from 'domain/dto/repositories/NaturalPersonRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export abstract class NaturalPersonRepository {
@@ -12,4 +13,7 @@ export abstract class NaturalPersonRepository {
     id: string,
     naturalPerson: NaturalPerson,
   ): Promise<NaturalPerson>;
+  abstract getAllNaturalPerson(
+    parameters: FindAllNaturalPersonWhereRequestDTO,
+  ): Promise<NaturalPerson[]>;
 }

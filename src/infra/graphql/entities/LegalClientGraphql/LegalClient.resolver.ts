@@ -14,6 +14,7 @@ import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy'
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { LegalClientWhereArgs } from 'infra/graphql/args/LegalClientArgs';
 import { LegalClientGraphDTO } from 'infra/graphql/DTO/LegalClient';
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -43,8 +44,13 @@ export class LegalClientResolver {
     return await this.legalClientRepository.findLegalClientById(id);
   }
   @Query(() => [LegalClientModel], { nullable: true })
-  async getAllLegalClient() {
-    const legalclient = await this.legalClientRepository.getAllLegalClient();
+  async getAllLegalClient(@Args() args: LegalClientWhereArgs) {
+    const legalclient = await this.legalClientRepository.getAllLegalClient({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
 
     return legalclient.length > 0 ? legalclient : null;
   }
