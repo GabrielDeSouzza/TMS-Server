@@ -6,6 +6,9 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
+import { Type } from 'class-transformer';
+import { Allow, IsObject } from 'class-validator';
+
 import { type IOutsourcedVehicle } from 'domain/entities/OutsourcedDriverEntities/outsourcedVehicle/OutsourcedVehicle';
 
 import {
@@ -18,12 +21,17 @@ export class OutsourcedVehicleInput
   implements Omit<IOutsourcedVehicle, 'id' | 'created_at' | 'updated_at'>
 {
   @HideField()
+  @Allow()
   vehicle_id: string;
   @Field(() => VehicleInput)
+  @IsObject()
+  @Type(() => VehicleInput)
   Vehicle: VehicleInput;
   @HideField()
+  @Allow()
   created_by: string;
   @HideField()
+  @Allow()
   updated_by: string;
 }
 @InputType()

@@ -12,7 +12,6 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
-
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
 

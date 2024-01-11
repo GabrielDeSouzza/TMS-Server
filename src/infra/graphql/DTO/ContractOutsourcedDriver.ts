@@ -47,7 +47,6 @@ export class ContractOutsourcedDriverGraphDTO {
           type: updateInput.type,
           updated_by: updateInput.updated_by,
           end_at: updateInput.end_at,
-          id: updateInput.id,
         })
       : undefined;
   }

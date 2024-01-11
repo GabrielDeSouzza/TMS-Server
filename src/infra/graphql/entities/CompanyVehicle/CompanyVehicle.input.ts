@@ -6,6 +6,14 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
+import {
+  Allow,
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsUUID,
+} from 'class-validator';
+
 import { type ICompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 
 import {
@@ -15,17 +23,26 @@ import {
 
 @InputType()
 export class CompanyVehicleInput
-  implements Omit<ICompanyVehicle, 'id' | 'created_at' | 'updated_at'>
+  implements
+    Omit<ICompanyVehicle, 'id' | 'created_at' | 'updated_at' | 'vehicle_id'>
 {
   @Field()
+  @IsUUID()
+  @IsNotEmpty()
   carrier_company_id: string;
+  @Field({ nullable: true })
+  @IsUUID()
+  @IsOptional()
+  vehicle_id?: string;
+  @Field(() => VehicleInput, { nullable: true })
+  @IsOptional()
+  @IsObject()
+  Vehicle?: VehicleInput;
   @HideField()
-  vehicle_id: string;
-  @Field(() => VehicleInput)
-  Vehicle: VehicleInput;
-  @HideField()
+  @Allow()
   created_by: string;
   @HideField()
+  @Allow()
   updated_by: string;
 }
 @InputType()

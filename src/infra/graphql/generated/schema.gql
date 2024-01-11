@@ -202,8 +202,9 @@ type CompanyVehicleIModel {
 }
 
 input CompanyVehicleInput {
-  Vehicle: VehicleInput!
+  Vehicle: VehicleInput
   carrier_company_id: String!
+  vehicle_id: String
 }
 
 input CompanyVehicleListRelationFilter {
@@ -235,6 +236,7 @@ input CompanyVehicleOrderByWithRelationInput {
 input CompanyVehicleUpdateInput {
   Vehicle: VehicleUpdateInput!
   carrier_company_id: String
+  vehicle_id: String
 }
 
 input CompanyVehicleWhereInput {
@@ -259,7 +261,6 @@ input CompanyVehicleWhereInput {
 input ContractOutsoucedDriverUpdateInput {
   cpf: String
   end_at: Timestamp
-  id: String
   outsourced_driver_id: String
   situation: String
   start_at: Timestamp
@@ -292,7 +293,6 @@ type ContractOutsourcedDriverRefencesModel {
 input ContractOutsourcedDriverReferecesInput {
   cpf: String!
   end_at: Timestamp!
-  id: String
   situation: String!
   start_at: Timestamp!
   type: String!
@@ -693,7 +693,6 @@ input LegalClientWhereInput {
 
 input LegalContractInput {
   carrier_company_id: String!
-  contract_number: String!
   delivery_conditions: String!
   effective_date: Timestamp!
   legal_client_id: String!
@@ -752,7 +751,6 @@ input LegalContractOrderByWithRelationInput {
 
 input LegalContractUpdateInput {
   carrier_company_id: String
-  contract_number: String
   delivery_conditions: String
   effective_date: Timestamp
   legal_client_id: String

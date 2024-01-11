@@ -6,6 +6,9 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
+import { Type } from 'class-transformer';
+import { Allow, IsNotEmpty, IsObject, IsString } from 'class-validator';
+
 import { type IOutsourcedTransportVehicle } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportVehicle/OutsourcedTransportVehicle';
 
 import {
@@ -22,12 +25,18 @@ export class OutsourcedTransportVehicleInput
     >
 {
   @Field()
+  @IsString()
+  @IsNotEmpty()
   outsourced_company_id: string;
   @Field(() => VehicleInput)
+  @IsObject()
+  @Type(() => VehicleInput)
   Vehicle: VehicleInput;
   @HideField()
+  @Allow()
   created_by: string;
   @HideField()
+  @Allow()
   updated_by: string;
 }
 @InputType()
