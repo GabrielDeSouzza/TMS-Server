@@ -2,7 +2,7 @@ import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereCarrierCompanyTypeDto extends WhereDTO {
+export abstract class WhereCarrierCompanyTypeDto extends WhereDTO {
   id?: StringFilterDTO;
   legal_person_id?: StringFilterDTO;
   updated_at?: DateTimeFilterDTO;
@@ -11,7 +11,7 @@ abstract class WhereCarrierCompanyTypeDto extends WhereDTO {
   created_by?: StringFilterDTO;
 }
 
-abstract class SortByCarrierCompanyTypeDTO {
+export abstract class SortByCarrierCompanyTypeDTO {
   id?: 'asc' | 'desc';
   legal_person_id?: 'asc' | 'desc';
   created_at?: 'asc' | 'desc';

@@ -9,9 +9,10 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompany/CarrierCompanyUseCases';
 
 import { CarrierCompanyWhereArgs } from 'infra/graphql/args/CarrierCompanyArgs';
 import { CarrierCompanyGraphqlDTO } from 'infra/graphql/DTO/CarrierCompanyGraphqlDto';
@@ -35,18 +36,18 @@ import { CarrierCompanyModel } from './CarrierCompany.model';
 @Resolver(() => CarrierCompanyModel)
 export class CarrierCompanyResolver {
   constructor(
-    private carrierCompanyRepository: CarrierCompanyRepository,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
     private userRepository: UserRepository,
     private legalPersonRepository: LegalPersonRepository,
   ) {}
   @Query(() => CarrierCompanyModel)
   async getCarrierCompanyModel(@Args('id') id: string) {
-    return this.carrierCompanyRepository.findCarrierCompanyById(id);
+    return this.carrierCompanyUseCase.getCarrierCompany({ id });
   }
   @Query(() => [CarrierCompanyModel], { nullable: true })
   async getAllCarrierCompany(@Args() args: CarrierCompanyWhereArgs) {
     const carrierCompany =
-      await this.carrierCompanyRepository.getAllCarrierCompany({
+      await this.carrierCompanyUseCase.getAllCarrierCompany({
         limit: args.limit,
         offset: args.offset,
         sort: args.sort,
@@ -70,11 +71,11 @@ export class CarrierCompanyResolver {
         )
       : null;
 
-    return this.carrierCompanyRepository.createCarrierCompany(
-      carrierCompanyEntity,
-      legalPersonEntity,
-      carrierCompanyInput.legalPersonId,
-    );
+    return this.carrierCompanyUseCase.createCarrierCompany({
+      CarrierCompany: carrierCompanyEntity,
+      LegalPerson: legalPersonEntity,
+      legalPersonId: carrierCompanyInput.legalPersonId,
+    });
   }
   @Mutation(() => CarrierCompanyModel)
   async updateCarriercompany(
@@ -89,11 +90,11 @@ export class CarrierCompanyResolver {
       carrierCompanyInput.LegalPerson,
     );
 
-    return this.carrierCompanyRepository.updateCarrierCompany(
+    return await this.carrierCompanyUseCase.updateCarierCompany({
       id,
-      carrierCompanyEntity,
-      legalPersonEntity,
-    );
+      CarrierCompany: carrierCompanyEntity,
+      LegalPerson: legalPersonEntity,
+    });
   }
   @ResolveField(() => LegalPersonModel)
   async LegalPerson(

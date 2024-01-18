@@ -48,3 +48,10 @@ export class FindAllLegalPersonWhereRequestDTO {
   sort?: SortByLegalPersonTypeDTO;
   where?: WhereLegalPersonTypeDTO;
 }
+
+export abstract class ValidateLegalPersonDTO {
+  cnpj?: string;
+  state_registration?: string;
+  corporate_name?: string;
+  fantasy_name?: string;
+}

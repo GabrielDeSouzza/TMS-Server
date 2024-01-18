@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindAllCiotForLegalClientWhereRequestDTO } from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
+import {
+  type validadeCiotForLegalPersonDTO,
+  type FindAllCiotForLegalClientWhereRequestDTO,
+} from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
 import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 import { type CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 
@@ -13,11 +16,13 @@ export class CiotForLegalClientPrismaService
 {
   constructor(private prisma: PrismaService) {}
 
-  async findCiotForLegalClientById(id: string): Promise<CiotForLegalClient> {
-    const ciotForLegalClient =
-      await this.prisma.ciotForLegalClient.findFirstOrThrow({
-        where: { id },
-      });
+  async findCiotForLegalClient(
+    id?: string,
+    ciot?: string,
+  ): Promise<CiotForLegalClient> {
+    const ciotForLegalClient = await this.prisma.ciotForLegalClient.findFirst({
+      where: { OR: [{ id }, { ciot }] },
+    });
 
     return CiotForLegalClientPrismaDTO.PrismaToEntity(ciotForLegalClient);
   }
@@ -68,5 +73,18 @@ export class CiotForLegalClientPrismaService
     });
 
     return ciots.map(ciot => CiotForLegalClientPrismaDTO.PrismaToEntity(ciot));
+  }
+  async validadeCiot(
+    data: validadeCiotForLegalPersonDTO,
+  ): Promise<CiotForLegalClient> {
+    const ciotExist = await this.prisma.ciotForLegalClient.findFirst({
+      where: {
+        ciot: data.ciot,
+      },
+    });
+
+    return ciotExist
+      ? CiotForLegalClientPrismaDTO.PrismaToEntity(ciotExist)
+      : null;
   }
 }

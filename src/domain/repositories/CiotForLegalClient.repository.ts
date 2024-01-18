@@ -1,8 +1,14 @@
-import { type FindAllCiotForLegalClientWhereRequestDTO } from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
+import {
+  type validadeCiotForLegalPersonDTO,
+  type FindAllCiotForLegalClientWhereRequestDTO,
+} from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
 import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 
 export abstract class CiotForLegalClientRepository {
-  abstract findCiotForLegalClientById(id: string): Promise<CiotForLegalClient>;
+  abstract findCiotForLegalClient(
+    id?: string,
+    ciot?: string,
+  ): Promise<CiotForLegalClient>;
   abstract createCiotForLegalClient(
     ciotForLegalClient: CiotForLegalClient,
   ): Promise<CiotForLegalClient>;
@@ -16,4 +22,8 @@ export abstract class CiotForLegalClientRepository {
   abstract fingCiotsByContract(
     idContract: string,
   ): Promise<CiotForLegalClient[]>;
+
+  abstract validadeCiot(
+    data: validadeCiotForLegalPersonDTO,
+  ): Promise<CiotForLegalClient | null>;
 }

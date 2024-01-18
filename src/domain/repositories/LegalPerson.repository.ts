@@ -1,4 +1,7 @@
-import { type FindAllLegalPersonWhereRequestDTO } from 'domain/dto/repositories/LegalPersonRepository';
+import {
+  type ValidateLegalPersonDTO,
+  type FindAllLegalPersonWhereRequestDTO,
+} from 'domain/dto/repositories/LegalPersonRepository';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export abstract class LegalPersonRepository {
@@ -7,4 +10,7 @@ export abstract class LegalPersonRepository {
   abstract getAllLegalPerson(
     parameters: FindAllLegalPersonWhereRequestDTO,
   ): Promise<LegalPerson[]>;
+  abstract ValideLegalPerson(
+    data: ValidateLegalPersonDTO,
+  ): Promise<LegalPerson | null>;
 }

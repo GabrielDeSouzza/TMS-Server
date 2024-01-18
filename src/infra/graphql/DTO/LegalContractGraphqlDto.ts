@@ -9,7 +9,7 @@ export class LegalContractGraphqlDTO {
   public static createInputToEntity(createInput: LegalContractInput) {
     return new LegalContract({
       carrier_company_id: createInput.carrier_company_id,
-      contract_number: createInput.contract_number,
+      contract_number: '154848',
       delivery_conditions: createInput.delivery_conditions,
       effective_date: createInput.effective_date,
       legal_client_id: createInput.legal_client_id,

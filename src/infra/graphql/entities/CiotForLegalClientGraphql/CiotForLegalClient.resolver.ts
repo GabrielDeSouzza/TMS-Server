@@ -9,12 +9,12 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { CiotForLegalClientUseCases } from 'app/useCases/CiotForLegalClient/CiotForLegalClientUseCases';
+
 import { CiotForLegalClientWhereArgs } from 'infra/graphql/args/CiotForLegalClientArgs';
-import { CiotForLegalClientGraphqlDTO } from 'infra/graphql/DTO/CiotForLegalClientGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -34,18 +34,21 @@ import { CiotForLegalClientModel } from './CiotForLegalClient.model';
 @Resolver(() => CiotForLegalClientModel)
 export class CiotForLegalClientResolver {
   constructor(
-    private ciotForLegalClientRepository: CiotForLegalClientRepository,
+    private ciotForLegalClientUseCases: CiotForLegalClientUseCases,
     private userRepository: UserRepository,
     private legalContractRepository: LegalContractRepository,
   ) {}
   @Query(() => CiotForLegalClientModel)
-  async getCiotForLegalClientModel(@Args('id') id: string) {
-    return this.ciotForLegalClientRepository.findCiotForLegalClientById(id);
+  async getCiotForLegalClientModel(
+    @Args('id', { nullable: true }) id?: string,
+    @Args('ciot', { nullable: true }) ciot?: string,
+  ) {
+    return this.ciotForLegalClientUseCases.getCiotForLegalClient({ id, ciot });
   }
   @Query(() => [CiotForLegalClientModel], { nullable: true })
   async getAllCiotForLegalClient(@Args() args: CiotForLegalClientWhereArgs) {
     const ciotForLegalClient =
-      await this.ciotForLegalClientRepository.getAllCiotForLegalClient({
+      await this.ciotForLegalClientUseCases.getAllCiotForLegalClient({
         limit: args.limit,
         offset: args.offset,
         sort: args.sort,
@@ -62,11 +65,9 @@ export class CiotForLegalClientResolver {
   ) {
     ciotForLegalClientInput.created_by = user.id;
     ciotForLegalClientInput.updated_by = user.id;
-    const ciotForLegalClientEntity =
-      CiotForLegalClientGraphqlDTO.createInputToEntity(ciotForLegalClientInput);
 
-    return this.ciotForLegalClientRepository.createCiotForLegalClient(
-      ciotForLegalClientEntity,
+    return this.ciotForLegalClientUseCases.createCiotForLegalClient(
+      ciotForLegalClientInput,
     );
   }
   @Mutation(() => CiotForLegalClientModel)
@@ -77,12 +78,10 @@ export class CiotForLegalClientResolver {
     @CurrentUser() user: User,
   ) {
     ciotForLegalClientInput.updated_by = user.id;
-    const ciotForLegalClientEntity =
-      CiotForLegalClientGraphqlDTO.updateInputToEntity(ciotForLegalClientInput);
 
-    return this.ciotForLegalClientRepository.updateCiotForLegalClient(
+    return this.ciotForLegalClientUseCases.updateCiotForLegalClient(
       id,
-      ciotForLegalClientEntity,
+      ciotForLegalClientInput,
     );
   }
   @ResolveField(() => LegalContractModel)

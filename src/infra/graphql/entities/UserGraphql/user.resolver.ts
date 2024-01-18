@@ -1,18 +1,14 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { hashSync } from 'bcrypt';
-import { GraphQLError } from 'graphql';
-
 import { ROLE } from 'domain/entities/User/User';
 
-import { FindAllUserUseCase } from 'app/useCases/user/FindAllUserUseCase';
+import { UserCases } from 'app/useCases/user/UserCases';
 
 import { UserWhereArgs } from 'infra/graphql/args/UserArgs';
 import { UserGraphDTO } from 'infra/graphql/DTO/User';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { UserRepository } from '../../../../domain/repositories/UserRepository';
 import { AcessAllowed } from '../../utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from '../../utilities/interceptors/RoleInterceptor';
 import { UserInput, UserUpdateInput } from './user.input';
@@ -23,28 +19,17 @@ import { UserModel } from './user.model';
 @UseInterceptors(RoleInterceptor)
 @Resolver(() => UserModel)
 export class UserResolver {
-  constructor(
-    private userRepository: UserRepository,
-    private findAll: FindAllUserUseCase,
-  ) {}
+  constructor(private userCases: UserCases) {}
   @Query(() => UserModel, { name: 'user' })
-  async getUserForId(
+  async getUser(
     @Args('id', { nullable: true }) id?: string,
     @Args('email', { nullable: true }) email?: string,
   ) {
-    if (id) {
-      return await this.userRepository.findUserById(id);
-    }
-
-    if (email) {
-      return await this.userRepository.findUserByEmail(email);
-    }
-
-    throw new GraphQLError('ID OR EMAIL IS REQUIRED');
+    return await this.userCases.getUser({ email, id });
   }
   @Query(() => [UserModel], { name: 'users' })
   async getAllUsers(@Args() args: UserWhereArgs) {
-    return this.findAll.execute({
+    return await this.userCases.getAllUser({
       where: args.where,
       limit: args.limit,
       offset: args.offset,
@@ -54,10 +39,9 @@ export class UserResolver {
 
   @Mutation(() => UserModel)
   async createUSer(@Args('createUserInput') createUserInput: UserInput) {
-    createUserInput.password = hashSync(createUserInput.password, 10);
     const user = UserGraphDTO.createInputToEntity(createUserInput);
 
-    return await this.userRepository.createUSer(user);
+    return await this.userCases.createUser(user);
   }
 
   @Mutation(() => UserModel)
@@ -67,6 +51,6 @@ export class UserResolver {
   ) {
     const user = UserGraphDTO.updateInputToEntity(updateUserInput);
 
-    return await this.userRepository.updateUser(id, user);
+    return await this.userCases.updateUser(id, user);
   }
 }

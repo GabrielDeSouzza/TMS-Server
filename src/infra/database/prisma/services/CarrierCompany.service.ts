@@ -11,8 +11,9 @@ import { CarrierCompanyPrismaDTO } from './prismaDTO/CarrierCompanyPrismaDto';
 @Injectable()
 export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
   constructor(private prisma: PrismaService) {}
+
   async findCarrierCompanyById(id: string): Promise<CarrierCompany> {
-    const carrierCompany = await this.prisma.carrierCompany.findFirstOrThrow({
+    const carrierCompany = await this.prisma.carrierCompany.findFirst({
       where: { id },
     });
 

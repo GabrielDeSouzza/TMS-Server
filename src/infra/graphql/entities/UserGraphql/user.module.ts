@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common/decorators/modules/module.decorator';
 
-import { FindAllUserUseCase } from 'app/useCases/user/FindAllUserUseCase';
+import { UserCases } from 'app/useCases/user/UserCases';
 
 import { PrismaService } from 'infra/database/prisma/prisma.service';
 
@@ -13,7 +13,7 @@ import { UserResolver } from './user.resolver';
   providers: [
     UserResolver,
     { provide: UserRepository, useClass: UserService },
-    FindAllUserUseCase,
+    UserCases,
     PrismaService,
   ],
   imports: [GraphqlCenterModule],

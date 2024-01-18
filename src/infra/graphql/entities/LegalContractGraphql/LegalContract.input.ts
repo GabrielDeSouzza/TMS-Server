@@ -16,9 +16,7 @@ import { type ILegalContract } from 'domain/entities/LegalClientEntities/LegalCo
 export class LegalContractInput
   implements Omit<ILegalContract, 'id' | 'created_at' | 'updated_at'>
 {
-  @HideField()
-  @IsString()
-  @IsNotEmpty()
+  @Allow()
   contract_number: string;
   @Field()
   @IsUUID()

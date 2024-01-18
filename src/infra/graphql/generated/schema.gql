@@ -1948,7 +1948,7 @@ type Query {
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
   getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
   getCarrierCompanyModel(id: String!): CarrierCompanyModel!
-  getCiotForLegalClientModel(id: String!): CiotForLegalClientModel!
+  getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String!): CompanyVehicleIModel!
   getInvoiceForLegalClientModel(id: String!): InvoiceForLegalClientModel!
   getLegalClientMerchandiseModel(id: String!): LegalClientMerchandiseModel!

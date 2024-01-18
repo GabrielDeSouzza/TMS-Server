@@ -2,7 +2,7 @@ import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereCiotForLegalClientTypeDTO extends WhereDTO {
+export abstract class WhereCiotForLegalClientTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   ciot?: StringFilterDTO;
   emission_date?: DateTimeFilterDTO;
@@ -13,7 +13,7 @@ abstract class WhereCiotForLegalClientTypeDTO extends WhereDTO {
   created_by?: StringFilterDTO;
 }
 
-abstract class SortByCiotForLegalClientTypeDTO {
+export abstract class SortByCiotForLegalClientTypeDTO {
   id?: 'asc' | 'desc';
   ciot?: 'asc' | 'desc';
   emission_date?: 'asc' | 'desc';
@@ -29,4 +29,8 @@ export class FindAllCiotForLegalClientWhereRequestDTO {
   offset: number;
   sort?: SortByCiotForLegalClientTypeDTO;
   where?: WhereCiotForLegalClientTypeDTO;
+}
+
+export abstract class validadeCiotForLegalPersonDTO {
+  ciot?: string;
 }
