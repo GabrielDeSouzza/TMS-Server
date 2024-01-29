@@ -115,9 +115,9 @@ export class OutsourcedTransportCompanyContractResolver {
   async CarrierCompany(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return this.carrierCompanyRepository.findCarrierCompanyById(
-      contract.outSourcedTransportCompanyId,
-    );
+    return this.carrierCompanyRepository.findCarrierCompany({
+      id: contract.carrierCompanyId,
+    });
   }
   @ResolveField(() => LegalClientOrderModel)
   async LegalClientOrder(

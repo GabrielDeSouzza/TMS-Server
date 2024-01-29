@@ -1,3 +1,4 @@
+import { type ValidadeVehicle } from 'domain/dto/repositories/CompanyVehicleRepositoryDto';
 import { type FindAllVehicleWhereRequestDTO } from 'domain/dto/repositories/VehicleRepositoryDto';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
@@ -10,4 +11,5 @@ export abstract class VehicleRepository {
   abstract getAllVehicle(
     parameters: FindAllVehicleWhereRequestDTO,
   ): Promise<Vehicle[]>;
+  abstract validadeVehicle(data: ValidadeVehicle): Promise<Vehicle>;
 }

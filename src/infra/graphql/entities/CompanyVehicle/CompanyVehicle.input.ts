@@ -49,6 +49,10 @@ export class CompanyVehicleInput
 export class CompanyVehicleUpdateInput extends PartialType(
   OmitType(CompanyVehicleInput, ['Vehicle']),
 ) {
+  @IsObject()
   @Field(() => VehicleUpdateInput)
   Vehicle: VehicleUpdateInput;
+  @HideField()
+  @Allow()
+  updated_by: string;
 }

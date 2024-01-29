@@ -75,6 +75,7 @@ export class PhysicalContractorPrismaDTO {
       },
       ContractOutsourcedDriver: {
         create: {
+          contract_number: contractOutsourced.contract_number,
           situation: contractOutsourced.situation,
           created_at: contractOutsourced.created_at,
           end_at: contractOutsourced.end_at,
@@ -156,6 +157,7 @@ export class PhysicalContractorPrismaDTO {
         Prisma.Enumerable<Prisma.ContractOutsourcedDriverCreateWithoutOutsourcedDriverInput>,
         Prisma.Enumerable<Prisma.ContractOutsourcedDriverUncheckedCreateWithoutOutsourcedDriverInput>
       > = {
+        contract_number: contract.contract_number,
         cpf: contract.cpf,
         situation: contract.situation,
         start_at: contract.start_at,

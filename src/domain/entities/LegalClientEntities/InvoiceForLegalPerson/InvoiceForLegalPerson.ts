@@ -8,6 +8,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 
 export interface IInvoiceForLegalClient {
   id?: string;
+  invoice_number: string;
   emission_date: Date;
   nature_invoice: string;
   invoice_total: number;
@@ -118,6 +119,14 @@ export class InvoiceForLegalClient extends Entity {
 
   set nature_invoice(nature_invoice: string) {
     this.props.nature_invoice = nature_invoice;
+  }
+
+  get invoice_number(): string {
+    return this.props.invoice_number;
+  }
+
+  set invoice_number(invoice_number: string) {
+    this.props.invoice_number = invoice_number;
   }
 
   get invoice_total(): number {

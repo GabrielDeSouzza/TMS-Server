@@ -3,7 +3,7 @@ import { type NumberFilterDTO } from 'domain/shared/dtos/NumberFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereVehicleModelTypeDTO extends WhereDTO {
+export abstract class WhereVehicleModelTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   name?: StringFilterDTO;
   weight?: NumberFilterDTO;
@@ -18,7 +18,7 @@ abstract class WhereVehicleModelTypeDTO extends WhereDTO {
   updated_by?: StringFilterDTO;
 }
 
-abstract class SortByVehicleModelTypeDTO {
+export abstract class SortByVehicleModelTypeDTO {
   id?: 'asc' | 'desc';
   name?: 'asc' | 'desc';
   weight?: 'asc' | 'desc';

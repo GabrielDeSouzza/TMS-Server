@@ -1,9 +1,14 @@
-import { type FindAllWhereCarrierCompanyRequestType } from 'domain/dto/repositories/CarrierRepositoryDto';
+import {
+  type getCarrierCompanyData,
+  type FindAllWhereCarrierCompanyRequestType,
+} from 'domain/dto/repositories/CarrierRepositoryDto';
 import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export abstract class CarrierCompanyRepository {
-  abstract findCarrierCompanyById(id: string): Promise<CarrierCompany>;
+  abstract findCarrierCompany(
+    data: getCarrierCompanyData,
+  ): Promise<CarrierCompany>;
   abstract createCarrierCompany(
     carrierCompany: CarrierCompany,
     legalPerson?: LegalPerson,

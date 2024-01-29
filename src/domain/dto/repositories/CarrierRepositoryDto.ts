@@ -24,3 +24,10 @@ export abstract class FindAllWhereCarrierCompanyRequestType {
   sort?: SortByCarrierCompanyTypeDTO;
   where?: WhereCarrierCompanyTypeDto;
 }
+
+export abstract class getCarrierCompanyData {
+  id?: string;
+  cnpj?: string;
+  fantasyName?: string;
+  corporateName?: string;
+}

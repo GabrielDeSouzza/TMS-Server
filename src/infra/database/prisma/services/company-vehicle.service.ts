@@ -12,9 +12,14 @@ import { CompanyVehiclePrismaDTO } from './prismaDTO/CompanyVehiclePrismaDto';
 export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findCompanyVehicle(id: string): Promise<CompanyVehicle> {
+  async findCompanyVehicle(
+    id?: string,
+    plate?: string,
+  ): Promise<CompanyVehicle> {
     return CompanyVehiclePrismaDTO.PrismaToEntity(
-      await this.prisma.companyVehicle.findFirstOrThrow({ where: { id } }),
+      await this.prisma.companyVehicle.findFirst({
+        where: { OR: [{ id }, { Vehicle: { plate } }] },
+      }),
     );
   }
   async createCompanyVehicle(

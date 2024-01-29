@@ -2,7 +2,7 @@ import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereCompanyVehicleTypeDto extends WhereDTO {
+export abstract class WhereCompanyVehicleTypeDto extends WhereDTO {
   id?: StringFilterDTO;
   vehicle_id?: StringFilterDTO;
   created_at?: DateTimeFilterDTO;
@@ -11,7 +11,7 @@ abstract class WhereCompanyVehicleTypeDto extends WhereDTO {
   updated_by?: StringFilterDTO;
 }
 
-abstract class SortByCompanyVehicleTypeDto {
+export abstract class SortByCompanyVehicleTypeDto {
   id?: 'asc' | 'desc';
   vehicle_id?: 'asc' | 'desc';
   created_at?: 'asc' | 'desc';
@@ -25,4 +25,9 @@ export class FindAllCompanyVehicleWhereRequestDTO {
   offset: number;
   sort?: SortByCompanyVehicleTypeDto;
   where?: WhereCompanyVehicleTypeDto;
+}
+
+export abstract class ValidadeVehicle {
+  plate?: string;
+  renavam?: string;
 }

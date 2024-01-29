@@ -11,6 +11,7 @@ export class ContractOutsourcedDriverGraphDTO {
     createInput: ContractOutsourcedDriverInput,
   ) {
     return new ContractOutsourcedDriver({
+      contract_number: createInput.contract_number,
       cpf: createInput.cpf,
       created_by: createInput.created_by,
       outsourced_driver_id: createInput.outsourced_driver_id,
@@ -25,6 +26,8 @@ export class ContractOutsourcedDriverGraphDTO {
     refefencesInput: ContractOutsourcedDriverReferecesInput | undefined,
   ) {
     return new ContractOutsourcedDriver({
+      contract_number: refefencesInput.contract_number,
+      outsourced_driver_id: null,
       cpf: refefencesInput.cpf,
       created_by: refefencesInput.created_by,
       situation: refefencesInput.situation,
@@ -39,6 +42,7 @@ export class ContractOutsourcedDriverGraphDTO {
   ) {
     return updateInput
       ? new ContractOutsourcedDriver({
+          contract_number: updateInput.contract_number,
           cpf: updateInput.cpf,
           created_by: updateInput.created_by,
           outsourced_driver_id: updateInput.outsourced_driver_id,

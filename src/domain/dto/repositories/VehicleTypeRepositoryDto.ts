@@ -4,7 +4,7 @@ import { type RelationSortDto } from 'domain/shared/dtos/RelationSortDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereVehicleTypeDTO extends WhereDTO {
+export abstract class WhereVehicleTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   name?: StringFilterDTO;
   bodyWork?: BoolFilterDTO;
@@ -15,7 +15,7 @@ abstract class WhereVehicleTypeDTO extends WhereDTO {
   updated_by?: StringFilterDTO;
 }
 
-abstract class SortByVehicleTypeDTO {
+export abstract class SortByVehicleTypeDTO {
   id?: 'asc' | 'desc';
   name?: 'asc' | 'desc';
   bodywork?: 'asc' | 'desc';

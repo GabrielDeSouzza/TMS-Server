@@ -1,24 +1,15 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
-import {
-  Args,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ROLE } from 'domain/entities/User/User';
-import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
-import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
+
+import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchandiseDto/LegalClientMerchandisesUseCases';
 
 import { LegalClientMerchandiseWhereArgs } from 'infra/graphql/args/LegalClientMerchandiseArgs';
-import { LegalClientMerchandiseGraphqlDTO } from 'infra/graphql/DTO/LegalClientMerchandiseGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import {
   LegalClientMerchandiseInput,
   LegalClientMerchandiseUpdateInput,
@@ -31,21 +22,24 @@ import { LegalClientMerchandiseModel } from './LegalClientMerchandise.model';
 @Resolver(() => LegalClientMerchandiseModel)
 export class LegalClientMerchandiseResolver {
   constructor(
-    private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
-    private legalClientOrderRepository: LegalClientOrderRepository,
+    private legalClientMerchandiseUseCases: LegalClientMerchandiseUseCases,
   ) {}
   @Query(() => LegalClientMerchandiseModel)
-  async getLegalClientMerchandiseModel(@Args('id') id: string) {
-    return this.legalClientMerchandiseRepository.findLegalClientMerchandiseById(
+  async getLegalClientMerchandiseModel(
+    @Args('id', { nullable: true }) id?: string,
+    @Args('codMerchandise', { nullable: true }) codMerchandise?: string,
+  ) {
+    return this.legalClientMerchandiseUseCases.getLegalClientMerchandises({
       id,
-    );
+      codMerchandise,
+    });
   }
   @Query(() => [LegalClientMerchandiseModel], { nullable: true })
   async getAllLegalClientMerchandise(
     @Args() args: LegalClientMerchandiseWhereArgs,
   ) {
     const legalClientMerchandise =
-      await this.legalClientMerchandiseRepository.getAllLegalClientMerchandise({
+      await this.legalClientMerchandiseUseCases.getAllLegalClientMerchandise({
         limit: args.limit,
         offset: args.offset,
         sort: args.sort,
@@ -59,13 +53,8 @@ export class LegalClientMerchandiseResolver {
     @Args('legalClientMerchandiseInput')
     legalClientMerchandiseInput: LegalClientMerchandiseInput,
   ) {
-    const legalClientMerchandiseEntity =
-      LegalClientMerchandiseGraphqlDTO.createInputToEntity(
-        legalClientMerchandiseInput,
-      );
-
-    return this.legalClientMerchandiseRepository.createLegalClientMerchandise(
-      legalClientMerchandiseEntity,
+    return this.legalClientMerchandiseUseCases.createLegalClientMerchandise(
+      legalClientMerchandiseInput,
     );
   }
   @Mutation(() => LegalClientMerchandiseModel)
@@ -74,22 +63,9 @@ export class LegalClientMerchandiseResolver {
     @Args('legalClientMerchandiseInput')
     legalClientMerchandiseInput: LegalClientMerchandiseUpdateInput,
   ) {
-    const legalClientMerchandiseEntity =
-      LegalClientMerchandiseGraphqlDTO.updateInputToEntity(
-        legalClientMerchandiseInput,
-      );
-
-    return this.legalClientMerchandiseRepository.updateLegalClientMerchandise(
+    return this.legalClientMerchandiseUseCases.updateLegalClientMerchandiseRepository(
       id,
-      legalClientMerchandiseEntity,
-    );
-  }
-  @ResolveField(() => LegalClientOrderModel)
-  async LegalClientOrder(@Parent() merchandise: LegalClientMerchandiseInput) {
-    const { legalClientOrderId } = merchandise;
-
-    return this.legalClientOrderRepository.findLegalClientOrderById(
-      legalClientOrderId,
+      legalClientMerchandiseInput,
     );
   }
 }

@@ -2,7 +2,7 @@ import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereContractOutsourcedDriverTypeDTO extends WhereDTO {
+export abstract class WhereContractOutsourcedDriverTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   type?: StringFilterDTO;
   situation?: StringFilterDTO;
@@ -16,7 +16,7 @@ abstract class WhereContractOutsourcedDriverTypeDTO extends WhereDTO {
   outsourced_driver_id?: StringFilterDTO;
 }
 
-abstract class SortByContractOutsourcedDriverTypeDTO {
+export abstract class SortByContractOutsourcedDriverTypeDTO {
   id?: 'asc' | 'desc';
   type?: 'asc' | 'desc';
   situation?: 'asc' | 'desc';

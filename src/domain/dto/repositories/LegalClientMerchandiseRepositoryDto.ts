@@ -5,7 +5,7 @@ import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 import { IntFilter } from 'infra/graphql/prisma-generated/prisma/int-filter.input';
 import { IntNullableFilter } from 'infra/graphql/prisma-generated/prisma/int-nullable-filter.input';
 
-abstract class WhereLegalClientMerchandiseTypeDTO extends WhereDTO {
+export abstract class WhereLegalClientMerchandiseTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   codMerchandise?: StringFilterDTO;
   amount?: NumberFilterDTO;
@@ -16,7 +16,7 @@ abstract class WhereLegalClientMerchandiseTypeDTO extends WhereDTO {
   legalClientOrderId?: StringFilterDTO;
 }
 
-abstract class SortByLegalClientMerchandiseTypeDTO {
+export abstract class SortByLegalClientMerchandiseTypeDTO {
   id?: 'asc' | 'desc';
   codMerchandise?: 'asc' | 'desc';
   amount?: 'asc' | 'desc';

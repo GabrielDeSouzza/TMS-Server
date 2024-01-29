@@ -8,6 +8,7 @@ import {
 export class InvoiceForLegalClientGraphqlDTO {
   public static createInputToEntity(createInput: InvoiceForLegalClientInput) {
     return new InvoiceForLegalClient({
+      invoice_number: createInput.invoice_number,
       additional_data: createInput.additional_data,
       created_by: createInput.created_by,
       digital_signature: createInput.digital_signature,
@@ -26,6 +27,7 @@ export class InvoiceForLegalClientGraphqlDTO {
   ) {
     return updateInput
       ? new InvoiceForLegalClient({
+          invoice_number: updateInput.invoice_number,
           additional_data: updateInput.additional_data,
           created_by: updateInput.created_by,
           digital_signature: updateInput.digital_signature,

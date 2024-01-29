@@ -82,6 +82,7 @@ export class OutsourcedDriverPrismaDTO {
         create: {
           situation: contractOutsourced.situation,
           created_at: contractOutsourced.created_at,
+          contract_number: contractOutsourced.contract_number,
           end_at: contractOutsourced.end_at,
           created_by: outsourcedDriver.created_by,
           updated_by: outsourcedDriver.updated_by,
@@ -161,6 +162,7 @@ export class OutsourcedDriverPrismaDTO {
         Prisma.Enumerable<Prisma.ContractOutsourcedDriverCreateWithoutOutsourcedDriverInput>,
         Prisma.Enumerable<Prisma.ContractOutsourcedDriverUncheckedCreateWithoutOutsourcedDriverInput>
       > = {
+        contract_number: contract.contract_number,
         cpf: contract.cpf,
         situation: contract.situation,
         start_at: contract.start_at,

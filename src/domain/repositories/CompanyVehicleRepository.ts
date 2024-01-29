@@ -3,7 +3,10 @@ import { type CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehi
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export abstract class CompanyVehicleRepository {
-  abstract findCompanyVehicle(id: string): Promise<CompanyVehicle>;
+  abstract findCompanyVehicle(
+    id?: string,
+    plate?: string,
+  ): Promise<CompanyVehicle>;
   abstract createCompanyVehicle(
     CompanyVehicle: CompanyVehicle,
     vehicle: Vehicle,

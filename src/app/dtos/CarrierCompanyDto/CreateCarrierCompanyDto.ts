@@ -1,9 +1,14 @@
-import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
-import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
+import { type CreateLegalPersonDTO } from '../LegalPerson/CreateLegalPersonDto';
 
 export abstract class CreateCarrierCompanyDTO {
-  CarrierCompany: CarrierCompany;
+  CarrierCompany: CarrierCompanyData;
+  LegalPerson: CreateLegalPersonDTO;
+}
 
-  LegalPerson?: LegalPerson;
+abstract class CarrierCompanyData {
+  id?: string;
+
+  updated_by: string;
+  created_by: string;
   legalPersonId?: string;
 }

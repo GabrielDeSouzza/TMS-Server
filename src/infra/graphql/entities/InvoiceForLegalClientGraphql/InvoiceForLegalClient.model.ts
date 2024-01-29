@@ -8,6 +8,8 @@ import { UserModelRefereces } from '../UserGraphql/user.model';
 @ObjectType()
 export class InvoiceForLegalClientModel implements IInvoiceForLegalClient {
   @Field()
+  invoice_number: string;
+  @Field()
   id: string;
   @Field(() => Float)
   emission_date: Date;

@@ -9,12 +9,11 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
+import { CompanyVehicleUseCases } from 'app/useCases/CompanyVehicleUseCases/CompanyVehicleUseCases';
+
 import { CompanyVehicleWhereArgs } from 'infra/graphql/args/CompanyVehicleArgs';
-import { CompanyVehicleGraphDTO } from 'infra/graphql/DTO/CompanyVehicle';
-import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -33,16 +32,19 @@ import { CompanyVehicleIModel } from './CompanyVehicle.model';
 @Resolver(() => CompanyVehicleIModel)
 export class CompanyVehicleResolver {
   constructor(
-    private companyRespository: CompanyVehicleRepository,
-    private vehicleRepositoy: VehicleRepository,
+    private companyUseCases: CompanyVehicleUseCases,
+    private vehicleRepository: VehicleRepository,
   ) {}
   @Query(() => CompanyVehicleIModel)
-  async getCompanyVehicle(@Args('id') id: string) {
-    return this.companyRespository.findCompanyVehicle(id);
+  async getCompanyVehicle(
+    @Args('id', { nullable: true }) id: string,
+    @Args('plate', { nullable: true }) plate?: string,
+  ) {
+    return this.companyUseCases.getCompanyVehicle({ id, plate });
   }
   @Query(() => [CompanyVehicleIModel])
   async getAllCompanyVehicle(@Args() args: CompanyVehicleWhereArgs) {
-    return await this.companyRespository.findAllCompanyVehicle({
+    return await this.companyUseCases.getAllCompanyVehicle({
       limit: args.limit,
       offset: args.offset,
       sort: args.sort,
@@ -56,16 +58,8 @@ export class CompanyVehicleResolver {
   ) {
     companyVehicle.created_by = user.id;
     companyVehicle.updated_by = user.id;
-    const companydVehicleEntity =
-      CompanyVehicleGraphDTO.createInputToEntity(companyVehicle);
-    const vehicleEntity = VehicleGraphDTO.createInputToEntity(
-      companyVehicle.Vehicle,
-    );
 
-    return await this.companyRespository.createCompanyVehicle(
-      companydVehicleEntity,
-      vehicleEntity,
-    );
+    return await this.companyUseCases.createCompanyVehicle(companyVehicle);
   }
   @Mutation(() => CompanyVehicleIModel)
   async updatedCompanyVehicle(
@@ -74,22 +68,13 @@ export class CompanyVehicleResolver {
     @CurrentUser() user: User,
   ) {
     companyVehicle.updated_by = user.id;
-    const companydVehicleEntity =
-      CompanyVehicleGraphDTO.updateInputToEntity(companyVehicle);
-    const vehicleEntity = VehicleGraphDTO.updateInputToEntity(
-      companyVehicle.Vehicle,
-    );
 
-    return await this.companyRespository.updateCompanyVehicle(
-      id,
-      companydVehicleEntity,
-      vehicleEntity,
-    );
+    return await this.companyUseCases.updateCompanyVehicle(id, companyVehicle);
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() outsoucedVehicle: CompanyVehicleInput) {
     const { vehicle_id: vehicleId } = outsoucedVehicle;
 
-    return await this.vehicleRepositoy.findVehicleById(vehicleId);
+    return await this.vehicleRepository.findVehicleById(vehicleId);
   }
 }

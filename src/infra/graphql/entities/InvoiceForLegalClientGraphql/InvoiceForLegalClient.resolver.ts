@@ -9,12 +9,12 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForLegalClient.repository';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { InvoiceForLegalClientUseCases } from 'app/useCases/InvoiceForLegalClient/InvoiceForLegalClientUseCases';
+
 import { LegalClientWhereArgs } from 'infra/graphql/args/LegalClientArgs';
-import { InvoiceForLegalClientGraphqlDTO } from 'infra/graphql/DTO/InvoiceForLegalClientGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -34,20 +34,24 @@ import { InvoiceForLegalClientModel } from './InvoiceForLegalClient.model';
 @Resolver(() => InvoiceForLegalClientModel)
 export class InvoiceForLegalClientResolver {
   constructor(
-    private invoiceForLegalClientRepository: InvoiceForLegalClientRepository,
+    private invoiceForLegalClientUseCase: InvoiceForLegalClientUseCases,
     private userRepository: UserRepository,
     private legalClientOrderRepository: LegalClientOrderRepository,
   ) {}
   @Query(() => InvoiceForLegalClientModel)
-  async getInvoiceForLegalClientModel(@Args('id') id: string) {
-    return this.invoiceForLegalClientRepository.findInvoiceForLegalClientById(
+  async getInvoiceForLegalClientModel(
+    @Args('id', { nullable: true }) id?: string,
+    @Args('invoiceNumber', { nullable: true }) invoiceNumber?: string,
+  ) {
+    return this.invoiceForLegalClientUseCase.getInvoiceForLegalClient({
       id,
-    );
+      invoice_number: invoiceNumber,
+    });
   }
   @Query(() => [InvoiceForLegalClientModel], { nullable: true })
   async getAllInvoiceForLegalClient(@Args() args: LegalClientWhereArgs) {
     const invoiceForLegalClient =
-      await this.invoiceForLegalClientRepository.getAllInvoiceForLegalClient({
+      await this.invoiceForLegalClientUseCase.getAllInvoiceForLegalClient({
         limit: args.limit,
         offset: args.offset,
         sort: args.sort,
@@ -64,13 +68,9 @@ export class InvoiceForLegalClientResolver {
   ) {
     invoiceForLegalClientInput.created_by = user.id;
     invoiceForLegalClientInput.updated_by = user.id;
-    const invoiceForLegalClientEntity =
-      InvoiceForLegalClientGraphqlDTO.createInputToEntity(
-        invoiceForLegalClientInput,
-      );
 
-    return this.invoiceForLegalClientRepository.createInvoiceForLegalClient(
-      invoiceForLegalClientEntity,
+    return this.invoiceForLegalClientUseCase.createInvoiceForLegalClient(
+      invoiceForLegalClientInput,
     );
   }
   @Mutation(() => InvoiceForLegalClientModel)
@@ -81,14 +81,10 @@ export class InvoiceForLegalClientResolver {
     @CurrentUser() user: User,
   ) {
     invoiceForLegalClientInput.updated_by = user.id;
-    const invoiceForLegalClientEntity =
-      InvoiceForLegalClientGraphqlDTO.updateInputToEntity(
-        invoiceForLegalClientInput,
-      );
 
-    return this.invoiceForLegalClientRepository.updateInvoiceForLegalClient(
+    return this.invoiceForLegalClientUseCase.updateInvoiceForLegalClient(
       id,
-      invoiceForLegalClientEntity,
+      invoiceForLegalClientInput,
     );
   }
   @ResolveField(() => LegalClientOrderModel)

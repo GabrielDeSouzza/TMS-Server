@@ -9,10 +9,11 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 
 import { LegalContractWhereArgs } from 'infra/graphql/args/LegalContractArgs';
 import { LegalContractGraphqlDTO } from 'infra/graphql/DTO/LegalContractGraphqlDto';
@@ -38,7 +39,7 @@ export class LegalContractResolver {
     private legalContractRepository: LegalContractRepository,
     private legalclientRepository: LegalClientRepository,
     private userRepository: UserRepository,
-    private carrierCompanyRepository: CarrierCompanyRepository,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   @Query(() => LegalContractModel)
   async getLegalContractModel(
@@ -102,9 +103,9 @@ export class LegalContractResolver {
   async CarrierCompany(@Parent() contract: LegalContractInput) {
     const { carrier_company_id: carrierCompanyID } = contract;
 
-    return await this.carrierCompanyRepository.findCarrierCompanyById(
-      carrierCompanyID,
-    );
+    return await this.carrierCompanyUseCase.getCarrierCompany({
+      id: carrierCompanyID,
+    });
   }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: LegalContractInput) {

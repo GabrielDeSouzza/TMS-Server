@@ -2,8 +2,9 @@ import { type FindAllLegalClientMerchandiseWhereRequestDTO } from 'domain/dto/re
 import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 
 export abstract class LegalClientMerchandiseRepository {
-  abstract findLegalClientMerchandiseById(
-    id: string,
+  abstract findLegalClientMerchandise(
+    id?: string,
+    codMerchandise?: string,
   ): Promise<LegalClientMerchandise>;
   abstract createLegalClientMerchandise(
     legalClientMerchandise: LegalClientMerchandise,

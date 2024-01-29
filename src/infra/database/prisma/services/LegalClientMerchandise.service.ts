@@ -23,12 +23,13 @@ export class LegalClientMerchandisePrismaService
       LegalClientMerchandisePrismaDTO.PrismaToEntity(merchandise),
     );
   }
-  async findLegalClientMerchandiseById(
-    id: string,
+  async findLegalClientMerchandise(
+    id?: string,
+    codMerchandise?: string,
   ): Promise<LegalClientMerchandise> {
     const legalClientMerchandise =
-      await this.prisma.legalClientMerchandise.findFirstOrThrow({
-        where: { id },
+      await this.prisma.legalClientMerchandise.findFirst({
+        where: { OR: [{ id }, { codMerchandise }] },
       });
 
     return LegalClientMerchandisePrismaDTO.PrismaToEntity(

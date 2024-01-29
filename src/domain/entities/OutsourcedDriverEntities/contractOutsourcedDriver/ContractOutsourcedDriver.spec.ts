@@ -4,6 +4,7 @@ describe('ContractOutsourcedDriver', () => {
   it('should create  contract outsourced driver', () => {
     const contractOutsourcedDriver = new ContractOutsourcedDriver({
       cpf: '12345678910',
+      contract_number: '464979',
       situation: 'Em aberto',
       start_at: new Date(),
       end_at: null,

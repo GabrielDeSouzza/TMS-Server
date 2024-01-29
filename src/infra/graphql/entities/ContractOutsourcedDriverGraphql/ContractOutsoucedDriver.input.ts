@@ -21,6 +21,13 @@ import { type IContractOutsourcedDriver } from 'domain/entities/OutsourcedDriver
 export class ContractOutsourcedDriverInput
   implements Omit<IContractOutsourcedDriver, 'updated_at' | 'created_at'>
 {
+  @Allow()
+  @HideField()
+  contract_number: string;
+
+  @Allow()
+  @HideField()
+  number_contract: string;
   @Field()
   @IsString()
   @IsNotEmpty()
@@ -64,4 +71,6 @@ export class ContractOutsourcedDriverReferecesInput extends OmitType(
 @InputType()
 export class ContractOutsoucedDriverUpdateInput extends PartialType(
   ContractOutsourcedDriverInput,
-) {}
+) {
+  updated_by: string;
+}

@@ -4,6 +4,7 @@ import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/
 export abstract class InvoiceForLegalClientRepository {
   abstract findInvoiceForLegalClientById(
     id: string,
+    invoice_number: string,
   ): Promise<InvoiceForLegalClient>;
   abstract createInvoiceForLegalClient(
     invoiceForLegalClient: InvoiceForLegalClient,

@@ -306,6 +306,7 @@ model OutsourcedTransportCompanyDriver {
 
 model ContractOutsourcedDriver {
   id                   String           @id @default(uuid())
+  contract_number      String           @unique
   type                 String
   situation            String
   start_at             DateTime
@@ -619,6 +620,7 @@ model LegalClientOrder {
 
 model InvoiceForLegalClient {
   id                  String           @id @default(uuid())
+  invoice_number      String              @unique
   emission_date       DateTime         @default(now())
   nature_invoice      String
   invoice_total       Float

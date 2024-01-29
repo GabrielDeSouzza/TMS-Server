@@ -1,8 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 
+import { randomUUID } from 'crypto';
 import { GraphQLError } from 'graphql';
 
-import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
+import { CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
@@ -10,6 +11,7 @@ import { type CreateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/CreateC
 import { type FindAllCompaniesUseCaseRequestDTO } from 'app/dtos/CarrierCompanyDto/GetAllCarrierCompanyDto';
 import { type GetCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/GetCarrierCompanyDto';
 import { type UpdateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/UpdatedCarrierCompanyDto';
+import { LegalPersonEntityDto } from 'app/dtos/LegalPerson/EntityDto';
 
 @Injectable()
 export class CarrierCompanyUseCases {
@@ -20,8 +22,15 @@ export class CarrierCompanyUseCases {
   async getCarrierCompany(
     request: GetCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
-    const carrier = await this.carrierCompanyRepository.findCarrierCompanyById(
-      request.id,
+    if (!request) {
+      throw new GraphQLError(
+        'IS NECESSARY AN ID, CNPJ, FANTASY NAME OR CORPORATE NAME ',
+        { extensions: { code: HttpStatus.BAD_REQUEST } },
+      );
+    }
+
+    const carrier = await this.carrierCompanyRepository.findCarrierCompany(
+      request,
     );
     if (carrier) return carrier;
 
@@ -44,32 +53,36 @@ export class CarrierCompanyUseCases {
   async createCarrierCompany(
     request: CreateCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
-    const carrierExist = await this.legalPersonRepository.ValideLegalPerson({
-      cnpj: request.LegalPerson.cnpj,
-      corporate_name: request.LegalPerson.corporate_name,
-      fantasy_name: request.LegalPerson.fantasy_name,
-      state_registration: request.LegalPerson.state_registration,
-    });
+    const legalPersonExist = await this.legalPersonRepository.ValideLegalPerson(
+      {
+        cnpj: request.LegalPerson.cnpj,
+        corporate_name: request.LegalPerson.corporate_name,
+        fantasy_name: request.LegalPerson.fantasy_name,
+        state_registration: request.LegalPerson.state_registration,
+      },
+    );
 
-    if (carrierExist) {
+    if (legalPersonExist) {
       let errors = '';
 
-      if (carrierExist.cnpj == request.LegalPerson.cnpj) {
+      if (legalPersonExist.cnpj == request.LegalPerson.cnpj) {
         errors += 'CNPJ IN USE;';
       }
 
       if (
-        carrierExist.state_registration ==
+        legalPersonExist.state_registration ==
         request.LegalPerson.state_registration
       ) {
         errors += 'STATE REGISTRATION IN USE;';
       }
 
-      if (carrierExist.fantasy_name == request.LegalPerson.fantasy_name) {
+      if (legalPersonExist.fantasy_name == request.LegalPerson.fantasy_name) {
         errors += ' FANTASY NAME IN USE';
       }
 
-      if (carrierExist.corporate_name == request.LegalPerson.corporate_name) {
+      if (
+        legalPersonExist.corporate_name == request.LegalPerson.corporate_name
+      ) {
         errors += 'CORPORATE NAME IN USE';
       }
 
@@ -80,19 +93,35 @@ export class CarrierCompanyUseCases {
       }
     }
 
+    const carrierCompany = new CarrierCompany({
+      created_by: request.CarrierCompany.created_by,
+      legalPersonId: request.CarrierCompany.legalPersonId,
+      updated_by: request.CarrierCompany.updated_by,
+      id: randomUUID(),
+    });
+    const legalPerson = LegalPersonEntityDto.createEntity(request.LegalPerson);
+
     return this.carrierCompanyRepository.createCarrierCompany(
-      request.CarrierCompany,
-      request.LegalPerson,
-      request.legalPersonId,
+      carrierCompany,
+      legalPerson,
+      request.CarrierCompany.legalPersonId,
     );
   }
   async updateCarierCompany(
+    id: string,
     request: UpdateCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
+    const carrierCompany = new CarrierCompany({
+      updated_by: request.CarrierCompany.updated_by,
+      created_by: '',
+      legalPersonId: '',
+    });
+    const legalPerson = LegalPersonEntityDto.updateEntity(request.LegalPerson);
+
     return this.carrierCompanyRepository.updateCarrierCompany(
-      request.id,
-      request.CarrierCompany,
-      request.LegalPerson,
+      id,
+      carrierCompany,
+      legalPerson,
     );
   }
 }

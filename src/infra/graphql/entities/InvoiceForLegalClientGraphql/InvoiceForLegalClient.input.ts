@@ -26,6 +26,9 @@ export class InvoiceForLegalClientInput
   @IsDate()
   @IsNotEmpty()
   emission_date: Date;
+  @Allow()
+  @HideField()
+  invoice_number: string;
   @Field()
   @IsString()
   @IsNotEmpty()
@@ -65,4 +68,6 @@ export class InvoiceForLegalClientInput
 @InputType()
 export class InvoiceForLegalClientUpdateInput extends PartialType(
   InvoiceForLegalClientInput,
-) {}
+) {
+  updated_by: string;
+}

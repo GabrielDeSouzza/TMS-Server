@@ -201,12 +201,6 @@ type CompanyVehicleIModel {
   vehicle_id: String!
 }
 
-input CompanyVehicleInput {
-  Vehicle: VehicleInput
-  carrier_company_id: String!
-  vehicle_id: String
-}
-
 input CompanyVehicleListRelationFilter {
   every: CompanyVehicleWhereInput
   none: CompanyVehicleWhereInput
@@ -231,12 +225,6 @@ input CompanyVehicleOrderByWithRelationInput {
   updated_at: SortOrder
   updated_by: SortOrder
   vehicle_id: SortOrder
-}
-
-input CompanyVehicleUpdateInput {
-  Vehicle: VehicleUpdateInput!
-  carrier_company_id: String
-  vehicle_id: String
 }
 
 input CompanyVehicleWhereInput {
@@ -267,17 +255,63 @@ input ContractOutsoucedDriverUpdateInput {
   type: String
 }
 
+input ContractOutsourcedDriverInput {
+  cpf: String!
+  end_at: Timestamp!
+  outsourced_driver_id: String!
+  situation: String!
+  start_at: Timestamp!
+  type: String!
+}
+
 input ContractOutsourcedDriverListRelationFilter {
   every: ContractOutsourcedDriverWhereInput
   none: ContractOutsourcedDriverWhereInput
   some: ContractOutsourcedDriverWhereInput
 }
 
+type ContractOutsourcedDriverModel {
+  OutsourcedDriver: OutsourcedDriverModel!
+  contract_number: String!
+  cpf: String!
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  end_at: Timestamp!
+  id: String!
+  outsourced_driver_id: String!
+  situation: String!
+  start_at: Timestamp!
+  type: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
 input ContractOutsourcedDriverOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
+input ContractOutsourcedDriverOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  OutsourcedDriver: OutsourcedDriverOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  contract_number: SortOrder
+  cpf: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  end_at: SortOrder
+  id: SortOrder
+  outsourced_driver_id: SortOrder
+  situation: SortOrder
+  start_at: SortOrder
+  type: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
 type ContractOutsourcedDriverRefencesModel {
+  contract_number: String!
   cpf: String!
   created_at: Timestamp!
   created_by: String!
@@ -305,6 +339,7 @@ input ContractOutsourcedDriverWhereInput {
   OR: [ContractOutsourcedDriverWhereInput!]
   OutsourcedDriver: OutsourcedDriverWhereInput
   UpdatedBy: UserWhereInput
+  contract_number: StringFilter
   cpf: StringFilter
   created_at: DateTimeFilter
   created_by: StringFilter
@@ -402,6 +437,7 @@ type InvoiceForLegalClientModel {
   emission_date: Float!
   form_payment: String!
   id: String!
+  invoice_number: String!
   invoice_taxes: Float!
   invoice_total: Float!
   legal_client_order_id: String!
@@ -440,6 +476,7 @@ input InvoiceForLegalClientWhereInput {
   emission_date: DateTimeFilter
   form_payment: StringFilter
   id: StringFilter
+  invoice_number: StringFilter
   invoice_taxes: FloatFilter
   invoice_total: FloatFilter
   legalClientrOrderId: StringFilter
@@ -957,7 +994,7 @@ input MaintenanceWhereInput {
 type Mutation {
   createCarrierCompany(carrierCompanyInput: CarrierCompanyInput!): CarrierCompanyModel!
   createCiotForLegalClient(ciotForLegalClientInput: CiotForLegalClientInput!): CiotForLegalClientModel!
-  createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
+  createCompanyVehicle(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
   createInvoiceForLegalClient(invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createLegalClientMerchandise(legalClientMerchandiseInput: LegalClientMerchandiseInput!): LegalClientMerchandiseModel!
@@ -984,7 +1021,7 @@ type Mutation {
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
   updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
-  updatedCompanyVehicle(id: String!, outsourced: CompanyVehicleUpdateInput!): CompanyVehicleIModel!
+  updatedCompanyVehicle(id: String!, outsourced: ContractOutsoucedDriverUpdateInput!): ContractOutsourcedDriverModel!
   updatedOutsourcedVehicle(id: String!, outsourced: OutsourcedVehicleUpdateInput!): OutsourcedVehicleIModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelUpdateInput!): VehicleModelGraphql!
@@ -1929,7 +1966,7 @@ input PhysicalCustomerWhereInput {
 type Query {
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]
   getAllCiotForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: CiotForLegalClientOrderByWithRelationInput, where: CiotForLegalClientWhereInput): [CiotForLegalClientModel!]
-  getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!
+  getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
   getAllInvoiceForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [InvoiceForLegalClientModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
   getAllLegalClientMerchandise(limit: Int! = 25, offset: Int! = 0, sort: LegalClientMerchandiseOrderByWithRelationInput, where: LegalClientMerchandiseWhereInput): [LegalClientMerchandiseModel!]
@@ -1949,9 +1986,10 @@ type Query {
   getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
   getCarrierCompanyModel(id: String!): CarrierCompanyModel!
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
-  getCompanyVehicle(id: String!): CompanyVehicleIModel!
-  getInvoiceForLegalClientModel(id: String!): InvoiceForLegalClientModel!
-  getLegalClientMerchandiseModel(id: String!): LegalClientMerchandiseModel!
+  getCompanyVehicle(id: String, plate: String): CompanyVehicleIModel!
+  getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
+  getInvoiceForLegalClientModel(id: String, invoiceNumber: String): InvoiceForLegalClientModel!
+  getLegalClientMerchandiseModel(codMerchandise: String, id: String): LegalClientMerchandiseModel!
   getLegalClientModel(id: String!): LegalClientModel!
   getLegalClientOrderModel(id: String!): LegalClientOrderModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!

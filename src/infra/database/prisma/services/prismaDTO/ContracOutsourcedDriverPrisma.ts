@@ -9,6 +9,7 @@ export class ContractOutsourcedDriverPrismaDto {
     return new ContractOutsourcedDriver({
       cpf: contractOutsourcedDriver.cpf,
       created_by: contractOutsourcedDriver.created_by,
+      contract_number: contractOutsourcedDriver.contract_number,
       outsourced_driver_id: contractOutsourcedDriver.outsourced_driver_id,
       situation: contractOutsourcedDriver.situation,
       start_at: contractOutsourcedDriver.start_at as Date,
@@ -20,39 +21,45 @@ export class ContractOutsourcedDriverPrismaDto {
       updated_at: contractOutsourcedDriver.updated_at as Date,
     });
   }
-  public static EntityToPrisma(
+  public static EntityCreateToPrisma(
     contractOutsourcedDriver: ContractOutsourcedDriver,
   ) {
-    const contractCreate: Prisma.ContractOutsourcedDriverUncheckedCreateWithoutOutsourcedDriverInput =
-      {
-        cpf: contractOutsourcedDriver.cpf,
-        created_by: contractOutsourcedDriver.created_by,
-        situation: contractOutsourcedDriver.situation,
-        start_at: contractOutsourcedDriver.start_at,
-        type: contractOutsourcedDriver.type,
-        updated_by: contractOutsourcedDriver.updated_by,
-        created_at: contractOutsourcedDriver.created_at,
-        end_at: contractOutsourcedDriver.end_at,
-        updated_at: contractOutsourcedDriver.updated_at,
-      };
+    const contractCreate: Prisma.ContractOutsourcedDriverCreateInput = {
+      cpf: contractOutsourcedDriver.cpf,
+      contract_number: contractOutsourcedDriver.contract_number,
+      CreatedBy: { connect: { id: contractOutsourcedDriver.created_by } },
+      situation: contractOutsourcedDriver.situation,
+      start_at: contractOutsourcedDriver.start_at,
+      type: contractOutsourcedDriver.type,
+      UpdatedBy: { connect: { id: contractOutsourcedDriver.updated_by } },
+      created_at: contractOutsourcedDriver.created_at,
+      end_at: contractOutsourcedDriver.end_at,
+      updated_at: contractOutsourcedDriver.updated_at,
+      id: contractOutsourcedDriver.id,
+      OutsourcedDriver: {
+        connect: { id: contractOutsourcedDriver.outsourced_driver_id },
+      },
+    };
 
     return contractCreate;
   }
   public static EntityToPrismaUpdate(
     contractOutsourcedDriver: ContractOutsourcedDriver,
   ) {
-    const contractCreate: Prisma.ContractOutsourcedDriverUncheckedUpdateWithoutOutsourcedDriverInput =
-      {
-        cpf: contractOutsourcedDriver.cpf,
-        situation: contractOutsourcedDriver.situation,
-        start_at: contractOutsourcedDriver.start_at,
-        type: contractOutsourcedDriver.type,
-        updated_by: contractOutsourcedDriver.updated_by,
-        created_at: contractOutsourcedDriver.created_at,
-        end_at: contractOutsourcedDriver.end_at,
-        updated_at: contractOutsourcedDriver.updated_at,
-      };
+    const contractUpdate: Prisma.ContractOutsourcedDriverUpdateInput = {
+      cpf: contractOutsourcedDriver.cpf,
+      situation: contractOutsourcedDriver.situation,
+      start_at: contractOutsourcedDriver.start_at,
+      type: contractOutsourcedDriver.type,
+      UpdatedBy: { connect: { id: contractOutsourcedDriver.updated_by } },
+      created_at: contractOutsourcedDriver.created_at,
+      end_at: contractOutsourcedDriver.end_at,
+      updated_at: contractOutsourcedDriver.updated_at,
+      OutsourcedDriver: {
+        connect: { id: contractOutsourcedDriver.outsourced_driver_id },
+      },
+    };
 
-    return contractCreate;
+    return contractUpdate;
   }
 }

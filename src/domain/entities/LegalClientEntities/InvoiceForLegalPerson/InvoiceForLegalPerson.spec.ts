@@ -4,7 +4,7 @@ describe('InvoiceForLegalPerson', () => {
   it('should create invoice for legal person', () => {
     const typeOfMaintenance = new InvoiceForLegalClient({
       additional_data: '64654',
-
+      invoice_number: '4467467',
       digital_signature: '56465496746545798749649',
       emission_date: new Date(),
       form_payment: '646546',

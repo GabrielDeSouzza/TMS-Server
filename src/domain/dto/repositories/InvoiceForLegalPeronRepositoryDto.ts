@@ -5,7 +5,7 @@ import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
 import { InvoiceForLegalClientWhereInput } from 'infra/graphql/prisma-generated/invoice-for-legal-client/invoice-for-legal-client-where.input';
 
-abstract class WhereInvoiceForLegalClientTypeDTO extends WhereDTO {
+export abstract class WhereInvoiceForLegalClientTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   emission_date?: DateTimeFilterDTO;
   nature_invoice?: StringFilterDTO;
@@ -21,7 +21,7 @@ abstract class WhereInvoiceForLegalClientTypeDTO extends WhereDTO {
   updated_by?: StringFilterDTO;
 }
 
-abstract class SortByInvoiceForLegalClientTypeDTO {
+export abstract class SortByInvoiceForLegalClientTypeDTO {
   id?: 'asc' | 'desc';
   emission_date?: 'asc' | 'desc';
   nature_invoice?: 'asc' | 'desc';

@@ -8,6 +8,7 @@ import { type Replace } from 'helpers/Replace';
 
 export interface IContractOutsourcedDriver {
   id?: string;
+  contract_number: string;
   type: string;
   situation: string;
   start_at: Date;
@@ -20,11 +21,11 @@ export interface IContractOutsourcedDriver {
   outsourced_driver_id: string;
 }
 export class ContractOutsourcedDriver extends Entity {
-  private props: IContractOutsourcedDriver | Partial<IContractOutsourcedDriver>;
+  private props: IContractOutsourcedDriver;
 
   constructor(
     props: Replace<
-      IContractOutsourcedDriver | Partial<IContractOutsourcedDriver>,
+      IContractOutsourcedDriver,
       { created_at?: Date; updated_at?: Date }
     >,
   ) {
@@ -84,6 +85,14 @@ export class ContractOutsourcedDriver extends Entity {
 
   public get type(): string {
     return this.props.type;
+  }
+
+  public set contract_number(contract_number: string | undefined) {
+    this.props.contract_number = contract_number;
+  }
+
+  public get contract_number(): string {
+    return this.props.contract_number;
   }
 
   public set situation(situation: string | undefined) {

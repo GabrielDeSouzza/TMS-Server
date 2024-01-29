@@ -3,7 +3,7 @@ import { type NumberFilterDTO } from 'domain/shared/dtos/NumberFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WherePhysicalCustomerMerchandiseTypeDTO extends WhereDTO {
+export abstract class WherePhysicalCustomerMerchandiseTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   codMerchandise?: StringFilterDTO;
   amount?: NumberFilterDTO;
@@ -18,7 +18,7 @@ abstract class WherePhysicalCustomerMerchandiseTypeDTO extends WhereDTO {
   created_by?: StringFilterDTO;
 }
 
-abstract class SortByPhysicalCustomerMerchandiseTypeDTO {
+export abstract class SortByPhysicalCustomerMerchandiseTypeDTO {
   id?: 'asc' | 'desc';
   codMerchandise?: 'asc' | 'desc';
   amount?: 'asc' | 'desc';

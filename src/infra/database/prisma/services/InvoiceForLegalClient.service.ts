@@ -14,11 +14,12 @@ export class InvoiceForLegalClientPrismaService
   constructor(private prisma: PrismaService) {}
 
   async findInvoiceForLegalClientById(
-    id: string,
+    id?: string,
+    invoiceNumber?: string,
   ): Promise<InvoiceForLegalClient> {
     const invoiceForLegalClient =
       await this.prisma.invoiceForLegalClient.findFirstOrThrow({
-        where: { id },
+        where: { OR: [{ id }, { invoice_number: invoiceNumber }] },
       });
 
     return InvoiceForLegalClientPrismaDTO.PrismaToEntity(invoiceForLegalClient);
@@ -39,7 +40,7 @@ export class InvoiceForLegalClientPrismaService
   }
   async updateInvoiceForLegalClient(
     id: string,
-    invoiceForLegalClient?: InvoiceForLegalClient,
+    invoiceForLegalClient: InvoiceForLegalClient,
   ): Promise<InvoiceForLegalClient> {
     const invoiceForLegalClientPrisma =
       await this.prisma.invoiceForLegalClient.update({

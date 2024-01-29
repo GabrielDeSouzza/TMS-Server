@@ -12,10 +12,9 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
-import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompany/CarrierCompanyUseCases';
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 
 import { CarrierCompanyWhereArgs } from 'infra/graphql/args/CarrierCompanyArgs';
-import { CarrierCompanyGraphqlDTO } from 'infra/graphql/DTO/CarrierCompanyGraphqlDto';
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -63,18 +62,10 @@ export class CarrierCompanyResolver {
   ) {
     carrierCompanyInput.created_by = user.id;
     carrierCompanyInput.updated_by = user.id;
-    const carrierCompanyEntity =
-      CarrierCompanyGraphqlDTO.createInputToEntity(carrierCompanyInput);
-    const legalPersonEntity = carrierCompanyInput.LegalPerson
-      ? LegalPersonGraphqlDTO.createInputToEntity(
-          carrierCompanyInput.LegalPerson,
-        )
-      : null;
 
     return this.carrierCompanyUseCase.createCarrierCompany({
-      CarrierCompany: carrierCompanyEntity,
-      LegalPerson: legalPersonEntity,
-      legalPersonId: carrierCompanyInput.legalPersonId,
+      CarrierCompany: carrierCompanyInput,
+      LegalPerson: carrierCompanyInput.LegalPerson,
     });
   }
   @Mutation(() => CarrierCompanyModel)
@@ -84,16 +75,10 @@ export class CarrierCompanyResolver {
     @CurrentUser() user: User,
   ) {
     carrierCompanyInput.updated_by = user.id;
-    const carrierCompanyEntity =
-      CarrierCompanyGraphqlDTO.updateInputToEntity(carrierCompanyInput);
-    const legalPersonEntity = LegalPersonGraphqlDTO.updateInputToEntity(
-      carrierCompanyInput.LegalPerson,
-    );
 
-    return await this.carrierCompanyUseCase.updateCarierCompany({
-      id,
-      CarrierCompany: carrierCompanyEntity,
-      LegalPerson: legalPersonEntity,
+    return await this.carrierCompanyUseCase.updateCarierCompany(id, {
+      CarrierCompany: carrierCompanyInput,
+      LegalPerson: carrierCompanyInput.LegalPerson,
     });
   }
   @ResolveField(() => LegalPersonModel)

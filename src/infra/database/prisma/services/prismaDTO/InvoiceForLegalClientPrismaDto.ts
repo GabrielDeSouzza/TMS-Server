@@ -10,6 +10,7 @@ export class InvoiceForLegalClientPrismaDTO {
     invoiceForLegalClientPrisma: InvoiceForLegalClientPrisma,
   ) {
     return new InvoiceForLegalClient({
+      invoice_number: invoiceForLegalClientPrisma.invoice_number,
       additional_data: invoiceForLegalClientPrisma.additional_data,
       created_by: invoiceForLegalClientPrisma.created_by,
       digital_signature: invoiceForLegalClientPrisma.digital_signature,
@@ -30,6 +31,7 @@ export class InvoiceForLegalClientPrismaDTO {
   ) {
     const invoiceForLegalClientPrisma: Prisma.InvoiceForLegalClientCreateInput =
       {
+        invoice_number: invoiceForLegalClient.invoice_number,
         additional_data: invoiceForLegalClient.additional_data,
         CreatedBy: { connect: { id: invoiceForLegalClient.created_by } },
         digital_signature: invoiceForLegalClient.digital_signature,

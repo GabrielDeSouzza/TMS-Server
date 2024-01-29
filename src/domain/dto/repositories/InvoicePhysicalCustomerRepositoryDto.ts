@@ -3,7 +3,7 @@ import { type NumberFilterDTO } from 'domain/shared/dtos/NumberFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereInvoicePhysicalCustomerTypeDTO extends WhereDTO {
+export abstract class WhereInvoicePhysicalCustomerTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   emission_date?: DateTimeFilterDTO;
   nature_invoice?: StringFilterDTO;
@@ -20,7 +20,7 @@ abstract class WhereInvoicePhysicalCustomerTypeDTO extends WhereDTO {
   updated_by?: StringFilterDTO;
 }
 
-abstract class SortByInvoicePhysicalCustomerTypeDTO {
+export abstract class SortByInvoicePhysicalCustomerTypeDTO {
   id?: 'asc' | 'desc';
   emission_date?: 'asc' | 'desc';
   nature_invoice?: 'asc' | 'desc';

@@ -4,7 +4,7 @@ import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.rep
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
-import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompany/CarrierCompanyUseCases';
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 
 import { CarrierCompanyPrismaService } from 'infra/database/prisma/services/CarrierCompany.service';
 import { LegalPersonPrismaService } from 'infra/database/prisma/services/legal-person.service';

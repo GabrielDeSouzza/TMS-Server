@@ -4,6 +4,8 @@ import { InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForL
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { InvoiceForLegalClientUseCases } from 'app/useCases/InvoiceForLegalClient/InvoiceForLegalClientUseCases';
+
 import { InvoiceForLegalClientPrismaService } from 'infra/database/prisma/services/InvoiceForLegalClient.service';
 import { LegalClientOrderPrismaService } from 'infra/database/prisma/services/LegalClientOrder.service';
 import { UserService } from 'infra/database/prisma/services/user.service';
@@ -24,6 +26,7 @@ import { InvoiceForLegalClientResolver } from './InvoiceForLegalClient.resolver'
       useClass: LegalClientOrderPrismaService,
     },
     InvoiceForLegalClientResolver,
+    InvoiceForLegalClientUseCases,
   ],
 })
 export class InvoiceForLegalClientModule {}

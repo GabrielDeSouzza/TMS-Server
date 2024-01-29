@@ -1,7 +1,7 @@
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-abstract class WhereVehicleTypeDTO extends WhereDTO {
+export abstract class WhereVehicleTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   plate?: StringFilterDTO;
   year?: StringFilterDTO;
@@ -11,7 +11,7 @@ abstract class WhereVehicleTypeDTO extends WhereDTO {
   model_id?: StringFilterDTO;
 }
 
-abstract class SortByVehicleTypeDTO {
+export abstract class SortByVehicleTypeDTO {
   id?: 'asc' | 'desc';
   plate?: 'asc' | 'desc';
   year?: 'asc' | 'desc';

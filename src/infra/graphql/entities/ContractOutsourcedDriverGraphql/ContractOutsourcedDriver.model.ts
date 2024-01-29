@@ -9,6 +9,8 @@ export class ContractOutsourcedDriverModel
   @Field()
   id: string;
   @Field()
+  contract_number: string;
+  @Field()
   type: string;
   @Field()
   situation: string;

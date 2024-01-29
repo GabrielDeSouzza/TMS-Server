@@ -5,10 +5,10 @@ import { GraphQLError } from 'graphql';
 import { CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 import { CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 
-import { type createCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClient/CreateCiotForLegalClientDto';
-import { type getAllCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClient/GetAllCiotForLegalClientDto';
-import { type GetCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClient/GetCiotForLegalClientDto';
-import { type updateCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClient/UpdateCiotForLegalClientDto';
+import { type createCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/CreateCiotForLegalClientDto';
+import { type getAllCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/GetAllCiotForLegalClientDto';
+import { type GetCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/GetCiotForLegalClientDto';
+import { type updateCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/UpdateCiotForLegalClientDto';
 
 @Injectable()
 export class CiotForLegalClientUseCases {

@@ -249,6 +249,7 @@ Table outsourcedT_transport_company_driver {
 
 Table contract_outsourced_drivers {
   id String [pk]
+  contract_number String [unique, not null]
   type String [not null]
   situation String [not null]
   start_at DateTime [not null]
@@ -528,6 +529,7 @@ Table legal_orders {
 
 Table invoices_legal_client {
   id String [pk]
+  invoice_number String [unique, not null]
   emission_date DateTime [default: `now()`, not null]
   nature_invoice String [not null]
   invoice_total Float [not null]

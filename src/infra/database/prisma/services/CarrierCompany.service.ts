@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindAllWhereCarrierCompanyRequestType } from 'domain/dto/repositories/CarrierRepositoryDto';
+import {
+  type getCarrierCompanyData,
+  type FindAllWhereCarrierCompanyRequestType,
+} from 'domain/dto/repositories/CarrierRepositoryDto';
 import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
@@ -12,9 +15,18 @@ import { CarrierCompanyPrismaDTO } from './prismaDTO/CarrierCompanyPrismaDto';
 export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findCarrierCompanyById(id: string): Promise<CarrierCompany> {
+  async findCarrierCompany(
+    data: getCarrierCompanyData,
+  ): Promise<CarrierCompany> {
     const carrierCompany = await this.prisma.carrierCompany.findFirst({
-      where: { id },
+      where: {
+        OR: [
+          { id: data.id },
+          { LegalPerson: { cnpj: data.cnpj } },
+          { LegalPerson: { fantasy_name: data.fantasyName } },
+          { LegalPerson: { corporate_name: data.corporateName } },
+        ],
+      },
     });
 
     return CarrierCompanyPrismaDTO.PrismaToEntity(carrierCompany);
