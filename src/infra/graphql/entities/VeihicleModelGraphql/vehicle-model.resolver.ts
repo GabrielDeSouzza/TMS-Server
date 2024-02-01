@@ -87,13 +87,13 @@ export class VehicleModelResolver {
     );
   }
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: VehicleModelGraphql) {
+  async CreatedUser(@Parent() user: VehicleModelGraphql) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: VehicleModelInput) {
+  async UpdatedUser(@Parent() user: VehicleModelInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });

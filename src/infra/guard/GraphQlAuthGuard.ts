@@ -39,9 +39,7 @@ export class GraphQLAuthGuard extends AuthGuard('jwt') implements CanActivate {
       });
 
       req.user = payload;
-    } catch (error) {
-      console.log(error);
-
+    } catch {
       throw new GraphQLError('Invalid token!', {
         extensions: { code: HttpStatus.UNAUTHORIZED },
       });

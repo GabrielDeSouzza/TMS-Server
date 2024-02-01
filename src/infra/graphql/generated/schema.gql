@@ -35,12 +35,10 @@ type CarrierCompanyModel {
   CreatedUser: UserModelRefereces!
   LegalPerson: LegalPersonModel!
   UpdatedUser: UserModelRefereces!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   legalPersonId: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -108,13 +106,11 @@ type CiotForLegalClientModel {
   LegalClientContract: LegalContractModel!
   UpdatedUser: UserModelRefereces!
   ciot: String!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   emission_date: Timestamp!
   id: String!
   legal_contract_id: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -271,10 +267,11 @@ input ContractOutsourcedDriverListRelationFilter {
 }
 
 type ContractOutsourcedDriverModel {
+  CreatedUser: UserModelRefereces!
   OutsourcedDriver: OutsourcedDriverModel!
+  UpdatedUser: UserModelRefereces!
   contract_number: String!
   cpf: String!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   end_at: Timestamp!
@@ -283,7 +280,6 @@ type ContractOutsourcedDriverModel {
   situation: String!
   start_at: Timestamp!
   type: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -430,7 +426,6 @@ type InvoiceForLegalClientModel {
   LegalClientOrder: LegalClientOrderModel!
   UpdatedUser: UserModelRefereces!
   additional_data: String!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   digital_signature: String!
@@ -442,7 +437,6 @@ type InvoiceForLegalClientModel {
   invoice_total: Float!
   legal_client_order_id: String!
   nature_invoice: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -606,12 +600,10 @@ type LegalClientModel {
   Orders: [LegalClientOrderModel!]!
   UpdatedUser: UserModelRefereces!
   branch: String!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   legal_person_id: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -650,13 +642,11 @@ type LegalClientOrderModel {
   LegalContract: LegalContractModel!
   Merchandises: [LegalClientMerchandiseModel!]!
   UpdatedUser: UserModelRefereces!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   legal_contract_id: String!
   order: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -749,7 +739,6 @@ type LegalContractModel {
   UpdatedUser: UserModelRefereces!
   carrier_company_id: String!
   contract_number: String!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   delivery_conditions: String!
@@ -757,7 +746,6 @@ type LegalContractModel {
   id: String!
   legal_client_id: String!
   observations: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -1322,12 +1310,10 @@ type OutsourcedDriverModel {
   cnh_expiration: Timestamp!
   company_vehicle: Boolean!
   course_mopp: Boolean!
-  createdUser: UserModelRefereces!
   created_by: String!
   id: String!
   natural_person_id: String!
   outsourced_vehicle_id: String!
-  updatedUser: UserModelRefereces!
   updated_by: String!
 }
 
@@ -1408,13 +1394,11 @@ type OutsourcedTransportCompanyContractModel {
   OutsourcedTransportCompany: OutsourcedTransportCompanyModel!
   UpdatedUser: UserModelRefereces!
   carrierCompanyId: String!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   legalClientOrderId: String!
   outSourcedTransportCompanyId: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -1489,13 +1473,11 @@ type OutsourcedTransportCompanyDriverModel {
   cnh_category: String!
   cnh_expiration: Timestamp!
   course_mopp: Boolean!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   natural_person_id: String!
   outsourced_transport_company_id: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -1571,12 +1553,10 @@ type OutsourcedTransportCompanyModel {
   LegalPerson: LegalPersonModel!
   UpdatedUser: UserModelRefereces!
   Vehicles: [OutsourcedTransportVehicleModel!]
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   legalPersonId: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -1638,12 +1618,10 @@ type OutsourcedTransportVehicleModel {
   OutsourcedTransportCompany: OutsourcedTransportCompanyModel!
   UpdatedUser: UserModelRefereces!
   Vehicle: VehicleCarModel!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   outsourced_company_id: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
   vehicle_id: String!
@@ -2317,13 +2295,11 @@ type VehicleBodyworkModel {
   UpdatedUser: UserModelRefereces!
   VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   axles: Float!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   mass: Float!
   name: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
   volume: Float!
@@ -2474,19 +2450,19 @@ input VehicleListRelationFilter {
 }
 
 type VehicleModelGraphql {
+  CreatedUser: UserModelRefereces!
+  UpdatedUser: UserModelRefereces!
   VehicleBrand: VehicleBrandReferences!
   VehicleType: VehicleTypeModel!
   axles: Int!
   brand_id: String!
   capacity_max: Float!
   capacity_per_axle: Int!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   name: String!
   type_id: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
   weight: Float!
@@ -2647,6 +2623,8 @@ input VehicleTypeListRelationFilter {
 }
 
 type VehicleTypeModel {
+  CreatedUser: UserModelRefereces!
+  UpdatedUser: UserModelRefereces!
   VehicleModels: VehicleModelGraphql
   VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   bodyWork: Boolean!

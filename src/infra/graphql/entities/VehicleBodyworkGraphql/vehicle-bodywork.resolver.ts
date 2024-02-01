@@ -84,13 +84,13 @@ export class VehicleBodyworkResolver {
     );
   }
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: VehicleBodyworkInput) {
+  async CreatedUser(@Parent() user: VehicleBodyworkInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: VehicleBodyworkInput) {
+  async UpdatedUser(@Parent() user: VehicleBodyworkInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });

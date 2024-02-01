@@ -130,13 +130,13 @@ export class VehicleTypeResolver {
   }
 
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: VehicleTypeInput) {
+  async CreatedUser(@Parent() user: VehicleTypeInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: VehicleTypeInput) {
+  async UpdatedUser(@Parent() user: VehicleTypeInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });

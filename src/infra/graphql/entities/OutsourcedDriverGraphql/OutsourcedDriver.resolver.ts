@@ -141,13 +141,13 @@ export class OutsourcedDriverResolver {
     );
   }
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: OutsourcedDriverInput) {
+  async CreatedUser(@Parent() user: OutsourcedDriverInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: OutsourcedDriverInput) {
+  async UpdatedUser(@Parent() user: OutsourcedDriverInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });

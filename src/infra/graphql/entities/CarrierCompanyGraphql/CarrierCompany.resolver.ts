@@ -96,13 +96,13 @@ export class CarrierCompanyResolver {
     return LegalPersonGraphqlDTO.createInputToEntity(legalPerson);
   }
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: CarrierCompanyInput) {
+  async CreatedUser(@Parent() user: CarrierCompanyInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: CarrierCompanyModel) {
+  async UpdatedUser(@Parent() user: CarrierCompanyModel) {
     const { updated_by: updatedBy } = user;
     console.log(updatedBy);
 

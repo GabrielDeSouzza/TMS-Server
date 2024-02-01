@@ -141,13 +141,13 @@ export class OutsourcedTransportCompanyResolver {
     );
   }
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: OutsourcedTransportCompanyInput) {
+  async CreatedUser(@Parent() user: OutsourcedTransportCompanyInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: OutsourcedTransportCompanyInput) {
+  async UpdatedUser(@Parent() user: OutsourcedTransportCompanyInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });

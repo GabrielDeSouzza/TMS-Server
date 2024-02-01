@@ -48,7 +48,6 @@ export class VehicleBrandResolver {
       sort: args.sort,
       where: args.where,
     });
-    console.log(brands);
 
     return brands.length > 0 ? brands : null;
   }

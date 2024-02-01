@@ -21,7 +21,7 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
-import { UserModelRefereces } from '../UserGraphql/user.model';
+import { UserModel, UserModelRefereces } from '../UserGraphql/user.model';
 import {
   CiotForLegalClientInput,
   CiotForLegalClientUpdateInput,
@@ -90,15 +90,15 @@ export class CiotForLegalClientResolver {
       id: ciot.legal_contract_id,
     });
   }
-  @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: CiotForLegalClientInput) {
+  @ResolveField(() => UserModel)
+  async CreatedUser(@Parent() user: CiotForLegalClientModel) {
     const { created_by: createdBy } = user;
     console.log('test');
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: CiotForLegalClientInput) {
+  async UpdatedUser(@Parent() user: CiotForLegalClientInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });

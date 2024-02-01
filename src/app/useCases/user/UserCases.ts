@@ -18,7 +18,7 @@ export class UserUseCases {
   }
 
   async getUser(search: getUserDto): Promise<User> {
-    if (search) {
+    if (!search.id && !search.email) {
       throw new GraphQLError('Is necessary  to provide an ID or EMAIL');
     }
 

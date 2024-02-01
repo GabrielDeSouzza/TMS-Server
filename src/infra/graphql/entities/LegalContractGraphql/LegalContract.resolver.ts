@@ -97,13 +97,13 @@ export class LegalContractResolver {
     });
   }
   @ResolveField(() => UserModelRefereces)
-  async createdUser(@Parent() user: LegalContractInput) {
+  async CreatedUser(@Parent() user: LegalContractInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: LegalContractInput) {
+  async UpdatedUser(@Parent() user: LegalContractInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
