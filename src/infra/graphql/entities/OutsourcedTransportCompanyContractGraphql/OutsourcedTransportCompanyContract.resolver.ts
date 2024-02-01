@@ -13,7 +13,8 @@ import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.rep
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
 import { OutsourcedTransportCompanyContractRepository } from 'domain/repositories/OutsourcedTransportCompanyContract.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/args/OutsourcedTransportCompanyArgs';
 import { OutsourcedTransportCompanyContractGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyContractGraphqlDto';
@@ -39,7 +40,7 @@ import { OutsourcedTransportCompanyContractModel } from './OutsourcedTransportCo
 export class OutsourcedTransportCompanyContractResolver {
   constructor(
     private outsourcedTransportCompanyContractRepository: OutsourcedTransportCompanyContractRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
     private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
     private carrierCompanyRepository: CarrierCompanyRepository,
     private legalClientOrderRepository: LegalClientOrderRepository,
@@ -123,7 +124,7 @@ export class OutsourcedTransportCompanyContractResolver {
   async LegalClientOrder(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return await this.legalClientOrderRepository.findLegalClientOrderById(
+    return await this.legalClientOrderRepository.findLegalClientOrder(
       contract.legalClientOrderId,
     );
   }
@@ -131,7 +132,7 @@ export class OutsourcedTransportCompanyContractResolver {
   async createdUser(@Parent() user: OutsourcedTransportCompanyContractInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(
@@ -139,6 +140,6 @@ export class OutsourcedTransportCompanyContractResolver {
   ) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

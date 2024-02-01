@@ -9,8 +9,9 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleBodyworkWhereArgs } from 'infra/graphql/args/VehicleBodyworkArgs';
 import { VehicleBodyworkGraphDTO } from 'infra/graphql/DTO/VehicleBodywork';
@@ -33,7 +34,7 @@ import { VehicleBodyworkModel } from './vehicle-bodywork.model';
 export class VehicleBodyworkResolver {
   constructor(
     private vehicleBodyworkRepository: VehicleBodyworkRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
   ) {}
   @Query(() => VehicleBodyworkModel)
   async getVehicleBodyworkModel(@Args('id') id: string) {
@@ -86,12 +87,12 @@ export class VehicleBodyworkResolver {
   async createdUser(@Parent() user: VehicleBodyworkInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: VehicleBodyworkInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

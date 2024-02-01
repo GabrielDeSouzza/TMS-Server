@@ -2,7 +2,10 @@ import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/reposito
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 export abstract class LegalClientOrderRepository {
-  abstract findLegalClientOrderById(id: string): Promise<LegalClientOrder>;
+  abstract findLegalClientOrder(
+    id?: string,
+    order?: string,
+  ): Promise<LegalClientOrder>;
   abstract findOrdersByLegalClient(
     legalClientId: string,
   ): Promise<LegalClientOrder[]>;

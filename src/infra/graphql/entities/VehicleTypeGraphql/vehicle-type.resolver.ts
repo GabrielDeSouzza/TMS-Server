@@ -12,9 +12,10 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 import { VehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
 import { VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
-import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleTypeWhereArgs } from 'infra/graphql/args/VehicleTypeArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -34,7 +35,7 @@ import { VehicleTypeModel } from './vehicle-type.model';
 export class VehicleTypeResolver {
   constructor(
     private vehicleTypeRepository: VehicleTypeRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
     private vehicleTypeContainsBoyRepositoy: VehicleTypeContainsBodyRepository,
   ) {}
 
@@ -132,13 +133,13 @@ export class VehicleTypeResolver {
   async createdUser(@Parent() user: VehicleTypeInput) {
     const { created_by: createdBy } = user;
 
-    return this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: VehicleTypeInput) {
     const { updated_by: updatedBy } = user;
 
-    return this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
   @ResolveField(() => [VehicleTypeContainsBodyModel], { nullable: true })
   async VehicleTypeContainsBody(@Parent() vehicleType: VehicleTypeModel) {

@@ -22,5 +22,6 @@ import { CompanyVehicleResolver } from './CompanyVehicle.resolver';
     CompanyVehicleResolver,
     CompanyVehicleUseCases,
   ],
+  exports: [CompanyVehicleUseCases],
 })
 export class CompanyVehicleModule {}

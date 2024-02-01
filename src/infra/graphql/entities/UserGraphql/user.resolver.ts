@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ROLE } from 'domain/entities/User/User';
 
-import { UserCases } from 'app/useCases/user/UserCases';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { UserWhereArgs } from 'infra/graphql/args/UserArgs';
 import { UserGraphDTO } from 'infra/graphql/DTO/User';
@@ -12,15 +12,15 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { AcessAllowed } from '../../utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from '../../utilities/interceptors/RoleInterceptor';
 import { UserInput, UserUpdateInput } from './user.input';
-import { UserModel } from './user.model';
+import { UserModel, UserModelRefereces } from './user.model';
 
 @UseGuards(GraphQLAuthGuard)
 @AcessAllowed(ROLE.ADMIN)
 @UseInterceptors(RoleInterceptor)
-@Resolver(() => UserModel)
+@Resolver(() => UserModel || UserModelRefereces)
 export class UserResolver {
-  constructor(private userCases: UserCases) {}
-  @Query(() => UserModel, { name: 'user' })
+  constructor(private userCases: UserUseCases) {}
+  @Query(() => UserModel || UserModelRefereces, { name: 'user' })
   async getUser(
     @Args('id', { nullable: true }) id?: string,
     @Args('email', { nullable: true }) email?: string,

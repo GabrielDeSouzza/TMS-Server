@@ -9,10 +9,10 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
 
 import { CiotForLegalClientUseCases } from 'app/useCases/CiotForLegalClient/CiotForLegalClientUseCases';
+import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { CiotForLegalClientWhereArgs } from 'infra/graphql/args/CiotForLegalClientArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -35,8 +35,8 @@ import { CiotForLegalClientModel } from './CiotForLegalClient.model';
 export class CiotForLegalClientResolver {
   constructor(
     private ciotForLegalClientUseCases: CiotForLegalClientUseCases,
-    private userRepository: UserRepository,
-    private legalContractRepository: LegalContractRepository,
+    private userCase: UserUseCases,
+    private legalContractUseCase: LegalContractUseCases,
   ) {}
   @Query(() => CiotForLegalClientModel)
   async getCiotForLegalClientModel(
@@ -86,20 +86,21 @@ export class CiotForLegalClientResolver {
   }
   @ResolveField(() => LegalContractModel)
   async LegalClientContract(@Parent() ciot: CiotForLegalClientInput) {
-    return await this.legalContractRepository.findLegalContractById(
-      ciot.legal_contract_id,
-    );
+    return await this.legalContractUseCase.getContract({
+      id: ciot.legal_contract_id,
+    });
   }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: CiotForLegalClientInput) {
     const { created_by: createdBy } = user;
+    console.log('test');
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: CiotForLegalClientInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

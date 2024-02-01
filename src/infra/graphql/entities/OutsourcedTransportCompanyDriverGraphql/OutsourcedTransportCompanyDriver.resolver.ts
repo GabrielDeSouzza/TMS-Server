@@ -14,7 +14,8 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
 import { OutsourcedTransportCompanyDriverRepository } from 'domain/repositories/OutsourcedTransportCompanyDriver.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { OutsourcedTransportCompanyDriverWhereArgs } from 'infra/graphql/args/OutsourcedTransportCompanyDriverArgs';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
@@ -40,7 +41,7 @@ import { OutsourcedTransportCompanyDriverModel } from './OutsourcedTransportComp
 export class OutsourcedTransportCompanyDriverResolver {
   constructor(
     private outsourcedTransportCompanyDriverRepository: OutsourcedTransportCompanyDriverRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
     private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
     private naturalPersonRepository: NaturalPersonRepository,
   ) {}
@@ -139,12 +140,12 @@ export class OutsourcedTransportCompanyDriverResolver {
   async createdUser(@Parent() user: OutsourcedTransportCompanyDriverInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: OutsourcedTransportCompanyDriverInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

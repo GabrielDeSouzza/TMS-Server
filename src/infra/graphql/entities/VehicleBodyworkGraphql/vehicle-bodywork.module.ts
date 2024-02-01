@@ -5,8 +5,6 @@ import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRe
 import { PrismaService } from 'infra/database/prisma/prisma.service';
 import { VehicleBodyworkService } from 'infra/database/prisma/services/vehicle-bodywork.service';
 
-import { UserRepository } from '../../../../domain/repositories/UserRepository';
-import { UserService } from '../../../database/prisma/services/user.service';
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { VehicleBodyworkResolver } from './vehicle-bodywork.resolver';
 
@@ -15,7 +13,6 @@ import { VehicleBodyworkResolver } from './vehicle-bodywork.resolver';
   providers: [
     PrismaService,
     { provide: VehicleBodyworkRepository, useClass: VehicleBodyworkService },
-    { provide: UserRepository, useClass: UserService },
 
     VehicleBodyworkResolver,
   ],

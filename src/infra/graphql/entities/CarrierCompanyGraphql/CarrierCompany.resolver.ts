@@ -10,11 +10,12 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
 
 import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { CarrierCompanyWhereArgs } from 'infra/graphql/args/CarrierCompanyArgs';
+import { GetCarrierCompanyArgs } from 'infra/graphql/args/GetLegalPersons/GetCarrierCompanyArgs';
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -36,12 +37,14 @@ import { CarrierCompanyModel } from './CarrierCompany.model';
 export class CarrierCompanyResolver {
   constructor(
     private carrierCompanyUseCase: CarrierCompanyUseCases,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
     private legalPersonRepository: LegalPersonRepository,
   ) {}
   @Query(() => CarrierCompanyModel)
-  async getCarrierCompanyModel(@Args('id') id: string) {
-    return this.carrierCompanyUseCase.getCarrierCompany({ id });
+  async getCarrierCompanyModel(
+    @Args() carrierCompanySearch: GetCarrierCompanyArgs,
+  ) {
+    return this.carrierCompanyUseCase.getCarrierCompany(carrierCompanySearch);
   }
   @Query(() => [CarrierCompanyModel], { nullable: true })
   async getAllCarrierCompany(@Args() args: CarrierCompanyWhereArgs) {
@@ -96,12 +99,13 @@ export class CarrierCompanyResolver {
   async createdUser(@Parent() user: CarrierCompanyInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
-  async updatedUser(@Parent() user: CarrierCompanyInput) {
+  async updatedUser(@Parent() user: CarrierCompanyModel) {
     const { updated_by: updatedBy } = user;
+    console.log(updatedBy);
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

@@ -10,13 +10,13 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
-import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
 
+import { LegalClientUseCases } from 'app/useCases/LegalClientUseCases/LegalClientUseCase';
+import { UserUseCases } from 'app/useCases/user/UserCases';
+
+import { GetLegalClientArgs } from 'infra/graphql/args/GetLegalPersons/GetLegalClientArgs';
 import { LegalClientWhereArgs } from 'infra/graphql/args/LegalClientArgs';
-import { LegalClientGraphDTO } from 'infra/graphql/DTO/LegalClient';
-import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -34,18 +34,18 @@ import { LegalClientModel } from './LegalClient.model';
 @Resolver(() => LegalClientModel)
 export class LegalClientResolver {
   constructor(
-    private legalClientRepository: LegalClientRepository,
-    private userRepository: UserRepository,
+    private legalClientUseCase: LegalClientUseCases,
+    private userCase: UserUseCases,
     private legalPersonRepository: LegalPersonRepository,
     private legalClientOrderRepository: LegalClientOrderRepository,
   ) {}
   @Query(() => LegalClientModel)
-  async getLegalClientModel(@Args('id') id: string) {
-    return await this.legalClientRepository.findLegalClientById(id);
+  async getLegalClientModel(@Args() legalClientSearch: GetLegalClientArgs) {
+    return await this.legalClientUseCase.getClient(legalClientSearch);
   }
   @Query(() => [LegalClientModel], { nullable: true })
   async getAllLegalClient(@Args() args: LegalClientWhereArgs) {
-    const legalclient = await this.legalClientRepository.getAllLegalClient({
+    const legalclient = await this.legalClientUseCase.getAllClients({
       limit: args.limit,
       offset: args.offset,
       sort: args.sort,
@@ -61,18 +61,8 @@ export class LegalClientResolver {
   ) {
     legalclientInput.created_by = user.id;
     legalclientInput.updated_by = user.id;
-    const legalclientEntity =
-      LegalClientGraphDTO.createInputToEntity(legalclientInput);
-    const legalPersonEntity = LegalPersonGraphqlDTO.createInputToEntity(
-      legalclientInput.LegalPerson,
-    );
-    console.log('tess');
 
-    return await this.legalClientRepository.createLegalClient(
-      legalclientEntity,
-      legalPersonEntity,
-      legalclientInput.legal_person_id,
-    );
+    return await this.legalClientUseCase.createLegalClient(legalclientInput);
   }
   @Mutation(() => LegalClientModel)
   async updatelegalclient(
@@ -81,16 +71,10 @@ export class LegalClientResolver {
     @CurrentUser() user: User,
   ) {
     legalclientInput.updated_by = user.id;
-    const legalclientEntity =
-      LegalClientGraphDTO.updateInputToEntity(legalclientInput);
-    const legalPersonEntity = LegalPersonGraphqlDTO.updateInputToEntity(
-      legalclientInput.LegalPerson,
-    );
 
-    return await this.legalClientRepository.updateLegalClient(
+    return await this.legalClientUseCase.updateLegalClient(
       id,
-      legalclientEntity,
-      legalPersonEntity,
+      legalclientInput,
     );
   }
   @ResolveField(() => LegalPersonModel)
@@ -102,7 +86,7 @@ export class LegalClientResolver {
       legalPersonID,
     );
 
-    return LegalPersonGraphqlDTO.createInputToEntity(legalPerson);
+    return legalPerson;
   }
   @ResolveField(() => [LegalClientOrderModel])
   async Orders(@Parent() legalClient: LegalClientModel) {
@@ -114,12 +98,12 @@ export class LegalClientResolver {
   async createdUser(@Parent() user: LegalClientInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: LegalClientInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

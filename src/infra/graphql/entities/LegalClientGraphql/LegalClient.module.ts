@@ -4,13 +4,14 @@ import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.rep
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { LegalClientUseCases } from 'app/useCases/LegalClientUseCases/LegalClientUseCase';
+import { LegalPersonUseCases } from 'app/useCases/LegalPersonUseCases/LegalPersonUseCases';
 
 import { CarrierCompanyPrismaService } from 'infra/database/prisma/services/CarrierCompany.service';
 import { LegalClientPrismaService } from 'infra/database/prisma/services/legal-client.service';
 import { LegalPersonPrismaService } from 'infra/database/prisma/services/legal-person.service';
 import { LegalClientOrderPrismaService } from 'infra/database/prisma/services/LegalClientOrder.service';
-import { UserService } from 'infra/database/prisma/services/user.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { LegalClientResolver } from './LegalClient.resolver';
@@ -22,7 +23,6 @@ import { LegalClientResolver } from './LegalClient.resolver';
       provide: LegalClientRepository,
       useClass: LegalClientPrismaService,
     },
-    { provide: UserRepository, useClass: UserService },
     { provide: LegalPersonRepository, useClass: LegalPersonPrismaService },
     {
       provide: CarrierCompanyRepository,
@@ -32,8 +32,10 @@ import { LegalClientResolver } from './LegalClient.resolver';
       provide: LegalClientOrderRepository,
       useClass: LegalClientOrderPrismaService,
     },
-
+    LegalClientUseCases,
+    LegalPersonUseCases,
     LegalClientResolver,
   ],
+  exports: [LegalClientUseCases],
 })
 export class LegalClientModule {}

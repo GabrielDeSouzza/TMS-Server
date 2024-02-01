@@ -10,7 +10,7 @@ import { UserRepository } from 'domain/repositories/UserRepository';
 import { type getUserDto } from 'app/dtos/user/GetUserDto';
 
 @Injectable()
-export class UserCases {
+export class UserUseCases {
   constructor(private userRepository: UserRepository) {}
 
   async getAllUser(where: FindUserWhere): Promise<User[]> {

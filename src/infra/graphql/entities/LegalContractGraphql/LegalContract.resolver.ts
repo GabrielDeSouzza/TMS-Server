@@ -9,14 +9,13 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
-import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
 
 import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
+import { LegalClientUseCases } from 'app/useCases/LegalClientUseCases/LegalClientUseCase';
+import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalContractWhereArgs } from 'infra/graphql/args/LegalContractArgs';
-import { LegalContractGraphqlDTO } from 'infra/graphql/DTO/LegalContractGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -36,30 +35,29 @@ import { LegalContractModel } from './LegalContract.model';
 @Resolver(() => LegalContractModel)
 export class LegalContractResolver {
   constructor(
-    private legalContractRepository: LegalContractRepository,
-    private legalclientRepository: LegalClientRepository,
-    private userRepository: UserRepository,
+    private legalContractUseCase: LegalContractUseCases,
+    private legalClientUseCase: LegalClientUseCases,
+    private userCase: UserUseCases,
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   @Query(() => LegalContractModel)
   async getLegalContractModel(
     @Args('id', { nullable: true }) id: string,
-    @Args('contractNumber', { nullable: true }) contracNumber: string,
+    @Args('contractNumber', { nullable: true }) contractNumber: string,
   ) {
-    return this.legalContractRepository.findLegalContractById(
+    return this.legalContractUseCase.getContract({
       id,
-      contracNumber,
-    );
+      contractNumber,
+    });
   }
   @Query(() => [LegalContractModel], { nullable: true })
   async getAllLegalContract(@Args() args: LegalContractWhereArgs) {
-    const legalContract =
-      await this.legalContractRepository.getAllLegalContract({
-        limit: args.limit,
-        offset: args.offset,
-        sort: args.sort,
-        where: args.where,
-      });
+    const legalContract = await this.legalContractUseCase.getAllContracts({
+      limit: args.limit,
+      offset: args.offset,
+      sort: args.sort,
+      where: args.where,
+    });
 
     return legalContract.length > 0 ? legalContract : null;
   }
@@ -70,12 +68,8 @@ export class LegalContractResolver {
   ) {
     legalContractInput.created_by = user.id;
     legalContractInput.updated_by = user.id;
-    const legalContractEntity =
-      LegalContractGraphqlDTO.createInputToEntity(legalContractInput);
 
-    return this.legalContractRepository.createLegalContract(
-      legalContractEntity,
-    );
+    return this.legalContractUseCase.createContract(legalContractInput);
   }
   @Mutation(() => LegalContractModel)
   async updatelegalContract(
@@ -84,20 +78,15 @@ export class LegalContractResolver {
     @CurrentUser() user: User,
   ) {
     legalContractInput.updated_by = user.id;
-    const legalContractEntity =
-      LegalContractGraphqlDTO.updateInputToEntity(legalContractInput);
 
-    return this.legalContractRepository.updateLegalContract(
-      id,
-      legalContractEntity,
-    );
+    return this.legalContractUseCase.updateContract(id, legalContractInput);
   }
 
   @ResolveField(() => LegalClientModelRefereces)
   async LegalClient(@Parent() contract: LegalContractInput) {
     const { legal_client_id: legalClientID } = contract;
 
-    return await this.legalclientRepository.findLegalClientById(legalClientID);
+    return await this.legalClientUseCase.getClient({ id: legalClientID });
   }
   @ResolveField(() => LegalClientModelRefereces)
   async CarrierCompany(@Parent() contract: LegalContractInput) {
@@ -111,12 +100,12 @@ export class LegalContractResolver {
   async createdUser(@Parent() user: LegalContractInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: LegalContractInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

@@ -9,10 +9,10 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
 
 import { InvoiceForLegalClientUseCases } from 'app/useCases/InvoiceForLegalClient/InvoiceForLegalClientUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalClientWhereArgs } from 'infra/graphql/args/LegalClientArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -35,8 +35,8 @@ import { InvoiceForLegalClientModel } from './InvoiceForLegalClient.model';
 export class InvoiceForLegalClientResolver {
   constructor(
     private invoiceForLegalClientUseCase: InvoiceForLegalClientUseCases,
-    private userRepository: UserRepository,
-    private legalClientOrderRepository: LegalClientOrderRepository,
+    private userCase: UserUseCases,
+    private legalClientOrderUseCase: LegalClientOrderUseCases,
   ) {}
   @Query(() => InvoiceForLegalClientModel)
   async getInvoiceForLegalClientModel(
@@ -89,20 +89,20 @@ export class InvoiceForLegalClientResolver {
   }
   @ResolveField(() => LegalClientOrderModel)
   async LegalClientOrder(@Parent() invoice: InvoiceForLegalClientInput) {
-    return this.legalClientOrderRepository.findLegalClientOrderById(
-      invoice.legal_client_order_id,
-    );
+    return this.legalClientOrderUseCase.getLegalClientOrder({
+      id: invoice.legal_client_order_id,
+    });
   }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: InvoiceForLegalClientInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: InvoiceForLegalClientInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

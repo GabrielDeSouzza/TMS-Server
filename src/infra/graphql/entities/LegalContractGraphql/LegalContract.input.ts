@@ -1,4 +1,10 @@
-import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
+import {
+  Field,
+  HideField,
+  InputType,
+  OmitType,
+  PartialType,
+} from '@nestjs/graphql';
 
 import { Type } from 'class-transformer';
 import {
@@ -47,4 +53,6 @@ export class LegalContractInput
   created_by: string;
 }
 @InputType()
-export class LegalContractUpdateInput extends PartialType(LegalContractInput) {}
+export class LegalContractUpdateInput extends PartialType(
+  OmitType(LegalContractInput, ['contract_number', 'created_by']),
+) {}

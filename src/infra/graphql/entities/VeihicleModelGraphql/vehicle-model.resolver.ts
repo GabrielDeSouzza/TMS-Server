@@ -9,10 +9,11 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleModelWhereArgs } from 'infra/graphql/args/VeihicleModelArgs';
 import { VehicleModelGraphDTO } from 'infra/graphql/DTO/VehicleModel';
@@ -36,7 +37,7 @@ import { VehicleModelGraphql } from './vehicle-model.model';
 @Resolver(() => VehicleModelGraphql)
 export class VehicleModelResolver {
   constructor(
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
     private vehicleModelRepository: VehicleModelRepository,
     private vehicleTypeRepository: VehicleTypeRepository,
     private vehicleBrandRepository: VehicleBrandRepository,
@@ -89,13 +90,13 @@ export class VehicleModelResolver {
   async createdUser(@Parent() user: VehicleModelGraphql) {
     const { created_by: createdBy } = user;
 
-    return this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: VehicleModelInput) {
     const { updated_by: updatedBy } = user;
 
-    return this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
   @ResolveField(() => VehicleTypeModel)
   async VehicleType(@Parent() vehicleModel: VehicleModelInput) {

@@ -9,8 +9,9 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { UserRepository } from 'domain/repositories/UserRepository';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleBrandWhereArgs } from 'infra/graphql/args/VehicleBrandArgs';
 import { VehicleBrandGraphDTO } from 'infra/graphql/DTO/VehicleBrand';
@@ -32,7 +33,7 @@ import { VehicleBrandModel } from './vehicle-brand.model';
 export class VehicleBrandResolver {
   constructor(
     private vehicleBrandRepository: VehicleBrandRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
   ) {}
 
   @Query(() => VehicleBrandModel)
@@ -85,12 +86,12 @@ export class VehicleBrandResolver {
   async createdUser(@Parent() user: VehicleBrandInput) {
     const { created_by: createdBy } = user;
 
-    return this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField()
   async updatedUser(@Parent() user: VehicleBrandInput) {
     const { updated_by: updatedBy } = user;
 
-    return this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

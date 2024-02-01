@@ -21,10 +21,13 @@ export class LegalClientOrderPrismaService
 
     return orders.map(order => LegalClientOrderPrismaDTO.PrismaToEntity(order));
   }
-  async findLegalClientOrderById(id: string): Promise<LegalClientOrder> {
+  async findLegalClientOrder(
+    id?: string,
+    order?: string,
+  ): Promise<LegalClientOrder> {
     const legalClientOrder =
       await this.prisma.legalClientOrder.findFirstOrThrow({
-        where: { id },
+        where: { OR: [{ id }, { order }] },
       });
 
     return LegalClientOrderPrismaDTO.PrismaToEntity(legalClientOrder);

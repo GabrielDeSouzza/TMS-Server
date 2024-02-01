@@ -2,7 +2,7 @@ import { type FindAllLegalContractWhereRequestDTO } from 'domain/dto/repositorie
 import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 
 export abstract class LegalContractRepository {
-  abstract findLegalContractById(
+  abstract findLegalContract(
     id?: string,
     contract_number?: string,
   ): Promise<LegalContract>;

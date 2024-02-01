@@ -9,13 +9,13 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
-import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
-import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchandiseDto/LegalClientMerchandisesUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalClientOrderWhereArgs } from 'infra/graphql/args/LegalClientOrderArgs';
-import { LegalClientOrderGraphqlDTO } from 'infra/graphql/DTO/LegalClientOrderGraphqlDto';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -36,19 +36,22 @@ import { LegalClientOrderModel } from './LegalClientOrder.model';
 @Resolver(() => LegalClientOrderModel)
 export class LegalClientOrderResolver {
   constructor(
-    private legalClientOrderRepository: LegalClientOrderRepository,
-    private userRepository: UserRepository,
-    private legalContract: LegalContractRepository,
-    private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
+    private legalClientOrdeUseCase: LegalClientOrderUseCases,
+    private userCase: UserUseCases,
+    private legalContractUseCase: LegalContractUseCases,
+    private legalClientMerchandiseUseCase: LegalClientMerchandiseUseCases,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
-  async getLegalClientOrderModel(@Args('id') id: string) {
-    return this.legalClientOrderRepository.findLegalClientOrderById(id);
+  async getLegalClientOrderModel(
+    @Args('id', { nullable: true }) id?: string,
+    @Args('order', { nullable: true }) order?: string,
+  ) {
+    return this.legalClientOrdeUseCase.getLegalClientOrder({ id, order });
   }
   @Query(() => [LegalClientOrderModel], { nullable: true })
   async getAllLegalClientOrder(@Args() args: LegalClientOrderWhereArgs) {
     const legalClientOrder =
-      await this.legalClientOrderRepository.getAllLegalClientOrder({
+      await this.legalClientOrdeUseCase.getAllLegalClientOrder({
         limit: args.limit,
         offset: args.offset,
         sort: args.sort,
@@ -64,12 +67,8 @@ export class LegalClientOrderResolver {
   ) {
     legalClientOrderInput.created_by = user.id;
     legalClientOrderInput.updated_by = user.id;
-    const legalClientOrderEntity =
-      LegalClientOrderGraphqlDTO.createInputToEntity(legalClientOrderInput);
 
-    return await this.legalClientOrderRepository.createLegalClientOrder(
-      legalClientOrderEntity,
-    );
+    return await this.legalClientOrdeUseCase.createOrder(legalClientOrderInput);
   }
   @Mutation(() => LegalClientOrderModel)
   async updatelegalClientOrder(
@@ -79,41 +78,39 @@ export class LegalClientOrderResolver {
     @CurrentUser() user: User,
   ) {
     legalClientOrderInput.updated_by = user.id;
-    const legalClientOrderEntity =
-      LegalClientOrderGraphqlDTO.updateInputToEntity(legalClientOrderInput);
 
-    return await this.legalClientOrderRepository.updateLegalClientOrder(
+    return await this.legalClientOrdeUseCase.updateOrder(
       id,
-      legalClientOrderEntity,
+      legalClientOrderInput,
     );
   }
   @ResolveField(() => LegalContractModel)
   async LegalContract(@Parent() order: LegalClientOrderInput) {
     console.log(order);
 
-    return await this.legalContract.findLegalContractById(
-      order.legal_contract_id,
-    );
+    return await this.legalContractUseCase.getContract({
+      id: order.legal_contract_id,
+    });
   }
   @ResolveField(() => [LegalClientMerchandiseModel])
   async LegalClientMerchandise(@Parent() order: LegalClientOrderModel) {
     const { id } = order;
 
-    return this.legalClientMerchandiseRepository.findLegalClientMerchandisesByOrder(
+    return this.legalClientMerchandiseUseCase.getLegalClientMerchandises({
       id,
-    );
+    });
   }
 
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: LegalClientOrderInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: LegalClientOrderInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

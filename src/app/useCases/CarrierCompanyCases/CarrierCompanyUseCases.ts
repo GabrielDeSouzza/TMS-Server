@@ -113,8 +113,8 @@ export class CarrierCompanyUseCases {
   ): Promise<CarrierCompany> {
     const carrierCompany = new CarrierCompany({
       updated_by: request.CarrierCompany.updated_by,
-      created_by: '',
-      legalPersonId: '',
+      created_by: null,
+      legalPersonId: null,
     });
     const legalPerson = LegalPersonEntityDto.updateEntity(request.LegalPerson);
 

@@ -11,7 +11,8 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/args/OutsourcedTransportCompanyArgs';
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
@@ -38,7 +39,7 @@ import { OutsourcedTransportCompanyModel } from './OutsourcedTransportCompany.mo
 export class OutsourcedTransportCompanyResolver {
   constructor(
     private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
     private legalPersonRepository: LegalPersonRepository,
   ) {}
   @Query(() => OutsourcedTransportCompanyModel)
@@ -143,12 +144,12 @@ export class OutsourcedTransportCompanyResolver {
   async createdUser(@Parent() user: OutsourcedTransportCompanyInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: OutsourcedTransportCompanyInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 }

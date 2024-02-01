@@ -25,13 +25,13 @@ export class LegalContractGraphqlDTO {
     return updateInput
       ? new LegalContract({
           carrier_company_id: updateInput.carrier_company_id,
-          contract_number: updateInput.contract_number,
+          contract_number: null,
           delivery_conditions: updateInput.delivery_conditions,
           effective_date: updateInput.effective_date,
           legal_client_id: updateInput.legal_client_id,
           updated_by: updateInput.updated_by,
           observations: updateInput.observations,
-          created_by: updateInput.created_by,
+          created_by: null,
         })
       : undefined;
   }

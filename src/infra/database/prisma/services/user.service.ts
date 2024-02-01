@@ -9,7 +9,7 @@ import { PrismaService } from '../prisma.service';
 import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 
 @Injectable()
-export class UserService implements UserRepository {
+export class UserPrismaService implements UserRepository {
   constructor(private prisma: PrismaService) {}
 
   async findAllUsers(parameters: FindUserWhere): Promise<User[]> {

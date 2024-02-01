@@ -11,7 +11,8 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { OwnDriverWhereArgs } from 'infra/graphql/args/OwnDriverArgs';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
@@ -34,7 +35,7 @@ export class OwnDriverResolver {
   constructor(
     private ownDriverRepository: OwnDriverRepository,
     private naturalPersonRepository: NaturalPersonRepository,
-    private userRepository: UserRepository,
+    private userCase: UserUseCases,
   ) {}
   @Query(() => OwnDriverModel)
   async getOwnDriver(@Args('id') id: string) {
@@ -94,13 +95,13 @@ export class OwnDriverResolver {
   async createdUser(@Parent() user: OwnDriverInput) {
     const { created_by: createdBy } = user;
 
-    return await this.userRepository.findUserById(createdBy);
+    return await this.userCase.getUser({ id: createdBy });
   }
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: OwnDriverInput) {
     const { updated_by: updatedBy } = user;
 
-    return await this.userRepository.findUserById(updatedBy);
+    return await this.userCase.getUser({ id: updatedBy });
   }
 
   @ResolveField(() => NaturalPersonModel)

@@ -28,3 +28,10 @@ export class FindAllLegalClientWhereRequestDTO {
   sort?: SortByLegalClientTypeDTO;
   where?: WhereLegalClientTypeDTO;
 }
+
+export abstract class getLegalClientData {
+  id?: string;
+  cnpj?: string;
+  fantasyName?: string;
+  corporateName?: string;
+}

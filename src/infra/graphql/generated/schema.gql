@@ -1984,14 +1984,14 @@ type Query {
   getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
   getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
-  getCarrierCompanyModel(id: String!): CarrierCompanyModel!
+  getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String): CarrierCompanyModel!
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String, plate: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
   getInvoiceForLegalClientModel(id: String, invoiceNumber: String): InvoiceForLegalClientModel!
   getLegalClientMerchandiseModel(codMerchandise: String, id: String): LegalClientMerchandiseModel!
-  getLegalClientModel(id: String!): LegalClientModel!
-  getLegalClientOrderModel(id: String!): LegalClientOrderModel
+  getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String): LegalClientModel!
+  getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
   getOutsourcedDriver(id: String!): OutsourcedDriverModel!
   getOutsourcedTransportCompanyContractModel(id: String!): OutsourcedTransportCompanyContractModel!

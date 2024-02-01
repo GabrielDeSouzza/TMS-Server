@@ -19,5 +19,6 @@ import { LegalClientMerchandiseResolver } from './LegalClientMerchandise.resolve
     LegalClientMerchandiseUseCases,
     LegalClientMerchandiseResolver,
   ],
+  exports: [LegalClientMerchandiseUseCases],
 })
 export class LegalClientMerchandiseModule {}

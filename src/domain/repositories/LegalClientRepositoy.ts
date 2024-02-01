@@ -1,9 +1,12 @@
-import { type FindAllLegalClientWhereRequestDTO } from 'domain/dto/repositories/LegalClientRepositoryDto';
+import {
+  type getLegalClientData,
+  type FindAllLegalClientWhereRequestDTO,
+} from 'domain/dto/repositories/LegalClientRepositoryDto';
 import { type LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export abstract class LegalClientRepository {
-  abstract findLegalClientById(id: string): Promise<LegalClient>;
+  abstract findLegalClient(request: getLegalClientData): Promise<LegalClient>;
   abstract createLegalClient(
     legalClient: LegalClient,
     legalPerson: LegalPerson,

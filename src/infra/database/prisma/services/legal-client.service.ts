@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindAllLegalClientWhereRequestDTO } from 'domain/dto/repositories/LegalClientRepositoryDto';
+import {
+  type getLegalClientData,
+  type FindAllLegalClientWhereRequestDTO,
+} from 'domain/dto/repositories/LegalClientRepositoryDto';
 import { type LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
@@ -11,9 +14,16 @@ import { LegalClientPrismaDTO } from './prismaDTO/LegalClientPrismaDto';
 @Injectable()
 export class LegalClientPrismaService implements LegalClientRepository {
   constructor(private prisma: PrismaService) {}
-  async findLegalClientById(id: string): Promise<LegalClient> {
+  async findLegalClient(data: getLegalClientData): Promise<LegalClient> {
     const legalClient = await this.prisma.legalClient.findFirstOrThrow({
-      where: { id },
+      where: {
+        OR: [
+          { id: data.id },
+          { LegalPerson: { fantasy_name: data.fantasyName } },
+          { LegalPerson: { corporate_name: data.corporateName } },
+          { LegalPerson: { cnpj: data.cnpj } },
+        ],
+      },
     });
 
     return LegalClientPrismaDTO.PrismaToEntity(legalClient);
@@ -38,8 +48,6 @@ export class LegalClientPrismaService implements LegalClientRepository {
     legalClient?: LegalClient,
     legalPerson?: LegalPerson,
   ): Promise<LegalClient> {
-    console.error('test', legalPerson);
-
     const legalClientPrisma = await this.prisma.legalClient.update({
       data: LegalClientPrismaDTO.EntityToPrismaUpdate(legalClient, legalPerson),
       where: { id },

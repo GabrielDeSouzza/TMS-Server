@@ -6,7 +6,7 @@ import { UserRepository } from 'domain/repositories/UserRepository';
 
 import { PrismaService } from './prisma/prisma.service';
 import { AuthServicePrisma } from './prisma/services/auth.service';
-import { UserService } from './prisma/services/user.service';
+import { UserPrismaService } from './prisma/services/user.service';
 
 @Module({
   providers: [
@@ -14,7 +14,7 @@ import { UserService } from './prisma/services/user.service';
     JwtService,
     {
       provide: UserRepository,
-      useClass: UserService,
+      useClass: UserPrismaService,
     },
     {
       provide: AuthRepository,
