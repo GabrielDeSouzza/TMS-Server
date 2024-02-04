@@ -50,3 +50,10 @@ export class FindAllNaturalPersonWhereRequestDTO {
   sort?: SortByNaturalPersonTypeDTO;
   where?: WhereNaturalPersonTypeDTO;
 }
+
+export class ValidateNaturalPersonDto {
+  cpf?: string;
+  rg?: string;
+  email?: string;
+  id?: string;
+}

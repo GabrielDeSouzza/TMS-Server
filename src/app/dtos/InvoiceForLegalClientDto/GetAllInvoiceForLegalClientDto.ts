@@ -1,7 +1,7 @@
 import {
   type SortByInvoiceForLegalClientTypeDTO,
   type WhereInvoiceForLegalClientTypeDTO,
-} from 'domain/dto/repositories/InvoiceForLegalPeronRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/InvoiceForLegalPeronRepositoryDto';
 
 export abstract class GetAllInvoiceForLegalClientDTO {
   limit: number;

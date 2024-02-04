@@ -1,4 +1,4 @@
-import { type FindAllPhysicalCustomerWhereRequestDTO } from 'domain/dto/repositories/PhysicalCustomerRepositoryDts';
+import { type FindAllPhysicalCustomerWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerRepositoryDts';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type PhysicalContract } from 'domain/entities/PhysicalClientEntities/physicalContract/PhysicalContract';
 import { type PhysicalCustomer } from 'domain/entities/PhysicalClientEntities/physicalCustomer/PhysicalCustomer';

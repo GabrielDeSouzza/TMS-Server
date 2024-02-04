@@ -1,4 +1,4 @@
-import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/InvoiceForLegalPeronRepositoryDto';
+import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
 export abstract class InvoiceForLegalClientRepository {

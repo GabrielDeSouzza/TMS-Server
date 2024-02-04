@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import {
   type validadeCiotForLegalPersonDTO,
   type FindAllCiotForLegalClientWhereRequestDTO,
-} from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/CiotForLegalPersonRepositoryDto';
 import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 import { type CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 

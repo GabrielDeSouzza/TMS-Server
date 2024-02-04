@@ -3,15 +3,15 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { GraphQLError } from 'graphql';
 
+import { type GetCarrierCompanyDTO } from 'domain/dto/repositories/getDataDtos/GetCarrierCompanyDto';
 import { CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
 import { type CreateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/CreateCarrierCompanyDto';
 import { type FindAllCompaniesUseCaseRequestDTO } from 'app/dtos/CarrierCompanyDto/GetAllCarrierCompanyDto';
-import { type GetCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/GetCarrierCompanyDto';
 import { type UpdateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/UpdatedCarrierCompanyDto';
-import { LegalPersonEntityDto } from 'app/dtos/LegalPerson/EntityDto';
+import { LegalPersonEntityDto } from 'app/dtos/LegalPerson/LegalPersonEntityDto';
 
 @Injectable()
 export class CarrierCompanyUseCases {

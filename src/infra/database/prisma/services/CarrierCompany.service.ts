@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import {
   type getCarrierCompanyData,
   type FindAllWhereCarrierCompanyRequestType,
-} from 'domain/dto/repositories/CarrierRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/CarrierRepositoryDto';
 import { type CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';

@@ -1,7 +1,7 @@
 import {
   type ValidateLegalPersonDTO,
   type FindAllLegalPersonWhereRequestDTO,
-} from 'domain/dto/repositories/LegalPersonRepository';
+} from 'domain/dto/repositories/whereDtos/LegalPersonRepository';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export abstract class LegalPersonRepository {

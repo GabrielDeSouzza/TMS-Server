@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
+import { type GetContractOutsourcedDriverDTO } from 'domain/dto/repositories/getDataDtos/GetContractOutsourcedDriverDto';
 import { ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 import { ContractOutsourcedDriverRepository } from 'domain/repositories/ContractOutsourcedDriverResitory';
 
 import { type CreateContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/CreateContractOutsourcedDriverDto';
 import { type GetAllContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/GetAllContractOutsourcedDriverDto';
-import { type GetContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/GetContractOutsourcedDriverDto';
 import { type UpdateContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/UpdateContractOutsourcedDriverDto';
 
 @Injectable()

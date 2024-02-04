@@ -1,7 +1,7 @@
 import {
   type SortByLegalClientTypeDTO,
   type WhereLegalClientTypeDTO,
-} from 'domain/dto/repositories/LegalClientRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/LegalClientRepositoryDto';
 
 export abstract class GetAllLegalClientDTO {
   limit: number;

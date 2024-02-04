@@ -3,11 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { hashSync } from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
-import { type FindUserWhere } from 'domain/dto/repositories/UserRepositoryDto';
+import { type getUserDto } from 'domain/dto/repositories/getDataDtos/GetUserDto';
+import { type FindUserWhere } from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
 import { type User } from 'domain/entities/User/User';
 import { UserRepository } from 'domain/repositories/UserRepository';
-
-import { type getUserDto } from 'app/dtos/user/GetUserDto';
 
 @Injectable()
 export class UserUseCases {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindAllLegalContractWhereRequestDTO } from 'domain/dto/repositories/LegalContractRepositoryDto';
+import { type FindAllLegalContractWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalContractRepositoryDto';
 import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 import { type LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 

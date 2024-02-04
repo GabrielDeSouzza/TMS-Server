@@ -1,7 +1,7 @@
 import {
   type SortByCompanyVehicleTypeDto,
   type WhereCompanyVehicleTypeDto,
-} from 'domain/dto/repositories/CompanyVehicleRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
 
 export abstract class GetAllCompanyVehcicleDTO {
   limit: number;

@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
+import { type GetLegalContractDTO } from 'domain/dto/repositories/getDataDtos/GetLegalContractDto';
 import { LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 
 import { type CreateLegalContractDTO } from 'app/dtos/LegalContracDto/CreateLegalContractDto';
 import { type GetAllLegalContractDTO } from 'app/dtos/LegalContracDto/GetAllLegalContractDto';
-import { type GetLegalContractDTO } from 'app/dtos/LegalContracDto/GetLegalContractDto';
 import { type UpdateLegalContractDTO } from 'app/dtos/LegalContracDto/UpdateLegalContractDto';
 
 @Injectable()

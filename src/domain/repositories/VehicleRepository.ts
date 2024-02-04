@@ -1,5 +1,5 @@
-import { type ValidadeVehicle } from 'domain/dto/repositories/CompanyVehicleRepositoryDto';
-import { type FindAllVehicleWhereRequestDTO } from 'domain/dto/repositories/VehicleRepositoryDto';
+import { type ValidadeVehicle } from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
+import { type FindAllVehicleWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleRepositoryDto';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export abstract class VehicleRepository {

@@ -1,4 +1,4 @@
-import { type FindAllOwnDriverWhereRequestDTO } from 'domain/dto/repositories/OwnDriverRepositoryDto';
+import { type FindAllOwnDriverWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OwnDriverRepositoryDto';
 import { type OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 

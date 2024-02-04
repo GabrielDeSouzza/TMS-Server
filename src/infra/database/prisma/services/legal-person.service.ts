@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import {
   type ValidateLegalPersonDTO,
   type FindAllLegalPersonWhereRequestDTO,
-} from 'domain/dto/repositories/LegalPersonRepository';
+} from 'domain/dto/repositories/whereDtos/LegalPersonRepository';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 

@@ -1,10 +1,13 @@
-import { type FindAllNaturalPersonWhereRequestDTO } from 'domain/dto/repositories/NaturalPersonRepositoryDto';
+import { type GetNaturalPersonDTO } from 'domain/dto/repositories/getDataDtos/GetNaturalPersonDto';
+import {
+  type ValidateNaturalPersonDto,
+  type FindAllNaturalPersonWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/NaturalPersonRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export abstract class NaturalPersonRepository {
-  abstract findNaturalPersonByIdOrCpf(
-    id?: string,
-    cpf?: string,
+  abstract findNaturalPerson(
+    request: GetNaturalPersonDTO,
   ): Promise<NaturalPerson>;
   abstract createNaturalPerson(
     naturalPerson: NaturalPerson,
@@ -16,4 +19,5 @@ export abstract class NaturalPersonRepository {
   abstract getAllNaturalPerson(
     parameters: FindAllNaturalPersonWhereRequestDTO,
   ): Promise<NaturalPerson[]>;
+  abstract validate(data: ValidateNaturalPersonDto): Promise<NaturalPerson>;
 }

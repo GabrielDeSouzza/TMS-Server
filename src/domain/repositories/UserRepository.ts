@@ -1,4 +1,4 @@
-import { type FindUserWhere } from 'domain/dto/repositories/UserRepositoryDto';
+import { type FindUserWhere } from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
 
 import { type User } from '../entities/User/User';
 

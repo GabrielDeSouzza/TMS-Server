@@ -1,7 +1,7 @@
 import {
   type getLegalClientData,
   type FindAllLegalClientWhereRequestDTO,
-} from 'domain/dto/repositories/LegalClientRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/LegalClientRepositoryDto';
 import { type LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 

@@ -132,9 +132,9 @@ export class OutsourcedTransportCompanyDriverResolver {
   async NaturalPerson(
     @Parent() outsourced: OutsourcedTransportCompanyDriverInput,
   ) {
-    return await this.naturalPersonRepository.findNaturalPersonByIdOrCpf(
-      outsourced.natural_person_id,
-    );
+    return await this.naturalPersonRepository.findNaturalPerson({
+      id: outsourced.natural_person_id,
+    });
   }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: OutsourcedTransportCompanyDriverInput) {

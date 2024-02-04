@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindAllVehicleBodyworkWhereRequestDTO } from 'domain/dto/repositories/VehicleBodyworkRepositoryDto';
+import { type FindAllVehicleBodyworkWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleBodyworkRepositoryDto';
 import { type VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 import { type VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 

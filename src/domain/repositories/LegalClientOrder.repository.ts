@@ -1,4 +1,4 @@
-import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/repositories/LegalClientOrderRepositoryDto';
+import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 export abstract class LegalClientOrderRepository {

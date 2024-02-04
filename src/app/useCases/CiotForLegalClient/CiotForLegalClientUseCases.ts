@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
+import { type GetCiotForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetCiotForLegalClientDto';
 import { CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 import { CiotForLegalClientRepository } from 'domain/repositories/CiotForLegalClient.repository';
 
 import { type createCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/CreateCiotForLegalClientDto';
 import { type getAllCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/GetAllCiotForLegalClientDto';
-import { type GetCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/GetCiotForLegalClientDto';
 import { type updateCiotForLegalClientDTO } from 'app/dtos/CiotForLegalClientDto/UpdateCiotForLegalClientDto';
 
 @Injectable()

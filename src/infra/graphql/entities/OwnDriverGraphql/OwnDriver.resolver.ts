@@ -108,8 +108,8 @@ export class OwnDriverResolver {
   async NaturalPerson(@Parent() ownDriverInput: OwnDriverInput) {
     console.log(ownDriverInput.natural_person_id);
 
-    return await this.naturalPersonRepository.findNaturalPersonByIdOrCpf(
-      ownDriverInput.natural_person_id,
-    );
+    return await this.naturalPersonRepository.findNaturalPerson({
+      id: ownDriverInput.natural_person_id,
+    });
   }
 }

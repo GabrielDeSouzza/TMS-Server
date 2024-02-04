@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindUserWhere } from 'domain/dto/repositories/UserRepositoryDto';
+import { type FindUserWhere } from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
 
 import { type User } from '../../../../domain/entities/User/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';

@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindAllNaturalPersonWhereRequestDTO } from 'domain/dto/repositories/NaturalPersonRepositoryDto';
+import { type GetNaturalPersonDTO } from 'domain/dto/repositories/getDataDtos/GetNaturalPersonDto';
+import {
+  type ValidateNaturalPersonDto,
+  type FindAllNaturalPersonWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/NaturalPersonRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 
@@ -10,14 +14,14 @@ import { NaturalPersonPrismaDTO } from './prismaDTO/NaturalPersonPrismaDto';
 @Injectable()
 export class NaturalPersonPrismaService implements NaturalPersonRepository {
   constructor(private prisma: PrismaService) {}
-
-  async findNaturalPersonByIdOrCpf(
-    id?: string,
-    cpf?: string,
+  async findNaturalPerson(
+    request: GetNaturalPersonDTO,
   ): Promise<NaturalPerson> {
     return NaturalPersonPrismaDTO.PrismaToEntity(
       await this.prisma.naturalPerson.findFirstOrThrow({
-        where: { OR: { id, cpf } },
+        where: {
+          OR: [{ id: request.id }, { cpf: request.cpf }, { rg: request.rg }],
+        },
       }),
     );
   }
@@ -55,5 +59,13 @@ export class NaturalPersonPrismaService implements NaturalPersonRepository {
     });
 
     return persons.map(person => NaturalPersonPrismaDTO.PrismaToEntity(person));
+  }
+
+  async validate(data: ValidateNaturalPersonDto): Promise<NaturalPerson> {
+    return NaturalPersonPrismaDTO.PrismaToEntity(
+      await this.prisma.naturalPerson.findFirst({
+        where: { id: { not: data.id }, OR: [{ cpf: data.cpf }] },
+      }),
+    );
   }
 }

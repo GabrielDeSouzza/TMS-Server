@@ -155,9 +155,9 @@ export class OutsourcedDriverResolver {
 
   @ResolveField(() => NaturalPersonModel)
   async NaturalPerson(@Parent() outsourcedDriverInput: OutsourcedDriverModel) {
-    return await this.naturalPersonRepository.findNaturalPersonByIdOrCpf(
-      outsourcedDriverInput.natural_person_id,
-    );
+    return await this.naturalPersonRepository.findNaturalPerson({
+      id: outsourcedDriverInput.natural_person_id,
+    });
   }
   @ResolveField(() => OutsourcedVehicleRecefencesModel)
   async OutsourcedVehicle(

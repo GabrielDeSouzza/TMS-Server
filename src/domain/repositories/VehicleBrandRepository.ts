@@ -1,4 +1,4 @@
-import { type FindAllVehicleBrandWhereRequestDTO } from 'domain/dto/repositories/VehicleBrandRepositoryDto';
+import { type FindAllVehicleBrandWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleBrandRepositoryDto';
 import { type VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 
 export abstract class VehicleBrandRepository {

@@ -1,4 +1,4 @@
-import { type FindAllOutsourcedTransportVehicleWhereRequestDTO } from 'domain/dto/repositories/OutsourcedTransportVehicleRepositoryDto';
+import { type FindAllOutsourcedTransportVehicleWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OutsourcedTransportVehicleRepositoryDto';
 import { type OutsourcedTransportVehicle } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportVehicle/OutsourcedTransportVehicle';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 

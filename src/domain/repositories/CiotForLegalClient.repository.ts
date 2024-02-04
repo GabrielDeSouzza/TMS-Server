@@ -1,7 +1,7 @@
 import {
   type validadeCiotForLegalPersonDTO,
   type FindAllCiotForLegalClientWhereRequestDTO,
-} from 'domain/dto/repositories/CiotForLegalPersonRepositoryDto';
+} from 'domain/dto/repositories/whereDtos/CiotForLegalPersonRepositoryDto';
 import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/CiotForLegalPerson/CiotForLegalClient';
 
 export abstract class CiotForLegalClientRepository {

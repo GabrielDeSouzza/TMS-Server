@@ -27,13 +27,10 @@ export interface INaturalPerson {
   nationality: string;
 }
 export class NaturalPerson extends Entity {
-  private props: INaturalPerson | Partial<INaturalPerson>;
+  private props: INaturalPerson;
 
   constructor(
-    props: Replace<
-      INaturalPerson | Partial<INaturalPerson>,
-      { created_at?: Date; updated_at?: Date }
-    >,
+    props: Replace<INaturalPerson, { created_at?: Date; updated_at?: Date }>,
   ) {
     super();
 

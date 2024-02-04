@@ -2,13 +2,13 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
+import { type GetCompanyVehcicleDTO } from 'domain/dto/repositories/getDataDtos/GetCompanyVehicleDto';
 import { CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 import { CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { type CreateCompanyVehcicleDTO } from 'app/dtos/CompanyVehicleDto/CreateCompanyVehicle';
 import { type GetAllCompanyVehcicleDTO } from 'app/dtos/CompanyVehicleDto/GetAllCompanyVehicle';
-import { type GetCompanyVehcicleDTO } from 'app/dtos/CompanyVehicleDto/GetCompanyVehicleDto';
 import { type UpdateCompanyVehcicleDTO } from 'app/dtos/CompanyVehicleDto/UpdateCompanyVehicleDto';
 import { VehicleEntityDTO } from 'app/dtos/VehicleDto/VehicleEntityDto';
 
