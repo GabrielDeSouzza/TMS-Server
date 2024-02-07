@@ -1,4 +1,5 @@
-export abstract class GetCompanyVehcicleDTO {
+import { GetVehicleDto } from './GetVehicleDto';
+
+export abstract class GetCompanyVehcicleDTO extends GetVehicleDto {
   id?: string;
-  plate?: string;
 }

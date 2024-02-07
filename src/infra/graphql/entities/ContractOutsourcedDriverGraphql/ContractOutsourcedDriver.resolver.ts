@@ -90,9 +90,9 @@ export class ContractOutsoucedDriverResolver {
   async OutsourcedDriver(@Parent() contract: ContractOutsourcedDriverModel) {
     const { outsourced_driver_id: outsourcedDriverId } = contract;
 
-    return await this.outsourcedDriverRepository.findOutsourcedDriver(
-      outsourcedDriverId,
-    );
+    return await this.outsourcedDriverRepository.findOutsourcedDriver({
+      id: outsourcedDriverId,
+    });
   }
 
   @ResolveField(() => UserModelRefereces)

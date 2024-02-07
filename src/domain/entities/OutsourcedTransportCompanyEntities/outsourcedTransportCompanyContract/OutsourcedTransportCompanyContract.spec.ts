@@ -10,6 +10,7 @@ describe('CarrierCompany', () => {
       carrierCompanyId: '5454',
       legalClientOrderId: '74857',
       outSourcedTransportCompanyId: '454857',
+      contractNumber: '134564',
     });
 
     expect(outsourcedTransportCompany).toBeTruthy();

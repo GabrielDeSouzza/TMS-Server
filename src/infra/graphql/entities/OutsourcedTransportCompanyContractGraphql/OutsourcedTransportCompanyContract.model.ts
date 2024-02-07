@@ -12,6 +12,8 @@ export class OutsourcedTransportCompanyContractModel
   implements IOutsourcedTransportCompanyContract
 {
   @Field()
+  contractNumber: string;
+  @Field()
   outSourcedTransportCompanyId: string;
   @Field()
   carrierCompanyId: string;

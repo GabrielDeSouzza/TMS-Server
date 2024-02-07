@@ -25,7 +25,7 @@ export abstract class SortByAddressTypeDTO {
   username?: 'asc' | 'desc';
 }
 
-export abstract class FindUserWhere {
+export abstract class FindAllUserWhereRequestDTO {
   limit: number;
   offset: number;
   sort?: SortByAddressTypeDTO;

@@ -15,7 +15,7 @@ import { type UpdateNaturalPersonDTO } from 'app/dtos/NaturalPersonDto/UpdateNat
 export class NaturalPersonUseCases {
   constructor(private naturalPersonRepository: NaturalPersonRepository) {}
   async getNaturalPerson(request: GetNaturalPersonDTO) {
-    if (!request.cpf && !request.id && !request.rg)
+    if (!request.cpf && !request.naturalPersonId && !request.rg)
       throw new GraphQLError('IS NECESSATY AN ID, RG OR CPF', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });

@@ -9,7 +9,8 @@ import {
   type ISignInResponseDTO,
 } from 'domain/repositories/AuthDTO/AuthRepositoryDto';
 import { type AuthRepository } from 'domain/repositories/AuthRepository';
-import { UserRepository } from 'domain/repositories/UserRepository';
+
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 
@@ -17,14 +18,13 @@ import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 export class AuthServicePrisma implements AuthRepository {
   constructor(
     private jwtService: JwtService,
-    private userRepositoty: UserRepository,
+    private userUseCase: UserUseCases,
   ) {}
 
   async signIn(credentials: ISignInRequestDTO): Promise<ISignInResponseDTO> {
-    console.log(credentials);
-    const userPrisma = await this.userRepositoty.findUserByEmail(
-      credentials.email,
-    );
+    const userPrisma = await this.userUseCase.getUser({
+      email: credentials.email,
+    });
 
     if (!userPrisma) {
       throw new GraphQLError('E-mail not found!', {

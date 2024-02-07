@@ -1,11 +1,11 @@
+import { type GetCompanyVehcicleDTO } from 'domain/dto/repositories/getDataDtos/GetCompanyVehicleDto';
 import { type FindAllCompanyVehicleWhereRequestDTO } from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
 import { type CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export abstract class CompanyVehicleRepository {
   abstract findCompanyVehicle(
-    id?: string,
-    plate?: string,
+    request: GetCompanyVehcicleDTO,
   ): Promise<CompanyVehicle>;
   abstract createCompanyVehicle(
     CompanyVehicle: CompanyVehicle,

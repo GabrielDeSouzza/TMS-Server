@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetLegalClientOrderDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientOrderDto';
 import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { type LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
@@ -22,13 +23,11 @@ export class LegalClientOrderPrismaService
     return orders.map(order => LegalClientOrderPrismaDTO.PrismaToEntity(order));
   }
   async findLegalClientOrder(
-    id?: string,
-    order?: string,
+    request: GetLegalClientOrderDTO,
   ): Promise<LegalClientOrder> {
-    const legalClientOrder =
-      await this.prisma.legalClientOrder.findFirstOrThrow({
-        where: { OR: [{ id }, { order }] },
-      });
+    const legalClientOrder = await this.prisma.legalClientOrder.findFirst({
+      where: { OR: [{ id: request.id }, { order: request.order }] },
+    });
 
     return LegalClientOrderPrismaDTO.PrismaToEntity(legalClientOrder);
   }

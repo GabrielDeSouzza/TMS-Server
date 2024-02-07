@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetInvoiceForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetInvoiceForLegalClientDto';
 import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 import { type InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForLegalClient.repository';
@@ -13,13 +14,14 @@ export class InvoiceForLegalClientPrismaService
 {
   constructor(private prisma: PrismaService) {}
 
-  async findInvoiceForLegalClientById(
-    id?: string,
-    invoiceNumber?: string,
+  async findInvoiceForLegalClient(
+    request: GetInvoiceForLegalClientDTO,
   ): Promise<InvoiceForLegalClient> {
     const invoiceForLegalClient =
-      await this.prisma.invoiceForLegalClient.findFirstOrThrow({
-        where: { OR: [{ id }, { invoice_number: invoiceNumber }] },
+      await this.prisma.invoiceForLegalClient.findFirst({
+        where: {
+          OR: [{ id: request.id }, { invoice_number: request.invoice_number }],
+        },
       });
 
     return InvoiceForLegalClientPrismaDTO.PrismaToEntity(invoiceForLegalClient);

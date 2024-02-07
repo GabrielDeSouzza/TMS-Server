@@ -3,8 +3,6 @@ import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 import { type IVehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { VehicleTypeContainsBodyModel } from '../VehicleTypeContainsBodyGraphql/VehicleTypeContainsBody.model';
-
 @ObjectType()
 export class VehicleBodyworkModel implements IVehicleBodywork {
   @Field()
@@ -29,8 +27,6 @@ export class VehicleBodyworkModel implements IVehicleBodywork {
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)
   UpdatedUser: UserModelRefereces;
-  @Field(() => [VehicleTypeContainsBodyModel], { nullable: true })
-  VehicleTypeContainsBody?: [VehicleTypeContainsBodyModel];
 }
 
 @ObjectType()
@@ -39,7 +35,6 @@ export class VehicleBodyworkModelReferences extends OmitType(
   [
     'CreatedUser',
     'UpdatedUser',
-    'VehicleTypeContainsBody',
     'created_at',
     'created_by',
     'updated_at',

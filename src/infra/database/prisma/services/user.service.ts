@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { type FindUserWhere } from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
+import { type getUserDto } from 'domain/dto/repositories/getDataDtos/GetUserDto';
+import { type FindAllUserWhereRequestDTO } from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
 
 import { type User } from '../../../../domain/entities/User/User';
 import { type UserRepository } from '../../../../domain/repositories/UserRepository';
@@ -11,8 +12,21 @@ import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 @Injectable()
 export class UserPrismaService implements UserRepository {
   constructor(private prisma: PrismaService) {}
+  async findUser(request: getUserDto): Promise<User> {
+    return UserPrismaDTO.PrismaToEntity(
+      await this.prisma.user.findFirst({
+        where: {
+          OR: [
+            { email: request.email },
+            { username: request.username },
+            { id: request.id },
+          ],
+        },
+      }),
+    );
+  }
 
-  async findAllUsers(parameters: FindUserWhere): Promise<User[]> {
+  async findAllUsers(parameters: FindAllUserWhereRequestDTO): Promise<User[]> {
     const usersPrisma = await this.prisma.user.findMany({
       take: parameters.limit,
       skip: parameters.offset,
@@ -27,7 +41,7 @@ export class UserPrismaService implements UserRepository {
     return users;
   }
 
-  async createUSer(user: User): Promise<User> {
+  async createUser(user: User): Promise<User> {
     try {
       const newUSer = await this.prisma.user.create({
         data: UserPrismaDTO.EntityToPrisma(user),
@@ -39,27 +53,6 @@ export class UserPrismaService implements UserRepository {
     }
   }
 
-  async findUserById(id: string): Promise<User> {
-    try {
-      const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
-
-      return UserPrismaDTO.PrismaToEntity(user);
-    } catch (error) {
-      new NotificationErrorsDatabase().HandleErrors(error);
-    }
-  }
-
-  async findUserByEmail(email: string): Promise<User> {
-    try {
-      const user = await this.prisma.user.findUniqueOrThrow({
-        where: { email },
-      });
-
-      return UserPrismaDTO.PrismaToEntity(user);
-    } catch (error) {
-      new NotificationErrorsDatabase().HandleErrors(error);
-    }
-  }
   async updateUser(id: string, user: User): Promise<User> {
     try {
       const userPrisma = UserPrismaDTO.EntityToPrismaUpdate(user);

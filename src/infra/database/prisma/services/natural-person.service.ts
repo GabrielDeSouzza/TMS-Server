@@ -18,9 +18,13 @@ export class NaturalPersonPrismaService implements NaturalPersonRepository {
     request: GetNaturalPersonDTO,
   ): Promise<NaturalPerson> {
     return NaturalPersonPrismaDTO.PrismaToEntity(
-      await this.prisma.naturalPerson.findFirstOrThrow({
+      await this.prisma.naturalPerson.findFirst({
         where: {
-          OR: [{ id: request.id }, { cpf: request.cpf }, { rg: request.rg }],
+          OR: [
+            { id: request.naturalPersonId },
+            { cpf: request.cpf },
+            { rg: request.rg },
+          ],
         },
       }),
     );

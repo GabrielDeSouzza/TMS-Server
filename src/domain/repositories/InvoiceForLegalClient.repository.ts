@@ -1,10 +1,10 @@
+import { type GetInvoiceForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetInvoiceForLegalClientDto';
 import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
 export abstract class InvoiceForLegalClientRepository {
-  abstract findInvoiceForLegalClientById(
-    id: string,
-    invoice_number: string,
+  abstract findInvoiceForLegalClient(
+    request: GetInvoiceForLegalClientDTO,
   ): Promise<InvoiceForLegalClient>;
   abstract createInvoiceForLegalClient(
     invoiceForLegalClient: InvoiceForLegalClient,

@@ -22,9 +22,8 @@ export class InvoiceForLegalClientUseCases {
     }
 
     const invoice =
-      await this.invoiceForLegalClientRepository.findInvoiceForLegalClientById(
-        request.id,
-        request.invoice_number,
+      await this.invoiceForLegalClientRepository.findInvoiceForLegalClient(
+        request,
       );
 
     if (invoice) {

@@ -39,7 +39,7 @@ export class OwnDriverResolver {
   ) {}
   @Query(() => OwnDriverModel)
   async getOwnDriver(@Args('id') id: string) {
-    return await this.ownDriverRepository.findOwnDriverById(id);
+    return await this.ownDriverRepository.findOwnDriver({ id });
   }
   @Query(() => [OwnDriverModel])
   async getAllOwnDriver(@Args() args: OwnDriverWhereArgs) {
@@ -55,7 +55,6 @@ export class OwnDriverResolver {
     @Args('ownDriverInput') ownDriverInput: OwnDriverInput,
     @CurrentUser() user: User,
   ) {
-    console.log(user);
     ownDriverInput.created_by = user.id;
     ownDriverInput.updated_by = user.id;
 
@@ -106,10 +105,8 @@ export class OwnDriverResolver {
 
   @ResolveField(() => NaturalPersonModel)
   async NaturalPerson(@Parent() ownDriverInput: OwnDriverInput) {
-    console.log(ownDriverInput.natural_person_id);
-
     return await this.naturalPersonRepository.findNaturalPerson({
-      id: ownDriverInput.natural_person_id,
+      naturalPersonId: ownDriverInput.natural_person_id,
     });
   }
 }

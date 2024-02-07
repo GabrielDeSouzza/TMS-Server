@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetCompanyVehcicleDTO } from 'domain/dto/repositories/getDataDtos/GetCompanyVehicleDto';
 import { type FindAllCompanyVehicleWhereRequestDTO } from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
 import { type CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
@@ -13,12 +14,17 @@ export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
   constructor(private prisma: PrismaService) {}
 
   async findCompanyVehicle(
-    id?: string,
-    plate?: string,
+    request: GetCompanyVehcicleDTO,
   ): Promise<CompanyVehicle> {
     return CompanyVehiclePrismaDTO.PrismaToEntity(
       await this.prisma.companyVehicle.findFirst({
-        where: { OR: [{ id }, { Vehicle: { plate } }] },
+        where: {
+          OR: [
+            { id: request.id },
+            { Vehicle: { plate: request.plate } },
+            { vehicle_id: request.vehicleId },
+          ],
+        },
       }),
     );
   }

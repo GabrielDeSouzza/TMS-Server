@@ -89,9 +89,9 @@ export class CarrierCompanyResolver {
     @Parent() legalClient: CarrierCompanyInput | CarrierCompanyUpdateInput,
   ) {
     const { legalPersonId: legalPersonID } = legalClient;
-    const legalPerson = await this.legalPersonRepository.findlegalpersonById(
-      legalPersonID,
-    );
+    const legalPerson = await this.legalPersonRepository.findlegalperson({
+      legalPersonId: legalPersonID,
+    });
 
     return LegalPersonGraphqlDTO.createInputToEntity(legalPerson);
   }
@@ -104,7 +104,6 @@ export class CarrierCompanyResolver {
   @ResolveField(() => UserModelRefereces)
   async UpdatedUser(@Parent() user: CarrierCompanyModel) {
     const { updated_by: updatedBy } = user;
-    console.log(updatedBy);
 
     return await this.userCase.getUser({ id: updatedBy });
   }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetLegalClientMerchandisesDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientMerchandisesDto';
 import { type FindAllLegalClientMerchandiseWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientMerchandiseRepositoryDto';
 import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 import { type LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
@@ -24,12 +25,13 @@ export class LegalClientMerchandisePrismaService
     );
   }
   async findLegalClientMerchandise(
-    id?: string,
-    codMerchandise?: string,
+    request: GetLegalClientMerchandisesDTO,
   ): Promise<LegalClientMerchandise> {
     const legalClientMerchandise =
       await this.prisma.legalClientMerchandise.findFirst({
-        where: { OR: [{ id }, { codMerchandise }] },
+        where: {
+          OR: [{ id: request.id }, { codMerchandise: request.codMerchandise }],
+        },
       });
 
     return LegalClientMerchandisePrismaDTO.PrismaToEntity(

@@ -1,3 +1,4 @@
+import { type GetOutsoucedDriverDTO } from 'domain/dto/repositories/getDataDtos/GetOutsourcedDriverDto';
 import { type FindAllOutsourcedDriverWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OutsourcedDriverRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
@@ -6,7 +7,9 @@ import { type OutsourcedVehicle } from 'domain/entities/OutsourcedDriverEntities
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export abstract class OutsourcedDriverRepository {
-  abstract findOutsourcedDriver(id: string): Promise<OutsourcedDriver>;
+  abstract findOutsourcedDriver(
+    request: GetOutsoucedDriverDTO,
+  ): Promise<OutsourcedDriver>;
   abstract createOutsourcedDriver(
     outsourcedDriver: OutsourcedDriver,
     naturalPerson: NaturalPerson,

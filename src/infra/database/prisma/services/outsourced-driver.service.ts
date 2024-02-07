@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetOutsoucedDriverDTO } from 'domain/dto/repositories/getDataDtos/GetOutsourcedDriverDto';
 import { type FindAllOutsourcedDriverWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OutsourcedDriverRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type ContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
@@ -35,9 +36,21 @@ export class OutsourcedDriverPrismaService
       }),
     );
   }
-  async findOutsourcedDriver(id: string): Promise<OutsourcedDriver> {
+  async findOutsourcedDriver(
+    request: GetOutsoucedDriverDTO,
+  ): Promise<OutsourcedDriver> {
     return OutsourcedDriverPrismaDTO.PrismaToEntity(
-      await this.prisma.outsourcedDriver.findFirstOrThrow({ where: { id } }),
+      await this.prisma.outsourcedDriver.findFirst({
+        where: {
+          OR: [
+            { id: request.id },
+            { cnh: request.cnh },
+            { natural_person_id: request.naturalPersonId },
+            { NaturalPerson: { cpf: request.cpf } },
+            { NaturalPerson: { rg: request.rg } },
+          ],
+        },
+      }),
     );
   }
 

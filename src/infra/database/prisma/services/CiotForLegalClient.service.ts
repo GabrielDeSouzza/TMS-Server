@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetCiotForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetCiotForLegalClientDto';
 import {
   type validadeCiotForLegalPersonDTO,
   type FindAllCiotForLegalClientWhereRequestDTO,
@@ -17,11 +18,10 @@ export class CiotForLegalClientPrismaService
   constructor(private prisma: PrismaService) {}
 
   async findCiotForLegalClient(
-    id?: string,
-    ciot?: string,
+    request: GetCiotForLegalClientDTO,
   ): Promise<CiotForLegalClient> {
     const ciotForLegalClient = await this.prisma.ciotForLegalClient.findFirst({
-      where: { OR: [{ id }, { ciot }] },
+      where: { OR: [{ id: request.id }, { ciot: request.ciot }] },
     });
 
     return CiotForLegalClientPrismaDTO.PrismaToEntity(ciotForLegalClient);

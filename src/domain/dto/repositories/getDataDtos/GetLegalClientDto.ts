@@ -1,6 +1,5 @@
-export abstract class GetLegalClientDTO {
+import { GetLegalPersonDTO } from './GetLegalPersonDto';
+
+export abstract class GetLegalClientDTO extends GetLegalPersonDTO {
   id?: string;
-  cnpj?: string;
-  corporateName?: string;
-  fantasyName?: string;
 }

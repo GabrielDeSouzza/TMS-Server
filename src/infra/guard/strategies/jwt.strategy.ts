@@ -4,13 +4,13 @@ import { PassportStrategy } from '@nestjs/passport';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { UserRepository } from 'domain/repositories/UserRepository';
+import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { type IPayloadJwtDTO } from '../dto/payload-jwt-dto.ts';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly userRepository: UserRepository) {
+  constructor(private readonly userUseCase: UserUseCases) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -21,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: IPayloadJwtDTO) {
     const { id } = payload;
 
-    const user = await this.userRepository.findUserById(id);
+    const user = await this.userUseCase.getUser({ id });
 
     if (!user) {
       throw new UnauthorizedException('invalid token');

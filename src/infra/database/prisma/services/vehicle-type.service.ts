@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetVehicleTypeDTO } from 'domain/dto/repositories/getDataDtos/GetVehicleTypeDto';
 import { type FindAllVehicleTypeWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleTypeRepositoryDto';
 import { type VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 import { type VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
@@ -10,9 +11,10 @@ import { VehicleTypePrismaDTO } from './prismaDTO/VehicleTypePrismaDto.ts';
 @Injectable()
 export class VehicleTypeService implements VehicleTypeRepository {
   constructor(private prisma: PrismaService) {}
-  async findVehicleTypeById(id: string): Promise<VehicleType> {
-    const vehicleTypePrisma = await this.prisma.vehicleType.findFirstOrThrow({
-      where: { id },
+  async findVehicleType(request: GetVehicleTypeDTO): Promise<VehicleType> {
+    const vehicleTypePrisma = await this.prisma.vehicleType.findFirst({
+      where: { OR: [{ id: request.id }, { name: request.name }] },
+      include: { VehicleBodyWork: true },
     });
     const vehicleType = VehicleTypePrismaDTO.PrismaToEntity(vehicleTypePrisma);
 
@@ -20,7 +22,7 @@ export class VehicleTypeService implements VehicleTypeRepository {
   }
   async createVehicleType(vehicleType: VehicleType): Promise<VehicleType> {
     const prismaVehicleType = await this.prisma.vehicleType.create({
-      data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType),
+      data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType).vehicleTypePrisma,
     });
 
     return VehicleTypePrismaDTO.PrismaToEntity(prismaVehicleType);
@@ -29,7 +31,6 @@ export class VehicleTypeService implements VehicleTypeRepository {
     id: string,
     vehicleType: VehicleType,
   ): Promise<VehicleType> {
-    console.log(id);
     const updatedType = await this.prisma.vehicleType.update({
       data: VehicleTypePrismaDTO.EntityToPrismaUpdate(vehicleType),
       where: { id },

@@ -12,6 +12,9 @@ export class OutsourcedTransportCompanyContractInput
       'id' | 'created_at' | 'updated_at'
     >
 {
+  @HideField()
+  @Allow()
+  contractNumber: string;
   @Field()
   @IsString()
   @IsNotEmpty()

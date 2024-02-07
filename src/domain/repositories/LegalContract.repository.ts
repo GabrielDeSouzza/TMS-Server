@@ -1,10 +1,10 @@
+import { type GetLegalContractDTO } from 'domain/dto/repositories/getDataDtos/GetLegalContractDto';
 import { type FindAllLegalContractWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalContractRepositoryDto';
 import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 
 export abstract class LegalContractRepository {
   abstract findLegalContract(
-    id?: string,
-    contract_number?: string,
+    request: GetLegalContractDTO,
   ): Promise<LegalContract>;
   abstract createLegalContract(
     legalContract: LegalContract,

@@ -8,7 +8,7 @@ import { UserModelRefereces } from '../UserGraphql/user.model';
 @ObjectType()
 export class CarrierCompanyModel implements ICarrierCompany {
   @Field()
-  id?: string;
+  id: string;
   @Field()
   legalPersonId: string;
   @Field(() => Date)

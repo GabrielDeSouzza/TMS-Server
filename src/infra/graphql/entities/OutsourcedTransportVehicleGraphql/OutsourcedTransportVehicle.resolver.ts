@@ -45,8 +45,8 @@ export class OutsourcedTransportVehicleResolver {
   ) {}
   @Query(() => OutsourcedTransportVehicleModel)
   async getOutsourcedTransportVehicleModel(@Args('id') id: string) {
-    return this.outsourcedTransportVehicleRepository.findOutsourcedTransportVehicleById(
-      id,
+    return this.outsourcedTransportVehicleRepository.findOutsourcedTransportVehicle(
+      { id },
     );
   }
   @Query(() => [OutsourcedTransportVehicleModel], { nullable: true })
@@ -103,7 +103,6 @@ export class OutsourcedTransportVehicleResolver {
     const vehicleEntity = VehicleGraphDTO.updateInputToEntity(
       outsourcedTransportVehicleInput.Vehicle,
     );
-    console.log(vehicleEntity.year);
 
     return await this.outsourcedTransportVehicleRepository.updateOutsourcedTransportVehicle(
       id,
@@ -113,14 +112,16 @@ export class OutsourcedTransportVehicleResolver {
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() outsourced: OutsourcedTransportVehicleModel) {
-    return this.vehicleRepository.findVehicleById(outsourced.vehicle_id);
+    return await this.vehicleRepository.findVehicle({
+      vehicleId: outsourced.vehicle_id,
+    });
   }
   @ResolveField(() => OutsourcedTransportCompanyModel)
   async OutsourcedTransportCompany(
     @Parent() outsourced: OutsourcedTransportVehicleModel,
   ) {
-    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompanyById(
-      outsourced.outsourced_company_id,
+    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+      { id: outsourced.outsourced_company_id },
     );
   }
   @ResolveField(() => UserModelRefereces)

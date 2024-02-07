@@ -47,8 +47,8 @@ export class OutsourcedTransportCompanyDriverResolver {
   ) {}
   @Query(() => OutsourcedTransportCompanyDriverModel)
   async getOutsourcedTransportCompanyDriverModel(@Args('id') id: string) {
-    return this.outsourcedTransportCompanyDriverRepository.findOutsourcedTransportCompanyDriverById(
-      id,
+    return this.outsourcedTransportCompanyDriverRepository.findOutsourcedTransportCompanyDriver(
+      { id },
     );
   }
   @Query(() => [OutsourcedTransportCompanyDriverModel], { nullable: true })
@@ -124,8 +124,8 @@ export class OutsourcedTransportCompanyDriverResolver {
   async OutsourcedTransportCompany(
     @Parent() outsourced: OutsourcedTransportCompanyDriverInput,
   ) {
-    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompanyById(
-      outsourced.outsourced_transport_company_id,
+    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+      { id: outsourced.outsourced_transport_company_id },
     );
   }
   @ResolveField(() => NaturalPersonModel)
@@ -133,7 +133,7 @@ export class OutsourcedTransportCompanyDriverResolver {
     @Parent() outsourced: OutsourcedTransportCompanyDriverInput,
   ) {
     return await this.naturalPersonRepository.findNaturalPerson({
-      id: outsourced.natural_person_id,
+      naturalPersonId: outsourced.natural_person_id,
     });
   }
   @ResolveField(() => UserModelRefereces)

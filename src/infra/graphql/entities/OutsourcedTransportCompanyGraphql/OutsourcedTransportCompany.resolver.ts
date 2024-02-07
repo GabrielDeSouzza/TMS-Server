@@ -44,8 +44,8 @@ export class OutsourcedTransportCompanyResolver {
   ) {}
   @Query(() => OutsourcedTransportCompanyModel)
   async getOutsourcedTransportCompanyModel(@Args('id') id: string) {
-    return this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompanyById(
-      id,
+    return this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+      { id },
     );
   }
   @Query(() => [OutsourcedTransportCompanyModel], { nullable: true })
@@ -112,33 +112,27 @@ export class OutsourcedTransportCompanyResolver {
   }
   @ResolveField(() => [OutsourcedTransportCompanyDriverModel])
   async Drivers(@Parent() outsourd: OutsourcedTransportCompanyModel) {
-    console.log(outsourd.id);
-
     return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyDrivers(
       outsourd.id,
     );
   }
   @ResolveField(() => [OutsourcedTransportCompanyContractModel])
   async Contracts(@Parent() outsourd: OutsourcedTransportCompanyModel) {
-    console.log(outsourd.id);
-
     return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyContracts(
       outsourd.id,
     );
   }
   @ResolveField(() => [OutsourcedTransportCompanyContractModel])
   async Vehicles(@Parent() outsourd: OutsourcedTransportCompanyModel) {
-    console.log(outsourd.id);
-
     return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyVehicles(
       outsourd.id,
     );
   }
   @ResolveField(() => LegalPersonModel)
   async LegalPerson(@Parent() transport: OutsourcedTransportCompanyModel) {
-    return await this.legalPersonRepository.findlegalpersonById(
-      transport.legalPersonId,
-    );
+    return await this.legalPersonRepository.findlegalperson({
+      id: transport.legalPersonId,
+    });
   }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: OutsourcedTransportCompanyInput) {

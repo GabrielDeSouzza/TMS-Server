@@ -82,9 +82,9 @@ export class LegalClientResolver {
     @Parent() legalClient: LegalClientInput | LegalClientUpdateInput,
   ) {
     const { legal_person_id: legalPersonID } = legalClient;
-    const legalPerson = await this.legalPersonRepository.findlegalpersonById(
-      legalPersonID,
-    );
+    const legalPerson = await this.legalPersonRepository.findlegalperson({
+      legalPersonId: legalPersonID,
+    });
 
     return legalPerson;
   }

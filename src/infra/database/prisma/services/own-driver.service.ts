@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetOwnDriverDTO } from 'domain/dto/repositories/getDataDtos/GetOwnDriverDto';
 import { type FindAllOwnDriverWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OwnDriverRepositoryDto';
 import { type OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
@@ -11,10 +12,18 @@ import { OwnDriverPrismaDTO } from './prismaDTO/OwnDriverPrismaDto';
 @Injectable()
 export class OwnDriverService implements OwnDriverRepository {
   constructor(private prisma: PrismaService) {}
-  async findOwnDriverById(id: string): Promise<OwnDriver> {
+  async findOwnDriver(request: GetOwnDriverDTO): Promise<OwnDriver> {
     return OwnDriverPrismaDTO.PrismaToEntity(
-      await this.prisma.ownDriver.findFirstOrThrow({
-        where: { id },
+      await this.prisma.ownDriver.findFirst({
+        where: {
+          OR: [
+            { id: request.id },
+            { natural_person_id: request.naturalPersonId },
+            { cnh: request.cnh },
+            { NaturalPerson: { cpf: request.cpf } },
+            { NaturalPerson: { rg: request.rg } },
+          ],
+        },
       }),
     );
   }

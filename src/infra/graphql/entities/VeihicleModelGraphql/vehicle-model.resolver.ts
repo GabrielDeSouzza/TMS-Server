@@ -44,7 +44,7 @@ export class VehicleModelResolver {
   ) {}
   @Query(() => VehicleModelGraphql)
   async getVehicleModel(@Args('id') id: string) {
-    return await this.vehicleModelRepository.findVehicleModelById(id);
+    return await this.vehicleModelRepository.findVehicleModel({ id });
   }
   @Query(() => [VehicleModelGraphql], { nullable: true })
   async getAllVehicleModel(@Args() args: VehicleModelWhereArgs) {
@@ -102,12 +102,12 @@ export class VehicleModelResolver {
   async VehicleType(@Parent() vehicleModel: VehicleModelInput) {
     const { type_id: typeID } = vehicleModel;
 
-    return await this.vehicleTypeRepository.findVehicleTypeById(typeID);
+    return await this.vehicleTypeRepository.findVehicleType({ id: typeID });
   }
   @ResolveField(() => VehicleBrandReferences)
   async VehicleBrand(@Parent() vehicleModel: VehicleModelInput) {
     const { brand_id: brandId } = vehicleModel;
 
-    return await this.vehicleBrandRepository.findVehicleBrandById(brandId);
+    return await this.vehicleBrandRepository.findVehicleBrand({ id: brandId });
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetOutsourcedTransportCompanyDTO } from 'domain/dto/repositories/getDataDtos/GetOutsourcedTransportCompany';
 import { type FindAllOutsourcedTransportCompanyWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OutsourcedTransportCompanyRepositoryDto';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type OutsourcedTransportCompany } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompany/OutsourcedTransportCompany';
@@ -19,12 +20,20 @@ export class OutsourcedTransportCompanyPrismaService
   implements OutsourcedTransportCompanyRepository
 {
   constructor(private prisma: PrismaService) {}
-  async findOutsourcedTransportCompanyById(
-    id: string,
+  async findOutsourcedTransportCompany(
+    request: GetOutsourcedTransportCompanyDTO,
   ): Promise<OutsourcedTransportCompany> {
     const outsourcedTransportCompany =
-      await this.prisma.outsourcedTransportCompany.findFirstOrThrow({
-        where: { id },
+      await this.prisma.outsourcedTransportCompany.findFirst({
+        where: {
+          OR: [
+            { id: request.id },
+            { legal_person_id: request.legalPersonId },
+            { LegalPerson: { cnpj: request.cnpj } },
+            { LegalPerson: { corporate_name: request.corporateName } },
+            { LegalPerson: { fantasy_name: request.fantasyName } },
+          ],
+        },
       });
 
     return OutsourcedTransportCompanyPrismaDTO.PrismaToEntity(

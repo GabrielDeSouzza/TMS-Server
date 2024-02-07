@@ -1,5 +1,5 @@
 export abstract class GetNaturalPersonDTO {
-  id?: string;
+  naturalPersonId?: string;
   cpf?: string;
   rg?: string;
 }

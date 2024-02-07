@@ -40,8 +40,6 @@ model User {
   VehicleTypeUpdatedBy                        VehicleType[]                        @relation("updated_by")
   VehicleBodyworkCreatedBy                    VehicleBodywork[]                    @relation("created_by")
   VehicleBodyworkUpdatedBy                    VehicleBodywork[]                    @relation("updated_by")
-  VehicleTypeContainsBodyCreatedBy            VehicleTypeContainsBody[]            @relation("created_by")
-  VehicleTypeContainsBodyUpdatedBy            VehicleTypeContainsBody[]            @relation("updated_by")
   OutsourcedVehicleCreatedBy                  OutsourcedVehicle[]                  @relation("created_by")
   OutsourcedVehicleUpdatedBy                  OutsourcedVehicle[]                  @relation("updated_by")
   CompanyVehicleCreatedBy                     CompanyVehicle[]                     @relation("created_by")
@@ -158,8 +156,8 @@ model VehicleType {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  VehicleModel            VehicleModel[]
-  VehicleTypeContainsBody VehicleTypeContainsBody[]
+  VehicleModel    VehicleModel[]
+  VehicleBodyWork VehicleBodywork[]
 
   CreatedBy  User?  @relation("created_by", fields: [created_by], references: [id])
   created_by String
@@ -178,32 +176,14 @@ model VehicleBodywork {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  VehicleTypeContainsBody VehicleTypeContainsBody[]
+  CreatedBy     User?        @relation("created_by", fields: [created_by], references: [id])
+  created_by    String
+  UpdatedBy     User?        @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by    String
+  VehicleType   VehicleType[]
 
-  CreatedBy  User?  @relation("created_by", fields: [created_by], references: [id])
-  created_by String
-  UpdatedBy  User?  @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by String
 
   @@map("vehicle_bodyworks")
-}
-
-model VehicleTypeContainsBody {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-
-  CreatedBy       User?           @relation("created_by", fields: [created_by], references: [id])
-  created_by      String
-  UpdatedBy       User?           @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by      String
-  VehicleType     VehicleType     @relation(fields: [type_id], references: [id])
-  type_id         String
-  VehicleBodywork VehicleBodywork @relation(fields: [bodywork_id], references: [id])
-  bodywork_id     String
-
-  @@unique([bodywork_id, type_id])
-  @@map("vehicle_type_contain_bodyworks")
 }
 
 model OutsourcedVehicle {
@@ -535,6 +515,7 @@ model OutsourcedTransportCompany {
 
 model OutsourcedTransportCompanyContract {
   id                              String                     @id @default(uuid())
+  contract_number                 String                     @unique
   outsourced_transport_company_id String
   OutsourcedTransportCompany      OutsourcedTransportCompany @relation(fields: [outsourced_transport_company_id], references: [id])
   carrier_company_id              String
@@ -620,7 +601,7 @@ model LegalClientOrder {
 
 model InvoiceForLegalClient {
   id                  String           @id @default(uuid())
-  invoice_number      String              @unique
+  invoice_number      String           @unique
   emission_date       DateTime         @default(now())
   nature_invoice      String
   invoice_total       Float

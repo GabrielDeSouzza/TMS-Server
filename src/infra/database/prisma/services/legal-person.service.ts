@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetLegalPersonDTO } from 'domain/dto/repositories/getDataDtos/GetLegalPersonDto';
 import {
   type ValidateLegalPersonDTO,
   type FindAllLegalPersonWhereRequestDTO,
@@ -14,9 +15,16 @@ import { LegalPersonPrismaDTO } from './prismaDTO/LegalPersonPrismaDto';
 export class LegalPersonPrismaService implements LegalPersonRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findlegalpersonById(id: string): Promise<LegalPerson> {
-    const legalPersonPrisma = await this.prisma.legalPerson.findFirstOrThrow({
-      where: { id },
+  async findlegalperson(request: GetLegalPersonDTO): Promise<LegalPerson> {
+    const legalPersonPrisma = await this.prisma.legalPerson.findFirst({
+      where: {
+        OR: [
+          { cnpj: request.cnpj },
+          { corporate_name: request.corporateName },
+          { fantasy_name: request.fantasyName },
+          { id: request.legalPersonId },
+        ],
+      },
     });
 
     return LegalPersonPrismaDTO.PrismaToEntity(legalPersonPrisma);

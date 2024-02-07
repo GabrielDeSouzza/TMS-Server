@@ -20,17 +20,16 @@ export class LegalClientOrderUseCases {
       });
     }
 
-    return this.legalClientOrderRepository.findLegalClientOrder(
-      request.id,
-      request.order,
-    );
+    return this.legalClientOrderRepository.findLegalClientOrder(request);
   }
   async getAllLegalClientOrder(request: GetAllLegalClientOrderDTO) {
     return this.legalClientOrderRepository.getAllLegalClientOrder(request);
   }
   async createOrder(data: CreateLegalClientOrderDTO) {
     const orderExist =
-      await this.legalClientOrderRepository.findLegalClientOrder(data.order);
+      await this.legalClientOrderRepository.findLegalClientOrder({
+        order: data.order,
+      });
 
     if (orderExist) {
       throw new GraphQLError('ORDER ALREADY EXISTS', {

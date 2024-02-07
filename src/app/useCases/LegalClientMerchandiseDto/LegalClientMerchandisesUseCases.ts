@@ -24,8 +24,7 @@ export class LegalClientMerchandiseUseCases {
 
     const merchandise =
       await this.legalClientMerchandiseRepository.findLegalClientMerchandise(
-        request.id,
-        request.codMerchandise,
+        request,
       );
 
     if (merchandise) {
@@ -45,10 +44,9 @@ export class LegalClientMerchandiseUseCases {
   }
   async createLegalClientMerchandise(data: CreateLegalClientMerchandisesDTO) {
     const merchandiseExist =
-      await this.legalClientMerchandiseRepository.findLegalClientMerchandise(
-        null,
-        data.codMerchandise,
-      );
+      await this.legalClientMerchandiseRepository.findLegalClientMerchandise({
+        codMerchandise: data.codMerchandise,
+      });
 
     if (merchandiseExist) {
       throw new GraphQLError('COD MERCHANDISE ALREADY IN USE');

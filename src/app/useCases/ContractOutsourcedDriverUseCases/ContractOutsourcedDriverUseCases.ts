@@ -23,8 +23,7 @@ export class ContractOutsourcedDriverUseCases {
     }
 
     return this.contractOutsourcedDriverRepository.getContractOutsourcedDriver(
-      request.id,
-      request.contractNumber,
+      request,
     );
   }
 
@@ -40,8 +39,7 @@ export class ContractOutsourcedDriverUseCases {
   ) {
     const contractExist =
       await this.contractOutsourcedDriverRepository.getContractOutsourcedDriver(
-        null,
-        data.contract_number,
+        { contractNumber: data.contract_number },
       );
 
     if (contractExist) {

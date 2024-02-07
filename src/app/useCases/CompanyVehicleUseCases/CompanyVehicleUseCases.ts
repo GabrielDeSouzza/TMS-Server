@@ -26,10 +26,7 @@ export class CompanyVehicleUseCases {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
     const companyVehicle =
-      await this.companyVehicleRepository.findCompanyVehicle(
-        request.id,
-        request.plate,
-      );
+      await this.companyVehicleRepository.findCompanyVehicle(request);
     if (companyVehicle) return companyVehicle;
 
     throw new GraphQLError('VEHICLE NOT FOUND', {

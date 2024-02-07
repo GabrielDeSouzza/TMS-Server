@@ -21,6 +21,7 @@ export class OutsourcedTransportCompanyContractPrismaDTO {
       created_at: outsourcedTransportCompanyContractPrisma.created_at,
       id: outsourcedTransportCompanyContractPrisma.id,
       updated_at: outsourcedTransportCompanyContractPrisma.updated_at,
+      contractNumber: outsourcedTransportCompanyContractPrisma.contract_number,
     });
   }
   public static EntityToCreatePrisma(
@@ -28,6 +29,7 @@ export class OutsourcedTransportCompanyContractPrismaDTO {
   ) {
     const outsourcedTransportCompanyContractPrisma: Prisma.OutsourcedTransportCompanyContractCreateInput =
       {
+        contract_number: outsourcedTransportCompanyContract.contractNumber,
         CarrierCompany: {
           connect: { id: outsourcedTransportCompanyContract.carrierCompanyId },
         },
@@ -60,6 +62,7 @@ export class OutsourcedTransportCompanyContractPrismaDTO {
   ) {
     const outsourcedTransportCompanyContractUptade: Prisma.OutsourcedTransportCompanyContractUpdateInput =
       {
+        contract_number: outsourcedTransportCompanyContract.contractNumber,
         CarrierCompany: outsourcedTransportCompanyContract.carrierCompanyId
           ? {
               connect: {

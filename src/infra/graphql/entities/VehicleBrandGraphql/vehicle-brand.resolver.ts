@@ -38,7 +38,7 @@ export class VehicleBrandResolver {
 
   @Query(() => VehicleBrandModel)
   async getVehicleBrand(@Args('id') id: string) {
-    return await this.vehicleBrandRepository.findVehicleBrandById(id);
+    return await this.vehicleBrandRepository.findVehicleBrand({ id });
   }
   @Query(() => [VehicleBrandModel])
   async getAllVehicleBrand(@Args() args: VehicleBrandWhereArgs) {

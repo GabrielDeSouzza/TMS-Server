@@ -10,9 +10,7 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { VehicleTypeContainsBody } from 'domain/entities/VehicleEntities/vehicleTypeContainsBody/VehicleContainsBody';
 import { VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
-import { VehicleTypeContainsBodyRepository } from 'domain/repositories/VehicleTypeContainsBodyworkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
@@ -24,7 +22,6 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { VehicleTypeContainsBodyModel } from '../VehicleTypeContainsBodyGraphql/VehicleTypeContainsBody.model';
 import { VehicleTypeInput, VehicleTypeUpdateInput } from './vehicle-type.input';
 import { VehicleTypeModel } from './vehicle-type.model';
 
@@ -36,12 +33,11 @@ export class VehicleTypeResolver {
   constructor(
     private vehicleTypeRepository: VehicleTypeRepository,
     private userCase: UserUseCases,
-    private vehicleTypeContainsBoyRepositoy: VehicleTypeContainsBodyRepository,
   ) {}
 
   @Query(() => VehicleTypeModel)
   async getVehicleType(@Args('id') id: string) {
-    return this.vehicleTypeRepository.findVehicleTypeById(id);
+    return this.vehicleTypeRepository.findVehicleType({ id });
   }
   @Query(() => [VehicleTypeModel], { nullable: true })
   async getAllVehicleTypes(@Args() args: VehicleTypeWhereArgs) {
@@ -61,30 +57,11 @@ export class VehicleTypeResolver {
   ) {
     vehicleTypeInput.created_by = user.id;
     vehicleTypeInput.updated_by = user.id;
-    const {
-      bodyWork: containsBody,
-      body_work_id,
-      created_by,
-      updated_by,
-    } = vehicleTypeInput;
+
     const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
     const type = await this.vehicleTypeRepository.createVehicleType(
       vehicleTypeEntity,
     );
-
-    if (containsBody && body_work_id) {
-      body_work_id.map(async vehicleContains => {
-        const body = new VehicleTypeContainsBody({
-          created_by: created_by,
-          updated_by: updated_by,
-          vehicle_bodywork_id: vehicleContains,
-          vehicle_type_id: type.id,
-        });
-        await this.vehicleTypeContainsBoyRepositoy.createVehicleTypeContainsBody(
-          body,
-        );
-      });
-    }
 
     return type;
   }
@@ -95,36 +72,16 @@ export class VehicleTypeResolver {
     @CurrentUser() user: User,
   ) {
     vehicleTypeInput.updated_by = user.id;
-    const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
+    const vehicleTypeEntity = new VehicleType({
+      bodyWork: vehicleTypeInput.bodyWork,
+      created_by: user.id,
+      name: vehicleTypeInput.name,
+      updated_by: user.id,
+    });
     const type = await this.vehicleTypeRepository.updateVehicleType(
       id,
       vehicleTypeEntity,
     );
-
-    if (vehicleTypeInput.del_body_id) {
-      for (const [, delBody] of vehicleTypeInput.del_body_id.entries()) {
-        await this.vehicleTypeContainsBoyRepositoy.deleteVehicleTypeContainsBody(
-          type.id,
-          delBody,
-        );
-      }
-    }
-
-    if (vehicleTypeInput.body_work_id) {
-      vehicleTypeInput.body_work_id.map(async vehicleContains => {
-        const body = new VehicleTypeContainsBody({
-          created_at: new Date(),
-          updated_at: new Date(),
-          created_by: vehicleTypeInput.created_by,
-          updated_by: vehicleTypeInput.updated_by,
-          vehicle_bodywork_id: vehicleContains,
-          vehicle_type_id: type.id,
-        });
-        await this.vehicleTypeContainsBoyRepositoy.createVehicleTypeContainsBody(
-          body,
-        );
-      });
-    }
 
     return type;
   }
@@ -140,14 +97,5 @@ export class VehicleTypeResolver {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
-  }
-  @ResolveField(() => [VehicleTypeContainsBodyModel], { nullable: true })
-  async VehicleTypeContainsBody(@Parent() vehicleType: VehicleTypeModel) {
-    const { id } = vehicleType;
-
-    const typeBodies =
-      await this.vehicleTypeContainsBoyRepositoy.getAllVehicleTypeBodies(id);
-
-    return typeBodies;
   }
 }

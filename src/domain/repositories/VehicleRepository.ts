@@ -1,9 +1,10 @@
+import { type GetVehicleDto } from 'domain/dto/repositories/getDataDtos/GetVehicleDto';
 import { type ValidadeVehicle } from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
 import { type FindAllVehicleWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleRepositoryDto';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export abstract class VehicleRepository {
-  abstract findVehicleById(id?: string, plate?: string): Promise<Vehicle>;
+  abstract findVehicle(request: GetVehicleDto): Promise<Vehicle>;
   abstract createVehicle(
     vehicleBrand: Omit<Vehicle, 'id' | 'updated_at' | 'created_at'>,
   ): Promise<Vehicle>;

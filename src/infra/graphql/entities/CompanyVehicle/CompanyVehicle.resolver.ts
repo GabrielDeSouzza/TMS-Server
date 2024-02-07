@@ -75,6 +75,6 @@ export class CompanyVehicleResolver {
   async Vehicle(@Parent() outsoucedVehicle: CompanyVehicleInput) {
     const { vehicle_id: vehicleId } = outsoucedVehicle;
 
-    return await this.vehicleRepository.findVehicleById(vehicleId);
+    return await this.vehicleRepository.findVehicle({ vehicleId });
   }
 }

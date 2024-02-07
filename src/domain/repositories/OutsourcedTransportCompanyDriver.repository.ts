@@ -1,10 +1,11 @@
+import { type GetOutsourcedTransportCompanyDriverDTO } from 'domain/dto/repositories/getDataDtos/GetOutsourcedTransportCompanyDriverDto';
 import { type FindAllOutsourcedTransportCompanyDriverWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OutsourcedTransportCompanyDriverRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type OutsourcedTransportCompanyDriver } from 'domain/entities/OutsourcedTransportCompanyEntities/outsourcedTransportCompanyDriver/OutsourcedTransportCompany';
 
 export abstract class OutsourcedTransportCompanyDriverRepository {
-  abstract findOutsourcedTransportCompanyDriverById(
-    id: string,
+  abstract findOutsourcedTransportCompanyDriver(
+    request: GetOutsourcedTransportCompanyDriverDTO,
   ): Promise<OutsourcedTransportCompanyDriver>;
   abstract createOutsourcedTransportCompanyDriver(
     outsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriver,

@@ -1,9 +1,10 @@
+import { type GetOwnDriverDTO } from 'domain/dto/repositories/getDataDtos/GetOwnDriverDto';
 import { type FindAllOwnDriverWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OwnDriverRepositoryDto';
 import { type OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export abstract class OwnDriverRepository {
-  abstract findOwnDriverById(id: string): Promise<OwnDriver>;
+  abstract findOwnDriver(request: GetOwnDriverDTO): Promise<OwnDriver>;
   abstract createOwnDriver(
     OwnDriver: OwnDriver,
     naturalPerson: NaturalPerson,

@@ -19,8 +19,7 @@ export class LegalContractUseCases {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
     const contract = await this.legalContractRepository.findLegalContract(
-      request.id,
-      request.contractNumber,
+      request,
     );
     if (contract) return contract;
 
@@ -33,10 +32,9 @@ export class LegalContractUseCases {
   }
   async createContract(data: CreateLegalContractDTO) {
     const contractNumberExist =
-      await this.legalContractRepository.findLegalContract(
-        null,
-        data.contract_number,
-      );
+      await this.legalContractRepository.findLegalContract({
+        contractNumber: data.contract_number,
+      });
     if (contractNumberExist)
       throw new GraphQLError('ERROR, CONTRACT NUMBER ALREADY IN  USE', {
         extensions: { code: HttpStatus.CONFLICT },

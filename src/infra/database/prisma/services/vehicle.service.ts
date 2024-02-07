@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetVehicleDto } from 'domain/dto/repositories/getDataDtos/GetVehicleDto';
 import { type ValidadeVehicle } from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
 import { type FindAllVehicleWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleRepositoryDto';
 import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
@@ -10,9 +11,9 @@ import { VehiclePrismaDto } from './prismaDTO/VehiclePrismaDto';
 
 @Injectable()
 export class VehicleService implements VehicleRepository {
-  async findVehicleById(id?: string, plate?: string): Promise<Vehicle> {
+  async findVehicle(request: GetVehicleDto): Promise<Vehicle> {
     const vehiclePrisma = await this.prisma.vehicle.findFirstOrThrow({
-      where: { OR: [{ id }, { plate: plate || undefined }] },
+      where: { OR: [{ id: request.vehicleId }, { plate: request.plate }] },
     });
 
     return VehiclePrismaDto.PrismaToEntity(vehiclePrisma);

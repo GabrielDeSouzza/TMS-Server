@@ -14,14 +14,14 @@ import { LegalClientPrismaDTO } from './prismaDTO/LegalClientPrismaDto';
 @Injectable()
 export class LegalClientPrismaService implements LegalClientRepository {
   constructor(private prisma: PrismaService) {}
-  async findLegalClient(data: getLegalClientData): Promise<LegalClient> {
-    const legalClient = await this.prisma.legalClient.findFirstOrThrow({
+  async findLegalClient(request: getLegalClientData): Promise<LegalClient> {
+    const legalClient = await this.prisma.legalClient.findFirst({
       where: {
         OR: [
-          { id: data.id },
-          { LegalPerson: { fantasy_name: data.fantasyName } },
-          { LegalPerson: { corporate_name: data.corporateName } },
-          { LegalPerson: { cnpj: data.cnpj } },
+          { id: request.id },
+          { LegalPerson: { fantasy_name: request.fantasyName } },
+          { LegalPerson: { corporate_name: request.corporateName } },
+          { LegalPerson: { cnpj: request.cnpj } },
         ],
       },
     });

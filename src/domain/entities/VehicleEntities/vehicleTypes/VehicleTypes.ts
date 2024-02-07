@@ -5,10 +5,6 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
-import {
-  type IVehicleTypeContainsBody,
-  type VehicleTypeContainsBody,
-} from '../vehicleTypeContainsBody/VehicleContainsBody';
 
 export interface IVehicleType {
   id?: string;
@@ -19,19 +15,13 @@ export interface IVehicleType {
   updated_at: Date;
   created_by: string;
   updated_by: string;
-  VehicleTypeContainsBody?:
-    | VehicleTypeContainsBody[]
-    | IVehicleTypeContainsBody[];
 }
 
 export class VehicleType extends Entity {
-  private props: IVehicleType | Partial<IVehicleType>;
+  private props: IVehicleType;
 
   constructor(
-    props: Replace<
-      IVehicleType | Partial<IVehicleType>,
-      { created_at?: Date; updated_at?: Date }
-    >,
+    props: Replace<IVehicleType, { created_at?: Date; updated_at?: Date }>,
   ) {
     super();
 
@@ -112,19 +102,5 @@ export class VehicleType extends Entity {
   }
   public get body_work_id(): string[] | undefined {
     return this.props.body_work_id;
-  }
-  public set VehicleTypeContainsBody(
-    VehicleTypeContainsBody:
-      | VehicleTypeContainsBody[]
-      | IVehicleTypeContainsBody[]
-      | undefined,
-  ) {
-    this.props.VehicleTypeContainsBody = VehicleTypeContainsBody;
-  }
-  public get VehicleTypeContainsBody():
-    | VehicleTypeContainsBody[]
-    | IVehicleTypeContainsBody[]
-    | undefined {
-    return this.props.VehicleTypeContainsBody;
   }
 }

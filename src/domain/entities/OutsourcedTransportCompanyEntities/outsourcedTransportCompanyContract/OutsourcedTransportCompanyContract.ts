@@ -8,6 +8,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 
 export interface IOutsourcedTransportCompanyContract {
   id?: string;
+  contractNumber: string;
   outSourcedTransportCompanyId: string;
   carrierCompanyId: string;
   legalClientOrderId: string;
@@ -62,6 +63,11 @@ export class OutsourcedTransportCompanyContract extends Entity {
         fieldName: 'outSourcedTransportCompanyId',
         maxLength: 1000,
       },
+      {
+        field: this.props.contractNumber,
+        fieldName: 'ContractNumber',
+        maxLength: 1000,
+      },
     );
     this.notification.requiredField(
       'OutsourcedTransportCompanyContract',
@@ -74,6 +80,13 @@ export class OutsourcedTransportCompanyContract extends Entity {
   }
   public set id(id: string) {
     this.props.id = id;
+  }
+
+  public get contractNumber(): string {
+    return this.props.contractNumber;
+  }
+  public set contractNumber(contractNumber: string) {
+    this.props.contractNumber = contractNumber;
   }
 
   public set carrierCompanyId(carrierCompanyId: string) {

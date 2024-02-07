@@ -48,7 +48,7 @@ export class OutsourcedDriverResolver {
   ) {}
   @Query(() => OutsourcedDriverModel)
   async getOutsourcedDriver(@Args('id') id: string) {
-    return await this.outsourcedDriverRepository.findOutsourcedDriver(id);
+    return await this.outsourcedDriverRepository.findOutsourcedDriver({ id });
   }
   @Query(() => [OutsourcedDriverModel])
   async getAllOutsourcedDriver(@Args() args: OutsourcedDriverWhereArgs) {
@@ -156,7 +156,7 @@ export class OutsourcedDriverResolver {
   @ResolveField(() => NaturalPersonModel)
   async NaturalPerson(@Parent() outsourcedDriverInput: OutsourcedDriverModel) {
     return await this.naturalPersonRepository.findNaturalPerson({
-      id: outsourcedDriverInput.natural_person_id,
+      naturalPersonId: outsourcedDriverInput.natural_person_id,
     });
   }
   @ResolveField(() => OutsourcedVehicleRecefencesModel)
@@ -165,10 +165,9 @@ export class OutsourcedDriverResolver {
   ) {
     const { outsourced_vehicle_id: outsourcedVehicleId } =
       outsourcedDriverInput;
-    console.log(outsourcedVehicleId);
 
-    return await this.outsourcedVehicleRepository.findOutsourcedVehicle(
-      outsourcedVehicleId,
-    );
+    return await this.outsourcedVehicleRepository.findOutsourcedVehicle({
+      id: outsourcedVehicleId,
+    });
   }
 }

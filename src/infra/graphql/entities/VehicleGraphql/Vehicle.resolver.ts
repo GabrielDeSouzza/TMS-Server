@@ -16,7 +16,7 @@ import { VehicleModelWhereArgs } from 'infra/graphql/args/VeihicleModelArgs';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
 
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
-import { VehicleTypeReferences } from '../VehicleTypeGraphql/vehicle-type.model';
+import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';
 import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.model';
 import { VehicleInput, VehicleUpdateInput } from './Vehicle.input';
 import { VehicleCarModel } from './vehicle.model';
@@ -36,7 +36,7 @@ export class VehicleGraphqlResolver {
     if (id == undefined && plate == undefined)
       throw new GraphQLError('insert a id or plate');
 
-    return this.vehicleRepository.findVehicleById(id, plate);
+    return this.vehicleRepository.findVehicle({ plate, vehicleId: id });
   }
   @Query(() => [VehicleCarModel])
   async getAllVehicle(@Args() args: VehicleModelWhereArgs) {
@@ -67,13 +67,12 @@ export class VehicleGraphqlResolver {
   async VehicleModel(@Parent() vehicle: VehicleInput) {
     const { model_id: modeld } = vehicle;
 
-    return this.vehicleModelRepository.findVehicleModelById(modeld);
+    return this.vehicleModelRepository.findVehicleModel({ id: modeld });
   }
-  @ResolveField(() => VehicleTypeReferences)
+  @ResolveField(() => VehicleTypeModel)
   async VehicleType(@Parent() vehicle: VehicleInput) {
     const { model_id: modeld } = vehicle;
     const type = await this.vehicleModelRepository.findOnlyVehicleType(modeld);
-    console.log(type);
 
     return type;
   }
@@ -81,6 +80,6 @@ export class VehicleGraphqlResolver {
   async VehicleBrand(@Parent() vehicle: VehicleInput) {
     const { model_id: modeld } = vehicle;
 
-    return await this.vehicleModelRepository.findVehicleModelById(modeld);
+    return await this.vehicleModelRepository.findVehicleModel({ id: modeld });
   }
 }

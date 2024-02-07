@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetVehicleBodyWorkDTO } from 'domain/dto/repositories/getDataDtos/GetVehicleBodWorkDto';
 import { type FindAllVehicleBodyworkWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleBodyworkRepositoryDto';
 import { type VehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 import { type VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
@@ -10,10 +11,12 @@ import { VehicleBodyworkPrismaDto } from './prismaDTO/VehicleBodyworkPrismaDto';
 @Injectable()
 export class VehicleBodyworkService implements VehicleBodyworkRepository {
   constructor(private prisma: PrismaService) {}
-  async findVehicleBodyworkById(id: string): Promise<VehicleBodywork> {
+  async findVehicleBodywork(
+    request: GetVehicleBodyWorkDTO,
+  ): Promise<VehicleBodywork> {
     return VehicleBodyworkPrismaDto.PrismaToEntity(
-      await this.prisma.vehicleBodywork.findFirstOrThrow({
-        where: { id },
+      await this.prisma.vehicleBodywork.findFirst({
+        where: { OR: [{ id: request.id }, { name: request.name }] },
       }),
     );
   }

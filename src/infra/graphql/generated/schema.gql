@@ -1394,6 +1394,7 @@ type OutsourcedTransportCompanyContractModel {
   OutsourcedTransportCompany: OutsourcedTransportCompanyModel!
   UpdatedUser: UserModelRefereces!
   carrierCompanyId: String!
+  contractNumber: String!
   created_at: Timestamp!
   created_by: String!
   id: String!
@@ -1414,6 +1415,7 @@ input OutsourcedTransportCompanyContractOrderByWithRelationInput {
   OutsourcedTransportCompany: OutsourcedTransportCompanyOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
   carrier_company_id: SortOrder
+  contract_number: SortOrder
   created_at: SortOrder
   created_by: SortOrder
   id: SortOrder
@@ -1439,6 +1441,7 @@ input OutsourcedTransportCompanyContractWhereInput {
   OutsourcedTransportCompany: OutsourcedTransportCompanyWhereInput
   UpdatedBy: UserWhereInput
   carrier_company_id: StringFilter
+  contract_number: StringFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
@@ -2187,8 +2190,6 @@ input UserOrderByWithRelationInput {
   VehicleBrandUpdatedBy: VehicleBrandOrderByRelationAggregateInput
   VehicleModelCreatedBy: VehicleModelOrderByRelationAggregateInput
   VehicleModelUpdatedBy: VehicleModelOrderByRelationAggregateInput
-  VehicleTypeContainsBodyCreatedBy: VehicleTypeContainsBodyOrderByRelationAggregateInput
-  VehicleTypeContainsBodyUpdatedBy: VehicleTypeContainsBodyOrderByRelationAggregateInput
   VehicleTypeCreatedBy: VehicleTypeOrderByRelationAggregateInput
   VehicleTypeUpdatedBy: VehicleTypeOrderByRelationAggregateInput
   created_at: SortOrder
@@ -2264,8 +2265,6 @@ input UserWhereInput {
   VehicleBrandUpdatedBy: VehicleBrandListRelationFilter
   VehicleModelCreatedBy: VehicleModelListRelationFilter
   VehicleModelUpdatedBy: VehicleModelListRelationFilter
-  VehicleTypeContainsBodyCreatedBy: VehicleTypeContainsBodyListRelationFilter
-  VehicleTypeContainsBodyUpdatedBy: VehicleTypeContainsBodyListRelationFilter
   VehicleTypeCreatedBy: VehicleTypeListRelationFilter
   VehicleTypeUpdatedBy: VehicleTypeListRelationFilter
   created_at: DateTimeFilter
@@ -2293,7 +2292,6 @@ input VehicleBodyworkListRelationFilter {
 type VehicleBodyworkModel {
   CreatedUser: UserModelRefereces!
   UpdatedUser: UserModelRefereces!
-  VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   axles: Float!
   created_at: Timestamp!
   created_by: String!
@@ -2305,14 +2303,6 @@ type VehicleBodyworkModel {
   volume: Float!
 }
 
-type VehicleBodyworkModelReferences {
-  axles: Float!
-  id: String!
-  mass: Float!
-  name: String!
-  volume: Float!
-}
-
 input VehicleBodyworkOrderByRelationAggregateInput {
   _count: SortOrder
 }
@@ -2320,7 +2310,7 @@ input VehicleBodyworkOrderByRelationAggregateInput {
 input VehicleBodyworkOrderByWithRelationInput {
   CreatedBy: UserOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
-  VehicleTypeContainsBody: VehicleTypeContainsBodyOrderByRelationAggregateInput
+  VehicleType: VehicleTypeOrderByRelationAggregateInput
   axles: SortOrder
   created_at: SortOrder
   created_by: SortOrder
@@ -2345,7 +2335,7 @@ input VehicleBodyworkWhereInput {
   NOT: [VehicleBodyworkWhereInput!]
   OR: [VehicleBodyworkWhereInput!]
   UpdatedBy: UserWhereInput
-  VehicleTypeContainsBody: VehicleTypeContainsBodyListRelationFilter
+  VehicleType: VehicleTypeListRelationFilter
   axles: IntFilter
   created_at: DateTimeFilter
   created_by: StringFilter
@@ -2422,7 +2412,7 @@ input VehicleBrandWhereInput {
 type VehicleCarModel {
   VehicleBrand: VehicleBrandReferences!
   VehicleModel: VehicleModelReferences!
-  VehicleType: VehicleTypeReferences!
+  VehicleType: VehicleTypeModel!
   color: String!
   createdUser: UserModelRefereces!
   id: String!
@@ -2572,44 +2562,6 @@ input VehicleOrderByWithRelationInput {
   year: SortOrder
 }
 
-input VehicleTypeContainsBodyListRelationFilter {
-  every: VehicleTypeContainsBodyWhereInput
-  none: VehicleTypeContainsBodyWhereInput
-  some: VehicleTypeContainsBodyWhereInput
-}
-
-type VehicleTypeContainsBodyModel {
-  VehicleBodywork: [VehicleBodyworkModelReferences!]!
-  created_at: Timestamp!
-  created_by: String!
-  id: String!
-  updated_at: Timestamp!
-  updated_by: String!
-  vehicle_bodywork_id: String!
-  vehicle_type_id: String!
-}
-
-input VehicleTypeContainsBodyOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input VehicleTypeContainsBodyWhereInput {
-  AND: [VehicleTypeContainsBodyWhereInput!]
-  CreatedBy: UserWhereInput
-  NOT: [VehicleTypeContainsBodyWhereInput!]
-  OR: [VehicleTypeContainsBodyWhereInput!]
-  UpdatedBy: UserWhereInput
-  VehicleBodywork: VehicleBodyworkWhereInput
-  VehicleType: VehicleTypeWhereInput
-  bodywork_id: StringFilter
-  created_at: DateTimeFilter
-  created_by: StringFilter
-  id: StringFilter
-  type_id: StringFilter
-  updated_at: DateTimeFilter
-  updated_by: StringFilter
-}
-
 input VehicleTypeInput {
   bodyWork: Boolean!
   body_work_id: [String!]
@@ -2623,17 +2575,15 @@ input VehicleTypeListRelationFilter {
 }
 
 type VehicleTypeModel {
+  CpdatedUser: UserModelRefereces!
   CreatedUser: UserModelRefereces!
   UpdatedUser: UserModelRefereces!
   VehicleModels: VehicleModelGraphql
-  VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
   bodyWork: Boolean!
-  createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
   id: String!
   name: String!
-  updatedUser: UserModelRefereces!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -2645,8 +2595,8 @@ input VehicleTypeOrderByRelationAggregateInput {
 input VehicleTypeOrderByWithRelationInput {
   CreatedBy: UserOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
+  VehicleBodyWork: VehicleBodyworkOrderByRelationAggregateInput
   VehicleModel: VehicleModelOrderByRelationAggregateInput
-  VehicleTypeContainsBody: VehicleTypeContainsBodyOrderByRelationAggregateInput
   bodywork: SortOrder
   created_at: SortOrder
   created_by: SortOrder
@@ -2654,13 +2604,6 @@ input VehicleTypeOrderByWithRelationInput {
   name: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
-}
-
-type VehicleTypeReferences {
-  VehicleTypeContainsBody: [VehicleTypeContainsBodyModel!]
-  bodyWork: Boolean!
-  id: String!
-  name: String!
 }
 
 input VehicleTypeUpdateInput {
@@ -2677,8 +2620,8 @@ input VehicleTypeWhereInput {
   NOT: [VehicleTypeWhereInput!]
   OR: [VehicleTypeWhereInput!]
   UpdatedBy: UserWhereInput
+  VehicleBodyWork: VehicleBodyworkListRelationFilter
   VehicleModel: VehicleModelListRelationFilter
-  VehicleTypeContainsBody: VehicleTypeContainsBodyListRelationFilter
   bodywork: BoolFilter
   created_at: DateTimeFilter
   created_by: StringFilter

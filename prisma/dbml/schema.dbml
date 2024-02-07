@@ -19,8 +19,6 @@ Table users {
   VehicleTypeUpdatedBy vehicle_types [not null]
   VehicleBodyworkCreatedBy vehicle_bodyworks [not null]
   VehicleBodyworkUpdatedBy vehicle_bodyworks [not null]
-  VehicleTypeContainsBodyCreatedBy vehicle_type_contain_bodyworks [not null]
-  VehicleTypeContainsBodyUpdatedBy vehicle_type_contain_bodyworks [not null]
   OutsourcedVehicleCreatedBy outsourced_vehicles [not null]
   OutsourcedVehicleUpdatedBy outsourced_vehicles [not null]
   CompanyVehicleCreatedBy company_vehicles [not null]
@@ -124,7 +122,7 @@ Table vehicle_types {
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   VehicleModel vehicle_models [not null]
-  VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
+  VehicleBodyWork vehicle_bodyworks [not null]
   CreatedBy users
   created_by String [not null]
   UpdatedBy users
@@ -139,29 +137,11 @@ Table vehicle_bodyworks {
   volume Float [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-  VehicleTypeContainsBody vehicle_type_contain_bodyworks [not null]
-  CreatedBy users
-  created_by String [not null]
-  UpdatedBy users
-  updated_by String [not null]
-}
-
-Table vehicle_type_contain_bodyworks {
-  id String [pk]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
   CreatedBy users
   created_by String [not null]
   UpdatedBy users
   updated_by String [not null]
   VehicleType vehicle_types [not null]
-  type_id String [not null]
-  VehicleBodywork vehicle_bodyworks [not null]
-  bodywork_id String [not null]
-
-  indexes {
-    (bodywork_id, type_id) [unique]
-  }
 }
 
 Table outsourced_vehicles {
@@ -452,6 +432,7 @@ Table OutsourcedTransportCompany {
 
 Table OutsourcedTransportCompanyContract {
   id String [pk]
+  contract_number String [unique, not null]
   outsourced_transport_company_id String [not null]
   OutsourcedTransportCompany OutsourcedTransportCompany [not null]
   carrier_company_id String [not null]
@@ -665,14 +646,6 @@ Ref: vehicle_types.updated_by > users.id
 Ref: vehicle_bodyworks.created_by > users.id
 
 Ref: vehicle_bodyworks.updated_by > users.id
-
-Ref: vehicle_type_contain_bodyworks.created_by > users.id
-
-Ref: vehicle_type_contain_bodyworks.updated_by > users.id
-
-Ref: vehicle_type_contain_bodyworks.type_id > vehicle_types.id
-
-Ref: vehicle_type_contain_bodyworks.bodywork_id > vehicle_bodyworks.id
 
 Ref: outsourced_vehicles.created_by > users.id
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { type GetVehicleModel } from 'domain/dto/repositories/getDataDtos/GetVehicleModelDto';
 import { type FindAllVehicleModelWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleModelRepositoryDto';
 import { type VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 import { type VehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
@@ -7,19 +8,17 @@ import { type VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/V
 import { type VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 
 import { PrismaService } from '../prisma.service';
-import { VehicleBodyworkPrismaDto } from './prismaDTO/VehicleBodyworkPrismaDto';
 import { VehicleBrandPrismaDTO } from './prismaDTO/VehicleBrandPrismaDto';
 import { VehicleModelPrismaDTO } from './prismaDTO/VehicleModelPrismaDto';
-import { VehicleTypeContainsBodyPrismaDTO } from './prismaDTO/VehicleTypeContainsBody';
 import { VehicleTypePrismaDTO } from './prismaDTO/VehicleTypePrismaDto.ts';
 
 @Injectable()
 export class VehicleModelService implements VehicleModelRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findVehicleModelById(id: string): Promise<VehicleModel> {
+  async findVehicleModel(request: GetVehicleModel): Promise<VehicleModel> {
     const vehicleModelPrisma = await this.prisma.vehicleModel.findFirstOrThrow({
-      where: { id },
+      where: { OR: [{ id: request.id }, { name: request.name }] },
     });
 
     return VehicleModelPrismaDTO.PrismaToEntity(vehicleModelPrisma);
@@ -59,32 +58,11 @@ export class VehicleModelService implements VehicleModelRepository {
     const type = await this.prisma.vehicleModel.findFirstOrThrow({
       where: { id: modelId },
       select: {
-        VehicleType: {
-          include: {
-            VehicleTypeContainsBody: {
-              include: { VehicleBodywork: true },
-            },
-          },
-        },
+        VehicleType: true,
       },
     });
 
     const typeEntity = VehicleTypePrismaDTO.PrismaToEntity(type.VehicleType);
-
-    if (typeEntity.bodyWork) {
-      const bodies = type.VehicleType.VehicleTypeContainsBody.map(x =>
-        VehicleBodyworkPrismaDto.PrismaToEntity(x.VehicleBodywork),
-      );
-      const typeContains = type.VehicleType.VehicleTypeContainsBody.map(
-        contains => VehicleTypeContainsBodyPrismaDTO.PrismaToEntity(contains),
-      );
-
-      for (const [index, entity] of typeContains.entries()) {
-        entity.VehicleBodywork = [bodies[index]];
-      }
-
-      typeEntity.VehicleTypeContainsBody = typeContains;
-    }
 
     return typeEntity;
   }

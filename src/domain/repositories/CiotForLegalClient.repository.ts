@@ -1,3 +1,4 @@
+import { type GetCiotForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetCiotForLegalClientDto';
 import {
   type validadeCiotForLegalPersonDTO,
   type FindAllCiotForLegalClientWhereRequestDTO,
@@ -6,8 +7,7 @@ import { type CiotForLegalClient } from 'domain/entities/LegalClientEntities/Cio
 
 export abstract class CiotForLegalClientRepository {
   abstract findCiotForLegalClient(
-    id?: string,
-    ciot?: string,
+    request: GetCiotForLegalClientDTO,
   ): Promise<CiotForLegalClient>;
   abstract createCiotForLegalClient(
     ciotForLegalClient: CiotForLegalClient,

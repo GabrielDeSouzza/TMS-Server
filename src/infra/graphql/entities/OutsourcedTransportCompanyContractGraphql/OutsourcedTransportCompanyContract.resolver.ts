@@ -47,8 +47,8 @@ export class OutsourcedTransportCompanyContractResolver {
   ) {}
   @Query(() => OutsourcedTransportCompanyContractModel)
   async getOutsourcedTransportCompanyContractModel(@Args('id') id: string) {
-    return this.outsourcedTransportCompanyContractRepository.findOutsourcedTransportCompanyContractById(
-      id,
+    return this.outsourcedTransportCompanyContractRepository.findOutsourcedTransportCompanyContract(
+      { id },
     );
   }
   @Query(() => [OutsourcedTransportCompanyContractModel], { nullable: true })
@@ -108,8 +108,8 @@ export class OutsourcedTransportCompanyContractResolver {
   async OutsourcedTransportCompany(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompanyById(
-      contract.outSourcedTransportCompanyId,
+    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+      { id: contract.outSourcedTransportCompanyId },
     );
   }
   @ResolveField(() => CarrierCompanyModel)
@@ -124,9 +124,9 @@ export class OutsourcedTransportCompanyContractResolver {
   async LegalClientOrder(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return await this.legalClientOrderRepository.findLegalClientOrder(
-      contract.legalClientOrderId,
-    );
+    return await this.legalClientOrderRepository.findLegalClientOrder({
+      id: contract.legalClientOrderId,
+    });
   }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: OutsourcedTransportCompanyContractInput) {

@@ -38,7 +38,7 @@ export class VehicleBodyworkResolver {
   ) {}
   @Query(() => VehicleBodyworkModel)
   async getVehicleBodyworkModel(@Args('id') id: string) {
-    return this.vehicleBodyworkRepository.findVehicleBodyworkById(id);
+    return this.vehicleBodyworkRepository.findVehicleBodywork({ id });
   }
   @Query(() => [VehicleBodyworkModel], { nullable: true })
   async getAllVehicleBodywork(@Args() args: VehicleBodyworkWhereArgs) {

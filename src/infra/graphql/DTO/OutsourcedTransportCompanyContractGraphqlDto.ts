@@ -15,6 +15,7 @@ export class OutsourcedTransportCompanyContractGraphqlDTO {
       legalClientOrderId: createInput.legalClientOrderId,
       outSourcedTransportCompanyId: createInput.outSourcedTransportCompanyId,
       updated_by: createInput.updated_by,
+      contractNumber: createInput.contractNumber,
     });
   }
 
@@ -29,6 +30,7 @@ export class OutsourcedTransportCompanyContractGraphqlDTO {
           outSourcedTransportCompanyId:
             updateInput.outSourcedTransportCompanyId,
           updated_by: updateInput.updated_by,
+          contractNumber: updateInput.contractNumber,
         })
       : undefined;
   }
