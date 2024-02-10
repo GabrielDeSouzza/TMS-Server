@@ -11,6 +11,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 import { VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
+import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
 import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
@@ -22,6 +23,7 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { VehicleBodyworkModel } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
 import { VehicleTypeInput, VehicleTypeUpdateInput } from './vehicle-type.input';
 import { VehicleTypeModel } from './vehicle-type.model';
 
@@ -32,6 +34,7 @@ import { VehicleTypeModel } from './vehicle-type.model';
 export class VehicleTypeResolver {
   constructor(
     private vehicleTypeRepository: VehicleTypeRepository,
+    private vehicleBodyworkRepository: VehicleBodyworkRepository,
     private userCase: UserUseCases,
   ) {}
 
@@ -81,11 +84,18 @@ export class VehicleTypeResolver {
     const type = await this.vehicleTypeRepository.updateVehicleType(
       id,
       vehicleTypeEntity,
+      vehicleTypeInput.del_body_id,
     );
 
     return type;
   }
 
+  @ResolveField(() => [VehicleBodyworkModel], { nullable: true })
+  async BodyWorks(@Parent() vehicleTypeInput: VehicleTypeInput) {
+    return await this.vehicleBodyworkRepository.getAllVehicleBodyworkByType({
+      name: vehicleTypeInput.name,
+    });
+  }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: VehicleTypeInput) {
     const { created_by: createdBy } = user;

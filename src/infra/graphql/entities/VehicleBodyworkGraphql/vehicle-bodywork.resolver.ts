@@ -10,6 +10,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
+import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
@@ -21,6 +22,7 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';
 import {
   VehicleBodyworkInput,
   VehicleBodyworkUpdateInput,
@@ -34,6 +36,7 @@ import { VehicleBodyworkModel } from './vehicle-bodywork.model';
 export class VehicleBodyworkResolver {
   constructor(
     private vehicleBodyworkRepository: VehicleBodyworkRepository,
+    private vehicleTypeRepository: VehicleTypeRepository,
     private userCase: UserUseCases,
   ) {}
   @Query(() => VehicleBodyworkModel)
@@ -94,5 +97,15 @@ export class VehicleBodyworkResolver {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
+  }
+
+  @ResolveField(() => VehicleTypeModel)
+  async VehicleTypes(@Parent() bodywork: VehicleBodyworkModel) {
+    const { id } = bodywork;
+    console.log(
+      await this.vehicleTypeRepository.getAllVehicleTypeByBodyWork(id),
+    );
+
+    return await this.vehicleTypeRepository.getAllVehicleTypeByBodyWork(id);
   }
 }

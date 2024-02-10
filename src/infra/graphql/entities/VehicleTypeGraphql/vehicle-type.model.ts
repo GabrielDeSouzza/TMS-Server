@@ -3,6 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { type IVehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { VehicleBodyworkModel } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
 import { VehicleModelGraphql } from '../VeihicleModelGraphql/vehicle-model.model';
 
 @ObjectType()
@@ -11,7 +12,8 @@ export class VehicleTypeModel implements IVehicleType {
   id: string;
   @Field(() => VehicleModelGraphql, { nullable: true })
   VehicleModels?: VehicleModelGraphql[];
-
+  @Field(() => [VehicleBodyworkModel], { nullable: true })
+  BodyWorks?: VehicleBodyworkModel[];
   @Field()
   name: string;
   @Field()

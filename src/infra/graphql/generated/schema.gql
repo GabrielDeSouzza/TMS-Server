@@ -2292,6 +2292,7 @@ input VehicleBodyworkListRelationFilter {
 type VehicleBodyworkModel {
   CreatedUser: UserModelRefereces!
   UpdatedUser: UserModelRefereces!
+  VehicleTypes: [VehicleTypeModel!]
   axles: Float!
   created_at: Timestamp!
   created_by: String!
@@ -2575,6 +2576,7 @@ input VehicleTypeListRelationFilter {
 }
 
 type VehicleTypeModel {
+  BodyWorks: [VehicleBodyworkModel!]
   CpdatedUser: UserModelRefereces!
   CreatedUser: UserModelRefereces!
   UpdatedUser: UserModelRefereces!

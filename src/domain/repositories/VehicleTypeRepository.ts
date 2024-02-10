@@ -8,8 +8,12 @@ export abstract class VehicleTypeRepository {
   abstract updateVehicleType(
     id: string,
     vehicleBrand: VehicleType,
+    delBodyWorkIds?: string[],
   ): Promise<VehicleType>;
   abstract getAllVehicleType(
     parameters: FindAllVehicleTypeWhereRequestDTO,
+  ): Promise<VehicleType[]>;
+  abstract getAllVehicleTypeByBodyWork(
+    bodyworkId: string,
   ): Promise<VehicleType[]>;
 }

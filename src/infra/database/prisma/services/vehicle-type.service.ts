@@ -11,6 +11,7 @@ import { VehicleTypePrismaDTO } from './prismaDTO/VehicleTypePrismaDto.ts';
 @Injectable()
 export class VehicleTypeService implements VehicleTypeRepository {
   constructor(private prisma: PrismaService) {}
+
   async findVehicleType(request: GetVehicleTypeDTO): Promise<VehicleType> {
     const vehicleTypePrisma = await this.prisma.vehicleType.findFirst({
       where: { OR: [{ id: request.id }, { name: request.name }] },
@@ -22,7 +23,7 @@ export class VehicleTypeService implements VehicleTypeRepository {
   }
   async createVehicleType(vehicleType: VehicleType): Promise<VehicleType> {
     const prismaVehicleType = await this.prisma.vehicleType.create({
-      data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType).vehicleTypePrisma,
+      data: VehicleTypePrismaDTO.EntityToPrisma(vehicleType),
     });
 
     return VehicleTypePrismaDTO.PrismaToEntity(prismaVehicleType);
@@ -30,9 +31,13 @@ export class VehicleTypeService implements VehicleTypeRepository {
   async updateVehicleType(
     id: string,
     vehicleType: VehicleType,
+    delBodyworkIds: string[],
   ): Promise<VehicleType> {
     const updatedType = await this.prisma.vehicleType.update({
-      data: VehicleTypePrismaDTO.EntityToPrismaUpdate(vehicleType),
+      data: VehicleTypePrismaDTO.EntityToPrismaUpdate(
+        vehicleType,
+        delBodyworkIds,
+      ),
       where: { id },
     });
 
@@ -50,5 +55,17 @@ export class VehicleTypeService implements VehicleTypeRepository {
     return vehicleTypes.map(vehicleType =>
       VehicleTypePrismaDTO.PrismaToEntity(vehicleType),
     );
+  }
+
+  async getAllVehicleTypeByBodyWork(
+    bodyworkId: string,
+  ): Promise<VehicleType[]> {
+    const types = await this.prisma.vehicleType.findMany({
+      where: { VehicleBodyWork: { some: { id: bodyworkId } } },
+    });
+
+    return types
+      ? types.map(type => VehicleTypePrismaDTO.PrismaToEntity(type))
+      : null;
   }
 }

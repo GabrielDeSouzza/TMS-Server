@@ -7,7 +7,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsDecimal, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { Allow, IsInt, IsNotEmpty, IsString, IsNumber } from 'class-validator';
 
 import { type IVehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
@@ -24,11 +24,11 @@ export class VehicleBodyworkInput
   @IsNotEmpty()
   axles: number;
   @Field(() => Float)
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   mass: number;
   @Field(() => Float)
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   volume: number;
   @HideField()

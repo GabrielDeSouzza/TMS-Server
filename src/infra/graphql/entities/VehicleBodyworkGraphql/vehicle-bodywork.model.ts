@@ -3,6 +3,7 @@ import { Field, ObjectType, OmitType } from '@nestjs/graphql';
 import { type IVehicleBodywork } from 'domain/entities/VehicleEntities/vehicleBodywork/VehicleBodywork';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';
 @ObjectType()
 export class VehicleBodyworkModel implements IVehicleBodywork {
   @Field()
@@ -23,6 +24,8 @@ export class VehicleBodyworkModel implements IVehicleBodywork {
   created_at: Date;
   @Field(() => Date)
   updated_at: Date;
+  @Field(() => [VehicleTypeModel], { nullable: true })
+  VehicleTypes: VehicleTypeModel[];
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

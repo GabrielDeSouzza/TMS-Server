@@ -2,6 +2,7 @@ import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
 import {
   Allow,
+  IsArray,
   IsBoolean,
   IsNotEmpty,
   IsOptional,
@@ -29,7 +30,7 @@ export class VehicleTypeInput
   @Allow()
   updated_by: string;
   @Field(() => [String], { nullable: true })
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
   body_work_id: string[];
 }
@@ -37,7 +38,7 @@ export class VehicleTypeInput
 @InputType()
 export class VehicleTypeUpdateInput extends PartialType(VehicleTypeInput) {
   @Field(() => [String], { nullable: true })
-  @IsString()
+  @IsArray()
   @IsOptional()
   del_body_id?: string[];
   @Field()
