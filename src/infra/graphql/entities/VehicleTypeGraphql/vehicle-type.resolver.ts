@@ -16,7 +16,7 @@ import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { VehicleTypeWhereArgs } from 'infra/graphql/args/VehicleTypeArgs';
+import { VehicleTypeWhereArgs } from 'infra/graphql/entities/VehicleTypeGraphql/Args/VehicleTypeArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

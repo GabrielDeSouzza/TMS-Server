@@ -14,7 +14,7 @@ import { OutsourcedDriverRepository } from 'domain/repositories/OutsourcedDriver
 import { ContractOutsourcedDriverUseCases } from 'app/useCases/ContractOutsourcedDriverUseCases/ContractOutsourcedDriverUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { ContractOutsourcedDriverWhereArgs } from 'infra/graphql/args/ContractOutsourcedDriverArgs';
+import { ContractOutsourcedDriverWhereArgs } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/Args/ContractOutsourcedDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

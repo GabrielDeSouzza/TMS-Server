@@ -12,8 +12,8 @@ import { GraphQLError } from 'graphql';
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
-import { VehicleModelWhereArgs } from 'infra/graphql/args/VeihicleModelArgs';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
+import { VehicleModelWhereArgs } from 'infra/graphql/entities/VeihicleModelGraphql/Args/VeihicleModelArgs';
 
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';

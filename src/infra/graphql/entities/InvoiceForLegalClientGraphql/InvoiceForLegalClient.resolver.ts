@@ -14,7 +14,7 @@ import { InvoiceForLegalClientUseCases } from 'app/useCases/InvoiceForLegalClien
 import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { LegalClientWhereArgs } from 'infra/graphql/args/LegalClientArgs';
+import { LegalClientWhereArgs } from 'infra/graphql/entities/LegalClientGraphql/Args/LegalClientArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

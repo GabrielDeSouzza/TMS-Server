@@ -14,7 +14,7 @@ import { CiotForLegalClientUseCases } from 'app/useCases/CiotForLegalClient/Ciot
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { CiotForLegalClientWhereArgs } from 'infra/graphql/args/CiotForLegalClientArgs';
+import { CiotForLegalClientWhereArgs } from 'infra/graphql/entities/CiotForLegalClientGraphql/Args/CiotForLegalClientArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

@@ -15,12 +15,12 @@ import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehic
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { OutsourcedDriverWhereArgs } from 'infra/graphql/args/OutsourcedDriverArgs';
 import { ContractOutsourcedDriverGraphDTO } from 'infra/graphql/DTO/ContractOutsourcedDriver';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
 import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
 import { OutsourcedDriverGraphDTO } from 'infra/graphql/DTO/OutsourcedDriver';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
+import { OutsourcedDriverWhereArgs } from 'infra/graphql/entities/OutsourcedDriverGraphql/Args/OutsourcedDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

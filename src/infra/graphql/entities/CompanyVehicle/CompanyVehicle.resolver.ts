@@ -13,7 +13,7 @@ import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { CompanyVehicleUseCases } from 'app/useCases/CompanyVehicleUseCases/CompanyVehicleUseCases';
 
-import { CompanyVehicleWhereArgs } from 'infra/graphql/args/CompanyVehicleArgs';
+import { CompanyVehicleWhereArgs } from 'infra/graphql/entities/CompanyVehicle/Args/CompanyVehicleArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

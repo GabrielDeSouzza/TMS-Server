@@ -14,9 +14,8 @@ import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repositor
 import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { CarrierCompanyWhereArgs } from 'infra/graphql/args/CarrierCompanyArgs';
-import { GetCarrierCompanyArgs } from 'infra/graphql/args/GetLegalPersons/GetCarrierCompanyArgs';
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
+import { CarrierCompanyWhereArgs } from 'infra/graphql/entities/CarrierCompanyGraphql/Args/WhereCarrierCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -24,6 +23,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetCarrierCompanyArgs } from './Args/GetCarrierCompanyArgs';
 import {
   CarrierCompanyInput,
   CarrierCompanyUpdateInput,

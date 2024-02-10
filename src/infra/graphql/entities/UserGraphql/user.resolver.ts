@@ -5,8 +5,8 @@ import { ROLE } from 'domain/entities/User/User';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { UserWhereArgs } from 'infra/graphql/args/UserArgs';
 import { UserGraphDTO } from 'infra/graphql/DTO/User';
+import { UserWhereArgs } from 'infra/graphql/entities/UserGraphql/Args/UserArgs';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { AcessAllowed } from '../../utilities/decorators/AcessAllowed';

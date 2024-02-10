@@ -14,9 +14,9 @@ import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { OwnDriverWhereArgs } from 'infra/graphql/args/OwnDriverArgs';
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
 import { OwnDriverGraphDTO } from 'infra/graphql/DTO/OwnDriverVehicle';
+import { OwnDriverWhereArgs } from 'infra/graphql/entities/OwnDriverGraphql/Args/OwnDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
