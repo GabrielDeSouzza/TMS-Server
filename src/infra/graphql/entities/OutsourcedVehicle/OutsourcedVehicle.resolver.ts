@@ -14,7 +14,7 @@ import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
-import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/entities/OutsourcedTransportVehicleGraphql/Args/OutsourcedTransportVehicleArgs';
+import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/entities/OutsourcedTransportVehicleGraphql/Args/WhereOutsourcedTransportVehicleArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

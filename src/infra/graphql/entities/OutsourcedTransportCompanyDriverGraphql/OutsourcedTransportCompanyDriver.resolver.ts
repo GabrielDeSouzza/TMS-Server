@@ -19,7 +19,7 @@ import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
 import { OutsourcedTransportCompanyDriverGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyDriverGraphqlDto';
-import { OutsourcedTransportCompanyDriverWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyDriverGraphql/Args/OutsourcedTransportCompanyDriverArgs';
+import { OutsourcedTransportCompanyDriverWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyDriverGraphql/Args/WhereOutsourcedTransportCompanyDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

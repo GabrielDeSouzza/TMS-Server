@@ -16,7 +16,7 @@ import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import { OutsourcedTransportCompanyGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyGraphqlDto';
-import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/Args/OutsourcedTransportCompanyArgs';
+import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/Args/WhereOutsourcedTransportCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

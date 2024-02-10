@@ -13,7 +13,7 @@ import { VehicleModelRepository } from 'domain/repositories/VehicleModelReposito
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
-import { VehicleModelWhereArgs } from 'infra/graphql/entities/VeihicleModelGraphql/Args/VeihicleModelArgs';
+import { VehicleModelWhereArgs } from 'infra/graphql/entities/VeihicleModelGraphql/Args/WhereVeihicleModelArgs';
 
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';

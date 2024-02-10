@@ -17,7 +17,7 @@ import { OutsourcedTransportCompanyContractRepository } from 'domain/repositorie
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { OutsourcedTransportCompanyContractGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyContractGraphqlDto';
-import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/Args/OutsourcedTransportCompanyArgs';
+import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/Args/WhereOutsourcedTransportCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

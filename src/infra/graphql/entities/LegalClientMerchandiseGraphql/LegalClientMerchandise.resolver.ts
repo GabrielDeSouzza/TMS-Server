@@ -5,7 +5,7 @@ import { ROLE } from 'domain/entities/User/User';
 
 import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchandiseDto/LegalClientMerchandisesUseCases';
 
-import { LegalClientMerchandiseWhereArgs } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/Args/LegalClientMerchandiseArgs';
+import { LegalClientMerchandiseWhereArgs } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/Args/WhereLegalClientMerchandiseArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';

@@ -14,7 +14,7 @@ import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandReposito
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleBrandGraphDTO } from 'infra/graphql/DTO/VehicleBrand';
-import { VehicleBrandWhereArgs } from 'infra/graphql/entities/VehicleBrandGraphql/Args/VehicleBrandArgs';
+import { VehicleBrandWhereArgs } from 'infra/graphql/entities/VehicleBrandGraphql/Args/WhereVehicleBrandArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

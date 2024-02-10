@@ -15,7 +15,7 @@ import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleBodyworkGraphDTO } from 'infra/graphql/DTO/VehicleBodywork';
-import { VehicleBodyworkWhereArgs } from 'infra/graphql/entities/VehicleBodyworkGraphql/Args/VehicleBodyworkArgs';
+import { VehicleBodyworkWhereArgs } from 'infra/graphql/entities/VehicleBodyworkGraphql/Args/WhereVehicleBodyworkArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';

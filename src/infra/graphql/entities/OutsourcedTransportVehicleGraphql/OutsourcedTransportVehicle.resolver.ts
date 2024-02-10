@@ -17,7 +17,7 @@ import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { OutsourcedTransportVehicleGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportVehicleGraphqlDto';
 import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
-import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/entities/OutsourcedTransportVehicleGraphql/Args/OutsourcedTransportVehicleArgs';
+import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/entities/OutsourcedTransportVehicleGraphql/Args/WhereOutsourcedTransportVehicleArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
