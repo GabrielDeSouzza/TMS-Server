@@ -7,6 +7,8 @@ import { LegalContract } from 'domain/entities/LegalClientEntities/LegalContract
 
 export class LegalContractPrismaDTO {
   public static PrismaToEntity(legalContractPrisma: LegalContractPrisma) {
+    if (!legalContractPrisma) return null;
+
     return new LegalContract({
       carrier_company_id: legalContractPrisma.carrier_company_id,
       delivery_conditions: legalContractPrisma.delivery_conditions,

@@ -9,6 +9,8 @@ export class VehicleBodyworkPrismaDto {
   public static PrismaToEntity(
     vehicleBodyworkPrisma: VehicleBodyworkPrisma,
   ): VehicleBodywork {
+    if (!vehicleBodyworkPrisma) return null;
+
     return new VehicleBodywork({
       axles: vehicleBodyworkPrisma.axles,
       mass: vehicleBodyworkPrisma.mass,

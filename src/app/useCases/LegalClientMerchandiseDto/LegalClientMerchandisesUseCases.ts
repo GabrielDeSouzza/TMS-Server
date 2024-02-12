@@ -16,7 +16,7 @@ export class LegalClientMerchandiseUseCases {
     private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
   ) {}
   async getLegalClientMerchandises(request: GetLegalClientMerchandisesDTO) {
-    if (!request.codMerchandise || !request.id) {
+    if (!request.codMerchandise && !request.id) {
       throw new GraphQLError('IS NECESSARY AN ID OR COD MERCHANDISE', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });

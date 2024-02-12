@@ -14,6 +14,8 @@ import { OutsourcedVehiclePrismaDTO } from './OwnsourcedVehiclePrisma.Dto';
 
 export class OutsourcedDriverPrismaDTO {
   public static PrismaToEntity(outsourcedDriverPrisma: OutsourcedDriverPrisma) {
+    if (!outsourcedDriverPrisma) return null;
+
     return new OutsourcedDriver({
       id: outsourcedDriverPrisma.id,
       cnh: outsourcedDriverPrisma.cnh,

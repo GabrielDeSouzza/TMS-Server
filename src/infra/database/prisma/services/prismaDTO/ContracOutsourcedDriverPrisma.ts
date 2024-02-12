@@ -6,6 +6,8 @@ export class ContractOutsourcedDriverPrismaDto {
   public static PrismaToEntity(
     contractOutsourcedDriver: Prisma.ContractOutsourcedDriverUncheckedCreateInput,
   ) {
+    if (!contractOutsourcedDriver) return null;
+
     return new ContractOutsourcedDriver({
       cpf: contractOutsourcedDriver.cpf,
       created_by: contractOutsourcedDriver.created_by,

@@ -9,6 +9,8 @@ export class OutsourcedTransportCompanyContractPrismaDTO {
   public static PrismaToEntity(
     outsourcedTransportCompanyContractPrisma: OutsourcedTransportCompanyContractPrisma,
   ) {
+    if (!outsourcedTransportCompanyContractPrisma) return null;
+
     return new OutsourcedTransportCompanyContract({
       carrierCompanyId:
         outsourcedTransportCompanyContractPrisma.carrier_company_id,

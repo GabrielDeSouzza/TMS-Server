@@ -12,6 +12,8 @@ export class VehicleModelPrismaDTO {
   public static PrismaToEntity(
     vehicleModelPrisma: VehicleModelPrisma,
   ): VehicleModel {
+    if (!vehicleModelPrisma) return null;
+
     return new VehicleModel({
       axles: vehicleModelPrisma.axles,
       capacity_max: vehicleModelPrisma.capacity_max,

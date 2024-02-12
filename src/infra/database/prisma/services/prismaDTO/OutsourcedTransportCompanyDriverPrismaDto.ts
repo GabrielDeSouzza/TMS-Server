@@ -10,6 +10,8 @@ export class OutsourcedTransportCompanyDriverPrismaDTO {
   public static PrismaToEntity(
     outsourcedTransportCompanyDriverPrisma: OutsourcedTransportCompanyDriverPrisma,
   ) {
+    if (!outsourcedTransportCompanyDriverPrisma) return null;
+
     return new OutsourcedTransportCompanyDriver({
       cnh: outsourcedTransportCompanyDriverPrisma.cnh,
       cnh_category: outsourcedTransportCompanyDriverPrisma.cnh_category,

@@ -7,6 +7,8 @@ import { LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClien
 
 export class LegalClientOrderPrismaDTO {
   public static PrismaToEntity(legalClientOrderPrisma: LegalClientOrderPrisma) {
+    if (!legalClientOrderPrisma) return null;
+
     return new LegalClientOrder({
       legal_contract_id: legalClientOrderPrisma.legal_contract_id,
       order: legalClientOrderPrisma.order,

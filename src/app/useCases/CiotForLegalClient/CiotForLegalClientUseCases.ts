@@ -27,7 +27,7 @@ export class CiotForLegalClientUseCases {
     const ciot = await this.ciotForLegalClientRepository.findCiotForLegalClient(
       request,
     );
-    if (ciot)
+    if (!ciot)
       throw new GraphQLError('CIOT not found', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });

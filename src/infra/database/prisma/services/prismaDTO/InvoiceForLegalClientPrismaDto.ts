@@ -9,6 +9,8 @@ export class InvoiceForLegalClientPrismaDTO {
   public static PrismaToEntity(
     invoiceForLegalClientPrisma: InvoiceForLegalClientPrisma,
   ) {
+    if (!invoiceForLegalClientPrisma) return null;
+
     return new InvoiceForLegalClient({
       invoice_number: invoiceForLegalClientPrisma.invoice_number,
       additional_data: invoiceForLegalClientPrisma.additional_data,

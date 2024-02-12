@@ -17,7 +17,7 @@ export class InvoiceForLegalClientUseCases {
   ) {}
 
   async getInvoiceForLegalClient(request: GetInvoiceForLegalClientDTO) {
-    if (request.id || request.invoice_number) {
+    if (!request.id && !request.invoice_number) {
       throw new GraphQLError('IS NECESSARY AN ID OR CONTRACT NUMBER');
     }
 
@@ -26,7 +26,7 @@ export class InvoiceForLegalClientUseCases {
         request,
       );
 
-    if (invoice) {
+    if (!invoice) {
       throw new GraphQLError('Invoice NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });

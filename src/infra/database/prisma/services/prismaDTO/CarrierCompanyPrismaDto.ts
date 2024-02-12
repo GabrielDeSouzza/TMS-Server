@@ -8,6 +8,8 @@ import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 export class CarrierCompanyPrismaDTO {
   public static PrismaToEntity(carriercompanyPrisma: CarrierCompanyPrisma) {
+    if (!carriercompanyPrisma) return null;
+
     return new CarrierCompany({
       legalPersonId: carriercompanyPrisma.legal_person_id,
       created_at: carriercompanyPrisma.created_at,

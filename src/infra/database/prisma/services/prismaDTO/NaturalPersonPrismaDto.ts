@@ -7,6 +7,8 @@ import { NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 export class NaturalPersonPrismaDTO {
   public static PrismaToEntity(naturalPersonPrisma: NaturalPersonPrisma) {
+    if (!naturalPersonPrisma) return null;
+
     return new NaturalPerson({
       address_number: naturalPersonPrisma.address_number,
       cep: naturalPersonPrisma.cep,

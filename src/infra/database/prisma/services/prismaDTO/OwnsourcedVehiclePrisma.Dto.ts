@@ -10,6 +10,8 @@ export class OutsourcedVehiclePrismaDTO {
   public static PrismaToEntity(
     outsourcedVehiclePrisma: OutsourcedVehiclePrisma,
   ) {
+    if (!outsourcedVehiclePrisma) return null;
+
     return new OutsourcedVehicle({
       id: outsourcedVehiclePrisma.id,
       created_by: outsourcedVehiclePrisma.created_by,

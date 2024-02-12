@@ -20,6 +20,17 @@ export class LegalClientUseCases {
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
   async getClient(request: GetLegalClientDTO) {
+    if (
+      !request.cnpj &&
+      !request.corporateName &&
+      !request.fantasyName &&
+      !request.id &&
+      !request.legalPersonId
+    )
+      throw new GraphQLError(
+        'IS NECESSARY IN CNPJ, CORPORATENAME, FANTASYNAME, ID OR LEGALPERSONID',
+        { extensions: { code: HttpStatus.BAD_REQUEST } },
+      );
     const client = await this.legalClientRepository.findLegalClient(request);
     if (client) return client;
 

@@ -20,7 +20,14 @@ export class LegalClientOrderUseCases {
       });
     }
 
-    return this.legalClientOrderRepository.findLegalClientOrder(request);
+    const order = await this.legalClientOrderRepository.findLegalClientOrder(
+      request,
+    );
+    if (order) return order;
+
+    throw new GraphQLError('ORDER Not Found', {
+      extensions: { code: HttpStatus.NOT_FOUND },
+    });
   }
   async getAllLegalClientOrder(request: GetAllLegalClientOrderDTO) {
     return this.legalClientOrderRepository.getAllLegalClientOrder(request);

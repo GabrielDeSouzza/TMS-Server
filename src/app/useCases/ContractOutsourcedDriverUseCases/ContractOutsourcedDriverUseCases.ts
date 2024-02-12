@@ -22,9 +22,16 @@ export class ContractOutsourcedDriverUseCases {
       });
     }
 
-    return this.contractOutsourcedDriverRepository.getContractOutsourcedDriver(
-      request,
-    );
+    const contract =
+      await this.contractOutsourcedDriverRepository.getContractOutsourcedDriver(
+        request,
+      );
+    console.log(contract);
+    if (contract) return contract;
+
+    throw new GraphQLError('Contract Not Found', {
+      extensions: { code: HttpStatus.NOT_FOUND },
+    });
   }
 
   async getAllContractOutsourcedDriver(

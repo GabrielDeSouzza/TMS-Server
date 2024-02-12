@@ -12,6 +12,8 @@ export class OutsourcedTransportCompanyPrismaDTO {
   public static PrismaToEntity(
     outsourcedTransportCompanyPrisma: OutsourcedTransportCompanyPrisma,
   ) {
+    if (!outsourcedTransportCompanyPrisma) return null;
+
     return new OutsourcedTransportCompany({
       created_by: outsourcedTransportCompanyPrisma.created_by,
       legalPersonId: outsourcedTransportCompanyPrisma.legal_person_id,

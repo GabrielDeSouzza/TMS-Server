@@ -5,6 +5,8 @@ import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson'
 
 export class OwnDriverPrismaDTO {
   public static PrismaToEntity(ownDriverPrisma: OwnDriverPrisma) {
+    if (!ownDriverPrisma) return null;
+
     return new OwnDriver({
       id: ownDriverPrisma.id,
       cnh: ownDriverPrisma.cnh,

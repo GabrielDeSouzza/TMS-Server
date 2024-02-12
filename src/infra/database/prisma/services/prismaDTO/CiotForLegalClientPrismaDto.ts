@@ -9,6 +9,8 @@ export class CiotForLegalClientPrismaDTO {
   public static PrismaToEntity(
     ciotForLegalClientPrisma: CiotForLegalClientPrisma,
   ) {
+    if (!ciotForLegalClientPrisma) return null;
+
     return new CiotForLegalClient({
       ciot: ciotForLegalClientPrisma.ciot,
       emission_date: ciotForLegalClientPrisma.emission_date,

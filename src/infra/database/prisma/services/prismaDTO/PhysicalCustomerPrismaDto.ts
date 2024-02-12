@@ -15,6 +15,8 @@ import { OutsourcedVehiclePrismaDTO } from './OwnsourcedVehiclePrisma.Dto';
 
 export class PhysicalContractorPrismaDTO {
   public static PrismaToEntity(physicalCustomerPrisma: PhysicalCustomerPrisma) {
+    if (!physicalCustomerPrisma) return null;
+
     return new PhysicalCustomer({
       created_by: physicalCustomerPrisma.created_by,
       natural_person_id: physicalCustomerPrisma.natural_person_id,

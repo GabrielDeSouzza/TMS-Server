@@ -9,6 +9,8 @@ export class LegalClientMerchandisePrismaDTO {
   public static PrismaToEntity(
     legalClientMerchandisePrisma: LegalClientMerchandisePrisma,
   ) {
+    if (!legalClientMerchandisePrisma) return null;
+
     return new LegalClientMerchandise({
       amount: legalClientMerchandisePrisma.amount,
       codMerchandise: legalClientMerchandisePrisma.codMerchandise,

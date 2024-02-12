@@ -4,6 +4,8 @@ import { User } from 'domain/entities/User/User';
 
 export class UserPrismaDTO {
   public static PrismaToEntity(userPrisma: UserPrisma) {
+    if (!userPrisma) return null;
+
     return new User({
       id: userPrisma.id,
       email: userPrisma.email,

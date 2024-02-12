@@ -4,6 +4,8 @@ import { type IVehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 import { Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 export class VehiclePrismaDto {
   public static PrismaToEntity(vehicle: VehiclePrisma): Vehicle {
+    if (!vehicle) return null;
+
     return new Vehicle({
       plate: vehicle.plate,
       year: vehicle.year,

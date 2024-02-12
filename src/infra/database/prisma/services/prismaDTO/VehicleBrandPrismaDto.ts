@@ -9,6 +9,8 @@ export class VehicleBrandPrismaDTO {
   public static PrismaToEntity(
     vehicleBrandPrisma: VehicleBrandPrisma,
   ): VehicleBrand {
+    if (!vehicleBrandPrisma) return null;
+
     return new VehicleBrand({
       id: vehicleBrandPrisma.id,
       name: vehicleBrandPrisma.name,

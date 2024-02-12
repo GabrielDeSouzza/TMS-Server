@@ -19,8 +19,14 @@ export class NaturalPersonUseCases {
       throw new GraphQLError('IS NECESSATY AN ID, RG OR CPF', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
+    const natural = await this.naturalPersonRepository.findNaturalPerson(
+      request,
+    );
+    if (natural) return natural;
 
-    return this.naturalPersonRepository.findNaturalPerson(request);
+    throw new GraphQLError('Person Not Found', {
+      extensions: { code: HttpStatus.NOT_FOUND },
+    });
   }
   getAllNaturalPersons(request: GetAllNaturalPersonDTO) {
     return this.naturalPersonRepository.getAllNaturalPerson(request);

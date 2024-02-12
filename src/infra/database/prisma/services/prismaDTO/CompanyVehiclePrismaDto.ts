@@ -8,6 +8,8 @@ import { type Vehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
 export class CompanyVehiclePrismaDTO {
   public static PrismaToEntity(companyVehiclePrisma: CompanyVehiclePrisma) {
+    if (!companyVehiclePrisma) return null;
+
     return new CompanyVehicle({
       id: companyVehiclePrisma.id,
       created_by: companyVehiclePrisma.created_by,

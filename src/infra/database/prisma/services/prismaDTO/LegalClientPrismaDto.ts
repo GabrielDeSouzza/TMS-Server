@@ -10,6 +10,8 @@ import { LegalPersonPrismaDTO } from './LegalPersonPrismaDto';
 
 export class LegalClientPrismaDTO {
   public static PrismaToEntity(legalclientPrisma: LegalClientPrisma) {
+    if (!legalclientPrisma) return null;
+
     return new LegalClient({
       id: legalclientPrisma.id,
       branch: legalclientPrisma.branch,
