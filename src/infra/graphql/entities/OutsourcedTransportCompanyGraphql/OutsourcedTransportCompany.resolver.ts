@@ -26,6 +26,7 @@ import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
 import { OutsourcedTransportCompanyContractModel } from '../OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.model';
 import { OutsourcedTransportCompanyDriverModel } from '../OutsourcedTransportCompanyDriverGraphql/OutsourcedTransportCompanyDriver.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetOutsourcedTransportCompanyArgs } from './Args/GetOutsourcedTransportCompanyArgs';
 import {
   OutsourcedTransportCompanyInput,
   OutsourcedTransportCompanyUpdateInput,
@@ -43,9 +44,11 @@ export class OutsourcedTransportCompanyResolver {
     private legalPersonRepository: LegalPersonRepository,
   ) {}
   @Query(() => OutsourcedTransportCompanyModel)
-  async getOutsourcedTransportCompanyModel(@Args('id') id: string) {
+  async getOutsourcedTransportCompanyModel(
+    @Args() request: GetOutsourcedTransportCompanyArgs,
+  ) {
     return this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
-      { id },
+      request,
     );
   }
   @Query(() => [OutsourcedTransportCompanyModel], { nullable: true })

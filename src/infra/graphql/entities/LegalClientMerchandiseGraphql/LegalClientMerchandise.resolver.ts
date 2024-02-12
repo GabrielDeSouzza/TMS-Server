@@ -10,6 +10,7 @@ import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { GetLegalClientMerchandisesArgs } from './Args/GetLegalClientMerchandiseArgs';
 import {
   LegalClientMerchandiseInput,
   LegalClientMerchandiseUpdateInput,
@@ -26,13 +27,11 @@ export class LegalClientMerchandiseResolver {
   ) {}
   @Query(() => LegalClientMerchandiseModel)
   async getLegalClientMerchandiseModel(
-    @Args('id', { nullable: true }) id?: string,
-    @Args('codMerchandise', { nullable: true }) codMerchandise?: string,
+    @Args() request: GetLegalClientMerchandisesArgs,
   ) {
-    return this.legalClientMerchandiseUseCases.getLegalClientMerchandises({
-      id,
-      codMerchandise,
-    });
+    return this.legalClientMerchandiseUseCases.getLegalClientMerchandises(
+      request,
+    );
   }
   @Query(() => [LegalClientMerchandiseModel], { nullable: true })
   async getAllLegalClientMerchandise(

@@ -27,6 +27,7 @@ import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.mod
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { OutsourcedTransportCompanyModel } from '../OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetOutsourcedTransportCompanyContractArgs } from './Args/GetOutsourcedTransportCompanyContractArgs';
 import {
   OutsourcedTransportCompanyContractInput,
   OutsourcedTransportCompanyContractUpdateInput,
@@ -46,9 +47,11 @@ export class OutsourcedTransportCompanyContractResolver {
     private legalClientOrderRepository: LegalClientOrderRepository,
   ) {}
   @Query(() => OutsourcedTransportCompanyContractModel)
-  async getOutsourcedTransportCompanyContractModel(@Args('id') id: string) {
+  async getOutsourcedTransportCompanyContractModel(
+    @Args() request: GetOutsourcedTransportCompanyContractArgs,
+  ) {
     return this.outsourcedTransportCompanyContractRepository.findOutsourcedTransportCompanyContract(
-      { id },
+      request,
     );
   }
   @Query(() => [OutsourcedTransportCompanyContractModel], { nullable: true })

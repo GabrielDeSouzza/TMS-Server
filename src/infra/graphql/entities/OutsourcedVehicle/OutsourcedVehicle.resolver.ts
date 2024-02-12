@@ -21,6 +21,7 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
+import { GetOutsoucedVehicleArgs } from './Args/GetOutsourcedVehicleArgs';
 import {
   OutsourcedVehicleUpdateInput,
   OutsourcedVehicleInput,
@@ -37,8 +38,8 @@ export class OutsourcedVehicleResolver {
     private vehicleRepositoy: VehicleRepository,
   ) {}
   @Query(() => OutsourcedVehicleIModel)
-  async getOutsourcedVehicle(@Args('id') id: string) {
-    return await this.outsourcedReposity.findOutsourcedVehicle({ id });
+  async getOutsourcedVehicle(@Args() request: GetOutsoucedVehicleArgs) {
+    return await this.outsourcedReposity.findOutsourcedVehicle(request);
   }
   @Query(() => [OutsourcedVehicleIModel])
   async getAllOutsourcedVehicle(

@@ -1965,28 +1965,28 @@ type Query {
   getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
   getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
-  getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String): CarrierCompanyModel!
+  getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): CarrierCompanyModel!
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
-  getCompanyVehicle(id: String, plate: String): CompanyVehicleIModel!
+  getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
-  getInvoiceForLegalClientModel(id: String, invoiceNumber: String): InvoiceForLegalClientModel!
+  getInvoiceForLegalClientModel(id: String, invoice_number: String): InvoiceForLegalClientModel!
   getLegalClientMerchandiseModel(codMerchandise: String, id: String): LegalClientMerchandiseModel!
-  getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String): LegalClientModel!
+  getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): LegalClientModel!
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
-  getOutsourcedDriver(id: String!): OutsourcedDriverModel!
-  getOutsourcedTransportCompanyContractModel(id: String!): OutsourcedTransportCompanyContractModel!
-  getOutsourcedTransportCompanyDriverModel(id: String!): OutsourcedTransportCompanyDriverModel!
-  getOutsourcedTransportCompanyModel(id: String!): OutsourcedTransportCompanyModel!
-  getOutsourcedTransportVehicleModel(id: String!): OutsourcedTransportVehicleModel!
-  getOutsourcedVehicle(id: String!): OutsourcedVehicleIModel!
-  getOwnDriver(id: String!): OwnDriverModel!
-  getVehicle(id: String, plate: String): VehicleCarModel!
-  getVehicleBodyworkModel(id: String!): VehicleBodyworkModel!
-  getVehicleBrand(id: String!): VehicleBrandModel!
-  getVehicleModel(id: String!): VehicleModelGraphql!
-  getVehicleType(id: String!): VehicleTypeModel!
-  user(email: String, id: String): UserModel!
+  getOutsourcedDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedDriverModel!
+  getOutsourcedTransportCompanyContractModel(contractNumber: String, id: String): OutsourcedTransportCompanyContractModel!
+  getOutsourcedTransportCompanyDriverModel(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedTransportCompanyDriverModel!
+  getOutsourcedTransportCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): OutsourcedTransportCompanyModel!
+  getOutsourcedTransportVehicleModel(plate: String, vehicleId: String): OutsourcedTransportVehicleModel!
+  getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
+  getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel!
+  getVehicle(plate: String, vehicleId: String): VehicleCarModel!
+  getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
+  getVehicleBrand(id: String, name: String): VehicleBrandModel!
+  getVehicleModel(id: String, name: String): VehicleModelGraphql!
+  getVehicleType(id: String, name: String): VehicleTypeModel!
+  user(email: String, id: String, username: String): UserModel!
   users(limit: Int! = 25, offset: Int! = 0, sort: UserOrderByWithRelationInput, where: UserWhereInput): [UserModel!]!
 }
 

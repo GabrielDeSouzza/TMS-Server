@@ -22,6 +22,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetInvoiceForLegalClientArgs } from './Args/GetInvoiceForLegalClientArgs';
 import {
   InvoiceForLegalClientInput,
   InvoiceForLegalClientUpdateInput,
@@ -40,13 +41,9 @@ export class InvoiceForLegalClientResolver {
   ) {}
   @Query(() => InvoiceForLegalClientModel)
   async getInvoiceForLegalClientModel(
-    @Args('id', { nullable: true }) id?: string,
-    @Args('invoiceNumber', { nullable: true }) invoiceNumber?: string,
+    @Args() request: GetInvoiceForLegalClientArgs,
   ) {
-    return this.invoiceForLegalClientUseCase.getInvoiceForLegalClient({
-      id,
-      invoice_number: invoiceNumber,
-    });
+    return this.invoiceForLegalClientUseCase.getInvoiceForLegalClient(request);
   }
   @Query(() => [InvoiceForLegalClientModel], { nullable: true })
   async getAllInvoiceForLegalClient(@Args() args: LegalClientWhereArgs) {

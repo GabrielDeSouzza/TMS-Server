@@ -20,6 +20,7 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
+import { GetCompanVehicleArgs } from './Args/GetCompanyVehicleArgs';
 import {
   CompanyVehicleInput,
   CompanyVehicleUpdateInput,
@@ -36,11 +37,8 @@ export class CompanyVehicleResolver {
     private vehicleRepository: VehicleRepository,
   ) {}
   @Query(() => CompanyVehicleIModel)
-  async getCompanyVehicle(
-    @Args('id', { nullable: true }) id: string,
-    @Args('plate', { nullable: true }) plate?: string,
-  ) {
-    return this.companyUseCases.getCompanyVehicle({ id, plate });
+  async getCompanyVehicle(@Args() request: GetCompanVehicleArgs) {
+    return this.companyUseCases.getCompanyVehicle(request);
   }
   @Query(() => [CompanyVehicleIModel])
   async getAllCompanyVehicle(@Args() args: CompanyVehicleWhereArgs) {

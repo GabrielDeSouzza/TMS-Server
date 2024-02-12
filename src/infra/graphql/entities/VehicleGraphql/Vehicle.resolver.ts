@@ -7,8 +7,6 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 
-import { GraphQLError } from 'graphql';
-
 import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
@@ -18,6 +16,7 @@ import { VehicleModelWhereArgs } from 'infra/graphql/entities/VeihicleModelGraph
 import { VehicleBrandReferences } from '../VehicleBrandGraphql/vehicle-brand.model';
 import { VehicleTypeModel } from '../VehicleTypeGraphql/vehicle-type.model';
 import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.model';
+import { GetVehicleArgs } from './Args/GetVehicleArgs';
 import { VehicleInput, VehicleUpdateInput } from './Vehicle.input';
 import { VehicleCarModel } from './vehicle.model';
 
@@ -29,14 +28,8 @@ export class VehicleGraphqlResolver {
   ) {}
 
   @Query(() => VehicleCarModel)
-  async getVehicle(
-    @Args('id', { nullable: true }) id?: string,
-    @Args('plate', { nullable: true }) plate?: string,
-  ) {
-    if (id == undefined && plate == undefined)
-      throw new GraphQLError('insert a id or plate');
-
-    return this.vehicleRepository.findVehicle({ plate, vehicleId: id });
+  async getVehicle(@Args() request: GetVehicleArgs) {
+    return this.vehicleRepository.findVehicle(request);
   }
   @Query(() => [VehicleCarModel])
   async getAllVehicle(@Args() args: VehicleModelWhereArgs) {

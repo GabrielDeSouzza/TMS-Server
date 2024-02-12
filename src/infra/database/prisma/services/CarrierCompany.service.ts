@@ -28,6 +28,7 @@ export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
         ],
       },
     });
+    console.log(carrierCompany);
 
     return CarrierCompanyPrismaDTO.PrismaToEntity(carrierCompany);
   }

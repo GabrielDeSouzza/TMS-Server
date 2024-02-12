@@ -24,6 +24,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBodyworkModel } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
+import { GetVehicleTypeArgs } from './Args/GetVehicleTypeArgs';
 import { VehicleTypeInput, VehicleTypeUpdateInput } from './vehicle-type.input';
 import { VehicleTypeModel } from './vehicle-type.model';
 
@@ -39,8 +40,8 @@ export class VehicleTypeResolver {
   ) {}
 
   @Query(() => VehicleTypeModel)
-  async getVehicleType(@Args('id') id: string) {
-    return this.vehicleTypeRepository.findVehicleType({ id });
+  async getVehicleType(@Args() request: GetVehicleTypeArgs) {
+    return this.vehicleTypeRepository.findVehicleType(request);
   }
   @Query(() => [VehicleTypeModel], { nullable: true })
   async getAllVehicleTypes(@Args() args: VehicleTypeWhereArgs) {

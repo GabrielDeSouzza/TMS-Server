@@ -23,6 +23,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientModelRefereces } from '../LegalClientGraphql/LegalClient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetLegalContractArgs } from './Args/GetLegalContractGraphqlArgs';
 import {
   LegalContractInput,
   LegalContractUpdateInput,
@@ -41,14 +42,8 @@ export class LegalContractResolver {
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   @Query(() => LegalContractModel)
-  async getLegalContractModel(
-    @Args('id', { nullable: true }) id: string,
-    @Args('contractNumber', { nullable: true }) contractNumber: string,
-  ) {
-    return this.legalContractUseCase.getContract({
-      id,
-      contractNumber,
-    });
+  async getLegalContractModel(@Args() request: GetLegalContractArgs) {
+    return this.legalContractUseCase.getContract(request);
   }
   @Query(() => [LegalContractModel], { nullable: true })
   async getAllLegalContract(@Args() args: LegalContractWhereArgs) {

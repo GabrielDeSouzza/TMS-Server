@@ -11,6 +11,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { AcessAllowed } from '../../utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from '../../utilities/interceptors/RoleInterceptor';
+import { getUserArgs } from './Args/GetUserArgs';
 import { UserInput, UserUpdateInput } from './user.input';
 import { UserModel, UserModelRefereces } from './user.model';
 
@@ -21,11 +22,8 @@ import { UserModel, UserModelRefereces } from './user.model';
 export class UserResolver {
   constructor(private userCases: UserUseCases) {}
   @Query(() => UserModel || UserModelRefereces, { name: 'user' })
-  async getUser(
-    @Args('id', { nullable: true }) id?: string,
-    @Args('email', { nullable: true }) email?: string,
-  ) {
-    return await this.userCases.getUser({ email, id });
+  async getUser(@Args() request: getUserArgs) {
+    return await this.userCases.getUser(request);
   }
   @Query(() => [UserModel], { name: 'users' })
   async getAllUsers(@Args() args: UserWhereArgs) {

@@ -22,6 +22,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModel, UserModelRefereces } from '../UserGraphql/user.model';
+import { GetCiotForLegalClientArgs } from './Args/GetCiotForLegalClientArgs';
 import {
   CiotForLegalClientInput,
   CiotForLegalClientUpdateInput,
@@ -39,11 +40,8 @@ export class CiotForLegalClientResolver {
     private legalContractUseCase: LegalContractUseCases,
   ) {}
   @Query(() => CiotForLegalClientModel)
-  async getCiotForLegalClientModel(
-    @Args('id', { nullable: true }) id?: string,
-    @Args('ciot', { nullable: true }) ciot?: string,
-  ) {
-    return this.ciotForLegalClientUseCases.getCiotForLegalClient({ id, ciot });
+  async getCiotForLegalClientModel(@Args() request: GetCiotForLegalClientArgs) {
+    return this.ciotForLegalClientUseCases.getCiotForLegalClient(request);
   }
   @Query(() => [CiotForLegalClientModel], { nullable: true })
   async getAllCiotForLegalClient(@Args() args: CiotForLegalClientWhereArgs) {

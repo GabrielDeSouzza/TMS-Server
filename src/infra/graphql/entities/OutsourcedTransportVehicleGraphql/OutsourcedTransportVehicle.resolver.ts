@@ -26,6 +26,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { OutsourcedTransportCompanyModel } from '../OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
+import { GetOutsourcedTransportVehicleArgs } from './Args/GetOutsourcedTransportVehicleArgs';
 import {
   OutsourcedTransportVehicleInput,
   OutsourcedTransportVehicleUpdateInput,
@@ -44,9 +45,11 @@ export class OutsourcedTransportVehicleResolver {
     private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
   ) {}
   @Query(() => OutsourcedTransportVehicleModel)
-  async getOutsourcedTransportVehicleModel(@Args('id') id: string) {
+  async getOutsourcedTransportVehicleModel(
+    @Args() request: GetOutsourcedTransportVehicleArgs,
+  ) {
     return this.outsourcedTransportVehicleRepository.findOutsourcedTransportVehicle(
-      { id },
+      request,
     );
   }
   @Query(() => [OutsourcedTransportVehicleModel], { nullable: true })

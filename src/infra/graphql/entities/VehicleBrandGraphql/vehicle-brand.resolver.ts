@@ -20,6 +20,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { GetVehicleBrandArgs } from './Args/GetVehicleBrandArgs';
 import {
   VehicleBrandInput,
   VehicleBrandUpdateInput,
@@ -37,8 +38,8 @@ export class VehicleBrandResolver {
   ) {}
 
   @Query(() => VehicleBrandModel)
-  async getVehicleBrand(@Args('id') id: string) {
-    return await this.vehicleBrandRepository.findVehicleBrand({ id });
+  async getVehicleBrand(@Args() request: GetVehicleBrandArgs) {
+    return await this.vehicleBrandRepository.findVehicleBrand(request);
   }
   @Query(() => [VehicleBrandModel])
   async getAllVehicleBrand(@Args() args: VehicleBrandWhereArgs) {

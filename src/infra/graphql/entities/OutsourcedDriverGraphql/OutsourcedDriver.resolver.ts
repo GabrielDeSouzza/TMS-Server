@@ -29,6 +29,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import { OutsourcedVehicleRecefencesModel } from '../OutsourcedVehicle/OutsourcedVehicle.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetOutsoucedDriverArgs } from './Args/GetOutsourcedDriverArgs';
 import {
   OutsourcedDriverUpdateInput,
   OutsourcedDriverInput,
@@ -47,8 +48,8 @@ export class OutsourcedDriverResolver {
     private outsourcedVehicleRepository: OutsourcedVehicleRepository,
   ) {}
   @Query(() => OutsourcedDriverModel)
-  async getOutsourcedDriver(@Args('id') id: string) {
-    return await this.outsourcedDriverRepository.findOutsourcedDriver({ id });
+  async getOutsourcedDriver(@Args() request: GetOutsoucedDriverArgs) {
+    return await this.outsourcedDriverRepository.findOutsourcedDriver(request);
   }
   @Query(() => [OutsourcedDriverModel])
   async getAllOutsourcedDriver(@Args() args: OutsourcedDriverWhereArgs) {

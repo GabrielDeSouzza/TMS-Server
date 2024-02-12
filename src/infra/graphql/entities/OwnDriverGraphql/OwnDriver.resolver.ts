@@ -24,6 +24,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetOwnDriverArgs } from './Args/GetOwnDriverArgs';
 import { OwnDriverInput, OwnDriverUpdate } from './OwnDriver.input';
 import { OwnDriverModel } from './OwnDriver.model';
 
@@ -38,8 +39,8 @@ export class OwnDriverResolver {
     private userCase: UserUseCases,
   ) {}
   @Query(() => OwnDriverModel)
-  async getOwnDriver(@Args('id') id: string) {
-    return await this.ownDriverRepository.findOwnDriver({ id });
+  async getOwnDriver(@Args() request: GetOwnDriverArgs) {
+    return await this.ownDriverRepository.findOwnDriver(request);
   }
   @Query(() => [OwnDriverModel])
   async getAllOwnDriver(@Args() args: OwnDriverWhereArgs) {

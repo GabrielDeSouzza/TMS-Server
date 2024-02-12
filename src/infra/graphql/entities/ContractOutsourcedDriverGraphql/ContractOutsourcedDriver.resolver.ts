@@ -22,6 +22,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { OutsourcedDriverModel } from '../OutsourcedDriverGraphql/OutsourcedDriver.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetContractOutsourcedDriverArgs } from './Args/GetContractOutsourcedDriverArgs';
 import {
   ContractOutsoucedDriverUpdateInput,
   ContractOutsourcedDriverInput,
@@ -40,13 +41,11 @@ export class ContractOutsoucedDriverResolver {
   ) {}
   @Query(() => ContractOutsourcedDriverModel)
   async getContractOutsourcedDriver(
-    @Args('id', { nullable: true }) id: string,
-    @Args('contractNumber', { nullable: true }) contractNumber?: string,
+    @Args() request: GetContractOutsourcedDriverArgs,
   ) {
-    return this.contractOutsourcedDriverUseCases.getContractOutsourcedDriver({
-      id,
-      contractNumber,
-    });
+    return this.contractOutsourcedDriverUseCases.getContractOutsourcedDriver(
+      request,
+    );
   }
   @Query(() => [ContractOutsourcedDriverModel])
   async getAllCompanyVehicle(@Args() args: ContractOutsourcedDriverWhereArgs) {

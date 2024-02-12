@@ -24,6 +24,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
+import { GetLegalClientOrderArgs } from './Args/GetLegalClientOrderArgs';
 import {
   LegalClientOrderInput,
   LegalClientOrderUpdateInput,
@@ -42,11 +43,8 @@ export class LegalClientOrderResolver {
     private legalClientMerchandiseUseCase: LegalClientMerchandiseUseCases,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
-  async getLegalClientOrderModel(
-    @Args('id', { nullable: true }) id?: string,
-    @Args('order', { nullable: true }) order?: string,
-  ) {
-    return this.legalClientOrdeUseCase.getLegalClientOrder({ id, order });
+  async getLegalClientOrderModel(@Args() request: GetLegalClientOrderArgs) {
+    return this.legalClientOrdeUseCase.getLegalClientOrder(request);
   }
   @Query(() => [LegalClientOrderModel], { nullable: true })
   async getAllLegalClientOrder(@Args() args: LegalClientOrderWhereArgs) {
