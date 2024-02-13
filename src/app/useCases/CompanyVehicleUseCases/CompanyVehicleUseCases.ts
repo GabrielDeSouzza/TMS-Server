@@ -20,7 +20,7 @@ export class CompanyVehicleUseCases {
   ) {}
   async getCompanyVehicle(
     request: GetCompanyVehcicleDTO,
-  ): Promise<CompanyVehicle> {
+  ): Promise<CompanyVehicle | string> {
     if (!request.id || !request.plate)
       new GraphQLError('IS NECESSARY AN ID OR PLATE VEHICLE', {
         extensions: { code: HttpStatus.BAD_REQUEST },
@@ -29,9 +29,10 @@ export class CompanyVehicleUseCases {
       await this.companyVehicleRepository.findCompanyVehicle(request);
     if (companyVehicle) return companyVehicle;
 
-    throw new GraphQLError('VEHICLE NOT FOUND', {
+    return null;
+    /*throw new GraphQLError('VEHICLE NOT FOUND', {
       extensions: { code: HttpStatus.NOT_FOUND },
-    });
+    });*/
   }
   async getAllCompanyVehicle(request: GetAllCompanyVehcicleDTO) {
     return await this.companyVehicleRepository.findAllCompanyVehicle(request);

@@ -9,6 +9,7 @@ import { ContractOutsourcedDriverRepository } from 'domain/repositories/Contract
 import { type CreateContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/CreateContractOutsourcedDriverDto';
 import { type GetAllContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/GetAllContractOutsourcedDriverDto';
 import { type UpdateContractOutsourcedDriverDTO } from 'app/dtos/ContractOutsourcedDriverDto/UpdateContractOutsourcedDriverDto';
+import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 @Injectable()
 export class ContractOutsourcedDriverUseCases {
@@ -55,6 +56,7 @@ export class ContractOutsourcedDriverUseCases {
       });
     }
 
+    data.contract_number = generateRandomNumber();
     const newContract = new ContractOutsourcedDriver({
       cpf: data.cpf,
       created_by: data.created_by,

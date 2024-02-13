@@ -1,36 +1,42 @@
 import { Module } from '@nestjs/common';
 
 import { ContractOutsourcedDriverRepository } from 'domain/repositories/ContractOutsourcedDriverResitory';
-import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
 import { OutsourcedDriverRepository } from 'domain/repositories/OutsourcedDriverRepository';
-import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
+
+import { OutsourcedDriverUseCases } from 'app/useCases/OutsourcedDriverUseCases/OutsourcedDriverUseCases';
 
 import { ContractOutsourcedDriverPrismaService } from 'infra/database/prisma/services/contract-outsouced-driver.service';
-import { NaturalPersonPrismaService } from 'infra/database/prisma/services/natural-person.service';
 import { OutsourcedDriverPrismaService } from 'infra/database/prisma/services/outsourced-driver.service';
-import { OutsourcedVehicleServicePrisma } from 'infra/database/prisma/services/outsourced-vehicle.service';
 
+import { CompanyVehicleModule } from '../CompanyVehicle/CompanyVehicle.module';
+import { ContractOutsoucedDriverModule } from '../ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.module';
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { NaturalPersonModule } from '../NaturalPersonGraphql/NaturalPerson.module';
+import { OutsourcedVehicleModule } from '../OutsourcedVehicle/OutsourcedVehicle.module';
+import { UserModule } from '../UserGraphql/user.module';
 import { OutsourcedDriverResolver } from './OutsourcedDriver.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule],
+  imports: [
+    GraphqlCenterModule,
+    NaturalPersonModule,
+    OutsourcedVehicleModule,
+    UserModule,
+    ContractOutsoucedDriverModule,
+    CompanyVehicleModule,
+  ],
   providers: [
     OutsourcedDriverResolver,
+    OutsourcedDriverUseCases,
     {
       provide: ContractOutsourcedDriverRepository,
       useClass: ContractOutsourcedDriverPrismaService,
-    },
-    { provide: NaturalPersonRepository, useClass: NaturalPersonPrismaService },
-    {
-      provide: OutsourcedVehicleRepository,
-      useClass: OutsourcedVehicleServicePrisma,
     },
     {
       provide: OutsourcedDriverRepository,
       useClass: OutsourcedDriverPrismaService,
     },
-    { provide: NaturalPersonRepository, useClass: NaturalPersonPrismaService },
   ],
+  exports: [OutsourcedDriverUseCases],
 })
 export class OutsourcedDriverModule {}

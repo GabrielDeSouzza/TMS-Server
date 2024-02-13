@@ -6,7 +6,7 @@ describe('Outsourced Driver', () => {
       cnh: '48848878781',
       cnh_category: 'AD',
       cnh_expiration: new Date(),
-      company_vehicle: false,
+      company_vehicle_id: '15668',
       course_mopp: true,
       created_by: 'test',
       natural_person_id: 'test',

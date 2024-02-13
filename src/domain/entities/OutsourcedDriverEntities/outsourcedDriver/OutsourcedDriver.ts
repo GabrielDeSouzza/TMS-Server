@@ -12,9 +12,9 @@ export interface IOutsourcedDriver {
   cnh: string;
   cnh_category: string;
   cnh_expiration: Date;
-  company_vehicle: boolean | false;
   course_mopp: boolean;
-  outsourced_vehicle_id: string;
+  outsourced_vehicle_id?: string;
+  company_vehicle_id?: string;
   created_at: Date;
   updated_at: Date;
   updated_by: string;
@@ -61,11 +61,7 @@ export class OutsourcedDriver extends Entity {
         fieldName: 'CNH Category',
         maxLength: 4,
       },
-      {
-        field: this.props.company_vehicle,
-        fieldName: 'Company Vehicle',
-        maxLength: 5,
-      },
+
       {
         field: this.props.course_mopp,
         fieldName: 'Course MOPP',
@@ -118,12 +114,12 @@ export class OutsourcedDriver extends Entity {
     return this.props.cnh_expiration;
   }
 
-  public set company_vehicle(companyVehicle: boolean) {
-    this.props.company_vehicle = companyVehicle;
+  public set company_vehicle_id(company_vehicle_id: string) {
+    this.props.company_vehicle_id = company_vehicle_id;
   }
 
-  public get company_vehicle(): boolean {
-    return this.props.company_vehicle;
+  public get company_vehicle_id(): string {
+    return this.props.company_vehicle_id;
   }
 
   public set course_mopp(courseMopp: boolean) {

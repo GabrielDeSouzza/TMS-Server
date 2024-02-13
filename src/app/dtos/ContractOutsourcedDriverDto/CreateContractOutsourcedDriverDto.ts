@@ -15,5 +15,5 @@ export abstract class CreateContractOutsourcedDriverDTO {
 
   cpf: string;
 
-  outsourced_driver_id: string;
+  outsourced_driver_id?: string;
 }

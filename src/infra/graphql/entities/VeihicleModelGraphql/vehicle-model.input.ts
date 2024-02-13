@@ -9,9 +9,9 @@ import {
 
 import {
   Allow,
-  IsDecimal,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -27,11 +27,11 @@ export class VehicleModelInput
   @IsNotEmpty()
   name: string;
   @Field(() => Float)
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   weight: number;
   @Field(() => Float)
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   capacity_max: number;
   @Field()
@@ -51,8 +51,7 @@ export class VehicleModelInput
   @IsNotEmpty()
   type_id: string;
   @HideField()
-  @IsString()
-  @IsNotEmpty()
+  @Allow()
   created_by: string;
   @HideField()
   @Allow()

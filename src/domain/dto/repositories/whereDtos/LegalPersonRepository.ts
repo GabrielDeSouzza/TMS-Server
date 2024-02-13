@@ -54,4 +54,5 @@ export abstract class ValidateLegalPersonDTO {
   state_registration?: string;
   corporate_name?: string;
   fantasy_name?: string;
+  id?: string;
 }

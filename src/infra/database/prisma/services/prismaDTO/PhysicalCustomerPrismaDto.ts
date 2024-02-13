@@ -63,7 +63,6 @@ export class PhysicalContractorPrismaDTO {
       course_mopp: outsourcedDriver.course_mopp,
       UpdatedBy: { connect: { id: outsourcedDriver.updated_by } },
       updated_at: outsourcedDriver.updated_at,
-      company_vehicle: outsourcedDriver.company_vehicle,
       OutsourcedVehicle: {
         connectOrCreate: {
           where: {
@@ -113,7 +112,6 @@ export class PhysicalContractorPrismaDTO {
       course_mopp: outsourcedDriver.course_mopp,
       UpdatedBy: { connect: { id: outsourcedDriver.updated_by } },
       updated_at: outsourcedDriver.updated_at,
-      company_vehicle: outsourcedDriver.company_vehicle,
       OutsourcedVehicle: outsourcedVehicle
         ? {
             update: OutsourcedVehiclePrismaDTO.EntityToPrismaUpdate(

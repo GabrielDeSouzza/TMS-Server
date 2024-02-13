@@ -173,6 +173,7 @@ Table company_vehicles {
   vehicle_id String [unique, not null]
   OrderProcessing order_processing
   order_processing_id String
+  OutsourcedDriver outsourced_drivers [not null]
 }
 
 Table outsourced_transport_vehicle {
@@ -194,7 +195,6 @@ Table outsourced_drivers {
   cnh String [unique, not null]
   cnh_category String [not null]
   cnh_expiration DateTime [not null]
-  company_vehicle Boolean [not null, default: false]
   course_mopp Boolean [not null, default: false]
   ContractOutsourcedDriver contract_outsourced_drivers [not null]
   created_at DateTime [default: `now()`, not null]
@@ -205,8 +205,10 @@ Table outsourced_drivers {
   updated_by String [not null]
   NaturalPerson natural_people [not null]
   natural_person_id String [unique, not null]
-  OutsourcedVehicle outsourced_vehicles [not null]
-  outsourced_vehicle_id String [unique, not null]
+  OutsourcedVehicle outsourced_vehicles
+  outsourced_vehicle_id String [unique]
+  company_vehicle_id String [unique]
+  CompanyVehicle company_vehicles
 }
 
 Table outsourcedT_transport_company_driver {
@@ -680,6 +682,8 @@ Ref: outsourced_drivers.updated_by > users.id
 Ref: outsourced_drivers.natural_person_id > natural_people.id
 
 Ref: outsourced_drivers.outsourced_vehicle_id - outsourced_vehicles.id
+
+Ref: outsourced_drivers.company_vehicle_id > company_vehicles.id
 
 Ref: outsourcedT_transport_company_driver.created_by > users.id
 

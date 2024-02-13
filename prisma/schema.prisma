@@ -176,12 +176,11 @@ model VehicleBodywork {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  CreatedBy     User?        @relation("created_by", fields: [created_by], references: [id])
-  created_by    String
-  UpdatedBy     User?        @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by    String
-  VehicleType   VehicleType[]
-
+  CreatedBy   User?         @relation("created_by", fields: [created_by], references: [id])
+  created_by  String
+  UpdatedBy   User?         @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by  String
+  VehicleType VehicleType[]
 
   @@map("vehicle_bodyworks")
 }
@@ -205,19 +204,20 @@ model OutsourcedVehicle {
 }
 
 model CompanyVehicle {
-  id                  String           @id @default(uuid())
-  created_at          DateTime         @default(now())
-  updated_at          DateTime         @default(now())
+  id                  String             @id @default(uuid())
+  created_at          DateTime           @default(now())
+  updated_at          DateTime           @default(now())
   company_id          String
-  CarrierCompany      CarrierCompany   @relation(fields: [company_id], references: [id])
-  CreatedBy           User?            @relation("created_by", fields: [created_by], references: [id])
+  CarrierCompany      CarrierCompany     @relation(fields: [company_id], references: [id])
+  CreatedBy           User?              @relation("created_by", fields: [created_by], references: [id])
   created_by          String
-  UpdatedBy           User?            @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy           User?              @relation("updated_by", fields: [updated_by], references: [id])
   updated_by          String
-  Vehicle             Vehicle          @relation(fields: [vehicle_id], references: [id])
-  vehicle_id          String           @unique
-  OrderProcessing     OrderProcessing? @relation(fields: [order_processing_id], references: [id])
+  Vehicle             Vehicle            @relation(fields: [vehicle_id], references: [id])
+  vehicle_id          String             @unique
+  OrderProcessing     OrderProcessing?   @relation(fields: [order_processing_id], references: [id])
   order_processing_id String?
+  OutsourcedDriver    OutsourcedDriver[]
 
   @@map("company_vehicles")
 }
@@ -246,20 +246,21 @@ model OutsourcedDriver {
   cnh                      String                     @unique
   cnh_category             String
   cnh_expiration           DateTime
-  company_vehicle          Boolean                    @default(false)
   course_mopp              Boolean                    @default(false)
   ContractOutsourcedDriver ContractOutsourcedDriver[]
   created_at               DateTime                   @default(now())
   updated_at               DateTime                   @default(now())
 
-  CreatedBy             User?             @relation("created_by", fields: [created_by], references: [id])
+  CreatedBy             User?              @relation("created_by", fields: [created_by], references: [id])
   created_by            String
-  UpdatedBy             User?             @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy             User?              @relation("updated_by", fields: [updated_by], references: [id])
   updated_by            String
-  NaturalPerson         NaturalPerson     @relation(fields: [natural_person_id], references: [id])
-  natural_person_id     String            @unique
-  OutsourcedVehicle     OutsourcedVehicle @relation(fields: [outsourced_vehicle_id], references: [id])
-  outsourced_vehicle_id String            @unique
+  NaturalPerson         NaturalPerson      @relation(fields: [natural_person_id], references: [id])
+  natural_person_id     String             @unique
+  OutsourcedVehicle     OutsourcedVehicle? @relation(fields: [outsourced_vehicle_id], references: [id])
+  outsourced_vehicle_id String?            @unique
+  company_vehicle_id    String?            @unique
+  CompanyVehicle        CompanyVehicle?    @relation(fields: [company_vehicle_id], references: [id])
 
   @@map("outsourced_drivers")
 }

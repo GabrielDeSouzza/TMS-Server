@@ -20,7 +20,7 @@ export class CompanyVehicleServicePrisma implements CompanyVehicleRepository {
       await this.prisma.companyVehicle.findFirst({
         where: {
           OR: [
-            { id: request.id },
+            { id: request.id ?? undefined },
             { Vehicle: { plate: request.plate } },
             { vehicle_id: request.vehicleId },
           ],

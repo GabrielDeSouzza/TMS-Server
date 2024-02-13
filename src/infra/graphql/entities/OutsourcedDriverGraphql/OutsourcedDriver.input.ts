@@ -20,26 +20,16 @@ import {
 
 import { type IOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
 
-import {
-  ContractOutsoucedDriverUpdateInput,
-  ContractOutsourcedDriverReferecesInput,
-} from '../ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.input';
+import { ContractOutsourcedDriverReferecesInput } from '../ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.input';
 import {
   NaturalPersonInput,
   NaturalPersonUpdate,
 } from '../NaturalPersonGraphql/NaturalPerson.Input';
-import {
-  OutsourcedVehicleInput,
-  OutsourcedVehicleUpdateInput,
-} from '../OutsourcedVehicle/OutsourcedVehicle.input';
 
 @InputType()
 export class OutsourcedDriverInput
   implements Omit<IOutsourcedDriver, 'id' | 'created_at' | 'updated_at'>
 {
-  @HideField()
-  @Allow()
-  outsourced_vehicle_id: string;
   @HideField()
   @Allow()
   natural_person_id: string;
@@ -60,9 +50,14 @@ export class OutsourcedDriverInput
   @IsDate()
   @Type(() => Date)
   cnh_expiration: Date;
-  @Field()
-  @IsBoolean()
-  company_vehicle: boolean;
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  company_vehicle_id?: string;
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  outsourced_vehicle_id?: string;
   @Field()
   @IsBoolean()
   course_mopp: boolean;
@@ -76,25 +71,15 @@ export class OutsourcedDriverInput
   @Type(() => ContractOutsourcedDriverReferecesInput)
   @IsObject()
   ContractOutsourcedDriver: ContractOutsourcedDriverReferecesInput;
-  @Type(() => OutsourcedVehicleInput)
-  @IsObject()
-  @IsOptional()
-  @Field(() => OutsourcedVehicleInput, { nullable: true })
-  OutsourcedVehicle?: OutsourcedVehicleInput;
 }
 
 @InputType()
 export class OutsourcedDriverUpdateInput extends PartialType(
   OmitType(OutsourcedDriverInput, [
     'ContractOutsourcedDriver',
-    'OutsourcedVehicle',
     'NaturalPerson',
   ]),
 ) {
   @Field(() => NaturalPersonUpdate, { nullable: true })
   NaturalPerson: NaturalPersonUpdate;
-  @Field(() => ContractOutsoucedDriverUpdateInput, { nullable: true })
-  ContractOutsourcedDriver?: ContractOutsoucedDriverUpdateInput;
-  @Field(() => OutsourcedVehicleUpdateInput, { nullable: true })
-  OutsourcedVehicle?: OutsourcedVehicleUpdateInput;
 }

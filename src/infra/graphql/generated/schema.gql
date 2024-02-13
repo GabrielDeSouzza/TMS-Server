@@ -211,6 +211,7 @@ input CompanyVehicleOrderByWithRelationInput {
   CarrierCompany: CarrierCompanyOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
   OrderProcessing: OrderProcessingOrderByWithRelationInput
+  OutsourcedDriver: OutsourcedDriverOrderByRelationAggregateInput
   UpdatedBy: UserOrderByWithRelationInput
   Vehicle: VehicleOrderByWithRelationInput
   company_id: SortOrder
@@ -230,6 +231,7 @@ input CompanyVehicleWhereInput {
   NOT: [CompanyVehicleWhereInput!]
   OR: [CompanyVehicleWhereInput!]
   OrderProcessing: OrderProcessingWhereInput
+  OutsourcedDriver: OutsourcedDriverListRelationFilter
   UpdatedBy: UserWhereInput
   Vehicle: VehicleWhereInput
   company_id: StringFilter
@@ -1285,12 +1287,12 @@ input OrderProcessingWhereInput {
 input OutsourcedDriverInput {
   ContractOutsourcedDriver: ContractOutsourcedDriverReferecesInput!
   NaturalPerson: NaturalPersonInput!
-  OutsourcedVehicle: OutsourcedVehicleInput
   cnh: String!
   cnh_category: String!
   cnh_expiration: Timestamp!
-  company_vehicle: Boolean!
+  company_vehicle_id: String
   course_mopp: Boolean!
+  outsourced_vehicle_id: String
 }
 
 input OutsourcedDriverListRelationFilter {
@@ -1300,6 +1302,7 @@ input OutsourcedDriverListRelationFilter {
 }
 
 type OutsourcedDriverModel {
+  CompanyVehicle: CompanyVehicleIModel
   ContractOutsourcedDriver: [ContractOutsourcedDriverRefencesModel!]!
   CreatedUser: UserModelRefereces!
   NaturalPerson: NaturalPersonModel!
@@ -1322,6 +1325,7 @@ input OutsourcedDriverOrderByRelationAggregateInput {
 }
 
 input OutsourcedDriverOrderByWithRelationInput {
+  CompanyVehicle: CompanyVehicleOrderByWithRelationInput
   ContractOutsourcedDriver: ContractOutsourcedDriverOrderByRelationAggregateInput
   CreatedBy: UserOrderByWithRelationInput
   NaturalPerson: NaturalPersonOrderByWithRelationInput
@@ -1330,7 +1334,7 @@ input OutsourcedDriverOrderByWithRelationInput {
   cnh: SortOrder
   cnh_category: SortOrder
   cnh_expiration: SortOrder
-  company_vehicle: SortOrder
+  company_vehicle_id: SortOrder
   course_mopp: SortOrder
   created_at: SortOrder
   created_by: SortOrder
@@ -1342,18 +1346,18 @@ input OutsourcedDriverOrderByWithRelationInput {
 }
 
 input OutsourcedDriverUpdateInput {
-  ContractOutsourcedDriver: ContractOutsoucedDriverUpdateInput
   NaturalPerson: NaturalPersonUpdate
-  OutsourcedVehicle: OutsourcedVehicleUpdateInput
   cnh: String
   cnh_category: String
   cnh_expiration: Timestamp
-  company_vehicle: Boolean
+  company_vehicle_id: String
   course_mopp: Boolean
+  outsourced_vehicle_id: String
 }
 
 input OutsourcedDriverWhereInput {
   AND: [OutsourcedDriverWhereInput!]
+  CompanyVehicle: CompanyVehicleWhereInput
   ContractOutsourcedDriver: ContractOutsourcedDriverListRelationFilter
   CreatedBy: UserWhereInput
   NOT: [OutsourcedDriverWhereInput!]
@@ -1364,13 +1368,13 @@ input OutsourcedDriverWhereInput {
   cnh: StringFilter
   cnh_category: StringFilter
   cnh_expiration: DateTimeFilter
-  company_vehicle: BoolFilter
+  company_vehicle_id: StringNullableFilter
   course_mopp: BoolFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
   natural_person_id: StringFilter
-  outsourced_vehicle_id: StringFilter
+  outsourced_vehicle_id: StringNullableFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }

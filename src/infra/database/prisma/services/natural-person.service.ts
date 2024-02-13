@@ -66,9 +66,14 @@ export class NaturalPersonPrismaService implements NaturalPersonRepository {
   }
 
   async validate(data: ValidateNaturalPersonDto): Promise<NaturalPerson> {
+    if (!data.cpf && !data.email && !data.id && !data.rg) return;
+
     return NaturalPersonPrismaDTO.PrismaToEntity(
       await this.prisma.naturalPerson.findFirst({
-        where: { id: { not: data.id }, OR: [{ cpf: data.cpf }] },
+        where: {
+          id: { not: data.id },
+          OR: [{ cpf: data.cpf }, { rg: data.rg }, { email: data.email }],
+        },
       }),
     );
   }
