@@ -28,6 +28,7 @@ export class FindAllCompanyVehicleWhereRequestDTO {
 }
 
 export abstract class ValidadeVehicle {
+  id?: string;
   plate?: string;
   renavam?: string;
 }

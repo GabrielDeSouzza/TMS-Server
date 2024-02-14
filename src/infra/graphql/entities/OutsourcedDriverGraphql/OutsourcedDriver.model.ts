@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
 
+import { CompanyVehicleIModel } from '../CompanyVehicle/CompanyVehicle.model';
 import { ContractOutsourcedDriverRefencesModel } from '../ContractOutsourcedDriverGraphql/ContractOutsourcedDriver.model';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import {
@@ -44,4 +45,6 @@ export class OutsourcedDriverModel
   UpdatedUser: UserModelRefereces;
   @Field(() => OutsourcedVehicleIModel, { nullable: true })
   OutsourcedVehicle?: OutsourcedVehicleRecefencesModel;
+  @Field(() => CompanyVehicleIModel, { nullable: true })
+  CompanyVehicle?: CompanyVehicleIModel;
 }

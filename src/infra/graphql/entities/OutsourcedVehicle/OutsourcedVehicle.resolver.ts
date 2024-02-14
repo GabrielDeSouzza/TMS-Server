@@ -9,11 +9,10 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { OutsourcedVehicleRepository } from 'domain/repositories/OutsourcedVehicleRepository';
-import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
-import { OutsourcedVehicleGraphDTO } from 'infra/graphql/DTO/OutsoucerdVehicle';
-import { VehicleGraphDTO } from 'infra/graphql/DTO/Vehicle';
+import { OutsourcedVehicleUseCases } from 'app/useCases/OutsoucedVehicleUseCases/OutsourcedVehicleUseCases';
+import { VehicleUseCases } from 'app/useCases/VehicleUseCases/VehicleUseCases';
+
 import { OutsourcedTransportVehicleWhereArgs } from 'infra/graphql/entities/OutsourcedTransportVehicleGraphql/Args/WhereOutsourcedTransportVehicleArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -34,18 +33,18 @@ import { OutsourcedVehicleIModel } from './OutsourcedVehicle.model';
 @Resolver(() => OutsourcedVehicleIModel)
 export class OutsourcedVehicleResolver {
   constructor(
-    private outsourcedReposity: OutsourcedVehicleRepository,
-    private vehicleRepositoy: VehicleRepository,
+    private outsourcedUseCase: OutsourcedVehicleUseCases,
+    private vehicleUseCase: VehicleUseCases,
   ) {}
   @Query(() => OutsourcedVehicleIModel)
   async getOutsourcedVehicle(@Args() request: GetOutsoucedVehicleArgs) {
-    return await this.outsourcedReposity.findOutsourcedVehicle(request);
+    return await this.outsourcedUseCase.getOutsourcedVehicle(request);
   }
   @Query(() => [OutsourcedVehicleIModel])
   async getAllOutsourcedVehicle(
     @Args() args: OutsourcedTransportVehicleWhereArgs,
   ) {
-    return await this.outsourcedReposity.findAllOutsourcedVehicle({
+    return await this.outsourcedUseCase.getAllOutsourcedVehicle({
       limit: args.limit,
       offset: args.offset,
       sort: args.sort,
@@ -59,15 +58,9 @@ export class OutsourcedVehicleResolver {
   ) {
     outsoucedVehicle.created_by = user.id;
     outsoucedVehicle.updated_by = user.id;
-    const outsourcedVehicleEntity =
-      OutsourcedVehicleGraphDTO.createInputToEntity(outsoucedVehicle);
-    const vehicleEntity = VehicleGraphDTO.createInputToEntity(
-      outsoucedVehicle.Vehicle,
-    );
 
-    return await this.outsourcedReposity.createOutsourcedVehicle(
-      outsourcedVehicleEntity,
-      vehicleEntity,
+    return await this.outsourcedUseCase.createOutsourcedVehicle(
+      outsoucedVehicle,
     );
   }
   @Mutation(() => OutsourcedVehicleIModel)
@@ -77,22 +70,13 @@ export class OutsourcedVehicleResolver {
     @CurrentUser() user: User,
   ) {
     outsourced.updated_by = user.id;
-    const outsourcedVehicleEntity =
-      OutsourcedVehicleGraphDTO.updateInputToEntity(outsourced);
-    const vehicleEntity = outsourced.Vehicle
-      ? VehicleGraphDTO.updateInputToEntity(outsourced.Vehicle)
-      : undefined;
 
-    return await this.outsourcedReposity.updateOutsourcedVehicle(
-      id,
-      outsourcedVehicleEntity,
-      vehicleEntity,
-    );
+    return await this.outsourcedUseCase.updateOutsourcedVehicle(id, outsourced);
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() outsoucedVehicle: OutsourcedVehicleInput) {
     const { vehicle_id: vehicleId } = outsoucedVehicle;
 
-    return await this.vehicleRepositoy.findVehicle({ vehicleId });
+    return await this.vehicleUseCase.getVehicle({ vehicleId });
   }
 }
