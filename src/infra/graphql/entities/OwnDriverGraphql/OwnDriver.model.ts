@@ -24,8 +24,6 @@ export class OwnDriverModel implements IOwnDriver {
   created_at: Date;
   @Field()
   updated_at: Date;
-  @Field()
-  cpf?: string;
   @Field(() => NaturalPersonModel)
   NaturalPerson: NaturalPersonModel;
   @Field()

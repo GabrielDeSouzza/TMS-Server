@@ -23,6 +23,7 @@ export class NaturalPersonUseCases {
     const natural = await this.naturalPersonRepository.findNaturalPerson(
       request,
     );
+
     if (natural) return natural;
 
     throw new GraphQLError('Person Not Found', {

@@ -1757,7 +1757,6 @@ type OwnDriverModel {
   cnh_expiration: Timestamp!
   company_vehicle: Boolean!
   course_mopp: Boolean!
-  cpf: String!
   createdUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
@@ -1984,7 +1983,7 @@ type Query {
   getOutsourcedTransportCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): OutsourcedTransportCompanyModel!
   getOutsourcedTransportVehicleModel(plate: String, vehicleId: String): OutsourcedTransportVehicleModel!
   getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
-  getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel!
+  getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel
   getVehicle(plate: String, vehicleId: String): VehicleCarModel!
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
   getVehicleBrand(id: String, name: String): VehicleBrandModel!

@@ -9,13 +9,11 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
-import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 
+import { NaturalPersonUseCases } from 'app/useCases/NaturalPersoUseCases/NaturalPersonUseCases';
+import { OwnDriverUseCases } from 'app/useCases/OwnDriverUseCases/OwnDriverUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
-import { OwnDriverGraphDTO } from 'infra/graphql/DTO/OwnDriverVehicle';
 import { OwnDriverWhereArgs } from 'infra/graphql/entities/OwnDriverGraphql/Args/WhereOwnDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -34,22 +32,17 @@ import { OwnDriverModel } from './OwnDriver.model';
 @Resolver(OwnDriverModel)
 export class OwnDriverResolver {
   constructor(
-    private ownDriverRepository: OwnDriverRepository,
-    private naturalPersonRepository: NaturalPersonRepository,
+    private ownDriverUseCase: OwnDriverUseCases,
+    private naturalPersonUseCase: NaturalPersonUseCases,
     private userCase: UserUseCases,
   ) {}
-  @Query(() => OwnDriverModel)
+  @Query(() => OwnDriverModel, { nullable: true })
   async getOwnDriver(@Args() request: GetOwnDriverArgs) {
-    return await this.ownDriverRepository.findOwnDriver(request);
+    return await this.ownDriverUseCase.getOwnDriver(request);
   }
   @Query(() => [OwnDriverModel])
   async getAllOwnDriver(@Args() args: OwnDriverWhereArgs) {
-    return await this.ownDriverRepository.findAllOwnDrivers({
-      limit: args.limit,
-      offset: args.offset,
-      sort: args.sort,
-      where: args.where,
-    });
+    return await this.ownDriverUseCase.getAllOwnDriver(args);
   }
   @Mutation(() => OwnDriverModel)
   async createOwnDriver(
@@ -59,16 +52,7 @@ export class OwnDriverResolver {
     ownDriverInput.created_by = user.id;
     ownDriverInput.updated_by = user.id;
 
-    const { NaturalPerson: naturalPerson } = ownDriverInput;
-    const ownDriverEntity =
-      OwnDriverGraphDTO.createInputToEntity(ownDriverInput);
-    const naturalPersonEntity =
-      NaturalPersonGraphDTO.createInputToEntity(naturalPerson);
-
-    return await this.ownDriverRepository.createOwnDriver(
-      ownDriverEntity,
-      naturalPersonEntity,
-    );
+    return await this.ownDriverUseCase.createOwnDriver(ownDriverInput);
   }
   @Mutation(() => OwnDriverModel)
   async updateOwnDriver(
@@ -77,19 +61,8 @@ export class OwnDriverResolver {
     @CurrentUser() user: User,
   ) {
     ownDriverUpdate.updated_by = user.id;
-    const ownDriverEntity =
-      OwnDriverGraphDTO.updateInputToEntity(ownDriverUpdate);
-    const naturalPersonEntity = ownDriverUpdate.NaturalPersonUpdate
-      ? NaturalPersonGraphDTO.updateInputToEntity(
-          ownDriverUpdate.NaturalPersonUpdate,
-        )
-      : undefined;
 
-    return this.ownDriverRepository.updateOwnDriver(
-      id,
-      ownDriverEntity,
-      naturalPersonEntity,
-    );
+    return this.ownDriverUseCase.updateOwnDriver(id, ownDriverUpdate);
   }
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: OwnDriverInput) {
@@ -106,7 +79,7 @@ export class OwnDriverResolver {
 
   @ResolveField(() => NaturalPersonModel)
   async NaturalPerson(@Parent() ownDriverInput: OwnDriverInput) {
-    return await this.naturalPersonRepository.findNaturalPerson({
+    return await this.naturalPersonUseCase.getNaturalPerson({
       naturalPersonId: ownDriverInput.natural_person_id,
     });
   }
