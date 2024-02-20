@@ -997,6 +997,7 @@ type Mutation {
   createOutsourcedTransportVehicle(outsourcedTransportVehicleInput: OutsourcedTransportVehicleInput!): OutsourcedTransportVehicleModel!
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
+  createPhysicalCustomer(data: PhysicalCustomerInput!): PhysicalCustomerModel!
   createUSer(createUserInput: UserInput!): UserModel!
   createVehicle(vehicleInput: VehicleInput!): VehicleCarModel!
   createVehicleBodywork(vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
@@ -1007,6 +1008,7 @@ type Mutation {
   updateCarriercompany(carrierCompanyInput: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
+  updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
   updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
   updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
@@ -1836,6 +1838,12 @@ input PhysicalContractWhereInput {
   physicalCustomerId: StringFilter
 }
 
+input PhysicalCustomerInput {
+  NaturalPerson: NaturalPersonInput
+  branch: String
+  natural_person_id: String
+}
+
 input PhysicalCustomerListRelationFilter {
   every: PhysicalCustomerWhereInput
   none: PhysicalCustomerWhereInput
@@ -1865,6 +1873,19 @@ input PhysicalCustomerMerchandiseWhereInput {
   physicalCustomerOrdermId: StringFilter
   value: FloatFilter
   volume: FloatFilter
+}
+
+type PhysicalCustomerModel {
+  NaturalPerson: NaturalPersonModel!
+  branch: String
+  createdUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  natural_person_id: String!
+  updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
+  updated_by: String!
 }
 
 input PhysicalCustomerOrderByRelationAggregateInput {
@@ -1930,6 +1951,12 @@ input PhysicalCustomerOrderWhereInput {
   updated_by: StringFilter
 }
 
+input PhysicalCustomerUpdateInput {
+  NaturalPerson: NaturalPersonUpdate
+  branch: String
+  natural_person_id: String
+}
+
 input PhysicalCustomerWhereInput {
   AND: [PhysicalCustomerWhereInput!]
   CreatedBy: UserWhereInput
@@ -1963,6 +1990,7 @@ type Query {
   getAllOutsourcedTransportVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedTransportVehicleModel!]
   getAllOutsourcedVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedVehicleIModel!]!
   getAllOwnDriver(limit: Int! = 25, offset: Int! = 0, sort: OwnDriverOrderByWithRelationInput, where: OwnDriverWhereInput): [OwnDriverModel!]!
+  getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerModel!]!
   getAllVehicle(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleCarModel!]!
   getAllVehicleBodywork(limit: Int! = 25, offset: Int! = 0, sort: VehicleBodyworkOrderByWithRelationInput, where: VehicleBodyworkWhereInput): [VehicleBodyworkModel!]
   getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
@@ -1984,6 +2012,7 @@ type Query {
   getOutsourcedTransportVehicleModel(plate: String, vehicleId: String): OutsourcedTransportVehicleModel!
   getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
   getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel
+  getPhysicalCustomer(cpf: String, id: String, naturalPersonId: String, rg: String): PhysicalCustomerModel
   getVehicle(plate: String, vehicleId: String): VehicleCarModel!
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
   getVehicleBrand(id: String, name: String): VehicleBrandModel!

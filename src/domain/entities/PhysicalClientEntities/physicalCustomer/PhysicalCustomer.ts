@@ -115,4 +115,19 @@ export class PhysicalCustomer extends Entity {
   public get created_at(): Date {
     return this.props.created_at;
   }
+  get created_by(): string {
+    return this.props.created_by;
+  }
+
+  set created_by(created_by: string) {
+    this.props.created_by = created_by;
+  }
+
+  get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
 }
