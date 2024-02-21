@@ -1023,7 +1023,7 @@ type Mutation {
   updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderUpdateInput!): LegalClientOrderModel!
   updatelegalContract(id: String!, legalContractInput: LegalContractUpdateInput!): LegalContractModel!
   updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
-  updateoutsourcedTransportCompany(id: String!, outsourcedTransportCompanyInput: OutsourcedTransportCompanyUpdateInput!): OutsourcedTransportCompanyModel!
+  updateoutsourcedTransportCompany(data: OutsourcedTransportCompanyUpdateInput!, id: String!): OutsourcedTransportCompanyModel!
   updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
   updateoutsourcedTransportCompanyDriver(id: String!, outsourcedTransportCompanyDriverInput: OutsourcedTransportCompanyDriverUpdateInput!): OutsourcedTransportCompanyDriverModel!
   updateoutsourcedTransportVehicle(id: String!, outsourcedTransportVehicleInput: OutsourcedTransportVehicleUpdateInput!): OutsourcedTransportVehicleModel!
@@ -1590,7 +1590,7 @@ input OutsourcedTransportCompanyOrderByWithRelationInput {
 }
 
 input OutsourcedTransportCompanyUpdateInput {
-  legalPersonId: String
+  LegalPerson: LegalPersonUpdateInput!
 }
 
 input OutsourcedTransportCompanyWhereInput {
@@ -2008,7 +2008,7 @@ type Query {
   getOutsourcedDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedDriverModel!
   getOutsourcedTransportCompanyContractModel(contractNumber: String, id: String): OutsourcedTransportCompanyContractModel!
   getOutsourcedTransportCompanyDriverModel(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedTransportCompanyDriverModel!
-  getOutsourcedTransportCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): OutsourcedTransportCompanyModel!
+  getOutsourcedTransportCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): OutsourcedTransportCompanyModel
   getOutsourcedTransportVehicleModel(plate: String, vehicleId: String): OutsourcedTransportVehicleModel!
   getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
   getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel

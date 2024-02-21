@@ -9,13 +9,11 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
-import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
 
+import { LegalPersonUseCases } from 'app/useCases/LegalPersonUseCases/LegalPersonUseCases';
+import { OutsourcedTransportCompanyUseCases } from 'app/useCases/OutsourcedTransportCompanyUseCases/OutsourcedTransportCompanyUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
-import { OutsourcedTransportCompanyGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyGraphqlDto';
 import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/Args/WhereOutsourcedTransportCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -39,15 +37,15 @@ import { OutsourcedTransportCompanyModel } from './OutsourcedTransportCompany.mo
 @Resolver(() => OutsourcedTransportCompanyModel)
 export class OutsourcedTransportCompanyResolver {
   constructor(
-    private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
+    private outsourcedTransportCompanyUseCases: OutsourcedTransportCompanyUseCases,
     private userCase: UserUseCases,
-    private legalPersonRepository: LegalPersonRepository,
+    private legalPersonUseCase: LegalPersonUseCases,
   ) {}
-  @Query(() => OutsourcedTransportCompanyModel)
+  @Query(() => OutsourcedTransportCompanyModel, { nullable: true })
   async getOutsourcedTransportCompanyModel(
     @Args() request: GetOutsourcedTransportCompanyArgs,
   ) {
-    return this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+    return this.outsourcedTransportCompanyUseCases.getOutsourcedTransportCompany(
       request,
     );
   }
@@ -56,7 +54,7 @@ export class OutsourcedTransportCompanyResolver {
     @Args() args: OutsourcedTransportCompanyWhereArgs,
   ) {
     const outsourcedTransportCompany =
-      await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompany(
+      await this.outsourcedTransportCompanyUseCases.getAllOutsourcedTransportCompany(
         {
           limit: args.limit,
           offset: args.offset,
@@ -77,64 +75,47 @@ export class OutsourcedTransportCompanyResolver {
   ) {
     outsourcedTransportCompanyInput.created_by = user.id;
     outsourcedTransportCompanyInput.updated_by = user.id;
-    const outsourcedTransportCompanyEntity =
-      OutsourcedTransportCompanyGraphqlDTO.createInputToEntity(
-        outsourcedTransportCompanyInput,
-      );
-    const legalPersonEntity = LegalPersonGraphqlDTO.updateInputToEntity(
-      outsourcedTransportCompanyInput.LegalPerson,
-    );
 
-    return this.outsourcedTransportCompanyRepository.createOutsourcedTransportCompany(
-      outsourcedTransportCompanyEntity,
-      legalPersonEntity,
-      outsourcedTransportCompanyInput.legalPersonId,
+    return this.outsourcedTransportCompanyUseCases.createOutsourcedTransportCompany(
+      outsourcedTransportCompanyInput,
     );
   }
   @Mutation(() => OutsourcedTransportCompanyModel)
   async updateoutsourcedTransportCompany(
     @Args('id') id: string,
-    @Args('outsourcedTransportCompanyInput')
-    outsourcedTransportCompanyInput: OutsourcedTransportCompanyUpdateInput,
+    @Args('data')
+    outsourcedTransCompanyInput: OutsourcedTransportCompanyUpdateInput,
     @CurrentUser() user: User,
   ) {
-    outsourcedTransportCompanyInput.updated_by = user.id;
-    const outsourcedTransportCompanyEntity =
-      OutsourcedTransportCompanyGraphqlDTO.updateInputToEntity(
-        outsourcedTransportCompanyInput,
-      );
-    const legalPersonEntity = LegalPersonGraphqlDTO.updateInputToEntity(
-      outsourcedTransportCompanyInput.LegalPeson,
-    );
+    outsourcedTransCompanyInput.updated_by = user.id;
 
-    return this.outsourcedTransportCompanyRepository.updateOutsourcedTransportCompany(
+    return this.outsourcedTransportCompanyUseCases.updateOutsourcedTransportCompany(
       id,
-      outsourcedTransportCompanyEntity,
-      legalPersonEntity,
+      outsourcedTransCompanyInput,
     );
   }
   @ResolveField(() => [OutsourcedTransportCompanyDriverModel])
   async Drivers(@Parent() outsourd: OutsourcedTransportCompanyModel) {
-    return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyDrivers(
+    return await this.outsourcedTransportCompanyUseCases.getDrivers(
       outsourd.id,
     );
   }
   @ResolveField(() => [OutsourcedTransportCompanyContractModel])
   async Contracts(@Parent() outsourd: OutsourcedTransportCompanyModel) {
-    return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyContracts(
+    return await this.outsourcedTransportCompanyUseCases.getAllContracts(
       outsourd.id,
     );
   }
   @ResolveField(() => [OutsourcedTransportCompanyContractModel])
   async Vehicles(@Parent() outsourd: OutsourcedTransportCompanyModel) {
-    return await this.outsourcedTransportCompanyRepository.getAllOutsourcedTransportCompanyVehicles(
+    return await this.outsourcedTransportCompanyUseCases.getVehicles(
       outsourd.id,
     );
   }
   @ResolveField(() => LegalPersonModel)
   async LegalPerson(@Parent() transport: OutsourcedTransportCompanyModel) {
-    return await this.legalPersonRepository.findlegalperson({
-      id: transport.legalPersonId,
+    return await this.legalPersonUseCase.getLegalPerson({
+      legalPersonId: transport.legalPersonId,
     });
   }
   @ResolveField(() => UserModelRefereces)

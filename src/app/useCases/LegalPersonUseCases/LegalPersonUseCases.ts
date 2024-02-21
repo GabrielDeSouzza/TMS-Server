@@ -2,14 +2,30 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
+import { type GetLegalPersonDTO } from 'domain/dto/repositories/getDataDtos/GetLegalPersonDto';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
 import { type CreateLegalPersonDTO } from 'app/dtos/LegalPerson/CreateLegalPersonDto';
+import { type UpdateLegalPersonDTO } from 'app/dtos/LegalPerson/UpdateLegalPersonDto';
 
 @Injectable()
 export class LegalPersonUseCases {
   constructor(private legalPersonRepository: LegalPersonRepository) {}
-  async validatePerson(data: CreateLegalPersonDTO) {
+  async getLegalPerson(request: GetLegalPersonDTO) {
+    if (
+      !request.cnpj &&
+      !request.corporateName &&
+      !request.fantasyName &&
+      !request.legalPersonId
+    )
+      throw new GraphQLError(
+        'IS NECESSARY A LEGALPERSONID, CORPORATENAME,  CNPJ OR FANTASY NAME',
+        { extensions: { code: HttpStatus.BAD_REQUEST } },
+      );
+
+    return this.legalPersonRepository.findlegalperson(request);
+  }
+  async validatePerson(data: CreateLegalPersonDTO | UpdateLegalPersonDTO) {
     const person = await this.legalPersonRepository.ValideLegalPerson({
       cnpj: data.cnpj,
       corporate_name: data.corporate_name,

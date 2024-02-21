@@ -6,18 +6,19 @@ import { GraphQLError } from 'graphql';
 import { type GetCarrierCompanyDTO } from 'domain/dto/repositories/getDataDtos/GetCarrierCompanyDto';
 import { CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
-import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
 import { type CreateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/CreateCarrierCompanyDto';
 import { type FindAllCompaniesUseCaseRequestDTO } from 'app/dtos/CarrierCompanyDto/GetAllCarrierCompanyDto';
 import { type UpdateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/UpdatedCarrierCompanyDto';
 import { LegalPersonEntityDto } from 'app/dtos/LegalPerson/LegalPersonEntityDto';
 
+import { LegalPersonUseCases } from '../LegalPersonUseCases/LegalPersonUseCases';
+
 @Injectable()
 export class CarrierCompanyUseCases {
   constructor(
     private carrierCompanyRepository: CarrierCompanyRepository,
-    private legalPersonRepository: LegalPersonRepository,
+    private legalPersonUseCase: LegalPersonUseCases,
   ) {}
   async getCarrierCompany(
     request: GetCarrierCompanyDTO,
@@ -51,60 +52,22 @@ export class CarrierCompanyUseCases {
   }
 
   async createCarrierCompany(
-    request: CreateCarrierCompanyDTO,
+    data: CreateCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
-    const legalPersonExist = await this.legalPersonRepository.ValideLegalPerson(
-      {
-        cnpj: request.LegalPerson.cnpj,
-        corporate_name: request.LegalPerson.corporate_name,
-        fantasy_name: request.LegalPerson.fantasy_name,
-        state_registration: request.LegalPerson.state_registration,
-      },
-    );
-
-    if (legalPersonExist) {
-      let errors = '';
-
-      if (legalPersonExist.cnpj == request.LegalPerson.cnpj) {
-        errors += 'CNPJ IN USE;';
-      }
-
-      if (
-        legalPersonExist.state_registration ==
-        request.LegalPerson.state_registration
-      ) {
-        errors += 'STATE REGISTRATION IN USE;';
-      }
-
-      if (legalPersonExist.fantasy_name == request.LegalPerson.fantasy_name) {
-        errors += ' FANTASY NAME IN USE';
-      }
-
-      if (
-        legalPersonExist.corporate_name == request.LegalPerson.corporate_name
-      ) {
-        errors += 'CORPORATE NAME IN USE';
-      }
-
-      if (errors.length > 0) {
-        throw new GraphQLError(errors, {
-          extensions: { code: HttpStatus.CONFLICT },
-        });
-      }
-    }
+    await this.legalPersonUseCase.validatePerson(data.LegalPerson);
 
     const carrierCompany = new CarrierCompany({
-      created_by: request.CarrierCompany.created_by,
-      legalPersonId: request.CarrierCompany.legalPersonId,
-      updated_by: request.CarrierCompany.updated_by,
+      created_by: data.CarrierCompany.created_by,
+      legalPersonId: data.CarrierCompany.legalPersonId,
+      updated_by: data.CarrierCompany.updated_by,
       id: randomUUID(),
     });
-    const legalPerson = LegalPersonEntityDto.createEntity(request.LegalPerson);
+    const legalPerson = LegalPersonEntityDto.createEntity(data.LegalPerson);
 
     return this.carrierCompanyRepository.createCarrierCompany(
       carrierCompany,
       legalPerson,
-      request.CarrierCompany.legalPersonId,
+      data.CarrierCompany.legalPersonId,
     );
   }
   async updateCarierCompany(

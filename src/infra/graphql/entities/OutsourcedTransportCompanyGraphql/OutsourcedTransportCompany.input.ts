@@ -19,7 +19,7 @@ import { type IOutsourcedTransportCompany } from 'domain/entities/OutsourcedTran
 
 import {
   LegalPersonInput,
-  type LegalPersonUpdateInput,
+  LegalPersonUpdateInput,
 } from '../LegalPersonGraphql/LegalPerson.input';
 
 @InputType()
@@ -49,7 +49,14 @@ export class OutsourcedTransportCompanyInput
 }
 @InputType()
 export class OutsourcedTransportCompanyUpdateInput extends PartialType(
-  OmitType(OutsourcedTransportCompanyInput, ['LegalPerson']),
+  OmitType(OutsourcedTransportCompanyInput, [
+    'LegalPerson',
+    'created_by',
+    'legalPersonId',
+  ]),
 ) {
-  LegalPeson: LegalPersonUpdateInput;
+  @Field(() => LegalPersonUpdateInput)
+  LegalPerson: LegalPersonUpdateInput;
+  @HideField()
+  updated_by: string;
 }

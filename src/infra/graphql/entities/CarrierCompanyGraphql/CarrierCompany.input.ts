@@ -41,5 +41,6 @@ export class CarrierCompanyUpdateInput extends PartialType(
 ) {
   @Field(() => LegalPersonUpdateInput)
   LegalPerson: LegalPersonUpdateInput;
+  @HideField()
   updated_by: string;
 }

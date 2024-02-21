@@ -23,21 +23,23 @@ export class LegalPersonEntityDto {
     });
   }
   public static updateEntity(update: UpdateLegalPersonDTO) {
+    console.log(update);
+
     return new LegalPerson({
-      fantasy_name: update.fantasy_name,
-      cnpj: update.cnpj,
-      state_registration: update.state_registration,
-      corporate_name: update.corporate_name,
-      public_place: update.public_place,
-      address_number: update.address_number,
-      neighborhood: update.neighborhood,
-      complement: update.complement,
-      city: update.city,
-      uf: update.uf,
-      first_phone: update.first_phone,
-      second_phone: update.second_phone,
-      third_phone: update.third_phone,
-      email: update.email,
+      fantasy_name: update?.fantasy_name,
+      cnpj: update?.cnpj,
+      state_registration: update?.state_registration,
+      corporate_name: update?.corporate_name,
+      public_place: update?.public_place,
+      address_number: update?.address_number,
+      neighborhood: update?.neighborhood,
+      complement: update?.complement,
+      city: update?.city,
+      uf: update?.uf,
+      first_phone: update?.first_phone,
+      second_phone: update?.second_phone,
+      third_phone: update?.third_phone,
+      email: update?.email,
     });
   }
 }

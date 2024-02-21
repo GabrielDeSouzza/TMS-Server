@@ -21,8 +21,8 @@ export class OutsourcedTransportCompanyGraphqlDTO {
   ) {
     return updateInput
       ? new OutsourcedTransportCompany({
-          created_by: updateInput.created_by,
-          legalPersonId: updateInput.legalPersonId,
+          created_by: null,
+          legalPersonId: null,
           updated_by: updateInput.updated_by,
         })
       : undefined;

@@ -1,23 +1,25 @@
 import { Module } from '@nestjs/common';
 
-import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
 
-import { LegalPersonPrismaService } from 'infra/database/prisma/services/legal-person.service';
+import { OutsourcedTransportCompanyUseCases } from 'app/useCases/OutsourcedTransportCompanyUseCases/OutsourcedTransportCompanyUseCases';
+
 import { OutsourcedTransportCompanyPrismaService } from 'infra/database/prisma/services/OutsourcedTransportCompany.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { LegalPersonModule } from '../LegalPersonGraphql/LegalPerson.module';
 import { OutsourcedTransportCompanyResolver } from './OutsourcedTransportCompany.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule],
+  imports: [GraphqlCenterModule, LegalPersonModule],
   providers: [
     {
       provide: OutsourcedTransportCompanyRepository,
       useClass: OutsourcedTransportCompanyPrismaService,
     },
-    { provide: LegalPersonRepository, useClass: LegalPersonPrismaService },
     OutsourcedTransportCompanyResolver,
+    OutsourcedTransportCompanyUseCases,
   ],
+  exports: [OutsourcedTransportCompanyUseCases],
 })
 export class OutsourcedTransportCompanyModule {}
