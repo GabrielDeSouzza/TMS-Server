@@ -26,12 +26,15 @@ import {
 @InputType()
 export class OutsourcedTransportCompanyDriverInput
   implements
-    Omit<IOutsourcedTransportCompanyDriver, 'id' | 'created_at' | 'updated_at'>
+    Omit<
+      IOutsourcedTransportCompanyDriver,
+      'id' | 'created_at' | 'updated_at' | 'natural_person_id'
+    >
 {
   @Field({ nullable: true })
   @IsString()
-  @IsNotEmpty()
-  natural_person_id: string;
+  @IsOptional()
+  natural_person_id?: string;
   @Field()
   @IsString()
   @IsNotEmpty()
@@ -66,6 +69,7 @@ export class OutsourcedTransportCompanyDriverInput
 export class OutsourcedTransportCompanyDriverUpdateInput extends PartialType(
   OmitType(OutsourcedTransportCompanyDriverInput, ['NaturalPerson']),
 ) {
-  @Field(() => NaturalPersonUpdate)
-  NaturalPerson: NaturalPersonUpdate;
+  @Field(() => NaturalPersonUpdate, { nullable: true })
+  NaturalPerson?: NaturalPersonUpdate;
+  updated_by: string;
 }

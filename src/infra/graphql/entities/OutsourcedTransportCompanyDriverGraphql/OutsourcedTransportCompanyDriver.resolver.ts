@@ -11,14 +11,12 @@ import {
 import { GraphQLError } from 'graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { NaturalPersonRepository } from 'domain/repositories/NaturalPersonRepository';
-import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
-import { OutsourcedTransportCompanyDriverRepository } from 'domain/repositories/OutsourcedTransportCompanyDriver.repository';
 
+import { NaturalPersonUseCases } from 'app/useCases/NaturalPersoUseCases/NaturalPersonUseCases';
+import { OutsourcedTransportCompanyDriverUseCases } from 'app/useCases/OutsourcedTransportCompanyDriverUseCases/OutsourcedTransportCompanyDriverUseCases';
+import { OutsourcedTransportCompanyUseCases } from 'app/useCases/OutsourcedTransportCompanyUseCases/OutsourcedTransportCompanyUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { NaturalPersonGraphDTO } from 'infra/graphql/DTO/NaturalPerson';
-import { OutsourcedTransportCompanyDriverGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyDriverGraphqlDto';
 import { OutsourcedTransportCompanyDriverWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyDriverGraphql/Args/WhereOutsourcedTransportCompanyDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -41,16 +39,16 @@ import { OutsourcedTransportCompanyDriverModel } from './OutsourcedTransportComp
 @Resolver(() => OutsourcedTransportCompanyDriverModel)
 export class OutsourcedTransportCompanyDriverResolver {
   constructor(
-    private outsourcedTransportCompanyDriverRepository: OutsourcedTransportCompanyDriverRepository,
+    private outsourcedTransportCompanyDriverUseCase: OutsourcedTransportCompanyDriverUseCases,
     private userCase: UserUseCases,
-    private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
-    private naturalPersonRepository: NaturalPersonRepository,
+    private outsourcedTransportCompanyUseCase: OutsourcedTransportCompanyUseCases,
+    private naturalPersonUseCase: NaturalPersonUseCases,
   ) {}
   @Query(() => OutsourcedTransportCompanyDriverModel)
   async getOutsourcedTransportCompanyDriverModel(
     @Args() request: GetOutsourcedTransportCompanyDriverArgs,
   ) {
-    return this.outsourcedTransportCompanyDriverRepository.findOutsourcedTransportCompanyDriver(
+    return this.outsourcedTransportCompanyDriverUseCase.getOutsourcedTransportCompanyDriver(
       request,
     );
   }
@@ -58,19 +56,9 @@ export class OutsourcedTransportCompanyDriverResolver {
   async getAllOutsourcedTransportCompanyDriver(
     @Args() args: OutsourcedTransportCompanyDriverWhereArgs,
   ) {
-    const outsourcedTransportCompanyDriver =
-      await this.outsourcedTransportCompanyDriverRepository.getAllOutsourcedTransportCompanyDriver(
-        {
-          limit: args.limit,
-          offset: args.offset,
-          sort: args.sort,
-          where: args.where,
-        },
-      );
-
-    return outsourcedTransportCompanyDriver.length > 0
-      ? outsourcedTransportCompanyDriver
-      : null;
+    return this.outsourcedTransportCompanyDriverUseCase.getAllOutsourcedTransportCompanyDriver(
+      args,
+    );
   }
   @Mutation(() => OutsourcedTransportCompanyDriverModel)
   async createOutsourcedTransportCompanyDriver(
@@ -87,39 +75,23 @@ export class OutsourcedTransportCompanyDriverResolver {
 
     outsourcedTransportCompanyDriverInput.created_by = user.id;
     outsourcedTransportCompanyDriverInput.updated_by = user.id;
-    const outsourcedTransportCompanyDriverEntity =
-      OutsourcedTransportCompanyDriverGraphqlDTO.createInputToEntity(
-        outsourcedTransportCompanyDriverInput,
-      );
-    const naturalPersonEntity = NaturalPersonGraphDTO.createInputToEntity(
-      outsourcedTransportCompanyDriverInput.NaturalPerson,
-    );
 
-    return this.outsourcedTransportCompanyDriverRepository.createOutsourcedTransportCompanyDriver(
-      outsourcedTransportCompanyDriverEntity,
-      naturalPersonEntity,
+    return this.outsourcedTransportCompanyDriverUseCase.createOutsourcedTransportCompanyDriver(
+      outsourcedTransportCompanyDriverInput,
     );
   }
   @Mutation(() => OutsourcedTransportCompanyDriverModel)
   async updateoutsourcedTransportCompanyDriver(
     @Args('id') id: string,
-    @Args('outsourcedTransportCompanyDriverInput')
+    @Args('data')
     outsourcedTransportCompanyDriverInput: OutsourcedTransportCompanyDriverUpdateInput,
     @CurrentUser() user: User,
   ) {
     outsourcedTransportCompanyDriverInput.updated_by = user.id;
-    const outsourcedTransportCompanyDriverEntity =
-      OutsourcedTransportCompanyDriverGraphqlDTO.updateInputToEntity(
-        outsourcedTransportCompanyDriverInput,
-      );
-    const naturalPersonEntity = NaturalPersonGraphDTO.updateInputToEntity(
-      outsourcedTransportCompanyDriverInput.NaturalPerson,
-    );
 
-    return this.outsourcedTransportCompanyDriverRepository.updateOutsourcedTransportCompanyDriver(
+    return this.outsourcedTransportCompanyDriverUseCase.updateOutsourcedTransportCompanyDriver(
       id,
-      outsourcedTransportCompanyDriverEntity,
-      naturalPersonEntity,
+      outsourcedTransportCompanyDriverInput,
     );
   }
 
@@ -127,7 +99,7 @@ export class OutsourcedTransportCompanyDriverResolver {
   async OutsourcedTransportCompany(
     @Parent() outsourced: OutsourcedTransportCompanyDriverInput,
   ) {
-    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+    return await this.outsourcedTransportCompanyUseCase.getOutsourcedTransportCompany(
       { id: outsourced.outsourced_transport_company_id },
     );
   }
@@ -135,7 +107,7 @@ export class OutsourcedTransportCompanyDriverResolver {
   async NaturalPerson(
     @Parent() outsourced: OutsourcedTransportCompanyDriverInput,
   ) {
-    return await this.naturalPersonRepository.findNaturalPerson({
+    return await this.naturalPersonUseCase.getNaturalPerson({
       naturalPersonId: outsourced.natural_person_id,
     });
   }

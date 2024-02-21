@@ -1,28 +1,31 @@
 import { Module } from '@nestjs/common';
 
-import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
 import { OutsourcedTransportCompanyDriverRepository } from 'domain/repositories/OutsourcedTransportCompanyDriver.repository';
 
-import { OutsourcedTransportCompanyPrismaService } from 'infra/database/prisma/services/OutsourcedTransportCompany.service';
+import { OutsourcedTransportCompanyDriverUseCases } from 'app/useCases/OutsourcedTransportCompanyDriverUseCases/OutsourcedTransportCompanyDriverUseCases';
+
 import { OutsourcedTransportCompanyDriverPrismaService } from 'infra/database/prisma/services/OutsourcedTransportCompanyDriver.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { NaturalPersonModule } from '../NaturalPersonGraphql/NaturalPerson.module';
+import { OutsourcedTransportCompanyModule } from '../OutsourcedTransportCompanyGraphql/OutsourcedTransportCompany.module';
 import { OutsourcedTransportCompanyDriverResolver } from './OutsourcedTransportCompanyDriver.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule, NaturalPersonModule],
+  imports: [
+    GraphqlCenterModule,
+    NaturalPersonModule,
+    OutsourcedTransportCompanyModule,
+  ],
 
   providers: [
     {
       provide: OutsourcedTransportCompanyDriverRepository,
       useClass: OutsourcedTransportCompanyDriverPrismaService,
     },
-    {
-      provide: OutsourcedTransportCompanyRepository,
-      useClass: OutsourcedTransportCompanyPrismaService,
-    },
+    OutsourcedTransportCompanyDriverUseCases,
     OutsourcedTransportCompanyDriverResolver,
   ],
+  exports: [OutsourcedTransportCompanyDriverUseCases],
 })
 export class OutsourcedTransportCompanyDriverModule {}

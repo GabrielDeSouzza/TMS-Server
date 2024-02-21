@@ -1025,7 +1025,7 @@ type Mutation {
   updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
   updateoutsourcedTransportCompany(data: OutsourcedTransportCompanyUpdateInput!, id: String!): OutsourcedTransportCompanyModel!
   updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
-  updateoutsourcedTransportCompanyDriver(id: String!, outsourcedTransportCompanyDriverInput: OutsourcedTransportCompanyDriverUpdateInput!): OutsourcedTransportCompanyDriverModel!
+  updateoutsourcedTransportCompanyDriver(data: OutsourcedTransportCompanyDriverUpdateInput!, id: String!): OutsourcedTransportCompanyDriverModel!
   updateoutsourcedTransportVehicle(id: String!, outsourcedTransportVehicleInput: OutsourcedTransportVehicleUpdateInput!): OutsourcedTransportVehicleModel!
 }
 
@@ -1514,7 +1514,7 @@ input OutsourcedTransportCompanyDriverOrderByWithRelationInput {
 }
 
 input OutsourcedTransportCompanyDriverUpdateInput {
-  NaturalPerson: NaturalPersonUpdate!
+  NaturalPerson: NaturalPersonUpdate
   cnh: String
   cnh_category: String
   cnh_expiration: Timestamp
