@@ -9,14 +9,13 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
-import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
-import { OutsourcedTransportCompanyRepository } from 'domain/repositories/OutsourcedTransportCompany.repository';
-import { OutsourcedTransportCompanyContractRepository } from 'domain/repositories/OutsourcedTransportCompanyContract.repository';
 
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { OutsourcedTransportCompanyContractUseCases } from 'app/useCases/OutsourcedTransportCompanyContractUseCases/OutsourcedTransportCompanyContractUseCases';
+import { OutsourcedTransportCompanyUseCases } from 'app/useCases/OutsourcedTransportCompanyUseCases/OutsourcedTransportCompanyUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { OutsourcedTransportCompanyContractGraphqlDTO } from 'infra/graphql/DTO/OutsourcedTransportCompanyContractGraphqlDto';
 import { OutsourcedTransportCompanyWhereArgs } from 'infra/graphql/entities/OutsourcedTransportCompanyGraphql/Args/WhereOutsourcedTransportCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -40,17 +39,17 @@ import { OutsourcedTransportCompanyContractModel } from './OutsourcedTransportCo
 @Resolver(() => OutsourcedTransportCompanyContractModel)
 export class OutsourcedTransportCompanyContractResolver {
   constructor(
-    private outsourcedTransportCompanyContractRepository: OutsourcedTransportCompanyContractRepository,
+    private outsourcedTransportCompanyContractUseCase: OutsourcedTransportCompanyContractUseCases,
     private userCase: UserUseCases,
-    private outsourcedTransportCompanyRepository: OutsourcedTransportCompanyRepository,
-    private carrierCompanyRepository: CarrierCompanyRepository,
-    private legalClientOrderRepository: LegalClientOrderRepository,
+    private outsourcedTransportCompanyUseCase: OutsourcedTransportCompanyUseCases,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
+    private legalClientOrderUseCase: LegalClientOrderUseCases,
   ) {}
-  @Query(() => OutsourcedTransportCompanyContractModel)
+  @Query(() => OutsourcedTransportCompanyContractModel, { nullable: true })
   async getOutsourcedTransportCompanyContractModel(
     @Args() request: GetOutsourcedTransportCompanyContractArgs,
   ) {
-    return this.outsourcedTransportCompanyContractRepository.findOutsourcedTransportCompanyContract(
+    return this.outsourcedTransportCompanyContractUseCase.getOutsourcedTransportCompanyContract(
       request,
     );
   }
@@ -58,19 +57,9 @@ export class OutsourcedTransportCompanyContractResolver {
   async getAllOutsourcedTransportCompanyContract(
     @Args() args: OutsourcedTransportCompanyWhereArgs,
   ) {
-    const outsourcedTransportCompanyContract =
-      await this.outsourcedTransportCompanyContractRepository.getAllOutsourcedTransportCompanyContract(
-        {
-          limit: args.limit,
-          offset: args.offset,
-          sort: args.sort,
-          where: args.where,
-        },
-      );
-
-    return outsourcedTransportCompanyContract.length > 0
-      ? outsourcedTransportCompanyContract
-      : null;
+    return await this.outsourcedTransportCompanyContractUseCase.getAllOutsourcedTransportCompanyContract(
+      args,
+    );
   }
   @Mutation(() => OutsourcedTransportCompanyContractModel)
   async createOutsourcedTransportCompanyContract(
@@ -80,13 +69,9 @@ export class OutsourcedTransportCompanyContractResolver {
   ) {
     outsourcedTransportCompanyContractInput.created_by = user.id;
     outsourcedTransportCompanyContractInput.updated_by = user.id;
-    const outsourcedTransportCompanyContractEntity =
-      OutsourcedTransportCompanyContractGraphqlDTO.createInputToEntity(
-        outsourcedTransportCompanyContractInput,
-      );
 
-    return this.outsourcedTransportCompanyContractRepository.createOutsourcedTransportCompanyContract(
-      outsourcedTransportCompanyContractEntity,
+    return this.outsourcedTransportCompanyContractUseCase.createOutsourcedTransportCompanyContract(
+      outsourcedTransportCompanyContractInput,
     );
   }
   @Mutation(() => OutsourcedTransportCompanyContractModel)
@@ -97,21 +82,17 @@ export class OutsourcedTransportCompanyContractResolver {
     @CurrentUser() user: User,
   ) {
     outsourcedTransportCompanyContractInput.updated_by = user.id;
-    const outsourcedTransportCompanyContractEntity =
-      OutsourcedTransportCompanyContractGraphqlDTO.updateInputToEntity(
-        outsourcedTransportCompanyContractInput,
-      );
 
-    return this.outsourcedTransportCompanyContractRepository.updateOutsourcedTransportCompanyContract(
+    return this.outsourcedTransportCompanyContractUseCase.updateOutsourcedTransportCompanyContract(
       id,
-      outsourcedTransportCompanyContractEntity,
+      outsourcedTransportCompanyContractInput,
     );
   }
   @ResolveField(() => OutsourcedTransportCompanyModel)
   async OutsourcedTransportCompany(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return await this.outsourcedTransportCompanyRepository.findOutsourcedTransportCompany(
+    return await this.outsourcedTransportCompanyUseCase.getOutsourcedTransportCompany(
       { id: contract.outSourcedTransportCompanyId },
     );
   }
@@ -119,7 +100,7 @@ export class OutsourcedTransportCompanyContractResolver {
   async CarrierCompany(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return this.carrierCompanyRepository.findCarrierCompany({
+    return this.carrierCompanyUseCase.getCarrierCompany({
       id: contract.carrierCompanyId,
     });
   }
@@ -127,7 +108,7 @@ export class OutsourcedTransportCompanyContractResolver {
   async LegalClientOrder(
     @Parent() contract: OutsourcedTransportCompanyContractInput,
   ) {
-    return await this.legalClientOrderRepository.findLegalClientOrder({
+    return await this.legalClientOrderUseCase.getLegalClientOrder({
       id: contract.legalClientOrderId,
     });
   }

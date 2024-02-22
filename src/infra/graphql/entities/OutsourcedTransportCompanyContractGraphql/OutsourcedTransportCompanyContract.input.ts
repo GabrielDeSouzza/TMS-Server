@@ -1,4 +1,10 @@
-import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
+import {
+  Field,
+  HideField,
+  InputType,
+  OmitType,
+  PartialType,
+} from '@nestjs/graphql';
 
 import { Allow, IsNotEmpty, IsString } from 'class-validator';
 
@@ -36,5 +42,11 @@ export class OutsourcedTransportCompanyContractInput
 }
 @InputType()
 export class OutsourcedTransportCompanyContractUpdateInput extends PartialType(
-  OutsourcedTransportCompanyContractInput,
-) {}
+  OmitType(OutsourcedTransportCompanyContractInput, [
+    'contractNumber',
+    'created_by',
+    'legalClientOrderId',
+  ]),
+) {
+  updated_by: string;
+}

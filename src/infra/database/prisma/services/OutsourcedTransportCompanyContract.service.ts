@@ -19,7 +19,10 @@ export class OutsourcedTransportCompanyContractPrismaService
     const outsourcedTransportCompanyContract =
       await this.prisma.outsourcedTransportCompanyContract.findFirst({
         where: {
-          OR: [{ id: request.id }, { contract_number: request.contractNumber }],
+          OR: [
+            { id: request.id ?? undefined },
+            { contract_number: request.contractNumber ?? undefined },
+          ],
         },
       });
 

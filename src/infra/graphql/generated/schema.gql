@@ -1433,7 +1433,6 @@ input OutsourcedTransportCompanyContractOrderByWithRelationInput {
 
 input OutsourcedTransportCompanyContractUpdateInput {
   carrierCompanyId: String
-  legalClientOrderId: String
   outSourcedTransportCompanyId: String
 }
 
@@ -2006,7 +2005,7 @@ type Query {
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
   getOutsourcedDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedDriverModel!
-  getOutsourcedTransportCompanyContractModel(contractNumber: String, id: String): OutsourcedTransportCompanyContractModel!
+  getOutsourcedTransportCompanyContractModel(contractNumber: String, id: String): OutsourcedTransportCompanyContractModel
   getOutsourcedTransportCompanyDriverModel(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedTransportCompanyDriverModel!
   getOutsourcedTransportCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): OutsourcedTransportCompanyModel
   getOutsourcedTransportVehicleModel(plate: String, vehicleId: String): OutsourcedTransportVehicleModel!
