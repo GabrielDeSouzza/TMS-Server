@@ -41,11 +41,15 @@ export class VehicleUseCases {
     return this.vehicleRepositoty.updateVehicle(id, vehicle);
   }
   async validateVehicle(request: ValidadeVehicle) {
-    const vehicleExist = await this.vehicleRepositoty.validadeVehicle(request);
+    const vehicleExist = await this.vehicleRepositoty.validadeVehicle({
+      id: request?.id,
+      plate: request?.plate,
+      renavam: request?.renavam,
+    });
     if (vehicleExist) return;
     let errors = '';
-    if (vehicleExist.plate == request.plate) errors += 'PLATE ALREADY IN USE';
-    if (vehicleExist.renavam == request.renavam)
+    if (vehicleExist?.plate == request?.plate) errors += 'PLATE ALREADY IN USE';
+    if (vehicleExist?.renavam == request?.renavam)
       errors += 'RENAVAM ALREADY IN USE';
     new GraphQLError(errors, { extensions: { code: HttpStatus.CONFLICT } });
   }

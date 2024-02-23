@@ -45,4 +45,5 @@ export class OutsourcedTransportVehicleUpdateInput extends PartialType(
 ) {
   @Field(() => VehicleUpdateInput, { nullable: true })
   Vehicle?: VehicleUpdateInput;
+  updated_by: string;
 }
