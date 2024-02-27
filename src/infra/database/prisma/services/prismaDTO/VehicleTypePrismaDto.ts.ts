@@ -49,8 +49,12 @@ export class VehicleTypePrismaDTO {
       updated_at: vehicleType.updated_at,
       UpdatedBy: { connect: { id: vehicleType.updated_by } },
       VehicleBodyWork: {
-        connect: vehicleType.body_work_id?.map(id => ({ id })),
-        disconnect: delBodyworkIds?.map(id => ({ id })),
+        connect: vehicleType
+          ? vehicleType.body_work_id?.map(id => ({ id }))
+          : undefined,
+        disconnect: delBodyworkIds
+          ? delBodyworkIds?.map(id => ({ id }))
+          : undefined,
       },
     };
 

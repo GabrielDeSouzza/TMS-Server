@@ -1,4 +1,4 @@
-export abstract class VehicleVehicleBodyworkDTO {
+export abstract class UpdateVehicleBodyworkDTO {
   name?: string;
 
   axles?: number;

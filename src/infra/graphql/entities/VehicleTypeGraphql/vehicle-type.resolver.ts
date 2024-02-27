@@ -10,11 +10,10 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRepository';
-import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
+import { VehicleTypeUseCases } from 'app/useCases/VehicleTypeUseCases/VehicleTypeUseCases';
 
 import { VehicleTypeWhereArgs } from 'infra/graphql/entities/VehicleTypeGraphql/Args/WhereVehicleTypeArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -34,25 +33,20 @@ import { VehicleTypeModel } from './vehicle-type.model';
 @Resolver(() => VehicleTypeModel)
 export class VehicleTypeResolver {
   constructor(
-    private vehicleTypeRepository: VehicleTypeRepository,
+    private vehicleTypeUseCase: VehicleTypeUseCases,
     private vehicleBodyworkRepository: VehicleBodyworkRepository,
     private userCase: UserUseCases,
   ) {}
 
   @Query(() => VehicleTypeModel)
   async getVehicleType(@Args() request: GetVehicleTypeArgs) {
-    return this.vehicleTypeRepository.findVehicleType(request);
+    return this.vehicleTypeUseCase.getVehicleType(request);
   }
   @Query(() => [VehicleTypeModel], { nullable: true })
   async getAllVehicleTypes(@Args() args: VehicleTypeWhereArgs) {
-    const vehicleTypes = await this.vehicleTypeRepository.getAllVehicleType({
-      limit: args.limit,
-      offset: args.offset,
-      sort: args.sort,
-      where: args.where,
-    });
+    const vehicleTypes = await this.vehicleTypeUseCase.getAllVehicleType(args);
 
-    return vehicleTypes.length > 0 ? vehicleTypes : null;
+    return vehicleTypes;
   }
   @Mutation(() => VehicleTypeModel)
   async createVehicleType(
@@ -62,9 +56,8 @@ export class VehicleTypeResolver {
     vehicleTypeInput.created_by = user.id;
     vehicleTypeInput.updated_by = user.id;
 
-    const vehicleTypeEntity = new VehicleType(vehicleTypeInput);
-    const type = await this.vehicleTypeRepository.createVehicleType(
-      vehicleTypeEntity,
+    const type = await this.vehicleTypeUseCase.createVehicleType(
+      vehicleTypeInput,
     );
 
     return type;
@@ -76,16 +69,9 @@ export class VehicleTypeResolver {
     @CurrentUser() user: User,
   ) {
     vehicleTypeInput.updated_by = user.id;
-    const vehicleTypeEntity = new VehicleType({
-      bodyWork: vehicleTypeInput.bodyWork,
-      created_by: user.id,
-      name: vehicleTypeInput.name,
-      updated_by: user.id,
-    });
-    const type = await this.vehicleTypeRepository.updateVehicleType(
+    const type = await this.vehicleTypeUseCase.updateVehicleType(
       id,
-      vehicleTypeEntity,
-      vehicleTypeInput.del_body_id,
+      vehicleTypeInput,
     );
 
     return type;

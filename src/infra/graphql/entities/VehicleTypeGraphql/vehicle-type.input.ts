@@ -1,11 +1,16 @@
-import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
+import {
+  Field,
+  HideField,
+  InputType,
+  OmitType,
+  PartialType,
+} from '@nestjs/graphql';
 
 import {
   Allow,
   IsArray,
   IsBoolean,
   IsNotEmpty,
-  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -36,13 +41,11 @@ export class VehicleTypeInput
 }
 
 @InputType()
-export class VehicleTypeUpdateInput extends PartialType(VehicleTypeInput) {
+export class VehicleTypeUpdateInput extends PartialType(
+  OmitType(VehicleTypeInput, ['created_by']),
+) {
   @Field(() => [String], { nullable: true })
-  @IsArray()
-  @IsOptional()
   del_body_id?: string[];
-  @Field()
-  @IsString()
-  @IsNotEmpty()
+  @HideField()
   updated_by: string;
 }

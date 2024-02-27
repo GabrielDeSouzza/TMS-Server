@@ -2644,7 +2644,6 @@ input VehicleTypeUpdateInput {
   body_work_id: [String!]
   del_body_id: [String!]
   name: String
-  updated_by: String!
 }
 
 input VehicleTypeWhereInput {
