@@ -16,12 +16,9 @@ export interface IVehicleBrand {
 }
 
 export class VehicleBrand extends Entity {
-  private props: IVehicleBrand | Partial<IVehicleBrand>;
+  private props: IVehicleBrand;
   constructor(
-    props: Replace<
-      IVehicleBrand | Partial<IVehicleBrand>,
-      { created_at?: Date; updated_at?: Date }
-    >,
+    props: Replace<IVehicleBrand, { created_at?: Date; updated_at?: Date }>,
   ) {
     super();
 

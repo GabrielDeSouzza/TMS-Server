@@ -21,4 +21,6 @@ export class VehicleBrandInput
 }
 
 @InputType()
-export class VehicleBrandUpdateInput extends PartialType(VehicleBrandInput) {}
+export class VehicleBrandUpdateInput extends PartialType(VehicleBrandInput) {
+  updated_by: string;
+}
