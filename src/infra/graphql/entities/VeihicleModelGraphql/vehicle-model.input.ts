@@ -59,4 +59,6 @@ export class VehicleModelInput
 }
 
 @InputType()
-export class VehicleModelUpdateInput extends PartialType(VehicleModelInput) {}
+export class VehicleModelUpdateInput extends PartialType(VehicleModelInput) {
+  updated_by: string;
+}

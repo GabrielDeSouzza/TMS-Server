@@ -18,5 +18,6 @@ import { VehicleBrandResolver } from './vehicle-brand.resolver';
     VehicleBrandResolver,
     VehicleBrandUseCases,
   ],
+  exports: [VehicleBrandUseCases],
 })
 export class VehicleBrandModule {}

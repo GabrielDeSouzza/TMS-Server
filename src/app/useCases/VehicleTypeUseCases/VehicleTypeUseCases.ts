@@ -18,13 +18,18 @@ export class VehicleTypeUseCases {
     private vehicleTypeRepository: VehicleTypeRepository,
     private vehicleBodyWorkUseCase: VehicleBodyworkUseCases,
   ) {}
-  getVehicleType(request: GetVehicleTypeDTO) {
+  async getVehicleType(request: GetVehicleTypeDTO) {
     if (!request.id && !request.name)
       throw new GraphQLError('IS NECESSARY AN ID OR NAME', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
 
-    return this.vehicleTypeRepository.findVehicleType(request);
+    const type = await this.vehicleTypeRepository.findVehicleType(request);
+    if (type) return type;
+
+    throw new GraphQLError('TYPE NOT FOUND', {
+      extensions: { code: HttpStatus.NOT_FOUND },
+    });
   }
   getAllVehicleType(request: FindAllVehicleTypeWhereRequestDTO) {
     return this.vehicleTypeRepository.getAllVehicleType(request);

@@ -9,13 +9,12 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
-import { VehicleModelRepository } from 'domain/repositories/VehicleModelRepository';
-import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
+import { VehicleBrandUseCases } from 'app/useCases/VehicleBrandCases/VehicleBrandUseCases';
+import { VehicleModelUseCases } from 'app/useCases/VehicleModelUseCases/VehihicleModelUseCases';
+import { VehicleTypeUseCases } from 'app/useCases/VehicleTypeUseCases/VehicleTypeUseCases';
 
-import { VehicleModelGraphDTO } from 'infra/graphql/DTO/VehicleModel';
 import { VehicleModelWhereArgs } from 'infra/graphql/entities/VeihicleModelGraphql/Args/WhereVeihicleModelArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
@@ -39,24 +38,19 @@ import { VehicleModelGraphql } from './vehicle-model.model';
 export class VehicleModelResolver {
   constructor(
     private userCase: UserUseCases,
-    private vehicleModelRepository: VehicleModelRepository,
-    private vehicleTypeRepository: VehicleTypeRepository,
-    private vehicleBrandRepository: VehicleBrandRepository,
+    private vehicleModelUseCase: VehicleModelUseCases,
+    private vehicleTypeUseCase: VehicleTypeUseCases,
+    private vehicleBrandUseCase: VehicleBrandUseCases,
   ) {}
   @Query(() => VehicleModelGraphql)
   async getVehicleModel(@Args() request: GetVehicleModelArgs) {
-    return await this.vehicleModelRepository.findVehicleModel(request);
+    return await this.vehicleModelUseCase.getModel(request);
   }
   @Query(() => [VehicleModelGraphql], { nullable: true })
   async getAllVehicleModel(@Args() args: VehicleModelWhereArgs) {
-    const models = await this.vehicleModelRepository.getAllVehicleModel({
-      limit: args.limit,
-      offset: args.offset,
-      sort: args.sort,
-      where: args.where,
-    });
+    const models = await this.vehicleModelUseCase.getAllModels(args);
 
-    return models.length > 0 ? models : null;
+    return models;
   }
   @Mutation(() => VehicleModelGraphql)
   async createVehicleModel(
@@ -65,12 +59,8 @@ export class VehicleModelResolver {
   ) {
     vehicleModelInput.created_by = user.id;
     vehicleModelInput.updated_by = user.id;
-    const vehicleModelEntity =
-      VehicleModelGraphDTO.createInputToEntity(vehicleModelInput);
 
-    return await this.vehicleModelRepository.createVehicleModel(
-      vehicleModelEntity,
-    );
+    return await this.vehicleModelUseCase.createModel(vehicleModelInput);
   }
   @Mutation(() => VehicleModelGraphql)
   async updatedVehicleModel(
@@ -79,13 +69,8 @@ export class VehicleModelResolver {
     @CurrentUser() user: User,
   ) {
     vehicleModelUpdate.updated_by = user.id;
-    const vehicleModelEntity =
-      VehicleModelGraphDTO.updateInputToEntity(vehicleModelUpdate);
 
-    return await this.vehicleModelRepository.updateVehicleModel(
-      id,
-      vehicleModelEntity,
-    );
+    return await this.vehicleModelUseCase.updateModel(id, vehicleModelUpdate);
   }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: VehicleModelGraphql) {
@@ -103,12 +88,12 @@ export class VehicleModelResolver {
   async VehicleType(@Parent() vehicleModel: VehicleModelInput) {
     const { type_id: typeID } = vehicleModel;
 
-    return await this.vehicleTypeRepository.findVehicleType({ id: typeID });
+    return await this.vehicleTypeUseCase.getVehicleType({ id: typeID });
   }
   @ResolveField(() => VehicleBrandReferences)
   async VehicleBrand(@Parent() vehicleModel: VehicleModelInput) {
     const { brand_id: brandId } = vehicleModel;
 
-    return await this.vehicleBrandRepository.findVehicleBrand({ id: brandId });
+    return await this.vehicleBrandUseCase.getVehicleBrand({ id: brandId });
   }
 }
