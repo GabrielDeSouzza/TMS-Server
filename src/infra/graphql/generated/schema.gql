@@ -1004,7 +1004,6 @@ type Mutation {
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createPhysicalCustomer(data: PhysicalCustomerInput!): PhysicalCustomerModel!
   createUSer(createUserInput: UserInput!): UserModel!
-  createVehicle(vehicleInput: VehicleInput!): VehicleCarModel!
   createVehicleBodywork(vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
@@ -1015,7 +1014,6 @@ type Mutation {
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
   updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
-  updateVehicle(id: String!, vehicleInput: VehicleUpdateInput!): VehicleCarModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
   updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
   updatedCompanyVehicle(id: String!, outsourced: ContractOutsoucedDriverUpdateInput!): ContractOutsourcedDriverModel!
@@ -1995,7 +1993,6 @@ type Query {
   getAllOutsourcedVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedVehicleIModel!]!
   getAllOwnDriver(limit: Int! = 25, offset: Int! = 0, sort: OwnDriverOrderByWithRelationInput, where: OwnDriverWhereInput): [OwnDriverModel!]!
   getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerModel!]!
-  getAllVehicle(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleCarModel!]!
   getAllVehicleBodywork(limit: Int! = 25, offset: Int! = 0, sort: VehicleBodyworkOrderByWithRelationInput, where: VehicleBodyworkWhereInput): [VehicleBodyworkModel!]
   getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
@@ -2017,7 +2014,6 @@ type Query {
   getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
   getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel
   getPhysicalCustomer(cpf: String, id: String, naturalPersonId: String, rg: String): PhysicalCustomerModel
-  getVehicle(plate: String, vehicleId: String): VehicleCarModel!
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
   getVehicleBrand(id: String, name: String): VehicleBrandModel!
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
@@ -2450,6 +2446,7 @@ type VehicleCarModel {
   VehicleBrand: VehicleBrandReferences!
   VehicleModel: VehicleModelReferences!
   VehicleType: VehicleTypeModel!
+  antt: String!
   color: String!
   createdUser: UserModelRefereces!
   id: String!
@@ -2462,6 +2459,7 @@ type VehicleCarModel {
 }
 
 input VehicleInput {
+  antt: String!
   color: String!
   model_id: String!
   plate: String!
@@ -2590,12 +2588,12 @@ input VehicleOrderByWithRelationInput {
   OrderProcessing: OrderProcessingOrderByWithRelationInput
   OutsourcedTransportVehicle: OutsourcedTransportVehicleOrderByWithRelationInput
   OutsourcedVehicle: OutsourcedVehicleOrderByWithRelationInput
+  antt: SortOrder
   color: SortOrder
   id: SortOrder
   model_id: SortOrder
   plate: SortOrder
   renavam: SortOrder
-  rntrc_expiration: SortOrder
   year: SortOrder
 }
 
@@ -2669,6 +2667,7 @@ input VehicleTypeWhereInput {
 }
 
 input VehicleUpdateInput {
+  antt: String
   color: String
   model_id: String
   plate: String
@@ -2687,11 +2686,11 @@ input VehicleWhereInput {
   OrderProcessing: OrderProcessingWhereInput
   OutsourcedTransportVehicle: OutsourcedTransportVehicleWhereInput
   OutsourcedVehicle: OutsourcedVehicleWhereInput
+  antt: StringFilter
   color: StringFilter
   id: StringFilter
   model_id: StringFilter
   plate: StringFilter
   renavam: StringFilter
-  rntrc_expiration: StringFilter
   year: StringFilter
 }

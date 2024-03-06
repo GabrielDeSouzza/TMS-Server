@@ -11,7 +11,7 @@ export class VehiclePrismaDto {
       year: vehicle.year,
       color: vehicle.color,
       renavam: vehicle.renavam,
-      rntrc_expiration: vehicle.rntrc_expiration,
+      antt: vehicle.antt,
       id: vehicle.id,
       model_id: vehicle.model_id,
     });
@@ -23,7 +23,7 @@ export class VehiclePrismaDto {
       year: vehicle.year,
       color: vehicle.color,
       renavam: vehicle.renavam,
-      rntrc_expiration: vehicle.rntrc_expiration,
+      antt: vehicle.antt,
       id: vehicle.id,
       model_id: vehicle.model_id,
     };
@@ -37,7 +37,7 @@ export class VehiclePrismaDto {
       year: vehicle.year,
       color: vehicle.color,
       renavam: vehicle.renavam,
-      rntrc_expiration: vehicle.rntrc_expiration,
+      antt: vehicle.antt,
       id: vehicle.id,
       model_id: vehicle.model_id,
     };

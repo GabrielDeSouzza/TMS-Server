@@ -73,7 +73,7 @@ Table vehicles {
   year String [not null]
   color String [not null]
   renavam String [not null]
-  rntrc_expiration String [not null]
+  antt String [not null]
   CompanyVehicle company_vehicles
   OrderProcessing order_processing
   Maintenance maintenance [not null]

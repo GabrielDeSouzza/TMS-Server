@@ -37,7 +37,7 @@ export class OutsourcedTransportVehiclePrismaDTO {
             color: vehicle.color,
             plate: vehicle.plate,
             renavam: vehicle.renavam,
-            rntrc_expiration: vehicle.rntrc_expiration,
+            antt: vehicle.antt,
             year: vehicle.year,
             id: vehicle.id,
             Model: { connect: { id: vehicle.model_id } },
@@ -72,7 +72,7 @@ export class OutsourcedTransportVehiclePrismaDTO {
             color: vehicle.color,
             plate: vehicle.plate,
             renavam: vehicle.renavam,
-            rntrc_expiration: vehicle.rntrc_expiration,
+            antt: vehicle.antt,
             year: vehicle.year,
             Model: vehicle.model_id
               ? { connect: { id: vehicle.model_id } }

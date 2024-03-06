@@ -6,7 +6,7 @@ describe('Vehicle', () => {
       plate: '455445',
       color: 'sdf',
       renavam: '449984944',
-      rntrc_expiration: 'dsa',
+      antt: 'dsa',
       year: '455',
       model_id: 'test',
     });

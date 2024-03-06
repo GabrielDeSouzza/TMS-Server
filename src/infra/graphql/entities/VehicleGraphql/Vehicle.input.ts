@@ -30,6 +30,10 @@ export class VehicleInput implements Omit<IVehicle, 'id'> {
   @IsString()
   @IsNotEmpty()
   model_id: string;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  antt: string;
 }
 @InputType()
 export class VehicleUpdateInput extends PartialType(VehicleInput) {}

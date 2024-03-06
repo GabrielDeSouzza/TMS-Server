@@ -7,7 +7,7 @@ export abstract class CreateVehicleDto {
 
   renavam: string;
 
-  rntrc_expiration: string;
+  antt: string;
 
   model_id: string;
 }

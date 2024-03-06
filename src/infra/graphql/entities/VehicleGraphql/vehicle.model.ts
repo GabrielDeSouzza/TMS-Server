@@ -23,6 +23,8 @@ export class VehicleCarModel implements IVehicle {
   rntrc_expiration: string;
   @Field()
   model_id: string;
+  @Field()
+  antt: string;
   @Field(() => UserModelRefereces)
   updatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

@@ -10,7 +10,7 @@ export class VehicleEntityDTO {
       model_id: data.model_id,
       plate: data.plate,
       renavam: data.renavam,
-      rntrc_expiration: data.rntrc_expiration,
+      antt: data.antt,
       year: data.year,
     });
   }
@@ -21,7 +21,7 @@ export class VehicleEntityDTO {
           model_id: data.model_id,
           plate: data.plate,
           renavam: data.renavam,
-          rntrc_expiration: data.rntrc_expiration,
+          antt: data.antt,
           year: data.year,
         })
       : null;

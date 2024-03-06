@@ -9,13 +9,11 @@ import { VehicleModelService } from 'infra/database/prisma/services/vehicle-mode
 import { VehicleService } from 'infra/database/prisma/services/vehicle.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
-import { VehicleGraphqlResolver } from './Vehicle.resolver';
 
 @Module({
   providers: [
     { provide: VehicleRepository, useClass: VehicleService },
     { provide: VehicleModelRepository, useClass: VehicleModelService },
-    VehicleGraphqlResolver,
     VehicleUseCases,
   ],
   imports: [GraphqlCenterModule],

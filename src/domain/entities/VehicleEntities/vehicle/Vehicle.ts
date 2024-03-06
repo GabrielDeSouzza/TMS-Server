@@ -12,7 +12,7 @@ export interface IVehicle {
   year: string;
   color: string;
   renavam: string;
-  rntrc_expiration: string;
+  antt: string;
   model_id: string;
 }
 
@@ -53,8 +53,8 @@ export class Vehicle extends Entity {
       { field: this.props.color, fieldName: 'Color', maxLength: 20 },
       { field: this.props.renavam, fieldName: 'Renavam', maxLength: 11 },
       {
-        field: this.props.rntrc_expiration,
-        fieldName: 'Rntrc expitarion',
+        field: this.props.antt,
+        fieldName: 'ANTT',
         maxLength: 4,
       },
       { field: this.props.year, fieldName: 'Year', maxLength: 4 },
@@ -108,11 +108,11 @@ export class Vehicle extends Entity {
     return this.props.renavam;
   }
 
-  public set rntrc_expiration(rntrc_expiration: string) {
-    this.props.rntrc_expiration = rntrc_expiration;
+  public set antt(antt: string) {
+    this.props.antt = antt;
   }
 
-  public get rntrc_expiration(): string {
-    return this.props.rntrc_expiration;
+  public get antt(): string {
+    return this.props.antt;
   }
 }
