@@ -48,7 +48,9 @@ export class ContractOutsoucedDriverResolver {
     );
   }
   @Query(() => [ContractOutsourcedDriverModel])
-  async getAllCompanyVehicle(@Args() args: ContractOutsourcedDriverWhereArgs) {
+  async getAllContractOutsourcedDriver(
+    @Args() args: ContractOutsourcedDriverWhereArgs,
+  ) {
     return await this.contractOutsourcedDriverUseCases.getAllContractOutsourcedDriver(
       {
         limit: args.limit,
@@ -59,7 +61,7 @@ export class ContractOutsoucedDriverResolver {
     );
   }
   @Mutation(() => ContractOutsourcedDriverModel)
-  async createCompanyVehicle(
+  async createContractOutsourcedDriver(
     @Args('CompanyVehicleInput')
     contractOutsourced: ContractOutsourcedDriverInput,
     @CurrentUser() user: User,
@@ -72,7 +74,7 @@ export class ContractOutsoucedDriverResolver {
     );
   }
   @Mutation(() => ContractOutsourcedDriverModel)
-  async updatedCompanyVehicle(
+  async updatedContractOutsourcedDriver(
     @Args('id') id: string,
     @Args('outsourced') contract: ContractOutsoucedDriverUpdateInput,
     @CurrentUser() user: User,

@@ -14,6 +14,8 @@ export class VehiclePrismaDto {
       antt: vehicle.antt,
       id: vehicle.id,
       model_id: vehicle.model_id,
+      isIpvaPaid: vehicle.is_ipva_paid,
+      registration: vehicle.registration,
     });
   }
 
@@ -26,6 +28,8 @@ export class VehiclePrismaDto {
       antt: vehicle.antt,
       id: vehicle.id,
       model_id: vehicle.model_id,
+      is_ipva_paid: vehicle.isIpvaPaid,
+      registration: vehicle.registration,
     };
   }
 
@@ -38,8 +42,9 @@ export class VehiclePrismaDto {
       color: vehicle.color,
       renavam: vehicle.renavam,
       antt: vehicle.antt,
-      id: vehicle.id,
       model_id: vehicle.model_id,
+      is_ipva_paid: vehicle.isIpvaPaid,
+      registration: vehicle.registration,
     };
   }
 }

@@ -39,6 +39,8 @@ export class CompanyVehiclePrismaDTO {
           antt: vehicle.antt,
           year: vehicle.year,
           Model: { connect: { id: vehicle.model_id } },
+          is_ipva_paid: vehicle.isIpvaPaid,
+          registration: vehicle.registration,
         },
       },
     };
@@ -63,6 +65,8 @@ export class CompanyVehiclePrismaDTO {
               antt: vehicle.antt,
               year: vehicle.year,
               model_id: vehicle.model_id,
+              is_ipva_paid: vehicle.isIpvaPaid,
+              registration: vehicle.registration,
             },
           }
         : undefined,

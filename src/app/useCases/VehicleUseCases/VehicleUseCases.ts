@@ -20,8 +20,10 @@ export class VehicleUseCases {
       throw new GraphQLError('IS NECESSARY A VEHICLEID OR PLATE', {
         extensions: { code: HttpStatus.BAD_GATEWAY },
       });
+    const vehicle = await this.vehicleRepositoty.findVehicle(request);
+    console.log(vehicle);
 
-    return this.vehicleRepositoty.findVehicle(request);
+    return vehicle;
   }
   async getAllVehicle(request: FindAllVehicleWhereRequestDTO) {
     return this.vehicleRepositoty.getAllVehicle(request);

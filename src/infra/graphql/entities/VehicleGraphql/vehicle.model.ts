@@ -10,6 +10,10 @@ import { VehicleModelReferences } from '../VeihicleModelGraphql/vehicle-model.mo
 @ObjectType()
 export class VehicleCarModel implements IVehicle {
   @Field()
+  isIpvaPaid: boolean;
+  @Field(() => Date)
+  registration: Date;
+  @Field()
   id: string;
   @Field()
   plate: string;
@@ -19,8 +23,6 @@ export class VehicleCarModel implements IVehicle {
   color: string;
   @Field()
   renavam: string;
-  @Field()
-  rntrc_expiration: string;
   @Field()
   model_id: string;
   @Field()

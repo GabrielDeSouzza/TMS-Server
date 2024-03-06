@@ -74,6 +74,8 @@ Table vehicles {
   color String [not null]
   renavam String [not null]
   antt String [not null]
+  registration DateTime [not null]
+  is_ipva_paid Boolean [not null]
   CompanyVehicle company_vehicles
   OrderProcessing order_processing
   Maintenance maintenance [not null]

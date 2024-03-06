@@ -1,6 +1,7 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
 
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsDate, IsNotEmpty, IsString } from 'class-validator';
 
 import { type IVehicle } from 'domain/entities/VehicleEntities/vehicle/Vehicle';
 
@@ -25,15 +26,19 @@ export class VehicleInput implements Omit<IVehicle, 'id'> {
   @Field()
   @IsString()
   @IsNotEmpty()
-  rntrc_expiration: string;
-  @Field()
-  @IsString()
-  @IsNotEmpty()
   model_id: string;
   @Field()
   @IsString()
   @IsNotEmpty()
   antt: string;
+  @Field()
+  @IsBoolean()
+  @IsNotEmpty()
+  isIpvaPaid: boolean;
+  @Field(() => Date)
+  @Type(() => Date)
+  @IsDate()
+  registration: Date;
 }
 @InputType()
 export class VehicleUpdateInput extends PartialType(VehicleInput) {}

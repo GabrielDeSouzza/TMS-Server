@@ -9,10 +9,11 @@ import { CompanyVehicleServicePrisma } from 'infra/database/prisma/services/comp
 import { VehicleService } from 'infra/database/prisma/services/vehicle.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { VehicleModule } from '../VehicleGraphql/Vehicle.module';
 import { CompanyVehicleResolver } from './CompanyVehicle.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule],
+  imports: [GraphqlCenterModule, VehicleModule],
   providers: [
     {
       provide: CompanyVehicleRepository,

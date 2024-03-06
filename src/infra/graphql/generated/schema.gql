@@ -202,6 +202,12 @@ type CompanyVehicleIModel {
   vehicle_id: String!
 }
 
+input CompanyVehicleInput {
+  Vehicle: VehicleInput
+  carrier_company_id: String!
+  vehicle_id: String
+}
+
 input CompanyVehicleListRelationFilter {
   every: CompanyVehicleWhereInput
   none: CompanyVehicleWhereInput
@@ -227,6 +233,12 @@ input CompanyVehicleOrderByWithRelationInput {
   updated_at: SortOrder
   updated_by: SortOrder
   vehicle_id: SortOrder
+}
+
+input CompanyVehicleUpdateInput {
+  Vehicle: VehicleUpdateInput!
+  carrier_company_id: String
+  vehicle_id: String
 }
 
 input CompanyVehicleWhereInput {
@@ -989,7 +1001,8 @@ input MaintenanceWhereInput {
 type Mutation {
   createCarrierCompany(data: CarrierCompanyInput!): CarrierCompanyModel!
   createCiotForLegalClient(ciotForLegalClientInput: CiotForLegalClientInput!): CiotForLegalClientModel!
-  createCompanyVehicle(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
+  createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
+  createContractOutsourcedDriver(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
   createInvoiceForLegalClient(invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createLegalClientMerchandise(legalClientMerchandiseInput: LegalClientMerchandiseInput!): LegalClientMerchandiseModel!
@@ -1016,7 +1029,8 @@ type Mutation {
   updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
   updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
-  updatedCompanyVehicle(id: String!, outsourced: ContractOutsoucedDriverUpdateInput!): ContractOutsourcedDriverModel!
+  updatedCompanyVehicle(id: String!, outsourced: CompanyVehicleUpdateInput!): CompanyVehicleIModel!
+  updatedContractOutsourcedDriver(id: String!, outsourced: ContractOutsoucedDriverUpdateInput!): ContractOutsourcedDriverModel!
   updatedOutsourcedVehicle(id: String!, outsourced: OutsourcedVehicleUpdateInput!): OutsourcedVehicleIModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelUpdateInput!): VehicleModelGraphql!
@@ -1979,7 +1993,8 @@ input PhysicalCustomerWhereInput {
 type Query {
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]
   getAllCiotForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: CiotForLegalClientOrderByWithRelationInput, where: CiotForLegalClientWhereInput): [CiotForLegalClientModel!]
-  getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
+  getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!
+  getAllContractOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
   getAllInvoiceForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [InvoiceForLegalClientModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
   getAllLegalClientMerchandise(limit: Int! = 25, offset: Int! = 0, sort: LegalClientMerchandiseOrderByWithRelationInput, where: LegalClientMerchandiseWhereInput): [LegalClientMerchandiseModel!]
@@ -2450,10 +2465,11 @@ type VehicleCarModel {
   color: String!
   createdUser: UserModelRefereces!
   id: String!
+  isIpvaPaid: Boolean!
   model_id: String!
   plate: String!
+  registration: Timestamp!
   renavam: String!
-  rntrc_expiration: String!
   updatedUser: UserModelRefereces!
   year: String!
 }
@@ -2461,10 +2477,11 @@ type VehicleCarModel {
 input VehicleInput {
   antt: String!
   color: String!
+  isIpvaPaid: Boolean!
   model_id: String!
   plate: String!
+  registration: Timestamp!
   renavam: String!
-  rntrc_expiration: String!
   year: String!
 }
 
@@ -2591,8 +2608,10 @@ input VehicleOrderByWithRelationInput {
   antt: SortOrder
   color: SortOrder
   id: SortOrder
+  is_ipva_paid: SortOrder
   model_id: SortOrder
   plate: SortOrder
+  registration: SortOrder
   renavam: SortOrder
   year: SortOrder
 }
@@ -2669,10 +2688,11 @@ input VehicleTypeWhereInput {
 input VehicleUpdateInput {
   antt: String
   color: String
+  isIpvaPaid: Boolean
   model_id: String
   plate: String
+  registration: Timestamp
   renavam: String
-  rntrc_expiration: String
   year: String
 }
 
@@ -2689,8 +2709,10 @@ input VehicleWhereInput {
   antt: StringFilter
   color: StringFilter
   id: StringFilter
+  is_ipva_paid: BoolFilter
   model_id: StringFilter
   plate: StringFilter
+  registration: DateTimeFilter
   renavam: StringFilter
   year: StringFilter
 }

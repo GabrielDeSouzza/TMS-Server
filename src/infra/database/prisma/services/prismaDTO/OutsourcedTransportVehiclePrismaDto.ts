@@ -41,6 +41,8 @@ export class OutsourcedTransportVehiclePrismaDTO {
             year: vehicle.year,
             id: vehicle.id,
             Model: { connect: { id: vehicle.model_id } },
+            is_ipva_paid: vehicle.isIpvaPaid,
+            registration: vehicle.registration,
           },
         },
         created_at: outsourcedTransportVehicle.created_at,
@@ -74,6 +76,8 @@ export class OutsourcedTransportVehiclePrismaDTO {
             renavam: vehicle.renavam,
             antt: vehicle.antt,
             year: vehicle.year,
+            is_ipva_paid: vehicle.isIpvaPaid,
+            registration: vehicle.registration,
             Model: vehicle.model_id
               ? { connect: { id: vehicle.model_id } }
               : undefined,

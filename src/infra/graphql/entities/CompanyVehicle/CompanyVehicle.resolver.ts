@@ -9,9 +9,9 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { VehicleRepository } from 'domain/repositories/VehicleRepository';
 
 import { CompanyVehicleUseCases } from 'app/useCases/CompanyVehicleUseCases/CompanyVehicleUseCases';
+import { VehicleUseCases } from 'app/useCases/VehicleUseCases/VehicleUseCases';
 
 import { CompanyVehicleWhereArgs } from 'infra/graphql/entities/CompanyVehicle/Args/WhereCompanyVehicleArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -34,7 +34,7 @@ import { CompanyVehicleIModel } from './CompanyVehicle.model';
 export class CompanyVehicleResolver {
   constructor(
     private companyUseCases: CompanyVehicleUseCases,
-    private vehicleRepository: VehicleRepository,
+    private vehicleUseCase: VehicleUseCases,
   ) {}
   @Query(() => CompanyVehicleIModel)
   async getCompanyVehicle(@Args() request: GetCompanVehicleArgs) {
@@ -73,6 +73,6 @@ export class CompanyVehicleResolver {
   async Vehicle(@Parent() outsoucedVehicle: CompanyVehicleInput) {
     const { vehicle_id: vehicleId } = outsoucedVehicle;
 
-    return await this.vehicleRepository.findVehicle({ vehicleId });
+    return await this.vehicleUseCase.getVehicle({ vehicleId: vehicleId });
   }
 }

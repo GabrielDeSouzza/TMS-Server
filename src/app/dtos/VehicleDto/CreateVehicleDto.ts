@@ -10,4 +10,8 @@ export abstract class CreateVehicleDto {
   antt: string;
 
   model_id: string;
+
+  registration: Date;
+
+  isIpvaPaid: boolean;
 }

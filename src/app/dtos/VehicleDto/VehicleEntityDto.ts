@@ -12,6 +12,8 @@ export class VehicleEntityDTO {
       renavam: data.renavam,
       antt: data.antt,
       year: data.year,
+      isIpvaPaid: data.isIpvaPaid,
+      registration: data.registration,
     });
   }
   public static updateEntity(data?: UpdateVehicleDto) {
@@ -23,6 +25,8 @@ export class VehicleEntityDTO {
           renavam: data.renavam,
           antt: data.antt,
           year: data.year,
+          isIpvaPaid: data.isIpvaPaid,
+          registration: data.registration,
         })
       : null;
   }

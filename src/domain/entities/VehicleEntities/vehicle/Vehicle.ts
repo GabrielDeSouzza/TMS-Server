@@ -14,6 +14,8 @@ export interface IVehicle {
   renavam: string;
   antt: string;
   model_id: string;
+  isIpvaPaid: boolean;
+  registration: Date;
 }
 
 export class Vehicle extends Entity {
@@ -55,9 +57,19 @@ export class Vehicle extends Entity {
       {
         field: this.props.antt,
         fieldName: 'ANTT',
-        maxLength: 4,
+        maxLength: 20,
       },
       { field: this.props.year, fieldName: 'Year', maxLength: 4 },
+      {
+        field: this.props.registration,
+        fieldName: 'Registration',
+        maxLength: 100,
+      },
+      {
+        field: this.props.isIpvaPaid,
+        fieldName: 'IS  IPVA PAID',
+        maxLength: 100,
+      },
     );
     this.notification.requiredField('vehicle', fieldsValidation);
   }
@@ -67,6 +79,20 @@ export class Vehicle extends Entity {
   }
   public set id(id: string) {
     this.props.id = id;
+  }
+
+  public get isIpvaPaid(): boolean {
+    return this.props.isIpvaPaid;
+  }
+  public set isIpvaPaid(isIpvaPaid: boolean) {
+    this.props.isIpvaPaid = isIpvaPaid;
+  }
+
+  public get registration(): Date {
+    return this.props.registration;
+  }
+  public set registration(registration: Date) {
+    this.props.registration = registration;
   }
 
   public get model_id(): string {

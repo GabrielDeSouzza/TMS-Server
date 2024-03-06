@@ -97,6 +97,8 @@ model Vehicle {
   color             String
   renavam           String
   antt              String
+  registration      DateTime //licenciamento do veiculo
+  is_ipva_paid      Boolean
   CompanyVehicle    CompanyVehicle?
   OrderProcessing   OrderProcessing?
   Maintenance       Maintenance[]

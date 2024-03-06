@@ -12,7 +12,7 @@ import { VehiclePrismaDto } from './prismaDTO/VehiclePrismaDto';
 @Injectable()
 export class VehicleService implements VehicleRepository {
   async findVehicle(request: GetVehicleDto): Promise<Vehicle> {
-    const vehiclePrisma = await this.prisma.vehicle.findFirstOrThrow({
+    const vehiclePrisma = await this.prisma.vehicle.findFirst({
       where: { OR: [{ id: request.vehicleId }, { plate: request.plate }] },
     });
 
