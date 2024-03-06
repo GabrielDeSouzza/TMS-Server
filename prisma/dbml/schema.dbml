@@ -408,6 +408,7 @@ Table carrier_companies {
   InvoiceForPhysicalClient invoices_physical_client [not null]
   LegalContract legal_Contracts [not null]
   CompanyVehicle company_vehicles [not null]
+  rntrc String [unique, not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users

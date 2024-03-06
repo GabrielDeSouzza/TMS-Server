@@ -5,6 +5,7 @@ import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 export abstract class WhereCarrierCompanyTypeDto extends WhereDTO {
   id?: StringFilterDTO;
   legal_person_id?: StringFilterDTO;
+  rntrc?: StringFilterDTO;
   updated_at?: DateTimeFilterDTO;
   created_at?: DateTimeFilterDTO;
   updated_by?: StringFilterDTO;
@@ -16,6 +17,7 @@ export abstract class SortByCarrierCompanyTypeDTO {
   legal_person_id?: 'asc' | 'desc';
   created_at?: 'asc' | 'desc';
   updated_at?: 'asc' | 'desc';
+  rntrc?: 'asc' | 'desc';
 }
 
 export abstract class FindAllWhereCarrierCompanyRequestType {
@@ -30,4 +32,5 @@ export abstract class getCarrierCompanyData {
   cnpj?: string;
   fantasyName?: string;
   corporateName?: string;
+  rntrc?: string;
 }

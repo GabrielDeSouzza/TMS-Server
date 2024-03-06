@@ -25,6 +25,7 @@ export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
           { LegalPerson: { cnpj: data.cnpj } },
           { LegalPerson: { fantasy_name: data.fantasyName } },
           { LegalPerson: { corporate_name: data.corporateName } },
+          { rntrc: data.rntrc },
         ],
       },
     });

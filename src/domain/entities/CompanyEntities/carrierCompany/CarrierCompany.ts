@@ -9,6 +9,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 export interface ICarrierCompany {
   id?: string;
   legalPersonId: string;
+  rntrc: string;
   updated_at: Date;
   created_at: Date;
   updated_by: string;
@@ -41,11 +42,19 @@ export class CarrierCompany extends Entity {
   validate() {
     const fieldsValidation: Array<IValidationField> =
       new Array<IValidationField>();
-    fieldsValidation.push({
-      field: this.props.legalPersonId,
-      fieldName: 'legalPersonId',
-      maxLength: 1000,
-    });
+    fieldsValidation.push(
+      {
+        field: this.props.legalPersonId,
+        fieldName: 'legalPersonId',
+        maxLength: 1000,
+      },
+      {
+        field: this.props.rntrc,
+        maxLength: 13,
+        minLength: 13,
+        fieldName: 'RNTRC',
+      },
+    );
     this.notification.requiredField('CarrierCompany', fieldsValidation);
   }
 
@@ -54,6 +63,13 @@ export class CarrierCompany extends Entity {
   }
   public set id(id: string) {
     this.props.id = id;
+  }
+
+  public get rntrc(): string {
+    return this.props.rntrc;
+  }
+  public set rntrc(rntrc: string) {
+    this.props.rntrc = rntrc;
   }
 
   public set legalPersonId(legalPersonId: string) {

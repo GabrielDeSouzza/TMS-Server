@@ -6,7 +6,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsObject, IsOptional, IsUUID } from 'class-validator';
+import { Allow, IsObject, IsOptional, IsString, IsUUID } from 'class-validator';
 
 import { type ICarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 
@@ -24,6 +24,9 @@ export class CarrierCompanyInput
   @IsOptional()
   @Field({ nullable: true })
   legalPersonId?: string;
+  @Field()
+  @IsString()
+  rntrc: string;
   @Allow()
   @HideField()
   updated_by: string;

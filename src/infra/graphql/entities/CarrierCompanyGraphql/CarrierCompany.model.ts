@@ -11,6 +11,8 @@ export class CarrierCompanyModel implements ICarrierCompany {
   id: string;
   @Field()
   legalPersonId: string;
+  @Field()
+  rntrc: string;
   @Field(() => Date)
   updated_at: Date;
   @Field(() => Date)

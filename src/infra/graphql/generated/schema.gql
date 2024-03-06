@@ -23,6 +23,7 @@ input BoolFilter {
 input CarrierCompanyInput {
   LegalPerson: LegalPersonInput
   legalPersonId: String
+  rntrc: String!
 }
 
 input CarrierCompanyListRelationFilter {
@@ -39,6 +40,7 @@ type CarrierCompanyModel {
   created_by: String!
   id: String!
   legalPersonId: String!
+  rntrc: String!
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -60,6 +62,7 @@ input CarrierCompanyOrderByWithRelationInput {
   created_by: SortOrder
   id: SortOrder
   legal_person_id: SortOrder
+  rntrc: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
 }
@@ -67,6 +70,7 @@ input CarrierCompanyOrderByWithRelationInput {
 input CarrierCompanyUpdateInput {
   LegalPerson: LegalPersonUpdateInput!
   legalPersonId: String
+  rntrc: String
 }
 
 input CarrierCompanyWhereInput {
@@ -85,6 +89,7 @@ input CarrierCompanyWhereInput {
   created_by: StringFilter
   id: StringFilter
   legal_person_id: StringFilter
+  rntrc: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
@@ -982,7 +987,7 @@ input MaintenanceWhereInput {
 }
 
 type Mutation {
-  createCarrierCompany(carrierCompanyInput: CarrierCompanyInput!): CarrierCompanyModel!
+  createCarrierCompany(data: CarrierCompanyInput!): CarrierCompanyModel!
   createCiotForLegalClient(ciotForLegalClientInput: CiotForLegalClientInput!): CiotForLegalClientModel!
   createCompanyVehicle(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
   createInvoiceForLegalClient(invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
@@ -1005,7 +1010,7 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   login(loginData: AuthInput!): AuthModel!
-  updateCarriercompany(carrierCompanyInput: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
+  updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!

@@ -57,9 +57,10 @@ export class CarrierCompanyUseCases {
     await this.legalPersonUseCase.validatePerson(data.LegalPerson);
 
     const carrierCompany = new CarrierCompany({
-      created_by: data.CarrierCompany.created_by,
-      legalPersonId: data.CarrierCompany.legalPersonId,
-      updated_by: data.CarrierCompany.updated_by,
+      created_by: data.created_by,
+      legalPersonId: data.legalPersonId,
+      updated_by: data.updated_by,
+      rntrc: data.rntrc,
       id: randomUUID(),
     });
     const legalPerson = LegalPersonEntityDto.createEntity(data.LegalPerson);
@@ -67,7 +68,7 @@ export class CarrierCompanyUseCases {
     return this.carrierCompanyRepository.createCarrierCompany(
       carrierCompany,
       legalPerson,
-      data.CarrierCompany.legalPersonId,
+      data.legalPersonId,
     );
   }
   async updateCarierCompany(
@@ -75,7 +76,8 @@ export class CarrierCompanyUseCases {
     request: UpdateCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
     const carrierCompany = new CarrierCompany({
-      updated_by: request.CarrierCompany.updated_by,
+      updated_by: request.updated_by,
+      rntrc: request.rntrc,
       created_by: null,
       legalPersonId: null,
     });

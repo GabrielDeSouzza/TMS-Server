@@ -8,6 +8,7 @@ describe('CarrierCompany', () => {
       updated_by: '5464',
       created_at: new Date(),
       updated_at: new Date(),
+      rntrc: '1234567891024',
     });
 
     expect(carrierCompany).toBeTruthy();

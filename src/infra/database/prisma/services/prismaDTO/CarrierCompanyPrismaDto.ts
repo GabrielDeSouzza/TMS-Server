@@ -17,6 +17,7 @@ export class CarrierCompanyPrismaDTO {
       updated_at: carriercompanyPrisma.updated_at,
       created_by: carriercompanyPrisma.created_by,
       updated_by: carriercompanyPrisma.updated_by,
+      rntrc: carriercompanyPrisma.rntrc,
     });
   }
   public static EntityToCreatePrisma(
@@ -33,6 +34,7 @@ export class CarrierCompanyPrismaDTO {
       const carriercompanyPrisma: Prisma.CarrierCompanyCreateInput = {
         created_at: carriercompany.created_at,
         updated_at: carriercompany.updated_at,
+        rntrc: carriercompany.rntrc,
         CreatedBy: { connect: { id: carriercompany.created_by } },
         UpdatedBy: { connect: { id: carriercompany.updated_by } },
         LegalPerson: {
@@ -68,6 +70,7 @@ export class CarrierCompanyPrismaDTO {
     const carriercompanyUptade: Prisma.CarrierCompanyUpdateInput = {
       updated_at: carriercompany.updated_at,
       UpdatedBy: { connect: { id: carriercompany.updated_by } },
+      rntrc: carriercompany.rntrc,
       LegalPerson: legalPerson
         ? {
             update: {
@@ -82,6 +85,7 @@ export class CarrierCompanyPrismaDTO {
               public_place: legalPerson.public_place,
               state_registration: legalPerson.state_registration,
               uf: legalPerson.uf,
+
               complement: legalPerson.complement,
               created_at: legalPerson.created_at,
               second_phone: legalPerson.second_phone,
@@ -102,6 +106,7 @@ export class CarrierCompanyPrismaDTO {
     const carriercompanyUptade: Prisma.CarrierCompanyCreateInput = {
       updated_at: carrierCompany.updated_at,
       created_at: carrierCompany.created_at,
+      rntrc: carrierCompany.rntrc,
       CreatedBy: { connect: { id: carrierCompany.created_by } },
       UpdatedBy: { connect: { id: carrierCompany.updated_by } },
       LegalPerson: {

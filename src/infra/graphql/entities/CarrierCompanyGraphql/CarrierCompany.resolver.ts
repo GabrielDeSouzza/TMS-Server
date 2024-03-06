@@ -60,29 +60,26 @@ export class CarrierCompanyResolver {
   }
   @Mutation(() => CarrierCompanyModel)
   async createCarrierCompany(
-    @Args('carrierCompanyInput') carrierCompanyInput: CarrierCompanyInput,
+    @Args('data') carrierCompanyInput: CarrierCompanyInput,
     @CurrentUser() user: User,
   ) {
     carrierCompanyInput.created_by = user.id;
     carrierCompanyInput.updated_by = user.id;
 
-    return this.carrierCompanyUseCase.createCarrierCompany({
-      CarrierCompany: carrierCompanyInput,
-      LegalPerson: carrierCompanyInput.LegalPerson,
-    });
+    return this.carrierCompanyUseCase.createCarrierCompany(carrierCompanyInput);
   }
   @Mutation(() => CarrierCompanyModel)
   async updateCarriercompany(
     @Args('id') id: string,
-    @Args('carrierCompanyInput') carrierCompanyInput: CarrierCompanyUpdateInput,
+    @Args('data') carrierCompanyInput: CarrierCompanyUpdateInput,
     @CurrentUser() user: User,
   ) {
     carrierCompanyInput.updated_by = user.id;
 
-    return await this.carrierCompanyUseCase.updateCarierCompany(id, {
-      CarrierCompany: carrierCompanyInput,
-      LegalPerson: carrierCompanyInput.LegalPerson,
-    });
+    return await this.carrierCompanyUseCase.updateCarierCompany(
+      id,
+      carrierCompanyInput,
+    );
   }
   @ResolveField(() => LegalPersonModel)
   async LegalPerson(

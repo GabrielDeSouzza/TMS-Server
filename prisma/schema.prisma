@@ -480,14 +480,14 @@ model LegalPerson {
 }
 
 model CarrierCompany {
-  id                       String                     @id @default(uuid())
-  Ciot                     CiotForPhysicalClient[]
-  LegalPerson              LegalPerson                @relation(fields: [legal_person_id], references: [id])
-  legal_person_id          String                     @unique
-  InvoiceForPhysicalClient InvoiceForPhysicalClient[]
-  LegalContract            LegalContract[]
-  CompanyVehicle           CompanyVehicle[]
-
+  id                                 String                               @id @default(uuid())
+  Ciot                               CiotForPhysicalClient[]
+  LegalPerson                        LegalPerson                          @relation(fields: [legal_person_id], references: [id])
+  legal_person_id                    String                               @unique
+  InvoiceForPhysicalClient           InvoiceForPhysicalClient[]
+  LegalContract                      LegalContract[]
+  CompanyVehicle                     CompanyVehicle[]
+  rntrc                             String                               @unique
   created_at                         DateTime                             @default(now())
   updated_at                         DateTime                             @default(now())
   CreatedBy                          User?                                @relation("created_by", fields: [created_by], references: [id])
