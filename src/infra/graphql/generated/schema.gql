@@ -50,7 +50,6 @@ input CarrierCompanyOrderByRelationAggregateInput {
 }
 
 input CarrierCompanyOrderByWithRelationInput {
-  Ciot: CiotForPhysicalClientOrderByRelationAggregateInput
   CompanyVehicle: CompanyVehicleOrderByRelationAggregateInput
   CreatedBy: UserOrderByWithRelationInput
   InvoiceForPhysicalClient: InvoiceForPhysicalClientOrderByRelationAggregateInput
@@ -75,7 +74,6 @@ input CarrierCompanyUpdateInput {
 
 input CarrierCompanyWhereInput {
   AND: [CarrierCompanyWhereInput!]
-  Ciot: CiotForPhysicalClientListRelationFilter
   CompanyVehicle: CompanyVehicleListRelationFilter
   CreatedBy: UserWhereInput
   InvoiceForPhysicalClient: InvoiceForPhysicalClientListRelationFilter
@@ -157,35 +155,6 @@ input CiotForLegalClientWhereInput {
   emission_date: DateTimeFilter
   id: StringFilter
   legal_contract_id: StringFilter
-  updated_at: DateTimeFilter
-  updated_by: StringFilter
-}
-
-input CiotForPhysicalClientListRelationFilter {
-  every: CiotForPhysicalClientWhereInput
-  none: CiotForPhysicalClientWhereInput
-  some: CiotForPhysicalClientWhereInput
-}
-
-input CiotForPhysicalClientOrderByRelationAggregateInput {
-  _count: SortOrder
-}
-
-input CiotForPhysicalClientWhereInput {
-  AND: [CiotForPhysicalClientWhereInput!]
-  CarrierCompany: CarrierCompanyWhereInput
-  CreatedBy: UserWhereInput
-  NOT: [CiotForPhysicalClientWhereInput!]
-  OR: [CiotForPhysicalClientWhereInput!]
-  PhysycalContract: PhysicalContractWhereInput
-  UpdatedBy: UserWhereInput
-  carrier_id: StringFilter
-  ciot: StringFilter
-  created_at: DateTimeFilter
-  created_by: StringFilter
-  emission_date: DateTimeFilter
-  id: StringFilter
-  physycalContractId: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
@@ -1016,6 +985,8 @@ type Mutation {
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createPhysicalCustomer(data: PhysicalCustomerInput!): PhysicalCustomerModel!
+  createPhysicalCustomerMerchandise(data: PhysicalCustomerMerchandiseInput!): PhysicalCustomerMerchandiseModel!
+  createPhysicalCustomerOrder(physicalCustomerOrderInput: PhysicalCustomerOrderInput!): PhysicalCustomerOrderModel!
   createUSer(createUserInput: UserInput!): UserModel!
   createVehicleBodywork(vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
@@ -1026,6 +997,7 @@ type Mutation {
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
+  updatePhysicalCustomerMerchandise(data: PhysicalCustomerMerchandiseUpdateInput!, id: String!): PhysicalCustomerMerchandiseModel!
   updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
   updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
@@ -1044,6 +1016,7 @@ type Mutation {
   updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
   updateoutsourcedTransportCompanyDriver(data: OutsourcedTransportCompanyDriverUpdateInput!, id: String!): OutsourcedTransportCompanyDriverModel!
   updateoutsourcedTransportVehicle(id: String!, outsourcedTransportVehicleInput: OutsourcedTransportVehicleUpdateInput!): OutsourcedTransportVehicleModel!
+  updatephysicalCustomerOrder(id: String!, physicalCustomerOrderInput: PhysicalCustomerOrderUpdateInput!): PhysicalCustomerOrderModel!
 }
 
 input NaturalPersonInput {
@@ -1835,25 +1808,6 @@ input OwnDriverWhereInput {
   updated_by: StringFilter
 }
 
-input PhysicalContractOrderByWithRelationInput {
-  Ciot: CiotForPhysicalClientOrderByRelationAggregateInput
-  PhysicalCustomer: PhysicalCustomerOrderByWithRelationInput
-  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByRelationAggregateInput
-  id: SortOrder
-  physicalCustomerId: SortOrder
-}
-
-input PhysicalContractWhereInput {
-  AND: [PhysicalContractWhereInput!]
-  Ciot: CiotForPhysicalClientListRelationFilter
-  NOT: [PhysicalContractWhereInput!]
-  OR: [PhysicalContractWhereInput!]
-  PhysicalCustomer: PhysicalCustomerWhereInput
-  PhysicalCustomerOrder: PhysicalCustomerOrderListRelationFilter
-  id: StringFilter
-  physicalCustomerId: StringFilter
-}
-
 input PhysicalCustomerInput {
   NaturalPerson: NaturalPersonInput
   branch: String
@@ -1866,27 +1820,71 @@ input PhysicalCustomerListRelationFilter {
   some: PhysicalCustomerWhereInput
 }
 
+input PhysicalCustomerMerchandiseInput {
+  amount: Int!
+  codMerchandise: String!
+  description: String!
+  mass: Float!
+  physicalCustomerOrderId: String!
+  value: Float!
+  volume: Float!
+}
+
 input PhysicalCustomerMerchandiseListRelationFilter {
   every: PhysicalCustomerMerchandiseWhereInput
   none: PhysicalCustomerMerchandiseWhereInput
   some: PhysicalCustomerMerchandiseWhereInput
 }
 
+type PhysicalCustomerMerchandiseModel {
+  LegalClientOrder: LegalClientOrderModel!
+  amount: Int!
+  codMerchandise: String!
+  description: String!
+  id: String!
+  mass: Float!
+  physicalCustomerOrderId: String!
+  value: Float!
+  volume: Float!
+}
+
 input PhysicalCustomerMerchandiseOrderByRelationAggregateInput {
   _count: SortOrder
+}
+
+input PhysicalCustomerMerchandiseOrderByWithRelationInput {
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByWithRelationInput
+  amount: SortOrder
+  codMerchandise: SortOrder
+  description: SortOrder
+  id: SortOrder
+  mass: SortOrder
+  physicalCustomerOrderId: SortOrder
+  value: SortOrder
+  volume: SortOrder
+}
+
+input PhysicalCustomerMerchandiseUpdateInput {
+  amount: Int
+  codMerchandise: String
+  description: String
+  mass: Float
+  physicalCustomerOrderId: String
+  value: Float
+  volume: Float
 }
 
 input PhysicalCustomerMerchandiseWhereInput {
   AND: [PhysicalCustomerMerchandiseWhereInput!]
   NOT: [PhysicalCustomerMerchandiseWhereInput!]
   OR: [PhysicalCustomerMerchandiseWhereInput!]
-  PhysicalCustomerOrderm: PhysicalCustomerOrderWhereInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderWhereInput
   amount: IntFilter
   codMerchandise: StringFilter
   description: StringFilter
   id: StringFilter
   mass: FloatFilter
-  physicalCustomerOrdermId: StringFilter
+  physicalCustomerOrderId: StringFilter
   value: FloatFilter
   volume: FloatFilter
 }
@@ -1911,7 +1909,7 @@ input PhysicalCustomerOrderByRelationAggregateInput {
 input PhysicalCustomerOrderByWithRelationInput {
   CreatedBy: UserOrderByWithRelationInput
   NaturalPerson: NaturalPersonOrderByWithRelationInput
-  PhysicalContract: PhysicalContractOrderByWithRelationInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByRelationAggregateInput
   UpdatedBy: UserOrderByWithRelationInput
   branch: SortOrder
   created_at: SortOrder
@@ -1922,10 +1920,28 @@ input PhysicalCustomerOrderByWithRelationInput {
   updated_by: SortOrder
 }
 
+input PhysicalCustomerOrderInput {
+  physicalCustomerId: String!
+}
+
 input PhysicalCustomerOrderListRelationFilter {
   every: PhysicalCustomerOrderWhereInput
   none: PhysicalCustomerOrderWhereInput
   some: PhysicalCustomerOrderWhereInput
+}
+
+type PhysicalCustomerOrderModel {
+  CreatedUser: UserModelRefereces!
+  Merchandises: [PhysicalCustomerMerchandiseModel!]!
+  PhysicalCustomer: PhysicalCustomerModel!
+  UpdatedUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  order: String!
+  physicalCustomerId: String!
+  updated_at: Timestamp!
+  updated_by: String!
 }
 
 input PhysicalCustomerOrderOrderByRelationAggregateInput {
@@ -1935,17 +1951,21 @@ input PhysicalCustomerOrderOrderByRelationAggregateInput {
 input PhysicalCustomerOrderOrderByWithRelationInput {
   CreatedBy: UserOrderByWithRelationInput
   Invoice: InvoiceForPhysicalClientOrderByRelationAggregateInput
-  PhysicalContract: PhysicalContractOrderByWithRelationInput
+  PhysicalCustomer: PhysicalCustomerOrderByWithRelationInput
   PhysicalCustomerMerchandise: PhysicalCustomerMerchandiseOrderByRelationAggregateInput
   Route: RoutesOrderByRelationAggregateInput
   UpdatedBy: UserOrderByWithRelationInput
-  contractId: SortOrder
   created_at: SortOrder
   created_by: SortOrder
   id: SortOrder
   order: SortOrder
+  physical_customer_id: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
+}
+
+input PhysicalCustomerOrderUpdateInput {
+  physicalCustomerId: String
 }
 
 input PhysicalCustomerOrderWhereInput {
@@ -1954,15 +1974,15 @@ input PhysicalCustomerOrderWhereInput {
   Invoice: InvoiceForPhysicalClientListRelationFilter
   NOT: [PhysicalCustomerOrderWhereInput!]
   OR: [PhysicalCustomerOrderWhereInput!]
-  PhysicalContract: PhysicalContractWhereInput
+  PhysicalCustomer: PhysicalCustomerWhereInput
   PhysicalCustomerMerchandise: PhysicalCustomerMerchandiseListRelationFilter
   Route: RoutesListRelationFilter
   UpdatedBy: UserWhereInput
-  contractId: StringFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
   order: StringFilter
+  physical_customer_id: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
@@ -1979,7 +1999,7 @@ input PhysicalCustomerWhereInput {
   NOT: [PhysicalCustomerWhereInput!]
   NaturalPerson: NaturalPersonWhereInput
   OR: [PhysicalCustomerWhereInput!]
-  PhysicalContract: PhysicalContractWhereInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderListRelationFilter
   UpdatedBy: UserWhereInput
   branch: StringNullableFilter
   created_at: DateTimeFilter
@@ -2008,6 +2028,8 @@ type Query {
   getAllOutsourcedVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedVehicleIModel!]!
   getAllOwnDriver(limit: Int! = 25, offset: Int! = 0, sort: OwnDriverOrderByWithRelationInput, where: OwnDriverWhereInput): [OwnDriverModel!]!
   getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerModel!]!
+  getAllPhysicalCustomerMerchandise(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerMerchandiseOrderByWithRelationInput, where: PhysicalCustomerMerchandiseWhereInput): [PhysicalCustomerMerchandiseModel!]
+  getAllPhysicalCustomerOrder(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderOrderByWithRelationInput, where: PhysicalCustomerOrderWhereInput): [PhysicalCustomerOrderModel!]
   getAllVehicleBodywork(limit: Int! = 25, offset: Int! = 0, sort: VehicleBodyworkOrderByWithRelationInput, where: VehicleBodyworkWhereInput): [VehicleBodyworkModel!]
   getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
@@ -2029,6 +2051,8 @@ type Query {
   getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
   getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel
   getPhysicalCustomer(cpf: String, id: String, naturalPersonId: String, rg: String): PhysicalCustomerModel
+  getPhysicalCustomerMerchandiseModel(codMerchandise: String, id: String): PhysicalCustomerMerchandiseModel!
+  getPhysicalCustomerOrderModel(id: String, order: String): PhysicalCustomerOrderModel
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
   getVehicleBrand(id: String, name: String): VehicleBrandModel!
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
@@ -2189,8 +2213,6 @@ input UserOrderByWithRelationInput {
   CarrierCompanyUpdatedBy: CarrierCompanyOrderByRelationAggregateInput
   CiotForLegalCreatedByClient: CiotForLegalClientOrderByRelationAggregateInput
   CiotForLegalUpdatedByClient: CiotForLegalClientOrderByRelationAggregateInput
-  CiotForPhysicalClientCreatedBy: CiotForPhysicalClientOrderByRelationAggregateInput
-  CiotForPhysicalClientUpdatedBy: CiotForPhysicalClientOrderByRelationAggregateInput
   CompanyVehicleCreatedBy: CompanyVehicleOrderByRelationAggregateInput
   CompanyVehicleUpdatedBy: CompanyVehicleOrderByRelationAggregateInput
   ContractOutsourcedDriverCreatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
@@ -2262,8 +2284,6 @@ input UserWhereInput {
   CarrierCompanyUpdatedBy: CarrierCompanyListRelationFilter
   CiotForLegalCreatedByClient: CiotForLegalClientListRelationFilter
   CiotForLegalUpdatedByClient: CiotForLegalClientListRelationFilter
-  CiotForPhysicalClientCreatedBy: CiotForPhysicalClientListRelationFilter
-  CiotForPhysicalClientUpdatedBy: CiotForPhysicalClientListRelationFilter
   CompanyVehicleCreatedBy: CompanyVehicleListRelationFilter
   CompanyVehicleUpdatedBy: CompanyVehicleListRelationFilter
   ContractOutsourcedDriverCreatedBy: ContractOutsourcedDriverListRelationFilter

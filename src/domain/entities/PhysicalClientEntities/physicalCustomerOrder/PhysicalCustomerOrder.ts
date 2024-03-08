@@ -9,8 +9,7 @@ import { NotificationError } from '../../../shared/notification/NotificationErro
 export interface IPhysicalCustomerOrder {
   id?: string;
   order: string;
-  physical_contract_id: string;
-
+  physicalCustomerId: string;
   updated_at: Date;
   created_at: Date;
   updated_by: string;
@@ -53,9 +52,9 @@ export class PhysicalCustomerOrder extends Entity {
         maxLength: 999,
       },
       {
-        field: this.props.physical_contract_id,
-        fieldName: 'Physical Contract',
-        maxLength: 200,
+        field: this.props.physicalCustomerId,
+        fieldName: 'Physical Customer Id',
+        maxLength: 999,
       },
       {
         field: this.props.created_by,
@@ -93,13 +92,12 @@ export class PhysicalCustomerOrder extends Entity {
   set order(order: string) {
     this.props.order = order;
   }
-
-  get physical_contract_id(): string {
-    return this.props.physical_contract_id;
+  get physicalCustomerId(): string {
+    return this.props.physicalCustomerId;
   }
 
-  set physical_contract_id(physical_contract_id: string) {
-    this.props.physical_contract_id = physical_contract_id;
+  set physicalCustomerId(physicalCustomerId: string) {
+    this.props.physicalCustomerId = physicalCustomerId;
   }
 
   get updated_at(): Date {

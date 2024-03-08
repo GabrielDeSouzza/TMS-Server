@@ -14,11 +14,7 @@ export interface IPhysicalCustomerMerchandise {
   mass: number;
   volume: number;
   value: number;
-  physicalCustomerOrdemId: string;
-  updated_at: Date;
-  created_at: Date;
-  updated_by: string;
-  created_by: string;
+  physicalCustomerOrderId: string;
 }
 
 export class PhysicalCustomerMerchandise extends Entity {
@@ -35,8 +31,6 @@ export class PhysicalCustomerMerchandise extends Entity {
     this.props = {
       ...props,
       id: props.id ?? randomUUID(),
-      updated_at: new Date(),
-      created_at: props.created_at ?? new Date(),
     };
     this.validate();
 
@@ -77,7 +71,7 @@ export class PhysicalCustomerMerchandise extends Entity {
         maxLength: 100_000,
       },
       {
-        field: this.props.physicalCustomerOrdemId,
+        field: this.props.physicalCustomerOrderId,
         fieldName: 'Physical Customer Order',
         maxLength: 200,
       },
@@ -137,35 +131,11 @@ export class PhysicalCustomerMerchandise extends Entity {
     this.props.value = value;
   }
 
-  get physicalCustomerOrdemId(): string {
-    return this.props.physicalCustomerOrdemId;
+  get physicalCustomerOrderId(): string {
+    return this.props.physicalCustomerOrderId;
   }
 
-  set physicalCustomerOrdemId(physicalCustomerOrdemId: string) {
-    this.props.physicalCustomerOrdemId = physicalCustomerOrdemId;
-  }
-
-  get updated_at(): Date {
-    return this.props.updated_at;
-  }
-
-  get created_at(): Date {
-    return this.props.created_at;
-  }
-
-  get updated_by(): string {
-    return this.props.updated_by;
-  }
-
-  set updated_by(updated_by: string) {
-    this.props.updated_by = updated_by;
-  }
-
-  get created_by(): string {
-    return this.props.created_by;
-  }
-
-  set created_by(created_by: string) {
-    this.props.created_by = created_by;
+  set physicalCustomerOrderId(physicalCustomerOrderId: string) {
+    this.props.physicalCustomerOrderId = physicalCustomerOrderId;
   }
 }

@@ -1,4 +1,4 @@
-export abstract class GetLegalClientMerchandisesDTO {
+export abstract class GetLegalClientMerchandiseDTO {
   id?: string;
   codMerchandise?: string;
 }

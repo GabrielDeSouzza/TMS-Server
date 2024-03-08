@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
-import { type GetLegalClientMerchandisesDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientMerchandisesDto';
+import { type GetLegalClientMerchandiseDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientMerchandisesDto';
 import { LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 import { LegalClientMerchandiseRepository } from 'domain/repositories/LegalClientMerchandise.repository';
 
@@ -15,7 +15,7 @@ export class LegalClientMerchandiseUseCases {
   constructor(
     private legalClientMerchandiseRepository: LegalClientMerchandiseRepository,
   ) {}
-  async getLegalClientMerchandises(request: GetLegalClientMerchandisesDTO) {
+  async getLegalClientMerchandises(request: GetLegalClientMerchandiseDTO) {
     if (!request.codMerchandise && !request.id) {
       throw new GraphQLError('IS NECESSARY AN ID OR COD MERCHANDISE', {
         extensions: { code: HttpStatus.BAD_REQUEST },

@@ -35,8 +35,6 @@ Table users {
   PhysicalCustomerUpdatedBy physical_customers [not null]
   InvoiceForLegalClientCreatedBy invoices_legal_client [not null]
   InvoiceForLegalClientUpdatedBy invoices_legal_client [not null]
-  CiotForPhysicalClientCreatedBy ciots_for_physical_clients [not null]
-  CiotForPhysicalClientUpdatedBy ciots_for_physical_clients [not null]
   OrderProcessingCreatedBy order_processing [not null]
   OrderProcessingUpdatedBy order_processing [not null]
   MaintenanceCreatedBy maintenance [not null]
@@ -296,20 +294,12 @@ Table physical_customers {
   branch String
   NaturalPerson natural_people [not null]
   natural_person_id String [unique, not null]
-  PhysicalContract physical_Contracts
   CreatedBy users [not null]
   created_by String [not null]
   UpdatedBy users [not null]
   updated_by String [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
-}
-
-Table physical_Contracts {
-  id String [pk]
-  PhysicalCustomer physical_customers [not null]
-  physicalCustomerId String [unique, not null]
-  Ciot ciots_for_physical_clients [not null]
   PhysicalCustomerOrder physical_orders [not null]
 }
 
@@ -321,8 +311,8 @@ Table physical_merchandise {
   mass Float [not null]
   volume Float [not null]
   value Float [not null]
-  PhysicalCustomerOrderm physical_orders [not null]
-  physicalCustomerOrdermId String [not null]
+  PhysicalCustomerOrder physical_orders [not null]
+  physicalCustomerOrderId String [not null]
 }
 
 Table physical_orders {
@@ -332,8 +322,8 @@ Table physical_orders {
   Route lroutes [not null]
   PhysicalCustomerMerchandise physical_merchandise [not null]
   Invoice invoices_physical_client [not null]
-  contractId String [not null]
-  PhysicalContract physical_Contracts [not null]
+  physical_customer_id String [not null]
+  PhysicalCustomer physical_customers [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users [not null]
@@ -362,22 +352,6 @@ Table invoices_physical_client {
   physicalCustomerOrderId String [not null]
 }
 
-Table ciots_for_physical_clients {
-  id String [pk]
-  ciot String [unique, not null]
-  emission_date DateTime [default: `now()`, not null]
-  CarrierCompany carrier_companies [not null]
-  carrier_id String [not null]
-  PhysycalContract physical_Contracts [not null]
-  physycalContractId String [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
-  CreatedBy users
-  created_by String [not null]
-  UpdatedBy users
-  updated_by String [not null]
-}
-
 Table legal_people {
   id String [pk]
   fantasy_name String [not null]
@@ -404,7 +378,6 @@ Table legal_people {
 
 Table carrier_companies {
   id String [pk]
-  Ciot ciots_for_physical_clients [not null]
   LegalPerson legal_people [not null]
   legal_person_id String [unique, not null]
   InvoiceForPhysicalClient invoices_physical_client [not null]
@@ -714,11 +687,9 @@ Ref: physical_customers.created_by > users.id
 
 Ref: physical_customers.updated_by > users.id
 
-Ref: physical_Contracts.physicalCustomerId - physical_customers.id
+Ref: physical_merchandise.physicalCustomerOrderId > physical_orders.id
 
-Ref: physical_merchandise.physicalCustomerOrdermId > physical_orders.id
-
-Ref: physical_orders.contractId > physical_Contracts.id
+Ref: physical_orders.physical_customer_id > physical_customers.id
 
 Ref: physical_orders.created_by > users.id
 
@@ -731,14 +702,6 @@ Ref: invoices_physical_client.updated_by > users.id
 Ref: invoices_physical_client.carrierCompanyId > carrier_companies.id
 
 Ref: invoices_physical_client.physicalCustomerOrderId > physical_orders.id
-
-Ref: ciots_for_physical_clients.carrier_id > carrier_companies.id
-
-Ref: ciots_for_physical_clients.physycalContractId > physical_Contracts.id
-
-Ref: ciots_for_physical_clients.created_by > users.id
-
-Ref: ciots_for_physical_clients.updated_by > users.id
 
 Ref: carrier_companies.legal_person_id > legal_people.id
 

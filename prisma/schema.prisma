@@ -56,8 +56,6 @@ model User {
   PhysicalCustomerUpdatedBy                   PhysicalCustomer[]                   @relation("updated_by")
   InvoiceForLegalClientCreatedBy              InvoiceForLegalClient[]              @relation("created_by")
   InvoiceForLegalClientUpdatedBy              InvoiceForLegalClient[]              @relation("updated_by")
-  CiotForPhysicalClientCreatedBy              CiotForPhysicalClient[]              @relation("created_by")
-  CiotForPhysicalClientUpdatedBy              CiotForPhysicalClient[]              @relation("updated_by")
   OrderProcessingCreatedBy                    OrderProcessing[]                    @relation("created_by")
   OrderProcessingUpdatedBy                    OrderProcessing[]                    @relation("updated_by")
   MaintenanceCreatedBy                        Maintenance[]                        @relation("created_by")
@@ -91,19 +89,18 @@ model User {
 }
 
 model Vehicle {
-  id                String             @id @default(uuid())
-  plate             String             @unique
-  year              String
-  color             String
-  renavam           String
-  antt              String
-  registration      DateTime //licenciamento do veiculo
-  is_ipva_paid      Boolean
-  CompanyVehicle    CompanyVehicle?
-  OrderProcessing   OrderProcessing?
-  Maintenance       Maintenance[]
-  OutsourcedVehicle OutsourcedVehicle?
-
+  id                         String                      @id @default(uuid())
+  plate                      String                      @unique
+  year                       String
+  color                      String
+  renavam                    String
+  antt                       String
+  registration               DateTime //licenciamento do veiculo
+  is_ipva_paid               Boolean
+  CompanyVehicle             CompanyVehicle?
+  OrderProcessing            OrderProcessing?
+  Maintenance                Maintenance[]
+  OutsourcedVehicle          OutsourcedVehicle?
   Model                      VehicleModel                @relation(fields: [model_id], references: [id])
   model_id                   String
   OutsourcedTransportVehicle OutsourcedTransportVehicle?
@@ -359,39 +356,29 @@ model PhysicalCustomer {
   id     String  @id @default(uuid())
   branch String?
 
-  NaturalPerson     NaturalPerson     @relation(fields: [natural_person_id], references: [id])
-  natural_person_id String            @unique
-  PhysicalContract  PhysicalContract?
-  CreatedBy         User              @relation("created_by", fields: [created_by], references: [id])
-  created_by        String
-  UpdatedBy         User              @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by        String
-  created_at        DateTime          @default(now())
-  updated_at        DateTime          @default(now())
+  NaturalPerson         NaturalPerson           @relation(fields: [natural_person_id], references: [id])
+  natural_person_id     String                  @unique
+  CreatedBy             User                    @relation("created_by", fields: [created_by], references: [id])
+  created_by            String
+  UpdatedBy             User                    @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by            String
+  created_at            DateTime                @default(now())
+  updated_at            DateTime                @default(now())
+  PhysicalCustomerOrder PhysicalCustomerOrder[]
 
   @@map("physical_customers")
 }
 
-model PhysicalContract {
-  id                    String                  @id @default(uuid())
-  PhysicalCustomer      PhysicalCustomer        @relation(fields: [physicalCustomerId], references: [id])
-  physicalCustomerId    String                  @unique
-  Ciot                  CiotForPhysicalClient[]
-  PhysicalCustomerOrder PhysicalCustomerOrder[]
-
-  @@map("physical_Contracts")
-}
-
 model PhysicalCustomerMerchandise {
-  id                       String                @id @default(uuid())
-  codMerchandise           String                @unique
-  amount                   Int
-  description              String
-  mass                     Float
-  volume                   Float
-  value                    Float
-  PhysicalCustomerOrderm   PhysicalCustomerOrder @relation(fields: [physicalCustomerOrdermId], references: [id])
-  physicalCustomerOrdermId String
+  id                      String                @id @default(uuid())
+  codMerchandise          String                @unique
+  amount                  Int
+  description             String
+  mass                    Float
+  volume                  Float
+  value                   Float
+  PhysicalCustomerOrder   PhysicalCustomerOrder @relation(fields: [physicalCustomerOrderId], references: [id])
+  physicalCustomerOrderId String
 
   @@map("physical_merchandise")
 }
@@ -403,8 +390,8 @@ model PhysicalCustomerOrder {
   Route                       Routes[]
   PhysicalCustomerMerchandise PhysicalCustomerMerchandise[]
   Invoice                     InvoiceForPhysicalClient[]
-  contractId                  String
-  PhysicalContract            PhysicalContract              @relation(references: [id], fields: [contractId])
+  physical_customer_id        String
+  PhysicalCustomer            PhysicalCustomer              @relation(fields: [physical_customer_id], references: [id])
   created_at                  DateTime                      @default(now())
   updated_at                  DateTime                      @default(now())
   CreatedBy                   User                          @relation("created_by", fields: [created_by], references: [id])
@@ -437,24 +424,6 @@ model InvoiceForPhysicalClient {
   @@map("invoices_physical_client")
 }
 
-model CiotForPhysicalClient {
-  id                 String           @id @default(uuid())
-  ciot               String           @unique
-  emission_date      DateTime         @default(now())
-  CarrierCompany     CarrierCompany   @relation(fields: [carrier_id], references: [id])
-  carrier_id         String
-  PhysycalContract   PhysicalContract @relation(fields: [physycalContractId], references: [id])
-  physycalContractId String
-  created_at         DateTime         @default(now())
-  updated_at         DateTime         @default(now())
-  CreatedBy          User?            @relation("created_by", fields: [created_by], references: [id])
-  created_by         String
-  UpdatedBy          User?            @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by         String
-
-  @@map("ciots_for_physical_clients")
-}
-
 model LegalPerson {
   id                         String                       @id @default(uuid())
   fantasy_name               String
@@ -483,7 +452,6 @@ model LegalPerson {
 
 model CarrierCompany {
   id                                 String                               @id @default(uuid())
-  Ciot                               CiotForPhysicalClient[]
   LegalPerson                        LegalPerson                          @relation(fields: [legal_person_id], references: [id])
   legal_person_id                    String                               @unique
   InvoiceForPhysicalClient           InvoiceForPhysicalClient[]
