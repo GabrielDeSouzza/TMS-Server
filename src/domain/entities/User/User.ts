@@ -91,11 +91,11 @@ export class User extends Entity {
     return this.props.username;
   }
 
-  public set avatarUrl(avatarUrl: string) {
-    this.props.avatar_url = avatarUrl;
+  public set avatar_url(avatar_url: string) {
+    this.props.avatar_url = avatar_url;
   }
 
-  public get avatarUrl(): string {
+  public get avatar_url(): string {
     return this.props.avatar_url;
   }
 

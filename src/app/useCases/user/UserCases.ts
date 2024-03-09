@@ -52,7 +52,7 @@ export class UserUseCases {
         folder: `users/${userEntity.id}/avatars`,
       }));
 
-    userEntity.avatarUrl = result?.path;
+    userEntity.avatar_url = result?.path;
     userEntity.password = hashSync(newUser.password, 10);
 
     return this.userRepository.createUser(userEntity);
@@ -79,9 +79,9 @@ export class UserUseCases {
           })
         : null,
       avatar?.filename &&
-        currentUser?.avatarUrl &&
+        currentUser?.avatar_url &&
         this.uploaderProvider.delete({
-          path: currentUser.avatarUrl,
+          path: currentUser?.avatar_url,
           folder: `users/${currentUser.id}/avatars`,
         }),
     ]);

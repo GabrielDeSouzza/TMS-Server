@@ -44,7 +44,7 @@ export class AuthServicePrisma implements AuthRepository {
     }
 
     const user = UserPrismaDTO.PrismaToEntity({
-      avatar_url: userPrisma.avatarUrl,
+      avatar_url: userPrisma.avatar_url,
       created_at: userPrisma.created_at,
       email: userPrisma.email,
       id: userPrisma.id,

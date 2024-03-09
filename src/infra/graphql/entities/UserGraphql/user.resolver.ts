@@ -26,7 +26,9 @@ export class UserResolver {
 
   @Query(() => UserModel || UserModelRefereces, { name: 'user' })
   async getUser(@Args() request: getUserArgs) {
-    return await this.userCases.getUser(request);
+    const user = await this.userCases.getUser(request);
+
+    return user;
   }
 
   @Query(() => [UserModel], { name: 'users' })
