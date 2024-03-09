@@ -3,7 +3,7 @@ import { type NumberFilterDTO } from 'domain/shared/dtos/NumberFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-export abstract class WhereInvoiceForLegalClientTypeDTO extends WhereDTO {
+export abstract class WhereInvoiceForPhysicalCustomerTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   emission_date?: DateTimeFilterDTO;
   nature_invoice?: StringFilterDTO;
@@ -12,14 +12,14 @@ export abstract class WhereInvoiceForLegalClientTypeDTO extends WhereDTO {
   additional_data?: StringFilterDTO;
   digital_signature?: StringFilterDTO;
   invoice_taxes?: NumberFilterDTO;
-  legal_client_order_id?: StringFilterDTO;
+  physicalClientOrderID?: StringFilterDTO;
   updated_at?: DateTimeFilterDTO;
   created_at?: DateTimeFilterDTO;
   created_by?: StringFilterDTO;
   updated_by?: StringFilterDTO;
 }
 
-export abstract class SortByInvoiceForLegalClientTypeDTO {
+export abstract class SortByInvoiceForPhysicalCustomerTypeDTO {
   id?: 'asc' | 'desc';
   emission_date?: 'asc' | 'desc';
   nature_invoice?: 'asc' | 'desc';
@@ -28,16 +28,16 @@ export abstract class SortByInvoiceForLegalClientTypeDTO {
   additional_data?: 'asc' | 'desc';
   digital_signature?: 'asc' | 'desc';
   invoice_taxes?: 'asc' | 'desc';
-  legal_client_order_id?: 'asc' | 'desc';
+  physicalClientOrderID?: 'asc' | 'desc';
   updated_at?: 'asc' | 'desc';
   created_at?: 'asc' | 'desc';
   created_by?: 'asc' | 'desc';
   updated_by?: 'asc' | 'desc';
 }
 
-export class FindAllInvoiceForLegalClientWhereRequestDTO {
+export class FindAllInvoiceForPhysicalCustomerWhereRequestDTO {
   limit: number;
   offset: number;
-  sort?: SortByInvoiceForLegalClientTypeDTO;
-  where?: WhereInvoiceForLegalClientTypeDTO;
+  sort?: SortByInvoiceForPhysicalCustomerTypeDTO;
+  where?: WhereInvoiceForPhysicalCustomerTypeDTO;
 }

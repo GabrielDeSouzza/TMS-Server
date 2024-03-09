@@ -9,9 +9,10 @@ describe('InvoiceForLegalPerson', () => {
       digital_signature: '1654165',
       emission_date: new Date(),
       form_payment: '215',
-      invoice_taxes: '2564',
+      invoice_taxes: 4545.454,
       invoice_total: 1_545_646,
       nature_invoice: '3213',
+      invoice_number: '45887',
       physicalCustomerOrderId: '64654',
       updated_by: '1321',
     });

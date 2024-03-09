@@ -72,8 +72,8 @@ model User {
   CiotForLegalCreatedByClient                 CiotForLegalClient[]                 @relation("created_by")
   LegalClientUpdatedBy                        LegalClient[]                        @relation("updated_by")
   LegalClientCreatedBy                        LegalClient[]                        @relation("created_by")
-  InvoiceForPhysicalClientUpdatedBy           InvoiceForPhysicalClient[]           @relation("updated_by")
-  InvoiceForPhysicalClientCreatedBy           InvoiceForPhysicalClient[]           @relation("created_by")
+  InvoiceForPhysicalClientUpdatedBy           InvoiceForPhysicalCustomer[]         @relation("updated_by")
+  InvoiceForPhysicalClientCreatedBy           InvoiceForPhysicalCustomer[]         @relation("created_by")
   LegalContractCreatedBy                      LegalContract[]                      @relation("created_by")
   LegalContractUpdatedBy                      LegalContract[]                      @relation("updated_by")
   OutsourcedTransportCompanyUpdatedBy         OutsourcedTransportCompany[]         @relation("updated_by")
@@ -389,7 +389,7 @@ model PhysicalCustomerOrder {
   updated_by                  String
   Route                       Routes[]
   PhysicalCustomerMerchandise PhysicalCustomerMerchandise[]
-  Invoice                     InvoiceForPhysicalClient[]
+  Invoice                     InvoiceForPhysicalCustomer[]
   physical_customer_id        String
   PhysicalCustomer            PhysicalCustomer              @relation(fields: [physical_customer_id], references: [id])
   created_at                  DateTime                      @default(now())
@@ -401,24 +401,25 @@ model PhysicalCustomerOrder {
   @@map("physical_orders")
 }
 
-model InvoiceForPhysicalClient {
-  id                      String                @id @default(uuid())
-  emission_date           DateTime              @default(now())
+model InvoiceForPhysicalCustomer {
+  id                      String                 @id @default(uuid())
+  invoice_number          String                 @unique
+  emission_date           DateTime               @default(now())
   nature_invoice          String
   invoice_total           Float
   form_payment            String
   additional_data         String
-  digital_signature       String                @unique
+  digital_signature       String                 @unique
   invoice_taxes           Float
-  created_at              DateTime              @default(now())
-  updated_at              DateTime              @default(now())
-  CreatedBy               User                  @relation("created_by", fields: [created_by], references: [id])
+  created_at              DateTime               @default(now())
+  updated_at              DateTime               @default(now())
+  CreatedBy               User                   @relation("created_by", fields: [created_by], references: [id])
   created_by              String
-  UpdatedBy               User                  @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy               User                   @relation("updated_by", fields: [updated_by], references: [id])
   updated_by              String
-  CarrierCompany          CarrierCompany        @relation(fields: [carrierCompanyId], references: [id])
+  CarrierCompany          CarrierCompany         @relation(fields: [carrierCompanyId], references: [id])
   carrierCompanyId        String
-  PhysicalCustomerOrder   PhysicalCustomerOrder @relation(fields: [physicalCustomerOrderId], references: [id])
+  PhysicalCustomerOrder   PhysicalCustomerOrder? @relation(fields: [physicalCustomerOrderId], references: [id])
   physicalCustomerOrderId String
 
   @@map("invoices_physical_client")
@@ -454,7 +455,7 @@ model CarrierCompany {
   id                                 String                               @id @default(uuid())
   LegalPerson                        LegalPerson                          @relation(fields: [legal_person_id], references: [id])
   legal_person_id                    String                               @unique
-  InvoiceForPhysicalClient           InvoiceForPhysicalClient[]
+  InvoiceForPhysicalClient           InvoiceForPhysicalCustomer[]
   LegalContract                      LegalContract[]
   CompanyVehicle                     CompanyVehicle[]
   rntrc                              String                               @unique

@@ -52,7 +52,7 @@ input CarrierCompanyOrderByRelationAggregateInput {
 input CarrierCompanyOrderByWithRelationInput {
   CompanyVehicle: CompanyVehicleOrderByRelationAggregateInput
   CreatedBy: UserOrderByWithRelationInput
-  InvoiceForPhysicalClient: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  InvoiceForPhysicalClient: InvoiceForPhysicalCustomerOrderByRelationAggregateInput
   LegalContract: LegalContractOrderByRelationAggregateInput
   LegalPerson: LegalPersonOrderByWithRelationInput
   OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByRelationAggregateInput
@@ -76,7 +76,7 @@ input CarrierCompanyWhereInput {
   AND: [CarrierCompanyWhereInput!]
   CompanyVehicle: CompanyVehicleListRelationFilter
   CreatedBy: UserWhereInput
-  InvoiceForPhysicalClient: InvoiceForPhysicalClientListRelationFilter
+  InvoiceForPhysicalClient: InvoiceForPhysicalCustomerListRelationFilter
   LegalContract: LegalContractListRelationFilter
   LegalPerson: LegalPersonWhereInput
   NOT: [CarrierCompanyWhereInput!]
@@ -467,22 +467,90 @@ input InvoiceForLegalClientWhereInput {
   updated_by: StringFilter
 }
 
-input InvoiceForPhysicalClientListRelationFilter {
-  every: InvoiceForPhysicalClientWhereInput
-  none: InvoiceForPhysicalClientWhereInput
-  some: InvoiceForPhysicalClientWhereInput
+input InvoiceForPhysicalCustomerInput {
+  additional_data: String!
+  carrierCompanyId: String!
+  digital_signature: String!
+  emission_date: Timestamp!
+  form_payment: String!
+  invoice_taxes: Float!
+  invoice_total: Float!
+  nature_invoice: String!
+  physicalCustomerOrderId: String!
 }
 
-input InvoiceForPhysicalClientOrderByRelationAggregateInput {
+input InvoiceForPhysicalCustomerListRelationFilter {
+  every: InvoiceForPhysicalCustomerWhereInput
+  none: InvoiceForPhysicalCustomerWhereInput
+  some: InvoiceForPhysicalCustomerWhereInput
+}
+
+type InvoiceForPhysicalCustomerModel {
+  CreatedUser: UserModelRefereces!
+  LegalClientOrder: LegalClientOrderModel!
+  PhysicalCustomer: PhysicalCustomerModel!
+  UpdatedUser: UserModelRefereces!
+  additional_data: String!
+  carrierCompanyId: String!
+  created_at: Timestamp!
+  created_by: String!
+  digital_signature: String!
+  emission_date: Timestamp!
+  form_payment: String!
+  id: String!
+  invoice_number: String!
+  invoice_taxes: Float!
+  invoice_total: Float!
+  nature_invoice: String!
+  physicalCustomerOrderId: String!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input InvoiceForPhysicalCustomerOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
-input InvoiceForPhysicalClientWhereInput {
-  AND: [InvoiceForPhysicalClientWhereInput!]
+input InvoiceForPhysicalCustomerOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByWithRelationInput
+  CreatedBy: UserOrderByWithRelationInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  additional_data: SortOrder
+  carrierCompanyId: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  digital_signature: SortOrder
+  emission_date: SortOrder
+  form_payment: SortOrder
+  id: SortOrder
+  invoice_number: SortOrder
+  invoice_taxes: SortOrder
+  invoice_total: SortOrder
+  nature_invoice: SortOrder
+  physicalCustomerOrderId: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
+input InvoiceForPhysicalCustomerUpdateInput {
+  additional_data: String
+  carrierCompanyId: String
+  digital_signature: String
+  emission_date: Timestamp
+  form_payment: String
+  invoice_taxes: Float
+  invoice_total: Float
+  nature_invoice: String
+  physicalCustomerOrderId: String
+}
+
+input InvoiceForPhysicalCustomerWhereInput {
+  AND: [InvoiceForPhysicalCustomerWhereInput!]
   CarrierCompany: CarrierCompanyWhereInput
   CreatedBy: UserWhereInput
-  NOT: [InvoiceForPhysicalClientWhereInput!]
-  OR: [InvoiceForPhysicalClientWhereInput!]
+  NOT: [InvoiceForPhysicalCustomerWhereInput!]
+  OR: [InvoiceForPhysicalCustomerWhereInput!]
   PhysicalCustomerOrder: PhysicalCustomerOrderWhereInput
   UpdatedBy: UserWhereInput
   additional_data: StringFilter
@@ -493,6 +561,7 @@ input InvoiceForPhysicalClientWhereInput {
   emission_date: DateTimeFilter
   form_payment: StringFilter
   id: StringFilter
+  invoice_number: StringFilter
   invoice_taxes: FloatFilter
   invoice_total: FloatFilter
   nature_invoice: StringFilter
@@ -973,6 +1042,7 @@ type Mutation {
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
   createContractOutsourcedDriver(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
   createInvoiceForLegalClient(invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
+  createInvoiceForPhysicalCustomer(invoiceForPhysicalCustomerInput: InvoiceForPhysicalCustomerInput!): InvoiceForPhysicalCustomerModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createLegalClientMerchandise(legalClientMerchandiseInput: LegalClientMerchandiseInput!): LegalClientMerchandiseModel!
   createLegalClientOrder(legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
@@ -1008,6 +1078,7 @@ type Mutation {
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelUpdateInput!): VehicleModelGraphql!
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
   updateinvoiceForLegalClient(id: String!, invoiceForLegalClientInput: InvoiceForLegalClientUpdateInput!): InvoiceForLegalClientModel!
+  updateinvoiceForPhysicalCustomer(id: String!, invoiceForPhysicalCustomerInput: InvoiceForPhysicalCustomerUpdateInput!): InvoiceForPhysicalCustomerModel!
   updatelegalClientMerchandise(id: String!, legalClientMerchandiseInput: LegalClientMerchandiseUpdateInput!): LegalClientMerchandiseModel!
   updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderUpdateInput!): LegalClientOrderModel!
   updatelegalContract(id: String!, legalContractInput: LegalContractUpdateInput!): LegalContractModel!
@@ -1950,7 +2021,7 @@ input PhysicalCustomerOrderOrderByRelationAggregateInput {
 
 input PhysicalCustomerOrderOrderByWithRelationInput {
   CreatedBy: UserOrderByWithRelationInput
-  Invoice: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  Invoice: InvoiceForPhysicalCustomerOrderByRelationAggregateInput
   PhysicalCustomer: PhysicalCustomerOrderByWithRelationInput
   PhysicalCustomerMerchandise: PhysicalCustomerMerchandiseOrderByRelationAggregateInput
   Route: RoutesOrderByRelationAggregateInput
@@ -1971,7 +2042,7 @@ input PhysicalCustomerOrderUpdateInput {
 input PhysicalCustomerOrderWhereInput {
   AND: [PhysicalCustomerOrderWhereInput!]
   CreatedBy: UserWhereInput
-  Invoice: InvoiceForPhysicalClientListRelationFilter
+  Invoice: InvoiceForPhysicalCustomerListRelationFilter
   NOT: [PhysicalCustomerOrderWhereInput!]
   OR: [PhysicalCustomerOrderWhereInput!]
   PhysicalCustomer: PhysicalCustomerWhereInput
@@ -2016,6 +2087,7 @@ type Query {
   getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!
   getAllContractOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
   getAllInvoiceForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [InvoiceForLegalClientModel!]
+  getAllInvoiceForPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: InvoiceForPhysicalCustomerOrderByWithRelationInput, where: InvoiceForPhysicalCustomerWhereInput): [InvoiceForPhysicalCustomerModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
   getAllLegalClientMerchandise(limit: Int! = 25, offset: Int! = 0, sort: LegalClientMerchandiseOrderByWithRelationInput, where: LegalClientMerchandiseWhereInput): [LegalClientMerchandiseModel!]
   getAllLegalClientOrder(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderOrderByWithRelationInput, where: LegalClientOrderWhereInput): [LegalClientOrderModel!]
@@ -2039,6 +2111,7 @@ type Query {
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
   getInvoiceForLegalClientModel(id: String, invoice_number: String): InvoiceForLegalClientModel!
+  getInvoiceForPhysicalCustomerModel(id: String, invoice_number: String): InvoiceForPhysicalCustomerModel!
   getLegalClientMerchandiseModel(codMerchandise: String, id: String): LegalClientMerchandiseModel!
   getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): LegalClientModel!
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
@@ -2219,8 +2292,8 @@ input UserOrderByWithRelationInput {
   ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
   InvoiceForLegalClientCreatedBy: InvoiceForLegalClientOrderByRelationAggregateInput
   InvoiceForLegalClientUpdatedBy: InvoiceForLegalClientOrderByRelationAggregateInput
-  InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalClientOrderByRelationAggregateInput
-  InvoiceForPhysicalClientUpdatedBy: InvoiceForPhysicalClientOrderByRelationAggregateInput
+  InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalCustomerOrderByRelationAggregateInput
+  InvoiceForPhysicalClientUpdatedBy: InvoiceForPhysicalCustomerOrderByRelationAggregateInput
   LegalClientCreatedBy: LegalClientOrderByRelationAggregateInput
   LegalClientCustomerOrderCreatedBy: LegalClientOrderOrderByRelationAggregateInput
   LegalClientCustomerOrderUpdatedBy: LegalClientOrderOrderByRelationAggregateInput
@@ -2290,8 +2363,8 @@ input UserWhereInput {
   ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverListRelationFilter
   InvoiceForLegalClientCreatedBy: InvoiceForLegalClientListRelationFilter
   InvoiceForLegalClientUpdatedBy: InvoiceForLegalClientListRelationFilter
-  InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalClientListRelationFilter
-  InvoiceForPhysicalClientUpdatedBy: InvoiceForPhysicalClientListRelationFilter
+  InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalCustomerListRelationFilter
+  InvoiceForPhysicalClientUpdatedBy: InvoiceForPhysicalCustomerListRelationFilter
   LegalClientCreatedBy: LegalClientListRelationFilter
   LegalClientCustomerOrderCreatedBy: LegalClientOrderListRelationFilter
   LegalClientCustomerOrderUpdatedBy: LegalClientOrderListRelationFilter

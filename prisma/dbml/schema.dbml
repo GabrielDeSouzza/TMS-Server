@@ -333,6 +333,7 @@ Table physical_orders {
 
 Table invoices_physical_client {
   id String [pk]
+  invoice_number String [unique, not null]
   emission_date DateTime [default: `now()`, not null]
   nature_invoice String [not null]
   invoice_total Float [not null]
@@ -348,7 +349,7 @@ Table invoices_physical_client {
   updated_by String [not null]
   CarrierCompany carrier_companies [not null]
   carrierCompanyId String [not null]
-  PhysicalCustomerOrder physical_orders [not null]
+  PhysicalCustomerOrder physical_orders
   physicalCustomerOrderId String [not null]
 }
 

@@ -14,9 +14,10 @@ export interface IInvoicePhysicalCustomer {
   form_payment: string;
   additional_data: string;
   digital_signature: string;
-  invoice_taxes: string;
+  invoice_taxes: number;
   physicalCustomerOrderId: string;
   carrierCompanyId: string;
+  invoice_number: string;
   updated_at: Date;
   created_at: Date;
   created_by: string;
@@ -126,6 +127,14 @@ export class InvoiceForPhysicalCustomer extends Entity {
     this.props.nature_invoice = nature_invoice;
   }
 
+  get invoice_number(): string {
+    return this.props.invoice_number;
+  }
+
+  set invoice_number(invoice_number: string) {
+    this.props.invoice_number = invoice_number;
+  }
+
   get invoice_total(): number {
     return this.props.invoice_total;
   }
@@ -158,11 +167,11 @@ export class InvoiceForPhysicalCustomer extends Entity {
     this.props.digital_signature = digital_signature;
   }
 
-  get invoice_taxes(): string {
+  get invoice_taxes(): number {
     return this.props.invoice_taxes;
   }
 
-  set invoice_taxes(invoice_taxes: string) {
+  set invoice_taxes(invoice_taxes: number) {
     this.props.invoice_taxes = invoice_taxes;
   }
 
