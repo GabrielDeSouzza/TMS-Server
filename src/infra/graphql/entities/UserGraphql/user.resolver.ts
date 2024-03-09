@@ -1,11 +1,13 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
+import { GraphQLUpload } from 'graphql-upload-minimal';
+
 import { ROLE } from 'domain/entities/User/User';
+import { FileUploadDTO } from 'domain/shared/dtos/FileUploadDto';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { UserGraphDTO } from 'infra/graphql/DTO/User';
 import { UserWhereArgs } from 'infra/graphql/entities/UserGraphql/Args/WhereUserArgs';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
@@ -21,10 +23,12 @@ import { UserModel, UserModelRefereces } from './user.model';
 @Resolver(() => UserModel || UserModelRefereces)
 export class UserResolver {
   constructor(private userCases: UserUseCases) {}
+
   @Query(() => UserModel || UserModelRefereces, { name: 'user' })
   async getUser(@Args() request: getUserArgs) {
     return await this.userCases.getUser(request);
   }
+
   @Query(() => [UserModel], { name: 'users' })
   async getAllUsers(@Args() args: UserWhereArgs) {
     return await this.userCases.getAllUser({
@@ -36,19 +40,21 @@ export class UserResolver {
   }
 
   @Mutation(() => UserModel)
-  async createUSer(@Args('createUserInput') createUserInput: UserInput) {
-    const user = UserGraphDTO.createInputToEntity(createUserInput);
-
-    return await this.userCases.createUser(user);
+  async createUser(
+    @Args('createUserInput') createUserInput: UserInput,
+    @Args('avatar', { nullable: true, type: () => GraphQLUpload })
+    avatar: FileUploadDTO,
+  ) {
+    return await this.userCases.createUser(createUserInput, avatar);
   }
 
   @Mutation(() => UserModel)
   async updateUser(
     @Args('id') id: string,
     @Args('userUpdate') updateUserInput: UserUpdateInput,
+    @Args('avatar', { nullable: true, type: () => GraphQLUpload })
+    avatar: FileUploadDTO,
   ) {
-    const user = UserGraphDTO.updateInputToEntity(updateUserInput);
-
-    return await this.userCases.updateUser(id, user);
+    return await this.userCases.updateUser(id, updateUserInput, avatar);
   }
 }

@@ -1057,7 +1057,7 @@ type Mutation {
   createPhysicalCustomer(data: PhysicalCustomerInput!): PhysicalCustomerModel!
   createPhysicalCustomerMerchandise(data: PhysicalCustomerMerchandiseInput!): PhysicalCustomerMerchandiseModel!
   createPhysicalCustomerOrder(physicalCustomerOrderInput: PhysicalCustomerOrderInput!): PhysicalCustomerOrderModel!
-  createUSer(createUserInput: UserInput!): UserModel!
+  createUser(avatar: Upload, createUserInput: UserInput!): UserModel!
   createVehicleBodywork(vehicleBodyworkInput: VehicleBodyworkInput!): VehicleBodyworkModel!
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
@@ -1068,7 +1068,7 @@ type Mutation {
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
   updatePhysicalCustomerMerchandise(data: PhysicalCustomerMerchandiseUpdateInput!, id: String!): PhysicalCustomerMerchandiseModel!
-  updateUser(id: String!, userUpdate: UserUpdateInput!): UserModel!
+  updateUser(avatar: Upload, id: String!, userUpdate: UserUpdateInput!): UserModel!
   updateVehicleBodywork(id: String!, vehicleBodyworkIUpdate: VehicleBodyworkUpdateInput!): VehicleBodyworkModel!
   updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
   updatedCompanyVehicle(id: String!, outsourced: CompanyVehicleUpdateInput!): CompanyVehicleIModel!
@@ -2255,6 +2255,9 @@ input TypeOfMaintenanceWhereInput {
   updated_by: StringFilter
 }
 
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
 input UserInput {
   email: String!
   name: String!
@@ -2264,6 +2267,7 @@ input UserInput {
 }
 
 type UserModel {
+  avatar_url: String
   created_at: Timestamp
   email: String!
   id: String!
@@ -2275,6 +2279,7 @@ type UserModel {
 }
 
 type UserModelRefereces {
+  avatar_url: String
   email: String!
   id: String!
   name: String!
@@ -2334,6 +2339,7 @@ input UserOrderByWithRelationInput {
   VehicleModelUpdatedBy: VehicleModelOrderByRelationAggregateInput
   VehicleTypeCreatedBy: VehicleTypeOrderByRelationAggregateInput
   VehicleTypeUpdatedBy: VehicleTypeOrderByRelationAggregateInput
+  avatar_url: SortOrder
   created_at: SortOrder
   email: SortOrder
   id: SortOrder
@@ -2407,6 +2413,7 @@ input UserWhereInput {
   VehicleModelUpdatedBy: VehicleModelListRelationFilter
   VehicleTypeCreatedBy: VehicleTypeListRelationFilter
   VehicleTypeUpdatedBy: VehicleTypeListRelationFilter
+  avatar_url: StringNullableFilter
   created_at: DateTimeFilter
   email: StringFilter
   id: StringFilter

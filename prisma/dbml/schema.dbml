@@ -8,6 +8,7 @@ Table users {
   username String [unique, not null]
   email String [unique, not null]
   role String [not null]
+  avatar_url String
   password String [not null, note: '@HideField({ input: true, output: true })']
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]

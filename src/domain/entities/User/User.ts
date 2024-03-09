@@ -13,10 +13,11 @@ export enum ROLE {
 export interface IUser {
   id?: string;
   name: string;
-  username: string;
   email: string;
-  password: string;
   role: string;
+  username: string;
+  password: string;
+  avatar_url?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -32,7 +33,6 @@ export class User extends Entity {
       updated_at: new Date(),
       created_at: props.created_at ?? new Date(),
     };
-    console.log(this.props);
     this.validate();
 
     if (this.notification.hasErrors()) {
@@ -53,7 +53,7 @@ export class User extends Entity {
         minLength: 4,
       },
       { field: this.props.email, fieldName: 'Email', maxLength: 80 },
-      { field: this.props.password, fieldName: 'Password', maxLength: 80 },
+      { field: this.props.password, fieldName: 'Password', maxLength: 200 },
       {
         field: String(this.props.role),
         fieldName: 'Role',
@@ -89,6 +89,14 @@ export class User extends Entity {
 
   public get username(): string {
     return this.props.username;
+  }
+
+  public set avatarUrl(avatarUrl: string) {
+    this.props.avatar_url = avatarUrl;
+  }
+
+  public get avatarUrl(): string {
+    return this.props.avatar_url;
   }
 
   public set role(role: ROLE) {

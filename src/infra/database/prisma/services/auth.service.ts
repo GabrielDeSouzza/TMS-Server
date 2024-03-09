@@ -43,7 +43,17 @@ export class AuthServicePrisma implements AuthRepository {
       });
     }
 
-    const user = UserPrismaDTO.PrismaToEntity(userPrisma);
+    const user = UserPrismaDTO.PrismaToEntity({
+      avatar_url: userPrisma.avatarUrl,
+      created_at: userPrisma.created_at,
+      email: userPrisma.email,
+      id: userPrisma.id,
+      name: userPrisma.name,
+      password: userPrisma.password,
+      role: userPrisma.role,
+      updated_at: userPrisma.updated_at,
+      username: userPrisma.username,
+    });
 
     const payload = {
       id: user.id,
