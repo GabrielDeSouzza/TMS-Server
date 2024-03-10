@@ -13,7 +13,7 @@ import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 export class UserPrismaService implements UserRepository {
   constructor(private prisma: PrismaService) {}
   async findUser(request: getUserDto): Promise<User> {
-    return UserPrismaDTO.PrismaToEntity(
+    const user = UserPrismaDTO.PrismaToEntity(
       await this.prisma.user.findFirst({
         where: {
           OR: [
@@ -24,6 +24,8 @@ export class UserPrismaService implements UserRepository {
         },
       }),
     );
+
+    return user;
   }
 
   async findAllUsers(parameters: FindAllUserWhereRequestDTO): Promise<User[]> {

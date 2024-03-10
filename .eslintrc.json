@@ -12,7 +12,10 @@
     "import/resolver": {
       "typescript": {},
       "node": {
-        "extensions": [".js", ".ts"]
+        "extensions": [
+          ".js",
+          ".ts"
+        ]
       }
     }
   },
@@ -20,7 +23,9 @@
   "parserOptions": {
     "ecmaVersion": 13,
     "sourceType": "module",
-    "project": ["./tsconfig.eslint.json"]
+    "project": [
+      "./tsconfig.eslint.json"
+    ]
   },
   "extends": [
     "prettier",
@@ -44,14 +49,18 @@
   ],
   "overrides": [
     {
-      "files": ["main.ts"],
+      "files": [
+        "main.ts"
+      ],
       "rules": {
         "unicorn/prefer-top-level-await": "off",
         "@typescript-eslint/no-floating-promises": "off"
       }
     },
     {
-      "files": ["prisma.service.ts"],
+      "files": [
+        "prisma.service.ts"
+      ],
       "rules": {
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/require-await": "off",
@@ -59,19 +68,26 @@
       }
     },
     {
-      "files": ["test/**"],
+      "files": [
+        "test/**"
+      ],
       "rules": {
         "jest/expect-expect": "off"
       }
     },
     {
-      "files": ["jest.config.ts", "commitlint.config.ts"],
+      "files": [
+        "jest.config.ts",
+        "commitlint.config.ts"
+      ],
       "rules": {
         "import/no-default-export": "off"
       }
     },
     {
-      "files": ["**.js"],
+      "files": [
+        "**.js"
+      ],
       "rules": {
         "no-undef": "off",
         "unicorn/prefer-module": "off",
@@ -79,7 +95,12 @@
       }
     },
     {
-      "files": ["spec.ts", "spec.tsx", "test.ts", "test.tsx"],
+      "files": [
+        "spec.ts",
+        "spec.tsx",
+        "test.ts",
+        "test.tsx"
+      ],
       "rules": {
         "unicorn/prefer-module": "off",
         "@typescript-eslint/no-var-requires": "off"
@@ -92,7 +113,9 @@
       }
     },
     {
-      "files": ["**.d.ts"],
+      "files": [
+        "**.d.ts"
+      ],
       "rules": {
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-empty-interface": "off",
@@ -105,20 +128,26 @@
       }
     },
     {
-      "files": ["src/helpers/*"],
+      "files": [
+        "src/helpers/*"
+      ],
       "rules": {
         "@typescript-eslint/naming-convention": "off"
       }
     },
     {
-      "files": ["src/dtos/*"],
+      "files": [
+        "src/dtos/*"
+      ],
       "rules": {
         "unicorn/filename-case": "off",
         "@typescript-eslint/naming-convention": [
           "error",
           {
             "selector": "interface",
-            "format": ["PascalCase"],
+            "format": [
+              "PascalCase"
+            ],
             "custom": {
               "regex": "[A-Z]*DTO$",
               "match": true
@@ -126,7 +155,9 @@
           },
           {
             "selector": "typeAlias",
-            "format": ["PascalCase"],
+            "format": [
+              "PascalCase"
+            ],
             "custom": {
               "regex": "[A-Z]*DTO$",
               "match": true
@@ -155,16 +186,29 @@
     "import/prefer-default-export": "off",
     "@darraghor/nestjs-typed/injectable-should-be-provided": "off",
     "@typescript-eslint/no-unsafe-call": "off",
-    "quote-props": ["error", "consistent-as-needed"],
-    "arrow-body-style": ["error", "as-needed"],
+    "@darraghor/nestjs-typed/should-specify-forbid-unknown-values": "off",
+    "quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
     "import/no-duplicates": [
       "error",
       {
         "prefer-inline": true
       }
     ],
-    "import/consistent-type-specifier-style": ["error", "prefer-inline"],
-    "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+    "import/consistent-type-specifier-style": [
+      "error",
+      "prefer-inline"
+    ],
+    "@typescript-eslint/consistent-type-definitions": [
+      "error",
+      "interface"
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -247,7 +291,12 @@
       "error",
       {
         "selector": "default",
-        "format": ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
+        "format": [
+          "camelCase",
+          "PascalCase",
+          "snake_case",
+          "UPPER_CASE"
+        ],
         "filter": {
           "regex": "^_.*$",
           "match": false
@@ -255,11 +304,16 @@
       },
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE"]
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ]
       },
       {
         "selector": "interface",
-        "format": ["PascalCase"],
+        "format": [
+          "PascalCase"
+        ],
         "custom": {
           "regex": "^I[A-Z]",
           "match": true
@@ -267,7 +321,9 @@
       },
       {
         "selector": "typeAlias",
-        "format": ["PascalCase"],
+        "format": [
+          "PascalCase"
+        ],
         "custom": {
           "regex": "[A-Z]*Props$",
           "match": true
@@ -275,9 +331,20 @@
       },
       {
         "selector": "variable",
-        "types": ["boolean"],
-        "format": ["PascalCase"],
-        "prefix": ["is", "should", "has", "can", "did", "will"]
+        "types": [
+          "boolean"
+        ],
+        "format": [
+          "PascalCase"
+        ],
+        "prefix": [
+          "is",
+          "should",
+          "has",
+          "can",
+          "did",
+          "will"
+        ]
       }
     ],
     "import/extensions": [
@@ -310,7 +377,11 @@
           "/^utils/",
           "/^constants/",
           "/^styles/",
-          ["parent", "sibling", "index"]
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
         ],
         "alphabetize": {
           "order": "asc",

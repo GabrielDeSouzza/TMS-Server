@@ -7,8 +7,10 @@ import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { PrismaService } from 'infra/database/prisma/prisma.service';
 import { UserPrismaService } from 'infra/database/prisma/services/user.service';
+import { ServicesModule } from 'infra/services/services.module';
 
 @Module({
+  imports: [ServicesModule],
   providers: [
     JwtService,
     PrismaService,

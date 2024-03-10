@@ -36,7 +36,11 @@ export class Notification {
 
   requiredField(context: string, fieldsValidation: Array<IValidationField>) {
     fieldsValidation.forEach(fieldValidation => {
-      if (fieldValidation.regex && fieldValidation.regex.length > 0)
+      if (
+        fieldValidation.regex &&
+        fieldValidation.regex.length > 0 &&
+        fieldValidation.field
+      )
         this.validateRegex(context, fieldValidation);
       else if (typeof fieldValidation.field === 'string')
         this.requiredFieldIsString(context, fieldValidation);
@@ -50,6 +54,8 @@ export class Notification {
   }
   private validateRegex(context: string, fielValidation: IValidationField) {
     const regex = new RegExp(fielValidation.regex);
+
+    console.log(regex);
 
     if (regex.test(fielValidation.field.toString())) {
       return;

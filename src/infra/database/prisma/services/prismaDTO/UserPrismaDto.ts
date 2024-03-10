@@ -11,6 +11,7 @@ export class UserPrismaDTO {
       email: userPrisma.email,
       name: userPrisma.name,
       password: userPrisma.password,
+      avatar_url: userPrisma.avatar_url,
       role: userPrisma.role,
       username: userPrisma.username,
       created_at: userPrisma.created_at,
@@ -21,6 +22,7 @@ export class UserPrismaDTO {
     const userPrisma: UserPrisma = {
       created_at: userEntity.created_at,
       email: userEntity.email,
+      avatar_url: userEntity.avatar_url,
       id: userEntity.id,
       name: userEntity.name,
       password: userEntity.password,
@@ -36,6 +38,7 @@ export class UserPrismaDTO {
     const userUptade: Prisma.UserUpdateInput = {
       created_at: user.created_at,
       email: user.email,
+      avatar_url: user.avatar_url,
       name: user.name,
       role: user.role,
       updated_at: user.updated_at,

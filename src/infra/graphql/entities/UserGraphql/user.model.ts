@@ -16,6 +16,8 @@ export class UserModel implements IUser {
   password: string;
   @Field()
   role: string;
+  @Field({ nullable: true })
+  avatar_url: string;
   @Field(() => Date, { nullable: true })
   created_at: Date;
   @Field(() => Date, { nullable: true })

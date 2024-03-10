@@ -49,6 +49,7 @@ import { AuthModule } from 'infra/guard/auth.module';
       ),
       sortSchema: true,
       playground: false,
+      csrfPrevention: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       buildSchemaOptions: { dateScalarMode: 'timestamp' },
     }),
