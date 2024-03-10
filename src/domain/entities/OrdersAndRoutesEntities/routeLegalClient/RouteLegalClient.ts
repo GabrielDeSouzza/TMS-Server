@@ -6,27 +6,25 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IRoute {
+export interface IRouteLegalClient {
   id?: string;
   cep: string;
   public_place: string;
   address_number: string;
   neighborhood: string;
   complement?: string;
-  legalClientOrderId?: string;
-  physicalCustomerOrderId?: string;
+  legalClientOrderId: string;
   city: string;
   uf: string;
   created_at: Date;
   updated_at: Date;
 }
 
-export class Route extends Entity {
-  private _id: string;
-  private props: IRoute;
+export class RouteLegalClient extends Entity {
+  private props: IRouteLegalClient;
 
   constructor(
-    props: Replace<IRoute, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<IRouteLegalClient, { created_at?: Date; updated_at?: Date }>,
   ) {
     super();
     this.props = {
@@ -86,6 +84,12 @@ export class Route extends Entity {
         maxLength: 2,
         minLength: 2,
       },
+      {
+        field: this.legalClientOrderId,
+        fieldName: 'Legal Client Order',
+        maxLength: 1000,
+        minLength: 2,
+      },
     );
     this.notification.requiredField('Route', fieldsValidation);
   }
@@ -133,20 +137,12 @@ export class Route extends Entity {
     this.props.complement = complement;
   }
 
-  get legalClientOrderId(): string | undefined {
+  get legalClientOrderId(): string {
     return this.props.legalClientOrderId;
   }
 
-  set legalClientOrderId(legalClientOrderId: string | undefined) {
+  set legalClientOrderId(legalClientOrderId: string) {
     this.props.legalClientOrderId = legalClientOrderId;
-  }
-
-  get physicalCustomerOrderId(): string | undefined {
-    return this.props.physicalCustomerOrderId;
-  }
-
-  set physicalCustomerOrderId(physicalCustomerOrderId: string | undefined) {
-    this.props.physicalCustomerOrderId = physicalCustomerOrderId;
   }
 
   get city(): string {

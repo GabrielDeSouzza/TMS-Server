@@ -42,15 +42,11 @@ export class UserPrismaService implements UserRepository {
   }
 
   async createUser(user: User): Promise<User> {
-    try {
-      const newUSer = await this.prisma.user.create({
-        data: UserPrismaDTO.EntityToPrisma(user),
-      });
+    const newUSer = await this.prisma.user.create({
+      data: UserPrismaDTO.EntityToPrisma(user),
+    });
 
-      return UserPrismaDTO.PrismaToEntity(newUSer);
-    } catch (error) {
-      new NotificationErrorsDatabase().HandleErrors(error);
-    }
+    return UserPrismaDTO.PrismaToEntity(newUSer);
   }
 
   async updateUser(id: string, user: User): Promise<User> {

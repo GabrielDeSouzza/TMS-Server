@@ -2,14 +2,13 @@ import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-export abstract class WhereRouteTypeDTO extends WhereDTO {
+export abstract class WhereRoutePhysicalClientTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   cep?: StringFilterDTO;
   public_place?: StringFilterDTO;
   address_number?: StringFilterDTO;
   neighborhood?: StringFilterDTO;
   complement?: StringFilterDTO;
-  legalClientOrderId?: StringFilterDTO;
   physicalCustomerOrderId?: StringFilterDTO;
   city?: StringFilterDTO;
   uf?: StringFilterDTO;
@@ -17,14 +16,13 @@ export abstract class WhereRouteTypeDTO extends WhereDTO {
   updated_at?: DateTimeFilterDTO;
 }
 
-export abstract class SortByRouteTypeDTO {
+export abstract class SortByRoutePhysicalClientTypeDTO {
   id?: 'asc' | 'desc';
   cep?: 'asc' | 'desc';
   public_place?: 'asc' | 'desc';
   address_number?: 'asc' | 'desc';
   neighborhood?: 'asc' | 'desc';
   complement?: 'asc' | 'desc';
-  legalClientOrderId?: 'asc' | 'desc';
   physicalCustomerOrderId?: 'asc' | 'desc';
   city?: 'asc' | 'desc';
   uf?: 'asc' | 'desc';
@@ -32,9 +30,9 @@ export abstract class SortByRouteTypeDTO {
   updated_at?: 'asc' | 'desc';
 }
 
-export class FindAllRouteWhereRequestDTO {
+export class FindAllRoutePhysicalClientWhereRequestDTO {
   limit: number;
   offset: number;
-  sort?: SortByRouteTypeDTO;
-  where?: WhereRouteTypeDTO;
+  sort?: SortByRoutePhysicalClientTypeDTO;
+  where?: WhereRoutePhysicalClientTypeDTO;
 }

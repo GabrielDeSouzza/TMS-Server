@@ -28,6 +28,8 @@ import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriv
 import { PhysicalCustomerModule } from 'infra/graphql/entities/PhysicalCustomerGraphql/PhysicalCustomer.module';
 import { PhysicalCustomerMerchandiseModule } from 'infra/graphql/entities/PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.module';
 import { PhysicalCustomerOrderModule } from 'infra/graphql/entities/PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.module';
+import { RouteLegalClientModule } from 'infra/graphql/entities/RouteLegalClientGraphql/RouteLegalClient.module';
+import { RoutePhysicalCustomerModule } from 'infra/graphql/entities/RoutePhysicalCustomerGraphql/RoutePhysicalCustomer.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
 import { VehicleBodyworkModule } from 'infra/graphql/entities/VehicleBodyworkGraphql/vehicle-bodywork.module';
 import { VehicleBrandModule } from 'infra/graphql/entities/VehicleBrandGraphql/vehicle-brand.module';
@@ -77,6 +79,8 @@ import { AuthModule } from 'infra/guard/auth.module';
     PhysicalCustomerMerchandiseModule,
     PhysicalCustomerOrderModule,
     InvoiceForPhysicalCustomerModule,
+    RouteLegalClientModule,
+    RoutePhysicalCustomerModule,
   ],
 })
 export class AppModule {}

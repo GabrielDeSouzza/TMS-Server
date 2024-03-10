@@ -9,6 +9,7 @@ import { LegalContractRepository } from 'domain/repositories/LegalContract.repos
 import { type CreateLegalContractDTO } from 'app/dtos/LegalContracDto/CreateLegalContractDto';
 import { type GetAllLegalContractDTO } from 'app/dtos/LegalContracDto/GetAllLegalContractDto';
 import { type UpdateLegalContractDTO } from 'app/dtos/LegalContracDto/UpdateLegalContractDto';
+import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 @Injectable()
 export class LegalContractUseCases {
@@ -31,6 +32,7 @@ export class LegalContractUseCases {
     return this.legalContractRepository.getAllLegalContract(request);
   }
   async createContract(data: CreateLegalContractDTO) {
+    data.contract_number = 'CLC' + generateRandomNumber();
     const contractNumberExist =
       await this.legalContractRepository.findLegalContract({
         contractNumber: data.contract_number,

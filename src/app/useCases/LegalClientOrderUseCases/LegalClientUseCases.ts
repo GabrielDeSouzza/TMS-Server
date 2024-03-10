@@ -9,6 +9,7 @@ import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder
 import { type CreateLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/CreateLegalClientOrderDto';
 import { type GetAllLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/GetAllLegalClientOrderDto';
 import { type UpdateLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/UpdateLegalClientOrderDto';
+import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 @Injectable()
 export class LegalClientOrderUseCases {
@@ -33,6 +34,7 @@ export class LegalClientOrderUseCases {
     return this.legalClientOrderRepository.getAllLegalClientOrder(request);
   }
   async createOrder(data: CreateLegalClientOrderDTO) {
+    data.order = 'OLC' + generateRandomNumber();
     const orderExist =
       await this.legalClientOrderRepository.findLegalClientOrder({
         order: data.order,
