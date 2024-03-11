@@ -93,8 +93,8 @@ model User {
 }
 
 model Vehicle {
-  id                         String                           @id @default(uuid())
-  plate                      String                           @unique
+  id                         String                            @id @default(uuid())
+  plate                      String                            @unique
   year                       String
   color                      String
   renavam                    String
@@ -102,13 +102,13 @@ model Vehicle {
   registration               DateTime //licenciamento do veiculo
   is_ipva_paid               Boolean
   CompanyVehicle             CompanyVehicle?
-  OrderProcessing            OrderProcessingPhysicalCustomer?
+  OrderProcessing            OrderProcessingPhysicalCustomer[]
   Maintenance                Maintenance[]
   OutsourcedVehicle          OutsourcedVehicle?
-  Model                      VehicleModel                     @relation(fields: [model_id], references: [id])
+  Model                      VehicleModel                      @relation(fields: [model_id], references: [id])
   model_id                   String
   OutsourcedTransportVehicle OutsourcedTransportVehicle?
-  OrderProcessingLegalClient OrderProcessingLegalClient?
+  OrderProcessingLegalClient OrderProcessingLegalClient[]
 
   @@map("vehicles")
 }
@@ -393,19 +393,20 @@ model PhysicalCustomerMerchandise {
 }
 
 model PhysicalCustomerOrder {
-  id                          String                        @id @default(uuid())
-  order                       String                        @unique
-  updated_by                  String
-  Route                       RoutesPhysicalCustomer[]
-  PhysicalCustomerMerchandise PhysicalCustomerMerchandise[]
-  Invoice                     InvoiceForPhysicalCustomer[]
-  physical_customer_id        String
-  PhysicalCustomer            PhysicalCustomer              @relation(fields: [physical_customer_id], references: [id])
-  created_at                  DateTime                      @default(now())
-  updated_at                  DateTime                      @default(now())
-  CreatedBy                   User                          @relation("created_by", fields: [created_by], references: [id])
-  created_by                  String
-  UpdatedBy                   User                          @relation("updated_by", fields: [updated_by], references: [id])
+  id         String @id @default(uuid())
+  order      String @unique
+  updated_by String
+
+  PhysicalCustomerMerchandise     PhysicalCustomerMerchandise[]
+  Invoice                         InvoiceForPhysicalCustomer[]
+  physical_customer_id            String
+  PhysicalCustomer                PhysicalCustomer                  @relation(fields: [physical_customer_id], references: [id])
+  created_at                      DateTime                          @default(now())
+  updated_at                      DateTime                          @default(now())
+  CreatedBy                       User                              @relation("created_by", fields: [created_by], references: [id])
+  created_by                      String
+  UpdatedBy                       User                              @relation("updated_by", fields: [updated_by], references: [id])
+  OrderProcessingPhysicalCustomer OrderProcessingPhysicalCustomer[]
 
   @@map("physical_orders")
 }
@@ -575,7 +576,7 @@ model LegalClientOrder {
   legal_contract_id                  String
   InvoiceForLegalClient              InvoiceForLegalClient[]
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
-  RoutesLegalClient                  RoutesLegalClient[]
+  OrderProcessingLegalClient         OrderProcessingLegalClient[]
 
   @@map("legal_orders")
 }
@@ -630,34 +631,34 @@ model RoutesPhysicalCustomer {
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now())
 
-  OrderProcessing OrderProcessingPhysicalCustomer[]
-
-  PhysicalCustomerOrder   PhysicalCustomerOrder @relation(fields: [physicalCustomerOrderId], references: [id])
-  physicalCustomerOrderId String
+  order_processing_id String
+  OrderProcessing     OrderProcessingPhysicalCustomer @relation(fields: [order_processing_id], references: [id])
 
   @@map("routes_physical_customer")
 }
 
 model OrderProcessingPhysicalCustomer {
-  id                   String                  @id @default(uuid())
+  id                   String                @id @default(uuid())
   total_distance       Float
   total_spend_liters   Int
   total_spending_money Float
   start_at             DateTime
-  end_at               DateTime
-  created_at           DateTime                @default(now())
-  updated_at           DateTime                @default(now())
-  CreatedBy            User                    @relation("created_by", fields: [created_by], references: [id])
+  end_at               DateTime?
+  created_at           DateTime              @default(now())
+  updated_at           DateTime              @default(now())
+  CreatedBy            User                  @relation("created_by", fields: [created_by], references: [id])
   created_by           String
-  UpdatedBy            User                    @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy            User                  @relation("updated_by", fields: [updated_by], references: [id])
   updated_by           String
-  Route                RoutesPhysicalCustomer @relation(fields: [route_id], references: [id])
-  route_id             String
-  Vehicle              Vehicle                 @relation(fields: [vehicle_id], references: [id])
-  vehicle_id           String                  @unique
+  Order                PhysicalCustomerOrder @relation(fields: [order_id], references: [id])
 
-  CompanyVehicle    CompanyVehicle[]
-  OutsourcedVehicle OutsourcedVehicle[]
+  order_id   String
+  Vehicle    Vehicle @relation(fields: [vehicle_id], references: [id])
+  vehicle_id String
+
+  CompanyVehicle         CompanyVehicle[]
+  OutsourcedVehicle      OutsourcedVehicle[]
+  RoutesPhysicalCustomer RoutesPhysicalCustomer[]
 
   @@map("order_processing_physical_customer")
 }
@@ -674,33 +675,33 @@ model RoutesLegalClient {
   created_at     DateTime @default(now())
   updated_at     DateTime @default(now())
 
-  legal_client_order_id       String
-  LegalClientOrder           LegalClientOrder             @relation(fields: [legal_client_order_id], references: [id])
-  OrderProcessingLegalClient OrderProcessingLegalClient[]
+  order_processing_id String
+  OrderProcessing     OrderProcessingLegalClient @relation(fields: [order_processing_id], references: [id])
 
   @@map("routes_legal_client")
 }
 
 model OrderProcessingLegalClient {
-  id                   String            @id @default(uuid())
+  id                   String   @id @default(uuid())
   total_distance       Float
   total_spend_liters   Int
   total_spending_money Float
   start_at             DateTime
-  end_at               DateTime
-  created_at           DateTime          @default(now())
-  updated_at           DateTime          @default(now())
-  CreatedBy            User              @relation("created_by", fields: [created_by], references: [id])
+  end_at               DateTime?
+  created_at           DateTime @default(now())
+  updated_at           DateTime @default(now())
+  CreatedBy            User     @relation("created_by", fields: [created_by], references: [id])
   created_by           String
-  UpdatedBy            User              @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy            User     @relation("updated_by", fields: [updated_by], references: [id])
   updated_by           String
-  Route                RoutesLegalClient @relation(fields: [route_id], references: [id])
-  route_id             String
-  Vehicle              Vehicle           @relation(fields: [vehicle_id], references: [id])
-  vehicle_id           String            @unique
 
+  Vehicle           Vehicle             @relation(fields: [vehicle_id], references: [id])
+  vehicle_id        String
+  order_id          String
+  Order             LegalClientOrder    @relation(fields: [order_id], references: [id])
   CompanyVehicle    CompanyVehicle[]
   OutsourcedVehicle OutsourcedVehicle[]
+  RoutesLegalClient RoutesLegalClient[]
 
   @@map("order_processing_legal_client")
 }

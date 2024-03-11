@@ -18,6 +18,8 @@ import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/Leg
 import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/LegalClientMerchandise.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
+import { OrderProcessingLegalClientModule } from 'infra/graphql/entities/OrderProcessingLegalClientGraphql/OrderProcessingLegalClient.module';
+import { OrderProcessingPhysicalCustomerModule } from 'infra/graphql/entities/OrderProcessingPhysicalCustomerGraphql/OrderProcessingPhysicalCustomer.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
 import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
 import { OutsourcedTransportCompanyDriverModule } from 'infra/graphql/entities/OutsourcedTransportCompanyDriverGraphql/OutsourcedTransportCompanyDriver.module';
@@ -82,6 +84,8 @@ import { AuthModule } from 'infra/guard/auth.module';
     InvoiceForPhysicalCustomerModule,
     RouteLegalClientModule,
     RoutePhysicalCustomerModule,
+    OrderProcessingLegalClientModule,
+    OrderProcessingPhysicalCustomerModule,
   ],
 })
 export class AppModule {}

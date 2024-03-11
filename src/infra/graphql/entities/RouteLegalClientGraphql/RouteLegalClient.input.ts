@@ -31,7 +31,7 @@ export class RouteLegalClientInput
   @Field()
   @IsString()
   @IsNotEmpty()
-  legalClientOrderId: string;
+  order_processing_id: string;
   @Field()
   @IsString()
   @IsNotEmpty()

@@ -28,8 +28,6 @@ export class NotificationErrorsDatabase {
       }
 
       console.log(error);
-
-      new Error('MERDA');
     }
   }
   private thowError(message: string) {

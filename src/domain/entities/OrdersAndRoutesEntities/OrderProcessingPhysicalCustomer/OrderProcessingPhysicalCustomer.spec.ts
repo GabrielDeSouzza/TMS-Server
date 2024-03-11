@@ -1,13 +1,13 @@
-import { OrderProcessing } from './OrderProcessing';
+import { OrderProcessingPhysicalCustomer } from './OrderProcessingPhysicalCustomer';
 
 describe('OrderProcessing', () => {
   it('should create order processing', () => {
-    const customerOrder = new OrderProcessing({
+    const customerOrder = new OrderProcessingPhysicalCustomer({
       start_at: new Date(),
       total_distance: 456.48,
       total_spend_liters: 458.54,
       total_spending_money: 456.54,
-      route_id: null,
+      order_id: null,
       end_at: null,
       updated_by: '123',
       vehicle_id: '123',

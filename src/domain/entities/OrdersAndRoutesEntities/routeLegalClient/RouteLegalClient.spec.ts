@@ -10,7 +10,7 @@ describe('Route', () => {
       city: 'São Paulo',
       uf: 'SP',
       complement: null,
-      legalClientOrderId: 'ssdsd',
+      order_processing_id: 'ssdsd',
     });
     expect(route).toBeTruthy();
   });

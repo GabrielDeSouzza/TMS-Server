@@ -7,10 +7,10 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
-import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { OrderProcessingLegalClientUseCases } from 'app/useCases/ProcessingLegalClientUseCases/ProcessingLegalClientUseCases';
 import { RouteLegalClientUseCases } from 'app/useCases/RouteLegalClientUseCases/RouteLegalClientUseCases';
 
-import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { OrderProcessingLegalClientModel } from '../OrderProcessingLegalClientGraphql/OrderProcessingLegalClient.model';
 import { getRouteLegalClientArgs } from './Args/GetRouteLegalClientArgs';
 import { RoutesLegalClientWhereArgs } from './Args/WhereRouteLegalClientArgs';
 import {
@@ -23,7 +23,7 @@ import { RouteLegalClientModel } from './RouteLegalClient.model';
 export class RouteLegalClientResolver {
   constructor(
     private routeLegalClientUseCase: RouteLegalClientUseCases,
-    private legalClientOrder: LegalClientOrderUseCases,
+    private orderProcessing: OrderProcessingLegalClientUseCases,
   ) {}
   @Query(() => RouteLegalClientModel)
   async getRouteLegalClient(@Args() request: getRouteLegalClientArgs) {
@@ -44,10 +44,10 @@ export class RouteLegalClientResolver {
   ) {
     return this.routeLegalClientUseCase.updateRoute(id, data);
   }
-  @ResolveField(() => LegalClientOrderModel)
+  @ResolveField(() => OrderProcessingLegalClientModel)
   async LegalClientOrder(@Parent() request: RouteLegalClientInput) {
-    return this.legalClientOrder.getLegalClientOrder({
-      id: request.legalClientOrderId,
+    return this.orderProcessing.getOrderProcessingLegalClient({
+      id: request.order_processing_id,
     });
   }
 }

@@ -1,16 +1,7 @@
-import {
-  Args,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 import { RoutePhysicalCustomerUseCases } from 'app/useCases/RoutePhysicalCustomerUseCase/RoutePhysicalCustomerUseCases';
 
-import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { getRoutePhysicalCustomerArgs } from './Args/GetRoutePhysicalCustomerArgs';
 import { RoutesPhysicalCustomerWhereArgs } from './Args/WhereRoutePhysicalCustomerArgs';
 import {
@@ -23,7 +14,6 @@ import { RoutePhysicalCustomerModel } from './RoutePhysicalCustomer.model';
 export class RoutePhysicalCustomerResolver {
   constructor(
     private routePhysicalCustomerUseCase: RoutePhysicalCustomerUseCases,
-    private physicalCustomerOrder: PhysicalCustomerOrderUseCases,
   ) {}
   @Query(() => RoutePhysicalCustomerModel)
   async getRoutePhysicalCustomer(
@@ -49,11 +39,5 @@ export class RoutePhysicalCustomerResolver {
     @Args('data') data: RoutePhysicalCustomerUpdateInput,
   ) {
     return this.routePhysicalCustomerUseCase.updateRoute(id, data);
-  }
-  @ResolveField(() => PhysicalCustomerOrderModel)
-  async PhysicalCustomerOrder(@Parent() request: RoutePhysicalCustomerInput) {
-    return this.physicalCustomerOrder.getPhysicalCustomerOrder({
-      id: request.physicalCustomerOrderId,
-    });
   }
 }

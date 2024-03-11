@@ -21,7 +21,7 @@ export abstract class RoutePhysicalCustomerModel
   @Field({ nullable: true })
   complement?: string;
   @Field()
-  physicalCustomerOrderId: string;
+  order_processing_id: string;
   @Field()
   city: string;
   @Field()

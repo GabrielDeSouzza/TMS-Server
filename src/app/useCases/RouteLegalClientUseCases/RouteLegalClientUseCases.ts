@@ -46,7 +46,7 @@ export class RouteLegalClientUseCases {
       throw new GraphQLError('IS NECESSARY SEND FIELDS', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
-    } else if (!data.legalClientOrderId) {
+    } else if (!data.order_processing_id) {
       throw new GraphQLError(
         'IS NECESSARY A LEGAL CLIENT OR PHYSICAL CUSTOMER ORDER',
         {
@@ -63,7 +63,7 @@ export class RouteLegalClientUseCases {
       public_place: data.public_place,
       uf: data.uf,
       complement: data.complement,
-      legalClientOrderId: data.legalClientOrderId,
+      order_processing_id: data.order_processing_id,
     });
 
     return this.routeRepository.createRoute(routeEntity);
@@ -78,7 +78,7 @@ export class RouteLegalClientUseCases {
       public_place: data.public_place,
       uf: data.uf,
       complement: data.complement,
-      legalClientOrderId: data.legalClientOrderId,
+      order_processing_id: data.order_processing_id,
     });
 
     return this.routeRepository.updateRoute(id, routeEntity);

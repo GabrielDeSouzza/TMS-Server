@@ -13,7 +13,7 @@ export interface IRoutePhysicalCustomer {
   address_number: string;
   neighborhood: string;
   complement?: string;
-  physicalCustomerOrderId: string;
+  order_processing_id: string;
   city: string;
   uf: string;
   created_at: Date;
@@ -50,46 +50,46 @@ export class RoutePhysicalCustomer extends Entity {
       new Array<IValidationField>();
     fieldsValidation.push(
       {
-        field: this.cep,
+        field: this.props.cep,
         fieldName: 'CEP',
         maxLength: 8,
         minLength: 8,
       },
       {
-        field: this.public_place,
+        field: this.props.public_place,
         fieldName: 'Public Place',
         maxLength: 80,
       },
       {
-        field: this.address_number,
+        field: this.props.address_number,
         fieldName: 'Address Number',
         maxLength: 10,
       },
       {
-        field: this.neighborhood,
+        field: this.props.neighborhood,
         fieldName: 'Neighborhood',
         maxLength: 80,
       },
       {
-        field: this.complement,
+        field: this.props.complement,
         fieldName: 'Complement',
         maxLength: 80,
         isNullAble: true,
       },
       {
-        field: this.city,
+        field: this.props.city,
         fieldName: 'City',
         maxLength: 80,
       },
       {
-        field: this.uf,
+        field: this.props.uf,
         fieldName: 'UF',
         maxLength: 2,
         minLength: 2,
       },
       {
-        field: this.physicalCustomerOrderId,
-        fieldName: 'Physical Customer Order',
+        field: this.props.order_processing_id,
+        fieldName: 'Order processing',
         maxLength: 1000,
         minLength: 2,
       },
@@ -140,12 +140,12 @@ export class RoutePhysicalCustomer extends Entity {
     this.props.complement = complement;
   }
 
-  get physicalCustomerOrderId(): string {
-    return this.props.physicalCustomerOrderId;
+  get order_processing_id(): string {
+    return this.props.order_processing_id;
   }
 
-  set physicalCustomerOrderId(physicalCustomerOrderId: string) {
-    this.props.physicalCustomerOrderId = physicalCustomerOrderId;
+  set order_processing_id(order_processing_id: string) {
+    this.props.order_processing_id = order_processing_id;
   }
 
   get city(): string {

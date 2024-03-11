@@ -2,7 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IRouteLegalClient } from 'domain/entities/OrdersAndRoutesEntities/routeLegalClient/RouteLegalClient';
 
-import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { OrderProcessingLegalClientModel } from '../OrderProcessingLegalClientGraphql/OrderProcessingLegalClient.model';
 
 @ObjectType()
 export abstract class RouteLegalClientModel implements IRouteLegalClient {
@@ -19,7 +19,7 @@ export abstract class RouteLegalClientModel implements IRouteLegalClient {
   @Field({ nullable: true })
   complement?: string;
   @Field()
-  legalClientOrderId: string;
+  order_processing_id: string;
   @Field()
   city: string;
   @Field()
@@ -28,6 +28,6 @@ export abstract class RouteLegalClientModel implements IRouteLegalClient {
   created_at: Date;
   @Field(() => Date)
   updated_at: Date;
-  @Field(() => LegalClientOrderModel)
-  LegalClientOrder: LegalClientOrderModel;
+  @Field(() => OrderProcessingLegalClientModel)
+  OrderProcessing: OrderProcessingLegalClientModel;
 }

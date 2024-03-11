@@ -4,7 +4,7 @@ export abstract class CreateRouteLegalClientDTO {
   address_number: string;
   neighborhood: string;
   complement?: string;
-  legalClientOrderId: string;
+  order_processing_id: string;
   city: string;
   uf: string;
 }

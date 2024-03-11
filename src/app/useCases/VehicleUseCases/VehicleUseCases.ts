@@ -21,7 +21,11 @@ export class VehicleUseCases {
         extensions: { code: HttpStatus.BAD_GATEWAY },
       });
     const vehicle = await this.vehicleRepositoty.findVehicle(request);
-    console.log(vehicle);
+
+    if (!vehicle)
+      throw new GraphQLError('VEHICLE NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
 
     return vehicle;
   }

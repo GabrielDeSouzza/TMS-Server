@@ -6,14 +6,14 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IOrderProcessing {
+export interface IOrderProcessingLegalClient {
   id?: string;
   total_distance: number;
   total_spend_liters: number;
   total_spending_money: number;
   start_at: Date;
   end_at?: Date;
-  route_id: string;
+  order_id: string;
   vehicle_id: string;
   updated_at: Date;
   created_at: Date;
@@ -21,11 +21,14 @@ interface IOrderProcessing {
   updated_by: string;
 }
 
-export class OrderProcessing extends Entity {
-  private props: IOrderProcessing;
+export class OrderProcessingLegalClient extends Entity {
+  private props: IOrderProcessingLegalClient;
 
   constructor(
-    props: Replace<IOrderProcessing, { created_at?: Date; updated_at?: Date }>,
+    props: Replace<
+      IOrderProcessingLegalClient,
+      { created_at?: Date; updated_at?: Date }
+    >,
   ) {
     super();
 
@@ -75,8 +78,8 @@ export class OrderProcessing extends Entity {
         isNullAble: true,
       },
       {
-        field: this.props.route_id,
-        fieldName: 'Route',
+        field: this.props.order_id,
+        fieldName: 'Order',
         maxLength: 20,
         isNullAble: true,
       },
@@ -88,7 +91,10 @@ export class OrderProcessing extends Entity {
       },
     );
 
-    this.notification.requiredField('OrderProcessing', fieldsValidation);
+    this.notification.requiredField(
+      'OrderProcessingLegalClient',
+      fieldsValidation,
+    );
   }
 
   get id(): string | undefined {
@@ -135,12 +141,12 @@ export class OrderProcessing extends Entity {
     this.props.end_at = end_at;
   }
 
-  get route_id(): string {
-    return this.props.route_id;
+  get order_id(): string {
+    return this.props.order_id;
   }
 
-  set route_id(route_id: string) {
-    this.props.route_id = route_id;
+  set order_id(order_id: string) {
+    this.props.order_id = order_id;
   }
 
   get vehicle_id(): string {

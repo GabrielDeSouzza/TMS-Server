@@ -7,11 +7,11 @@ import { RouteLegalClientUseCases } from 'app/useCases/RouteLegalClientUseCases/
 import { RouteLegalClientPrismaService } from 'infra/database/prisma/services/RouteLegalClient.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
-import { LegalClientOrderModule } from '../LegalClientOrderGraphql/LegalClientOrder.module';
+import { OrderProcessingLegalClientModule } from '../OrderProcessingLegalClientGraphql/OrderProcessingLegalClient.module';
 import { RouteLegalClientResolver } from './RouteLegalClient.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule, LegalClientOrderModule],
+  imports: [GraphqlCenterModule, OrderProcessingLegalClientModule],
   providers: [
     RouteLegalClientUseCases,
     {

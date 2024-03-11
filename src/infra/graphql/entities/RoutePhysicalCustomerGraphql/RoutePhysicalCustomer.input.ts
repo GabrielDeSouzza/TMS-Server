@@ -31,7 +31,7 @@ export class RoutePhysicalCustomerInput
   @Field()
   @IsString()
   @IsNotEmpty()
-  physicalCustomerOrderId: string;
+  order_processing_id: string;
   @Field()
   @IsString()
   @IsNotEmpty()
