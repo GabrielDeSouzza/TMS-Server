@@ -1,13 +1,19 @@
-import { Field, Float, InputType, PartialType } from '@nestjs/graphql';
+import {
+  Field,
+  Float,
+  HideField,
+  InputType,
+  PartialType,
+} from '@nestjs/graphql';
 
 import { Type } from 'class-transformer';
 import {
+  Allow,
   IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator';
 
 import { type IOrderProcessingPhysicalCustomer } from 'domain/entities/OrdersAndRoutesEntities/OrderProcessingPhysicalCustomer/OrderProcessingPhysicalCustomer';
@@ -34,7 +40,7 @@ export class OrderProcessingPhysicalCustomerInput
   @Type(() => Date)
   @IsNotEmpty()
   start_at: Date;
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   @IsDate()
   @Type(() => Date)
   @IsOptional()
@@ -47,13 +53,11 @@ export class OrderProcessingPhysicalCustomerInput
   @IsString()
   @IsNotEmpty()
   vehicle_id: string;
-  @Field()
-  @IsUUID()
-  @IsNotEmpty()
+  @HideField()
+  @Allow()
   created_by: string;
-  @Field()
-  @IsUUID()
-  @IsNotEmpty()
+  @HideField()
+  @Allow()
   updated_by: string;
 }
 

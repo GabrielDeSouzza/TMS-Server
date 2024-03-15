@@ -1,3 +1,4 @@
+import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -7,10 +8,17 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
+import { ROLE, User } from 'domain/entities/User/User';
+
 import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 import { OrderProcessingPhysicalCustomerUseCases } from 'app/useCases/ProcessingPhysicalCustomerCases/ProcessingPhysicalCustomerUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 import { VehicleUseCases } from 'app/useCases/VehicleUseCases/VehicleUseCases';
+
+import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
+import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
+import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -23,6 +31,9 @@ import {
 } from './OrderProcessingPhysicalCustomer.input';
 import { OrderProcessingPhysicalCustomerModel } from './OrderProcessingPhysicalCustomer.model';
 
+@UseGuards(GraphQLAuthGuard)
+@UseInterceptors(RoleInterceptor)
+@AcessAllowed(ROLE.USER)
 @Resolver(() => OrderProcessingPhysicalCustomerModel)
 export class OrderProcessingPhysicalCustomerResolver {
   constructor(
@@ -50,7 +61,12 @@ export class OrderProcessingPhysicalCustomerResolver {
   @Mutation(() => OrderProcessingPhysicalCustomerModel)
   async createOrderProcessingPhysicalCustomer(
     @Args('data') data: OrderProcessingPhysicalCustomerInput,
+    @CurrentUser() user: User,
   ) {
+    console.log(user);
+    data.created_by = user.id;
+    data.updated_by = user.id;
+
     return this.orderProcessingPhysicalCustomerUseCase.createOrderProcessingPhysicalCustomer(
       data,
     );
@@ -59,7 +75,10 @@ export class OrderProcessingPhysicalCustomerResolver {
   async updateOrderProcessingPhysicalCustomer(
     @Args('id') id: string,
     @Args('data') data: OrderProcessingPhysicalCustomerUpdateInput,
+    @CurrentUser() user: User,
   ) {
+    data.updated_by = user.id;
+
     return this.orderProcessingPhysicalCustomerUseCase.updateOrderProcessingPhysicalCustomer(
       id,
       data,
@@ -74,7 +93,7 @@ export class OrderProcessingPhysicalCustomerResolver {
     });
   }
   @ResolveField(() => PhysicalCustomerOrderModel)
-  async Route(@Parent() orderProcessing: OrderProcessingPhysicalCustomerInput) {
+  async Order(@Parent() orderProcessing: OrderProcessingPhysicalCustomerInput) {
     return this.legalOrderUseCase.getPhysicalCustomerOrder({
       id: orderProcessing.order_id,
     });

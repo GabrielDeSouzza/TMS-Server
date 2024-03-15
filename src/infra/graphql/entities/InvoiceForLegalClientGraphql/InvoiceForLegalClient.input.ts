@@ -3,17 +3,12 @@ import {
   Float,
   HideField,
   InputType,
+  OmitType,
   PartialType,
 } from '@nestjs/graphql';
 
 import { Type } from 'class-transformer';
-import {
-  Allow,
-  IsDate,
-  IsDecimal,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { Allow, IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 import { type IInvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
 
@@ -34,7 +29,7 @@ export class InvoiceForLegalClientInput
   @IsNotEmpty()
   nature_invoice: string;
   @Field(() => Float)
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   invoice_total: number;
 
@@ -51,13 +46,10 @@ export class InvoiceForLegalClientInput
   @IsNotEmpty()
   digital_signature: string;
   @Field(() => Float)
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   invoice_taxes: number;
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  legal_client_order_id: string;
+
   @HideField()
   @Allow()
   created_by: string;
@@ -67,7 +59,11 @@ export class InvoiceForLegalClientInput
 }
 @InputType()
 export class InvoiceForLegalClientUpdateInput extends PartialType(
-  InvoiceForLegalClientInput,
+  OmitType(InvoiceForLegalClientInput, [
+    'created_by',
+    'invoice_number',
+    'digital_signature',
+  ]),
 ) {
   updated_by: string;
 }

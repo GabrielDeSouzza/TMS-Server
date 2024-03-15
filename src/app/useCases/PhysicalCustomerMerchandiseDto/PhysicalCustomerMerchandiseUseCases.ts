@@ -73,6 +73,7 @@ export class PhysicalCustomerMerchandiseUseCases {
       mass: data.mass,
       value: data.value,
       volume: data.volume,
+      invoicePhysicalClient: data.invoicePhysicalClient,
     });
 
     return this.physicalCustomerMerchandiseRepository.createPhysicalCustomerMerchandise(
@@ -92,6 +93,7 @@ export class PhysicalCustomerMerchandiseUseCases {
       mass: data.mass,
       value: data.value,
       volume: data.volume,
+      invoicePhysicalClient: data.invoicePhysicalClient,
     });
 
     return this.physicalCustomerMerchandiseRepository.updatePhysicalCustomerMerchandise(

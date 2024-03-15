@@ -9,6 +9,7 @@ import { InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForL
 import { type CreateInvoiceForLegalClientDTO } from 'app/dtos/InvoiceForLegalClientDto/CreateInvoiceForLegalClient';
 import { type GetAllInvoiceForLegalClientDTO } from 'app/dtos/InvoiceForLegalClientDto/GetAllInvoiceForLegalClientDto';
 import { type UpdateInvoiceForLegalClientDTO } from 'app/dtos/InvoiceForLegalClientDto/UpdateInvoiceForLegalClient';
+import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 @Injectable()
 export class InvoiceForLegalClientUseCases {
@@ -48,10 +49,9 @@ export class InvoiceForLegalClientUseCases {
       digital_signature: data.digital_signature,
       emission_date: data.emission_date,
       form_payment: data.form_payment,
-      invoice_number: data.invoice_number,
+      invoice_number: 'ILC' + generateRandomNumber(),
       invoice_taxes: data.invoice_taxes,
       invoice_total: data.invoice_total,
-      legal_client_order_id: data.legal_client_order_id,
       nature_invoice: data.nature_invoice,
       updated_by: data.updated_by,
     });
@@ -74,7 +74,6 @@ export class InvoiceForLegalClientUseCases {
       invoice_number: data.invoice_number,
       invoice_taxes: data.invoice_taxes,
       invoice_total: data.invoice_total,
-      legal_client_order_id: data.legal_client_order_id,
       nature_invoice: data.nature_invoice,
       updated_by: data.updated_by,
     });
@@ -83,5 +82,18 @@ export class InvoiceForLegalClientUseCases {
       id,
       invoice,
     );
+  }
+
+  async getMerchandiseInInvoice(request: GetInvoiceForLegalClientDTO) {
+    const merchandise =
+      await this.invoiceForLegalClientRepository.getMerchandiseByInvoiceForLegalClient(
+        request,
+      );
+    if (!merchandise)
+      throw new GraphQLError('MERCHANDISE NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+
+    return merchandise;
   }
 }

@@ -7,10 +7,11 @@ import { PhysicalCustomerMerchandiseUseCases } from 'app/useCases/PhysicalCustom
 import { PhysicalCustomerMerchandisePrismaService } from 'infra/database/prisma/services/PhysicalCustomerMerchandise.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { InvoiceForPhysicalCustomerModule } from '../InvoiceForPhysicalCustomerGraphql/InvoiceForPhysicalCustomer.module';
 import { PhysicalCustomerMerchandiseResolver } from './PhysicalCustomerMerchandise.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule],
+  imports: [GraphqlCenterModule, InvoiceForPhysicalCustomerModule],
   providers: [
     {
       provide: PhysicalCustomerMerchandiseRepository,

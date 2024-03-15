@@ -1,4 +1,8 @@
-export abstract class UpdateLegalClientMerchandisesDTO {
+import { type ILegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
+
+export abstract class UpdateLegalClientMerchandisesDTO
+  implements Partial<ILegalClientMerchandise>
+{
   codMerchandise?: string;
 
   amount?: number;
@@ -11,5 +15,7 @@ export abstract class UpdateLegalClientMerchandisesDTO {
 
   value?: number;
 
-  legalClientOrderId?: string;
+  legal_client_order_id?: string;
+
+  invoice_legal_client?: string;
 }

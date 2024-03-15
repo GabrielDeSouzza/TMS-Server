@@ -9,6 +9,8 @@ import { UserModelRefereces } from '../UserGraphql/user.model';
 @ObjectType()
 export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   @Field()
+  recipient_id: string;
+  @Field()
   id?: string;
   @Field()
   order: string;

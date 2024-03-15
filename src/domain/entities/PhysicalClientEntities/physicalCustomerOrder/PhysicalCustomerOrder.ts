@@ -10,8 +10,9 @@ export interface IPhysicalCustomerOrder {
   id?: string;
   order: string;
   physicalCustomerId: string;
-  updated_at: Date;
-  created_at: Date;
+  recipient_id: string;
+  updated_at?: Date;
+  created_at?: Date;
   updated_by: string;
   created_by: string;
 }
@@ -57,6 +58,11 @@ export class PhysicalCustomerOrder extends Entity {
         maxLength: 999,
       },
       {
+        field: this.props.recipient_id,
+        fieldName: 'Recipient ',
+        maxLength: 200,
+      },
+      {
         field: this.props.created_by,
         fieldName: 'Created By',
         maxLength: 200,
@@ -83,6 +89,13 @@ export class PhysicalCustomerOrder extends Entity {
 
   get id(): string {
     return this.props.id;
+  }
+  public get recipient_id(): string {
+    return this.props.recipient_id;
+  }
+
+  public set recipient_id(recipient_id: string) {
+    this.props.recipient_id = recipient_id;
   }
 
   get order(): string {

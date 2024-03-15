@@ -2,12 +2,15 @@ import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 
 import { type IPhysicalCustomerMerchandise } from 'domain/entities/PhysicalClientEntities/physicalCustomerMerchandise/physical-merchandise';
 
+import { InvoiceForPhysicalCustomerModel } from '../InvoiceForPhysicalCustomerGraphql/InvoiceForPhysicalCustomer.model';
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 
 @ObjectType()
 export class PhysicalCustomerMerchandiseModel
   implements IPhysicalCustomerMerchandise
 {
+  @Field()
+  invoicePhysicalClient: string;
   @Field()
   id: string;
   @Field()
@@ -26,4 +29,6 @@ export class PhysicalCustomerMerchandiseModel
   physicalCustomerOrderId: string;
   @Field(() => LegalClientOrderModel)
   LegalClientOrder: LegalClientOrderModel;
+  @Field(() => InvoiceForPhysicalCustomerModel)
+  Invoice: InvoiceForPhysicalCustomerModel;
 }

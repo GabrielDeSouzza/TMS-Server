@@ -9,9 +9,9 @@ import {
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
-import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
 import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
+import { LegalPersonUseCases } from 'app/useCases/LegalPersonUseCases/LegalPersonUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
@@ -38,7 +38,7 @@ export class CarrierCompanyResolver {
   constructor(
     private carrierCompanyUseCase: CarrierCompanyUseCases,
     private userCase: UserUseCases,
-    private legalPersonRepository: LegalPersonRepository,
+    private legalPersonUseCase: LegalPersonUseCases,
   ) {}
   @Query(() => CarrierCompanyModel)
   async getCarrierCompanyModel(
@@ -86,7 +86,7 @@ export class CarrierCompanyResolver {
     @Parent() legalClient: CarrierCompanyInput | CarrierCompanyUpdateInput,
   ) {
     const { legalPersonId: legalPersonID } = legalClient;
-    const legalPerson = await this.legalPersonRepository.findlegalperson({
+    const legalPerson = await this.legalPersonUseCase.getLegalPerson({
       legalPersonId: legalPersonID,
     });
 

@@ -12,7 +12,8 @@ export interface ILegalClientMerchandise {
   mass: number;
   volume: number;
   value: number;
-  legalClientOrderId: string;
+  legal_client_order_id: string;
+  invoice_legal_client: string;
 }
 
 export class LegalClientMerchandise extends Entity {
@@ -54,7 +55,7 @@ export class LegalClientMerchandise extends Entity {
         maxLength: 100,
       },
       {
-        field: this.props.legalClientOrderId,
+        field: this.props.legal_client_order_id,
         fieldName: 'Legal Client Order',
         maxLength: 200,
       },
@@ -83,6 +84,14 @@ export class LegalClientMerchandise extends Entity {
 
   set id(id: string | undefined) {
     this.props.id = id;
+  }
+
+  get invoice_legal_client(): string {
+    return this.props.invoice_legal_client;
+  }
+
+  set invoice_legal_client(invoice_legal_client: string) {
+    this.props.invoice_legal_client = invoice_legal_client;
   }
 
   get codMerchandise(): string {
@@ -133,11 +142,11 @@ export class LegalClientMerchandise extends Entity {
     this.props.value = value;
   }
 
-  get legalClientOrderId(): string {
-    return this.props.legalClientOrderId;
+  get legal_client_order_id(): string {
+    return this.props.legal_client_order_id;
   }
 
-  set legalClientOrderId(legalClientOrderId: string) {
-    this.props.legalClientOrderId = legalClientOrderId;
+  set legal_client_order_id(legal_client_order_id: string) {
+    this.props.legal_client_order_id = legal_client_order_id;
   }
 }

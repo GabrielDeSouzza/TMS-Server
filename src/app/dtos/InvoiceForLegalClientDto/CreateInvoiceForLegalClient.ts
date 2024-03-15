@@ -15,8 +15,6 @@ export abstract class CreateInvoiceForLegalClientDTO {
 
   invoice_taxes: number;
 
-  legal_client_order_id: string;
-
   created_by: string;
 
   updated_by: string;

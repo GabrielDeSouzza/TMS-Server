@@ -11,7 +11,6 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 
 import { InvoiceForLegalClientUseCases } from 'app/useCases/InvoiceForLegalClient/InvoiceForLegalClientUseCases';
-import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalClientWhereArgs } from 'infra/graphql/entities/LegalClientGraphql/Args/WhereLegalClientArgs';
@@ -20,7 +19,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetInvoiceForLegalClientArgs } from './Args/GetInvoiceForLegalClientArgs';
 import {
@@ -37,7 +36,6 @@ export class InvoiceForLegalClientResolver {
   constructor(
     private invoiceForLegalClientUseCase: InvoiceForLegalClientUseCases,
     private userCase: UserUseCases,
-    private legalClientOrderUseCase: LegalClientOrderUseCases,
   ) {}
   @Query(() => InvoiceForLegalClientModel)
   async getInvoiceForLegalClientModel(
@@ -84,10 +82,10 @@ export class InvoiceForLegalClientResolver {
       invoiceForLegalClientInput,
     );
   }
-  @ResolveField(() => LegalClientOrderModel)
-  async LegalClientOrder(@Parent() invoice: InvoiceForLegalClientInput) {
-    return this.legalClientOrderUseCase.getLegalClientOrder({
-      id: invoice.legal_client_order_id,
+  @ResolveField(() => LegalClientMerchandiseModel)
+  async Merchandise(@Parent() invoice: InvoiceForLegalClientInput) {
+    return await this.invoiceForLegalClientUseCase.getMerchandiseInInvoice({
+      invoice_number: invoice.invoice_number,
     });
   }
   @ResolveField(() => UserModelRefereces)

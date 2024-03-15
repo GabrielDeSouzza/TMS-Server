@@ -66,6 +66,10 @@ Table users {
   OutsourcedTransportCompanyContractUpdatedBy OutsourcedTransportCompanyContract [not null]
   OrderProcessingLegalClientUpdatedBy order_processing_legal_client [not null]
   OrderProcessingLegalClientCreatedBy order_processing_legal_client [not null]
+  RecipientUpdatedBy recipient [not null]
+  RecipientCreatedBy recipient [not null]
+  IcmsUpdatedBy icms [not null]
+  IcmsCreatedBy icms [not null]
 }
 
 Table vehicles {
@@ -295,6 +299,7 @@ Table natural_people {
   OutsourcedDriver outsourced_drivers [not null]
   PhysicalCustomer physical_customers [not null]
   OutsourcedTransportCompanyDriver outsourcedT_transport_company_driver
+  Recipient recipient [not null]
 }
 
 Table physical_customers {
@@ -309,34 +314,7 @@ Table physical_customers {
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   PhysicalCustomerOrder physical_orders [not null]
-}
-
-Table physical_merchandise {
-  id String [pk]
-  codMerchandise String [unique, not null]
-  amount Int [not null]
-  description String [not null]
-  mass Float [not null]
-  volume Float [not null]
-  value Float [not null]
-  PhysicalCustomerOrder physical_orders [not null]
-  physicalCustomerOrderId String [not null]
-}
-
-Table physical_orders {
-  id String [pk]
-  order String [unique, not null]
-  updated_by String [not null]
-  PhysicalCustomerMerchandise physical_merchandise [not null]
-  Invoice invoices_physical_client [not null]
-  physical_customer_id String [not null]
-  PhysicalCustomer physical_customers [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
-  CreatedBy users [not null]
-  created_by String [not null]
-  UpdatedBy users [not null]
-  OrderProcessingPhysicalCustomer order_processing_physical_customer [not null]
+  InvoiceForPhysicalCustomer invoices_physical_client [not null]
 }
 
 Table invoices_physical_client {
@@ -355,10 +333,9 @@ Table invoices_physical_client {
   created_by String [not null]
   UpdatedBy users [not null]
   updated_by String [not null]
-  CarrierCompany carrier_companies [not null]
-  carrierCompanyId String [not null]
-  PhysicalCustomerOrder physical_orders
-  physicalCustomerOrderId String [not null]
+  physical_customer_id String [not null]
+  PhysicalCustomer physical_customers [not null]
+  PhysicalCustomerMerchandise physical_merchandise
 }
 
 Table legal_people {
@@ -383,13 +360,13 @@ Table legal_people {
   MaintenanceCompany maintenance_companies
   CarrierCompany carrier_companies [not null]
   OutsourcedTransportCompany OutsourcedTransportCompany [not null]
+  Recipient recipient [not null]
 }
 
 Table carrier_companies {
   id String [pk]
   LegalPerson legal_people [not null]
   legal_person_id String [unique, not null]
-  InvoiceForPhysicalClient invoices_physical_client [not null]
   LegalContract legal_Contracts [not null]
   CompanyVehicle company_vehicles [not null]
   rntrc String [unique, not null]
@@ -446,6 +423,145 @@ Table legal_clients {
   LegalContract legal_Contracts [not null]
 }
 
+Table physical_merchandise {
+  id String [pk]
+  codMerchandise String [unique, not null]
+  amount Int [not null]
+  description String [not null]
+  mass Float [not null]
+  volume Float [not null]
+  value Float [not null]
+  PhysicalCustomerOrder physical_orders [not null]
+  physicalCustomerOrderId String [unique, not null]
+  invoice_id String [unique, not null]
+  InvoiceForPhysicalCustomer invoices_physical_client [not null]
+}
+
+Table physical_orders {
+  id String [pk]
+  order String [unique, not null]
+  updated_by String [not null]
+  PhysicalCustomerMerchandise physical_merchandise [not null]
+  physical_customer_id String [not null]
+  PhysicalCustomer physical_customers [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users [not null]
+  created_by String [not null]
+  UpdatedBy users [not null]
+  OrderProcessingPhysicalCustomer order_processing_physical_customer [not null]
+  recipient_id String [not null]
+  Recipient recipient [not null]
+}
+
+Table recipient {
+  id String [pk]
+  legal_person_id String
+  LegalPerson legal_people
+  natural_person_id String
+  NaturalPerson natural_people
+  PhysicalCustomerOrder physical_orders [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users [not null]
+  created_by String [not null]
+  updated_by String [not null]
+  UpdatedBy users [not null]
+  LegalClientOrder legal_orders [not null]
+}
+
+Table icms {
+  id String [pk]
+  state_orgin String [not null]
+  recipient_state String [not null]
+  aliquot Decimal [not null]
+  effective_date DateTime [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users [not null]
+  created_by String [not null]
+  updated_by String [not null]
+  UpdatedBy users [not null]
+
+  indexes {
+    (state_orgin, recipient_state) [unique]
+  }
+}
+
+Table routes_physical_customer {
+  id String [pk]
+  cep String [not null]
+  public_place String [not null]
+  address_number String [not null]
+  neighborhood String [not null]
+  complement String
+  city String [not null]
+  uf String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  order_processing_id String [not null]
+  OrderProcessing order_processing_physical_customer [not null]
+}
+
+Table order_processing_physical_customer {
+  id String [pk]
+  total_distance Float [not null]
+  total_spend_liters Int [not null]
+  total_spending_money Float [not null]
+  start_at DateTime [not null]
+  end_at DateTime
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users [not null]
+  created_by String [not null]
+  UpdatedBy users [not null]
+  updated_by String [not null]
+  Order physical_orders [not null]
+  order_id String [unique, not null]
+  Vehicle vehicles [not null]
+  vehicle_id String [not null]
+  CompanyVehicle company_vehicles [not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
+  RoutesPhysicalCustomer routes_physical_customer [not null]
+}
+
+Table routes_legal_client {
+  id String [pk]
+  cep String [not null]
+  public_place String [not null]
+  address_number String [not null]
+  neighborhood String [not null]
+  complement String
+  city String [not null]
+  uf String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  order_processing_id String [not null]
+  OrderProcessing order_processing_legal_client [not null]
+}
+
+Table order_processing_legal_client {
+  id String [pk]
+  total_distance Float [not null]
+  total_spend_liters Int [not null]
+  total_spending_money Float [not null]
+  start_at DateTime [not null]
+  end_at DateTime
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  CreatedBy users [not null]
+  created_by String [not null]
+  UpdatedBy users [not null]
+  updated_by String [not null]
+  Vehicle vehicles [not null]
+  vehicle_id String [not null]
+  order_id String [not null]
+  Order legal_orders [not null]
+  CompanyVehicle company_vehicles [not null]
+  OutsourcedVehicle outsourced_vehicles [not null]
+  RoutesLegalClient routes_legal_client [not null]
+}
+
 Table legal_Contracts {
   id String [pk]
   contract_number String [unique, not null]
@@ -475,7 +591,9 @@ Table legal_merchandise {
   volume Float [not null]
   value Float [not null]
   LegalClientOrder legal_orders [not null]
-  legalClientOrderId String [not null]
+  legalClientOrderId String [unique, not null]
+  invoice_id String [unique, not null]
+  InvoiceLegalClient invoices_legal_client [not null]
 }
 
 Table legal_orders {
@@ -490,7 +608,8 @@ Table legal_orders {
   updated_by String [not null]
   LegalContract legal_Contracts [not null]
   legal_contract_id String [not null]
-  InvoiceForLegalClient invoices_legal_client [not null]
+  recipient_id String [not null]
+  Recipient recipient [not null]
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract
   OrderProcessingLegalClient order_processing_legal_client [not null]
 }
@@ -511,8 +630,7 @@ Table invoices_legal_client {
   created_by String [not null]
   UpdatedBy users [not null]
   updated_by String [not null]
-  LegalClientOrder legal_orders [not null]
-  legalClientrOrderId String [not null]
+  LegalClientMerchandise legal_merchandise
 }
 
 Table ciots_for_legal_clients {
@@ -527,80 +645,6 @@ Table ciots_for_legal_clients {
   created_by String [not null]
   UpdatedBy users
   updated_by String [not null]
-}
-
-Table routes_physical_customer {
-  id String [pk]
-  cep String [not null]
-  public_place String [not null]
-  address_number String [not null]
-  neighborhood String [not null]
-  complement String
-  city String [not null]
-  uf String [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
-  order_processing_id String [not null]
-  OrderProcessing order_processing_physical_customer [not null]
-}
-
-Table order_processing_physical_customer {
-  id String [pk]
-  total_distance Float [not null]
-  total_spend_liters Int [not null]
-  total_spending_money Float [not null]
-  start_at DateTime [not null]
-  end_at DateTime [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
-  CreatedBy users [not null]
-  created_by String [not null]
-  UpdatedBy users [not null]
-  updated_by String [not null]
-  Order physical_orders [not null]
-  order_id String [not null]
-  Vehicle vehicles [not null]
-  vehicle_id String [not null]
-  CompanyVehicle company_vehicles [not null]
-  OutsourcedVehicle outsourced_vehicles [not null]
-  RoutesPhysicalCustomer routes_physical_customer [not null]
-}
-
-Table routes_legal_client {
-  id String [pk]
-  cep String [not null]
-  public_place String [not null]
-  address_number String [not null]
-  neighborhood String [not null]
-  complement String
-  city String [not null]
-  uf String [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
-  order_processing_id String [not null]
-  OrderProcessing order_processing_legal_client [not null]
-}
-
-Table order_processing_legal_client {
-  id String [pk]
-  total_distance Float [not null]
-  total_spend_liters Int [not null]
-  total_spending_money Float [not null]
-  start_at DateTime [not null]
-  end_at DateTime [not null]
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
-  CreatedBy users [not null]
-  created_by String [not null]
-  UpdatedBy users [not null]
-  updated_by String [not null]
-  Vehicle vehicles [not null]
-  vehicle_id String [not null]
-  order_id String [not null]
-  Order legal_orders [not null]
-  CompanyVehicle company_vehicles [not null]
-  OutsourcedVehicle outsourced_vehicles [not null]
-  RoutesLegalClient routes_legal_client [not null]
 }
 
 Table types_of_maintenances {
@@ -735,21 +779,11 @@ Ref: physical_customers.created_by > users.id
 
 Ref: physical_customers.updated_by > users.id
 
-Ref: physical_merchandise.physicalCustomerOrderId > physical_orders.id
-
-Ref: physical_orders.physical_customer_id > physical_customers.id
-
-Ref: physical_orders.created_by > users.id
-
-Ref: physical_orders.updated_by > users.id
-
 Ref: invoices_physical_client.created_by > users.id
 
 Ref: invoices_physical_client.updated_by > users.id
 
-Ref: invoices_physical_client.carrierCompanyId > carrier_companies.id
-
-Ref: invoices_physical_client.physicalCustomerOrderId > physical_orders.id
+Ref: invoices_physical_client.physical_customer_id > physical_customers.id
 
 Ref: carrier_companies.legal_person_id > legal_people.id
 
@@ -779,33 +813,29 @@ Ref: legal_clients.created_by > users.id
 
 Ref: legal_clients.updated_by > users.id
 
-Ref: legal_Contracts.legal_client_id > legal_clients.id
+Ref: physical_merchandise.physicalCustomerOrderId > physical_orders.id
 
-Ref: legal_Contracts.carrier_company_id > carrier_companies.id
+Ref: physical_merchandise.invoice_id - invoices_physical_client.id
 
-Ref: legal_Contracts.created_by > users.id
+Ref: physical_orders.physical_customer_id > physical_customers.id
 
-Ref: legal_Contracts.updated_by > users.id
+Ref: physical_orders.created_by > users.id
 
-Ref: legal_merchandise.legalClientOrderId > legal_orders.id
+Ref: physical_orders.updated_by > users.id
 
-Ref: legal_orders.created_by > users.id
+Ref: physical_orders.recipient_id > recipient.id
 
-Ref: legal_orders.updated_by > users.id
+Ref: recipient.legal_person_id > legal_people.id
 
-Ref: legal_orders.legal_contract_id > legal_Contracts.id
+Ref: recipient.natural_person_id > natural_people.id
 
-Ref: invoices_legal_client.created_by > users.id
+Ref: recipient.created_by > users.id
 
-Ref: invoices_legal_client.updated_by > users.id
+Ref: recipient.updated_by > users.id
 
-Ref: invoices_legal_client.legalClientrOrderId > legal_orders.id
+Ref: icms.created_by > users.id
 
-Ref: ciots_for_legal_clients.legal_contract_id > legal_Contracts.id
-
-Ref: ciots_for_legal_clients.created_by > users.id
-
-Ref: ciots_for_legal_clients.updated_by > users.id
+Ref: icms.updated_by > users.id
 
 Ref: routes_physical_customer.order_processing_id > order_processing_physical_customer.id
 
@@ -826,6 +856,36 @@ Ref: order_processing_legal_client.updated_by > users.id
 Ref: order_processing_legal_client.vehicle_id > vehicles.id
 
 Ref: order_processing_legal_client.order_id > legal_orders.id
+
+Ref: legal_Contracts.legal_client_id > legal_clients.id
+
+Ref: legal_Contracts.carrier_company_id > carrier_companies.id
+
+Ref: legal_Contracts.created_by > users.id
+
+Ref: legal_Contracts.updated_by > users.id
+
+Ref: legal_merchandise.legalClientOrderId > legal_orders.id
+
+Ref: legal_merchandise.invoice_id - invoices_legal_client.id
+
+Ref: legal_orders.created_by > users.id
+
+Ref: legal_orders.updated_by > users.id
+
+Ref: legal_orders.legal_contract_id > legal_Contracts.id
+
+Ref: legal_orders.recipient_id > recipient.id
+
+Ref: invoices_legal_client.created_by > users.id
+
+Ref: invoices_legal_client.updated_by > users.id
+
+Ref: ciots_for_legal_clients.legal_contract_id > legal_Contracts.id
+
+Ref: ciots_for_legal_clients.created_by > users.id
+
+Ref: ciots_for_legal_clients.updated_by > users.id
 
 Ref: types_of_maintenances.created_by > users.id
 

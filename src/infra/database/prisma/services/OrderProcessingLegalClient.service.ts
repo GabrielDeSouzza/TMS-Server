@@ -3,10 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { type GetOrderProcessingLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetProcessingLegalClientDto';
 import { type FindAllOrderProcessingLegalClientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/ProcessingLegalClientRepositoryDto';
 import { type OrderProcessingLegalClient } from 'domain/entities/OrdersAndRoutesEntities/OrderProcessingLegalClient/OrderProcessingLegalClient';
+import { type RouteLegalClient } from 'domain/entities/OrdersAndRoutesEntities/routeLegalClient/RouteLegalClient';
 import { type OrderProcessingLegalClientRepository } from 'domain/repositories/OrderProcessingLegalClientRepository';
 
 import { PrismaService } from '../prisma.service';
 import { OrderProcessingLegalClientPrismaDTO } from './prismaDTO/OrderProcessingLegalClientPrismaDto';
+import { RouteLegalClientPrismaDTO } from './prismaDTO/RouteLegalClientPrismaDto';
 
 @Injectable()
 export class OrderProcessingLegalClientPrismaService
@@ -74,6 +76,19 @@ export class OrderProcessingLegalClientPrismaService
       OrderProcessingLegalClientPrismaDTO.PrismaToEntity(
         orderProcessingLegalClient,
       ),
+    );
+  }
+  async findAllRoutesByOrderProcessingLegalClient(
+    request: GetOrderProcessingLegalClientDTO,
+  ): Promise<RouteLegalClient[]> {
+    const orderProcessing =
+      await this.prisma.orderProcessingLegalClient.findFirst({
+        where: { id: request.id },
+        select: { RoutesLegalClient: true },
+      });
+
+    return orderProcessing.RoutesLegalClient.map(route =>
+      RouteLegalClientPrismaDTO.PrismaToEntity(route),
     );
   }
 }

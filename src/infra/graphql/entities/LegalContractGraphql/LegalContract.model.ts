@@ -10,6 +10,7 @@ import {
   LegalClientModel,
   LegalClientModelRefereces,
 } from '../LegalClientGraphql/LegalClient.model';
+import { OrderProcessingLegalClientModel } from '../OrderProcessingLegalClientGraphql/OrderProcessingLegalClient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
 @ObjectType()
@@ -40,6 +41,8 @@ export class LegalContractModel implements ILegalContract {
   CarrierCompany: CarrierCompanyModelRefereces;
   @Field()
   updated_by: string;
+  @Field(() => [OrderProcessingLegalClientModel])
+  OrderProcessings: [OrderProcessingLegalClientModel];
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

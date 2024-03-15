@@ -27,6 +27,6 @@ import { InvoiceForLegalClientResolver } from './InvoiceForLegalClient.resolver'
     InvoiceForLegalClientUseCases,
     LegalClientOrderUseCases,
   ],
-  exports: [LegalClientOrderUseCases],
+  exports: [InvoiceForLegalClientUseCases],
 })
 export class InvoiceForLegalClientModule {}

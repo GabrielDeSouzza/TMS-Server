@@ -1,6 +1,6 @@
 import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
-import { Allow, IsNotEmpty, IsUUID } from 'class-validator';
+import { Allow, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
@@ -8,6 +8,10 @@ import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/Lega
 export class LegalClientOrderInput
   implements Omit<ILegalClientOrder, 'id' | 'created_at' | 'updated_at'>
 {
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  recipient_id: string;
   @HideField()
   @Allow()
   order: string;

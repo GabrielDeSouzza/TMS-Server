@@ -74,13 +74,13 @@ export class OrderProcessingPhysicalCustomer extends Entity {
       {
         field: this.props.vehicle_id,
         fieldName: 'Vehicle',
-        maxLength: 20,
+        maxLength: 1000,
         isNullAble: true,
       },
       {
         field: this.props.order_id,
         fieldName: 'Order',
-        maxLength: 20,
+        maxLength: 1000,
         isNullAble: true,
       },
       {

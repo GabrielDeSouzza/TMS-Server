@@ -15,6 +15,7 @@ export interface IPhysicalCustomerMerchandise {
   volume: number;
   value: number;
   physicalCustomerOrderId: string;
+  invoicePhysicalClient: string;
 }
 
 export class PhysicalCustomerMerchandise extends Entity {
@@ -89,6 +90,14 @@ export class PhysicalCustomerMerchandise extends Entity {
 
   set codMerchandise(codMerchandise: string) {
     this.props.codMerchandise = codMerchandise;
+  }
+
+  get invoicePhysicalClient(): string {
+    return this.props.invoicePhysicalClient;
+  }
+
+  set invoicePhysicalClient(invoicePhysicalClient: string) {
+    this.props.invoicePhysicalClient = invoicePhysicalClient;
   }
 
   get amount(): number {

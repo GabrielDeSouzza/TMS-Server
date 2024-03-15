@@ -16,7 +16,6 @@ export interface IInvoiceForLegalClient {
   additional_data: string;
   digital_signature: string;
   invoice_taxes: number;
-  legal_client_order_id: string;
   updated_at: Date;
   created_at: Date;
   created_by: string;
@@ -87,11 +86,6 @@ export class InvoiceForLegalClient extends Entity {
         field: this.props.invoice_taxes,
         fieldName: 'Invoice Taxes',
         maxLength: 20,
-      },
-      {
-        field: this.props.legal_client_order_id,
-        fieldName: 'Legal Client Order',
-        maxLength: 999,
       },
     );
 
@@ -167,14 +161,6 @@ export class InvoiceForLegalClient extends Entity {
 
   set invoice_taxes(invoice_taxes: number) {
     this.props.invoice_taxes = invoice_taxes;
-  }
-
-  get legalClientOrderId(): string {
-    return this.props.legal_client_order_id;
-  }
-
-  set legalClientOrderId(legal_client_order_id: string) {
-    this.props.legal_client_order_id = legal_client_order_id;
   }
 
   get updated_by(): string {

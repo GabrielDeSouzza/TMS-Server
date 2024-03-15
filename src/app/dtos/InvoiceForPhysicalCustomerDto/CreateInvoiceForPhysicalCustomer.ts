@@ -1,9 +1,13 @@
-export abstract class CreateInvoiceForPhysicalCustomerDTO {
+import { type IInvoicePhysicalCustomer } from 'domain/entities/PhysicalClientEntities/invoiceForPhysicalCustomer/InvoiceForPhysicalCustomer';
+
+export abstract class CreateInvoiceForPhysicalCustomerDTO
+  implements IInvoicePhysicalCustomer
+{
+  physicalCustomerId: string;
+
   emission_date: Date;
 
   invoice_number: string;
-
-  carrierCompanyId: string;
 
   nature_invoice: string;
 
@@ -16,8 +20,6 @@ export abstract class CreateInvoiceForPhysicalCustomerDTO {
   digital_signature: string;
 
   invoice_taxes: number;
-
-  physicalCustomerOrderId: string;
 
   created_by: string;
 

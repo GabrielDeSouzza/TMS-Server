@@ -3,17 +3,17 @@ import { Injectable } from '@nestjs/common';
 import { type GetInvoiceForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetInvoiceForLegalClientDto';
 import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
+import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 import { type InvoiceForLegalClientRepository } from 'domain/repositories/InvoiceForLegalClient.repository';
 
 import { PrismaService } from '../prisma.service';
 import { InvoiceForLegalClientPrismaDTO } from './prismaDTO/InvoiceForLegalClientPrismaDto';
+import { LegalClientMerchandisePrismaDTO } from './prismaDTO/LegalClientMerchandisePrismaDto';
 
 @Injectable()
 export class InvoiceForLegalClientPrismaService
   implements InvoiceForLegalClientRepository
 {
-  constructor(private prisma: PrismaService) {}
-
   async findInvoiceForLegalClient(
     request: GetInvoiceForLegalClientDTO,
   ): Promise<InvoiceForLegalClient> {
@@ -70,6 +70,23 @@ export class InvoiceForLegalClientPrismaService
 
     return invoiceForLegalClients.map(invoiceForLegalClient =>
       InvoiceForLegalClientPrismaDTO.PrismaToEntity(invoiceForLegalClient),
+    );
+  }
+
+  constructor(private prisma: PrismaService) {}
+  async getMerchandiseByInvoiceForLegalClient(
+    request: GetInvoiceForLegalClientDTO,
+  ): Promise<LegalClientMerchandise> {
+    console.log('tete');
+    const invoice = await this.prisma.invoiceForLegalClient.findFirst({
+      where: {
+        OR: [{ id: request.id }, { invoice_number: request.invoice_number }],
+      },
+      select: { LegalClientMerchandise: true },
+    });
+
+    return LegalClientMerchandisePrismaDTO.PrismaToEntity(
+      invoice.LegalClientMerchandise,
     );
   }
 }

@@ -20,6 +20,7 @@ export class PhysicalCustomerMerchandisePrismaDTO {
       mass: physicalCustomerMerchandisePrisma.mass,
       value: physicalCustomerMerchandisePrisma.value,
       volume: physicalCustomerMerchandisePrisma.volume,
+      invoicePhysicalClient: physicalCustomerMerchandisePrisma.invoice_id,
     });
   }
   public static EntityToCreatePrisma(
@@ -32,6 +33,9 @@ export class PhysicalCustomerMerchandisePrismaDTO {
         description: physicalCustomerMerchandise.description,
         PhysicalCustomerOrder: {
           connect: { id: physicalCustomerMerchandise.physicalCustomerOrderId },
+        },
+        InvoiceForPhysicalCustomer: {
+          connect: { id: physicalCustomerMerchandise.invoicePhysicalClient },
         },
         mass: physicalCustomerMerchandise.mass,
         value: physicalCustomerMerchandise.value,
@@ -54,6 +58,14 @@ export class PhysicalCustomerMerchandisePrismaDTO {
             ? {
                 connect: {
                   id: physicalCustomerMerchandise.physicalCustomerOrderId,
+                },
+              }
+            : undefined,
+        InvoiceForPhysicalCustomer:
+          physicalCustomerMerchandise.invoicePhysicalClient
+            ? {
+                connect: {
+                  id: physicalCustomerMerchandise.invoicePhysicalClient,
                 },
               }
             : undefined,

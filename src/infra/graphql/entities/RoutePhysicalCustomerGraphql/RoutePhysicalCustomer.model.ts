@@ -2,8 +2,6 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IRoutePhysicalCustomer } from 'domain/entities/OrdersAndRoutesEntities/routePhysicalCustomer/RoutePhysicalCustomer';
 
-import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
-
 @ObjectType()
 export abstract class RoutePhysicalCustomerModel
   implements IRoutePhysicalCustomer
@@ -30,6 +28,4 @@ export abstract class RoutePhysicalCustomerModel
   created_at: Date;
   @Field(() => Date)
   updated_at: Date;
-  @Field(() => PhysicalCustomerOrderModel)
-  PhysicalCustomerOrder: PhysicalCustomerOrderModel;
 }

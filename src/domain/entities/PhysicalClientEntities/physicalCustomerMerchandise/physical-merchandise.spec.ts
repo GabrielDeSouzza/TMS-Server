@@ -13,6 +13,7 @@ describe('Merchandise', () => {
       created_at: new Date(),
       id: '123',
       updated_at: new Date(),
+      invoicePhysicalClient: 'dfsdfsd',
     });
 
     expect(merchandise).toBeTruthy();

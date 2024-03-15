@@ -36,4 +36,6 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   UpdatedUser: UserModelRefereces;
   @Field(() => [InvoiceForLegalClientModel])
   Invoices = [InvoiceForLegalClientModel];
+  @Field()
+  recipient_id: string;
 }

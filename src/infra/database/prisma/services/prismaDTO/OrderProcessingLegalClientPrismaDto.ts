@@ -43,14 +43,18 @@ export class OrderProcessingLegalClientPrismaDTO {
     const orderprocessinglegalclientUptate: Prisma.OrderProcessingLegalClientUpdateInput =
       {
         end_at: orderProcessinglegalclient.end_at,
-        Order: { connect: { id: orderProcessinglegalclient.order_id } },
+        Order: orderProcessinglegalclient.order_id
+          ? { connect: { id: orderProcessinglegalclient.order_id } }
+          : undefined,
         start_at: orderProcessinglegalclient.start_at,
         total_distance: orderProcessinglegalclient.total_distance,
         total_spend_liters: orderProcessinglegalclient.total_spend_liters,
         total_spending_money: orderProcessinglegalclient.total_spending_money,
         updated_at: orderProcessinglegalclient.updated_at,
         UpdatedBy: { connect: { id: orderProcessinglegalclient.updated_by } },
-        Vehicle: { connect: { id: orderProcessinglegalclient.vehicle_id } },
+        Vehicle: orderProcessinglegalclient.vehicle_id
+          ? { connect: { id: orderProcessinglegalclient.vehicle_id } }
+          : undefined,
       };
 
     return orderprocessinglegalclientUptate;

@@ -45,9 +45,9 @@ export class RouteLegalClientResolver {
     return this.routeLegalClientUseCase.updateRoute(id, data);
   }
   @ResolveField(() => OrderProcessingLegalClientModel)
-  async LegalClientOrder(@Parent() request: RouteLegalClientInput) {
+  async OrderProcessing(@Parent() route: RouteLegalClientInput) {
     return this.orderProcessing.getOrderProcessingLegalClient({
-      id: request.order_processing_id,
+      id: route.order_processing_id,
     });
   }
 }

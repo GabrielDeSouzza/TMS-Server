@@ -1,6 +1,7 @@
 import { type GetInvoiceForLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetInvoiceForLegalClientDto';
 import { type FindAllInvoiceForLegalClientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/InvoiceForLegalPeronRepositoryDto';
 import { type InvoiceForLegalClient } from 'domain/entities/LegalClientEntities/InvoiceForLegalPerson/InvoiceForLegalPerson';
+import { type LegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
 
 export abstract class InvoiceForLegalClientRepository {
   abstract findInvoiceForLegalClient(
@@ -16,4 +17,7 @@ export abstract class InvoiceForLegalClientRepository {
   abstract getAllInvoiceForLegalClient(
     parameters: FindAllInvoiceForLegalClientWhereRequestDTO,
   ): Promise<InvoiceForLegalClient[]>;
+  abstract getMerchandiseByInvoiceForLegalClient(
+    request: GetInvoiceForLegalClientDTO,
+  ): Promise<LegalClientMerchandise>;
 }

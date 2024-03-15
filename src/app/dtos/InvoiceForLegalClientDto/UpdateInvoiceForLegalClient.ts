@@ -15,7 +15,5 @@ export abstract class UpdateInvoiceForLegalClientDTO {
 
   invoice_taxes?: number;
 
-  legal_client_order_id?: string;
-
   updated_by: string;
 }

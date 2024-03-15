@@ -10,9 +10,7 @@ export class InvoiceForPhysicalCustomerModel
   implements IInvoicePhysicalCustomer
 {
   @Field()
-  physicalCustomerOrderId: string;
-  @Field()
-  carrierCompanyId: string;
+  physicalCustomerId: string;
   @Field()
   invoice_number: string;
   @Field()

@@ -28,10 +28,17 @@ export class OrderProcessingLegalClientUseCases {
       throw new GraphQLError('IS NECESSARY AN ID', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
+    const orderProcessing =
+      await this.orderProcessingLegalClientResitory.findOrderProcessingLegalClient(
+        request,
+      );
 
-    return await this.orderProcessingLegalClientResitory.findOrderProcessingLegalClient(
-      request,
-    );
+    if (!orderProcessing)
+      throw new GraphQLError('ORDER PROCESSING FOR LEGAL CLIENT NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+
+    return orderProcessing;
   }
 
   async getAllOrderProcessingLegalClient(
@@ -56,6 +63,10 @@ export class OrderProcessingLegalClientUseCases {
   ) {
     await this.vehicleUseCase.getVehicle({
       vehicleId: data.vehicle_id,
+    });
+
+    await this.orderUseCase.getLegalClientOrder({
+      id: data.order_id,
     });
 
     const orderProcesingEntity = new OrderProcessingLegalClient({ ...data });
@@ -93,5 +104,24 @@ export class OrderProcessingLegalClientUseCases {
       id,
       orderProcesingEntity,
     );
+  }
+
+  async getAllRouteByOrderProcessing(
+    request: GetOrderProcessingLegalClientDTO,
+  ) {
+    console.log('sdsad');
+    const routes =
+      await this.orderProcessingLegalClientResitory.findAllRoutesByOrderProcessingLegalClient(
+        request,
+      );
+    console.log(routes);
+
+    if (routes.length === 0) {
+      throw new GraphQLError('ANY ROUTE FOR LEGAL CLIENT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    }
+
+    return routes;
   }
 }

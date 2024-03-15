@@ -11,7 +11,7 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 
 import { InvoiceForPhysicalCustomerUseCases } from 'app/useCases/InvoiceForPhysicalCustomer/InvoiceForPhysicalCustomerUseCases';
-import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
+import { PhysicalCustomerUseCases } from 'app/useCases/PhysicalCustomerUseCases/PhysicalCustomerUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -19,7 +19,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetInvoiceForPhysicalCustomerArgs } from './Args/GetIInvoiceForPhysicalCustomerArgs';
 import { InvoiceForPhysicalCustomerWhereArgs } from './Args/WhereInvoiceForPhysicalCustomerArgs';
@@ -37,7 +37,7 @@ export class InvoiceForPhysicalCustomerResolver {
   constructor(
     private invoiceForPhysicalCustomerUseCase: InvoiceForPhysicalCustomerUseCases,
     private userCase: UserUseCases,
-    private physicalCustomerOrderUseCases: PhysicalCustomerOrderUseCases,
+    private physicalCustomerOUseCases: PhysicalCustomerUseCases,
   ) {}
   @Query(() => InvoiceForPhysicalCustomerModel)
   async getInvoiceForPhysicalCustomerModel(
@@ -87,10 +87,10 @@ export class InvoiceForPhysicalCustomerResolver {
       invoiceForPhysicalCustomerInput,
     );
   }
-  @ResolveField(() => LegalClientOrderModel)
-  async LegalClientOrder(@Parent() invoice: InvoiceForPhysicalCustomerInput) {
-    return this.physicalCustomerOrderUseCases.getPhysicalCustomerOrder({
-      id: invoice.physicalCustomerOrderId,
+  @ResolveField(() => PhysicalCustomerModel)
+  async PhysicalCustomer(@Parent() invoice: InvoiceForPhysicalCustomerInput) {
+    return this.physicalCustomerOUseCases.getPhysicalCustomer({
+      id: invoice.physicalCustomerId,
     });
   }
   @ResolveField(() => UserModelRefereces)

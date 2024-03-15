@@ -1,15 +1,26 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 
 import { ROLE } from 'domain/entities/User/User';
 
+import { InvoiceForLegalClientUseCases } from 'app/useCases/InvoiceForLegalClient/InvoiceForLegalClientUseCases';
 import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchandiseDto/LegalClientMerchandisesUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
 
 import { LegalClientMerchandiseWhereArgs } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/Args/WhereLegalClientMerchandiseArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { InvoiceForLegalClientModel } from '../InvoiceForLegalClientGraphql/InvoiceForLegalClient.model';
+import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { GetLegalClientMerchandisesArgs } from './Args/GetLegalClientMerchandiseArgs';
 import {
   LegalClientMerchandiseInput,
@@ -24,6 +35,8 @@ import { LegalClientMerchandiseModel } from './LegalClientMerchandise.model';
 export class LegalClientMerchandiseResolver {
   constructor(
     private legalClientMerchandiseUseCases: LegalClientMerchandiseUseCases,
+    private legalClientOrderUseCase: LegalClientOrderUseCases,
+    private invoiceForLegalClint: InvoiceForLegalClientUseCases,
   ) {}
   @Query(() => LegalClientMerchandiseModel)
   async getLegalClientMerchandiseModel(
@@ -66,5 +79,18 @@ export class LegalClientMerchandiseResolver {
       id,
       legalClientMerchandiseInput,
     );
+  }
+  @ResolveField(() => LegalClientOrderModel)
+  async Order(@Parent() merchandise: LegalClientMerchandiseInput) {
+    return this.legalClientOrderUseCase.getLegalClientOrder({
+      id: merchandise.legal_client_order_id,
+    });
+  }
+
+  @ResolveField(() => InvoiceForLegalClientModel)
+  async Invoice(@Parent() merchandise: LegalClientMerchandiseInput) {
+    return this.invoiceForLegalClint.getInvoiceForLegalClient({
+      id: merchandise.invoice_legal_client,
+    });
   }
 }

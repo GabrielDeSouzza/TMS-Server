@@ -28,10 +28,19 @@ export class OrderProcessingPhysicalCustomerUseCases {
       throw new GraphQLError('IS NECESSARY AN ID', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
+    const orderProcessing =
+      await this.orderProcessingPhysicalCustomerResitory.findOrderProcessingPhysicalCustomer(
+        request,
+      );
+    if (!orderProcessing)
+      throw new GraphQLError(
+        'ORDER PROCESSING FOR PHYSICAL CUSTOMER NOT FOUND',
+        {
+          extensions: { code: HttpStatus.NOT_FOUND },
+        },
+      );
 
-    return await this.orderProcessingPhysicalCustomerResitory.findOrderProcessingPhysicalCustomer(
-      request,
-    );
+    return orderProcessing;
   }
 
   async getAllOrderProcessingPhysicalCustomer(
@@ -54,6 +63,13 @@ export class OrderProcessingPhysicalCustomerUseCases {
   async createOrderProcessingPhysicalCustomer(
     data: CreateOrderProcessingPhysicalCustomerDTO,
   ) {
+    await this.vehicleUseCase.getVehicle({
+      vehicleId: data.vehicle_id,
+    });
+
+    await this.orderUseCase.getPhysicalCustomerOrder({
+      id: data.order_id,
+    });
     await this.vehicleUseCase.getVehicle({
       vehicleId: data.vehicle_id,
     });

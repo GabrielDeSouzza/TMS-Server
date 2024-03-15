@@ -45,7 +45,9 @@ export class OrderProcessingPhysicalCustomerPrismaDTO {
     const orderprocessingphysicalcustomerUptate: Prisma.OrderProcessingPhysicalCustomerUpdateInput =
       {
         end_at: orderProcessingphysicalcustomer.end_at,
-        Order: { connect: { id: orderProcessingphysicalcustomer.order_id } },
+        Order: orderProcessingphysicalcustomer.order_id
+          ? { connect: { id: orderProcessingphysicalcustomer.order_id } }
+          : undefined,
         start_at: orderProcessingphysicalcustomer.start_at,
         total_distance: orderProcessingphysicalcustomer.total_distance,
         total_spend_liters: orderProcessingphysicalcustomer.total_spend_liters,
@@ -55,9 +57,11 @@ export class OrderProcessingPhysicalCustomerPrismaDTO {
         UpdatedBy: {
           connect: { id: orderProcessingphysicalcustomer.updated_by },
         },
-        Vehicle: {
-          connect: { id: orderProcessingphysicalcustomer.vehicle_id },
-        },
+        Vehicle: orderProcessingphysicalcustomer.vehicle_id
+          ? {
+              connect: { id: orderProcessingphysicalcustomer.vehicle_id },
+            }
+          : undefined,
       };
 
     return orderprocessingphysicalcustomerUptate;

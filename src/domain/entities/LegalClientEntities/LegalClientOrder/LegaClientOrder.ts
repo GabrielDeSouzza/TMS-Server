@@ -10,7 +10,8 @@ export interface ILegalClientOrder {
   id?: string;
   order: string;
   legal_contract_id: string;
-  updated_at: Date;
+  recipient_id: string;
+  updated_at?: Date;
   created_at?: Date;
   created_by?: string;
   updated_by: string;
@@ -53,6 +54,11 @@ export class LegalClientOrder extends Entity {
         fieldName: 'Legal Contract',
         maxLength: 999,
       },
+      {
+        field: this.props.recipient_id,
+        fieldName: 'Recipient',
+        maxLength: 999,
+      },
     );
 
     this.notification.requiredField('LegalClientOrder', fieldsValidation);
@@ -72,6 +78,14 @@ export class LegalClientOrder extends Entity {
   }
   public get order(): string {
     return this.props.order;
+  }
+
+  public get recipient_id(): string {
+    return this.props.recipient_id;
+  }
+
+  public set recipient_id(recipient_id: string) {
+    this.props.recipient_id = recipient_id;
   }
   public set updated_at(updated_at: Date) {
     this.props.updated_at = updated_at;

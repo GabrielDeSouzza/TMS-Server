@@ -7,6 +7,7 @@ describe('CustomerOrder', () => {
       created_by: 'test',
       updated_by: 'test',
       physicalCustomerId: '54564654',
+      recipient_id: '54654',
     });
 
     expect(customerOrder).toBeTruthy();

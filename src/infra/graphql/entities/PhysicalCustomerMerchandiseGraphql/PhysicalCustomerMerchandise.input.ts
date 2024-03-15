@@ -12,6 +12,10 @@ export class PhysicalCustomerMerchandiseInput
   @Field()
   @IsString()
   @IsNotEmpty()
+  invoicePhysicalClient: string;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
   codMerchandise: string;
   @Field(() => Int)
   @IsInt()

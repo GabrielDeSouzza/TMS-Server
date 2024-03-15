@@ -15,7 +15,8 @@ export class LegalClientMerchandisePrismaDTO {
       amount: legalClientMerchandisePrisma.amount,
       codMerchandise: legalClientMerchandisePrisma.codMerchandise,
       description: legalClientMerchandisePrisma.description,
-      legalClientOrderId: legalClientMerchandisePrisma.legalClientOrderId,
+      invoice_legal_client: legalClientMerchandisePrisma.invoice_id,
+      legal_client_order_id: legalClientMerchandisePrisma.legalClientOrderId,
       mass: legalClientMerchandisePrisma.mass,
       value: legalClientMerchandisePrisma.value,
       volume: legalClientMerchandisePrisma.volume,
@@ -30,11 +31,14 @@ export class LegalClientMerchandisePrismaDTO {
         codMerchandise: legalClientMerchandise.codMerchandise,
         description: legalClientMerchandise.description,
         LegalClientOrder: {
-          connect: { id: legalClientMerchandise.legalClientOrderId },
+          connect: { id: legalClientMerchandise.legal_client_order_id },
         },
         mass: legalClientMerchandise.mass,
         value: legalClientMerchandise.value,
         volume: legalClientMerchandise.volume,
+        InvoiceLegalClient: {
+          connect: { id: legalClientMerchandise.invoice_legal_client },
+        },
       };
 
     return legalClientMerchandisePrisma;
@@ -48,12 +52,15 @@ export class LegalClientMerchandisePrismaDTO {
         amount: legalClientMerchandise.amount,
         codMerchandise: legalClientMerchandise.codMerchandise,
         description: legalClientMerchandise.description,
-        LegalClientOrder: legalClientMerchandise.legalClientOrderId
+        LegalClientOrder: legalClientMerchandise.legal_client_order_id
           ? {
-              connect: { id: legalClientMerchandise.legalClientOrderId },
+              connect: { id: legalClientMerchandise.legal_client_order_id },
             }
           : undefined,
         mass: legalClientMerchandise.mass,
+        InvoiceLegalClient: legalClientMerchandise.invoice_legal_client
+          ? { connect: { id: legalClientMerchandise.invoice_legal_client } }
+          : undefined,
         value: legalClientMerchandise.value,
         volume: legalClientMerchandise.volume,
       };

@@ -20,14 +20,12 @@ export class InvoiceForPhysicalCustomerPrismaDTO {
       form_payment: invoiceForPhysicalCustomerPrisma.form_payment,
       invoice_taxes: invoiceForPhysicalCustomerPrisma.invoice_taxes,
       invoice_total: invoiceForPhysicalCustomerPrisma.invoice_total,
-      physicalCustomerOrderId:
-        invoiceForPhysicalCustomerPrisma.physicalCustomerOrderId,
+      physicalCustomerId: invoiceForPhysicalCustomerPrisma.physical_customer_id,
       nature_invoice: invoiceForPhysicalCustomerPrisma.nature_invoice,
       updated_by: invoiceForPhysicalCustomerPrisma.updated_by,
       created_at: invoiceForPhysicalCustomerPrisma.created_at,
       id: invoiceForPhysicalCustomerPrisma.id,
       updated_at: invoiceForPhysicalCustomerPrisma.updated_at,
-      carrierCompanyId: invoiceForPhysicalCustomerPrisma.carrierCompanyId,
     });
   }
   public static EntityToCreatePrisma(
@@ -42,11 +40,8 @@ export class InvoiceForPhysicalCustomerPrismaDTO {
         form_payment: invoiceForPhysicalCustomer.form_payment,
         invoice_taxes: invoiceForPhysicalCustomer.invoice_taxes,
         invoice_total: invoiceForPhysicalCustomer.invoice_total,
-        PhysicalCustomerOrder: {
+        PhysicalCustomer: {
           connect: { id: invoiceForPhysicalCustomer.physicalCustomerOrderId },
-        },
-        CarrierCompany: {
-          connect: { id: invoiceForPhysicalCustomer.carrierCompanyId },
         },
         nature_invoice: invoiceForPhysicalCustomer.nature_invoice,
         UpdatedBy: { connect: { id: invoiceForPhysicalCustomer.updated_by } },
@@ -68,21 +63,17 @@ export class InvoiceForPhysicalCustomerPrismaDTO {
         form_payment: invoiceForPhysicalCustomer.form_payment,
         invoice_taxes: invoiceForPhysicalCustomer.invoice_taxes,
         invoice_total: invoiceForPhysicalCustomer.invoice_total,
-        PhysicalCustomerOrder:
-          invoiceForPhysicalCustomer.physicalCustomerOrderId
-            ? {
-                connect: {
-                  id: invoiceForPhysicalCustomer.physicalCustomerOrderId,
-                },
-              }
-            : undefined,
+        PhysicalCustomer: invoiceForPhysicalCustomer.physicalCustomerOrderId
+          ? {
+              connect: {
+                id: invoiceForPhysicalCustomer.physicalCustomerOrderId,
+              },
+            }
+          : undefined,
         nature_invoice: invoiceForPhysicalCustomer.nature_invoice,
         UpdatedBy: { connect: { id: invoiceForPhysicalCustomer.updated_by } },
         emission_date: invoiceForPhysicalCustomer.emission_date,
         updated_at: invoiceForPhysicalCustomer.updated_at,
-        CarrierCompany: invoiceForPhysicalCustomer.carrierCompanyId
-          ? { connect: { id: invoiceForPhysicalCustomer.carrierCompanyId } }
-          : undefined,
       };
 
     return invoiceForPhysicalCustomerUptade;

@@ -58,10 +58,9 @@ export class InvoiceForPhysicalCustomerUseCases {
       invoice_number: 'NFCF' + generateRandomNumber(),
       invoice_taxes: data.invoice_taxes,
       invoice_total: data.invoice_total,
-      physicalCustomerOrderId: data.physicalCustomerOrderId,
+      physicalCustomerId: data.physicalCustomerId,
       nature_invoice: data.nature_invoice,
       updated_by: data.updated_by,
-      carrierCompanyId: data.carrierCompanyId,
     });
 
     return this.invoiceForPhysicalCustomerRepository.createInvoiceForPhysicalCustomer(
@@ -82,10 +81,9 @@ export class InvoiceForPhysicalCustomerUseCases {
       invoice_number: data.invoice_number,
       invoice_taxes: data.invoice_taxes,
       invoice_total: data.invoice_total,
-      physicalCustomerOrderId: data.physicalCustomerOrderId,
+      physicalCustomerId: data.physicalCustomerId,
       nature_invoice: data.nature_invoice,
       updated_by: data.updated_by,
-      carrierCompanyId: data.carrierCompanyId,
     });
 
     return this.invoiceForPhysicalCustomerRepository.updateInvoiceForPhysicalCustomer(

@@ -1,4 +1,12 @@
-export abstract class CreateLegalClientMerchandisesDTO {
+import { type ILegalClientMerchandise } from 'domain/entities/LegalClientEntities/LegalClientMerchandises/LegalClientClientMerchandise';
+
+export abstract class CreateLegalClientMerchandisesDTO
+  implements ILegalClientMerchandise
+{
+  legal_client_order_id: string;
+
+  invoice_legal_client: string;
+
   codMerchandise: string;
 
   amount: number;
@@ -10,6 +18,4 @@ export abstract class CreateLegalClientMerchandisesDTO {
   volume: number;
 
   value: number;
-
-  legalClientOrderId: string;
 }

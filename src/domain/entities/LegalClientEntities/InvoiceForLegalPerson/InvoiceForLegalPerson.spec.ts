@@ -10,7 +10,6 @@ describe('InvoiceForLegalPerson', () => {
       form_payment: '646546',
       invoice_taxes: 56_546_546,
       invoice_total: 56_465_496,
-      legal_client_order_id: '557',
       nature_invoice: '6676',
       created_by: 'test',
       updated_by: 'test',

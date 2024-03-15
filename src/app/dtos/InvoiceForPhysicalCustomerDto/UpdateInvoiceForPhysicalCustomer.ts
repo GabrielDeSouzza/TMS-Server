@@ -1,4 +1,8 @@
-export abstract class UpdateInvoiceForPhysicalCustomerDTO {
+import { type IInvoicePhysicalCustomer } from 'domain/entities/PhysicalClientEntities/invoiceForPhysicalCustomer/InvoiceForPhysicalCustomer';
+
+export abstract class UpdateInvoiceForPhysicalCustomerDTO
+  implements Partial<IInvoicePhysicalCustomer>
+{
   emission_date?: Date;
 
   invoice_number?: string;
@@ -13,11 +17,9 @@ export abstract class UpdateInvoiceForPhysicalCustomerDTO {
 
   digital_signature?: string;
 
-  carrierCompanyId?: string;
-
   invoice_taxes?: number;
 
-  physicalCustomerOrderId?: string;
+  physicalCustomerId?: string;
 
   updated_by: string;
 }

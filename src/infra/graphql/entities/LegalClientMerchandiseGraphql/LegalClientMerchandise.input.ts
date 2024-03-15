@@ -11,6 +11,14 @@ export class LegalClientMerchandiseInput
   @Field()
   @IsString()
   @IsNotEmpty()
+  legal_client_order_id: string;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  invoice_legal_client: string;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
   codMerchandise: string;
   @Field(() => Int)
   @IsInt()
@@ -32,10 +40,6 @@ export class LegalClientMerchandiseInput
   @IsDecimal()
   @IsNotEmpty()
   value: number;
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  legalClientOrderId: string;
 }
 @InputType()
 export class LegalClientMerchandiseUpdateInput extends PartialType(

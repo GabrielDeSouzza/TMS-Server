@@ -1,4 +1,10 @@
-export abstract class CreatePhysicalCustomerMerchandiseDTO {
+import { type IPhysicalCustomerMerchandise } from 'domain/entities/PhysicalClientEntities/physicalCustomerMerchandise/physical-merchandise';
+
+export abstract class CreatePhysicalCustomerMerchandiseDTO
+  implements IPhysicalCustomerMerchandise
+{
+  invoicePhysicalClient: string;
+
   codMerchandise: string;
 
   amount: number;

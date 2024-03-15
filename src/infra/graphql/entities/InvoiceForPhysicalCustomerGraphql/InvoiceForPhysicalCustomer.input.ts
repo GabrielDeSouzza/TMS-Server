@@ -18,11 +18,7 @@ export class InvoiceForPhysicalCustomerInput
   @Field()
   @IsString()
   @IsNotEmpty()
-  physicalCustomerOrderId: string;
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  carrierCompanyId: string;
+  physicalCustomerId: string;
   @Field(() => Date)
   @Type(() => Date)
   @IsDate()

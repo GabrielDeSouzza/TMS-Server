@@ -3,6 +3,7 @@ import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { type IOrderProcessingPhysicalCustomer } from 'domain/entities/OrdersAndRoutesEntities/OrderProcessingPhysicalCustomer/OrderProcessingPhysicalCustomer';
 
 import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
+import { RoutePhysicalCustomerModel } from '../RoutePhysicalCustomerGraphql/RoutePhysicalCustomer.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
 
@@ -10,8 +11,11 @@ import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
 export abstract class OrderProcessingPhysicalCustomerModel
   implements IOrderProcessingPhysicalCustomer
 {
-  id?: string;
+  @Field()
+  id: string;
+  @Field(() => Date)
   updated_at: Date;
+  @Field(() => Date)
   created_at: Date;
   @Field(() => Float)
   total_distance: number;
@@ -34,7 +38,9 @@ export abstract class OrderProcessingPhysicalCustomerModel
   @Field(() => VehicleCarModel)
   Vehicle: VehicleCarModel;
   @Field(() => PhysicalCustomerOrderModel)
-  Route: PhysicalCustomerOrderModel;
+  Order: PhysicalCustomerOrderModel;
+  @Field(() => [RoutePhysicalCustomerModel])
+  Routes = [RoutePhysicalCustomerModel];
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

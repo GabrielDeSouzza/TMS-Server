@@ -20,7 +20,6 @@ export class InvoiceForLegalClientPrismaDTO {
       form_payment: invoiceForLegalClientPrisma.form_payment,
       invoice_taxes: invoiceForLegalClientPrisma.invoice_taxes,
       invoice_total: invoiceForLegalClientPrisma.invoice_total,
-      legal_client_order_id: invoiceForLegalClientPrisma.legalClientrOrderId,
       nature_invoice: invoiceForLegalClientPrisma.nature_invoice,
       updated_by: invoiceForLegalClientPrisma.updated_by,
       created_at: invoiceForLegalClientPrisma.created_at,
@@ -40,9 +39,6 @@ export class InvoiceForLegalClientPrismaDTO {
         form_payment: invoiceForLegalClient.form_payment,
         invoice_taxes: invoiceForLegalClient.invoice_taxes,
         invoice_total: invoiceForLegalClient.invoice_total,
-        LegalClientOrder: {
-          connect: { id: invoiceForLegalClient.legalClientOrderId },
-        },
         nature_invoice: invoiceForLegalClient.nature_invoice,
         UpdatedBy: { connect: { id: invoiceForLegalClient.updated_by } },
         created_at: invoiceForLegalClient.created_at,
@@ -60,20 +56,13 @@ export class InvoiceForLegalClientPrismaDTO {
     const invoiceForLegalClientUptade: Prisma.InvoiceForLegalClientUpdateInput =
       {
         additional_data: invoiceForLegalClient.additional_data,
-        digital_signature: invoiceForLegalClient.digital_signature,
         form_payment: invoiceForLegalClient.form_payment,
         invoice_taxes: invoiceForLegalClient.invoice_taxes,
         invoice_total: invoiceForLegalClient.invoice_total,
-        LegalClientOrder: invoiceForLegalClient.legalClientOrderId
-          ? {
-              connect: { id: invoiceForLegalClient.legalClientOrderId },
-            }
-          : undefined,
         nature_invoice: invoiceForLegalClient.nature_invoice,
         UpdatedBy: { connect: { id: invoiceForLegalClient.updated_by } },
         emission_date: invoiceForLegalClient.emission_date,
         updated_at: invoiceForLegalClient.updated_at,
-        id: invoiceForLegalClient.id,
       };
 
     return invoiceForLegalClientUptade;

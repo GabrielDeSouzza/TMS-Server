@@ -15,11 +15,10 @@ export interface IInvoicePhysicalCustomer {
   additional_data: string;
   digital_signature: string;
   invoice_taxes: number;
-  physicalCustomerOrderId: string;
-  carrierCompanyId: string;
+  physicalCustomerId: string;
   invoice_number: string;
-  updated_at: Date;
-  created_at: Date;
+  updated_at?: Date;
+  created_at?: Date;
   created_by: string;
   updated_by: string;
 }
@@ -90,13 +89,8 @@ export class InvoiceForPhysicalCustomer extends Entity {
         maxLength: 20,
       },
       {
-        field: this.props.physicalCustomerOrderId,
+        field: this.props.physicalCustomerId,
         fieldName: 'Physical  Customer Order',
-        maxLength: 200,
-      },
-      {
-        field: this.props.carrierCompanyId,
-        fieldName: 'Carrier Company',
         maxLength: 200,
       },
     );
@@ -176,19 +170,11 @@ export class InvoiceForPhysicalCustomer extends Entity {
   }
 
   get physicalCustomerOrderId(): string {
-    return this.props.physicalCustomerOrderId;
+    return this.props.physicalCustomerId;
   }
 
-  set physicalCustomerOrderId(physicalCustomerOrderId: string) {
-    this.props.physicalCustomerOrderId = physicalCustomerOrderId;
-  }
-
-  get carrierCompanyId(): string {
-    return this.props.carrierCompanyId;
-  }
-
-  set carrierCompanyId(carrierCompanyId: string) {
-    this.props.carrierCompanyId = carrierCompanyId;
+  set physicalCustomerOrderId(physicalCustomerId: string) {
+    this.props.physicalCustomerId = physicalCustomerId;
   }
 
   get updated_at(): Date {

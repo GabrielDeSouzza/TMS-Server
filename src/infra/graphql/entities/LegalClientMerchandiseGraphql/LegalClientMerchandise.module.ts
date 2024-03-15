@@ -7,10 +7,16 @@ import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchand
 import { LegalClientMerchandisePrismaService } from 'infra/database/prisma/services/LegalClientMerchandise.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { InvoiceForLegalClientModule } from '../InvoiceForLegalClientGraphql/InvoiceForLegalClient.module';
+import { LegalClientOrderModule } from '../LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalClientMerchandiseResolver } from './LegalClientMerchandise.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule],
+  imports: [
+    GraphqlCenterModule,
+    LegalClientOrderModule,
+    InvoiceForLegalClientModule,
+  ],
   providers: [
     {
       provide: LegalClientMerchandiseRepository,

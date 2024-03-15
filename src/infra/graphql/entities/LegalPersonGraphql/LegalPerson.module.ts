@@ -14,6 +14,6 @@ import { GraphqlCenterModule } from '../GraphqlCenter.module';
     { provide: LegalPersonRepository, useClass: LegalPersonPrismaService },
     LegalPersonUseCases,
   ],
-  exports: [LegalPersonUseCases, LegalPersonRepository],
+  exports: [LegalPersonUseCases],
 })
 export class LegalPersonModule {}
