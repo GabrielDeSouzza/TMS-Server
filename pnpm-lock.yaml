@@ -59,9 +59,6 @@ dependencies:
   passport-jwt:
     specifier: ^4.0.1
     version: 4.0.1
-  prisma-graphql-type-decimal:
-    specifier: ^3.0.0
-    version: 3.0.0(@prisma/client@4.15.0)(graphql@16.7.1)
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.13
@@ -8499,16 +8496,6 @@ packages:
       - encoding
       - supports-color
     dev: true
-
-  /prisma-graphql-type-decimal@3.0.0(@prisma/client@4.15.0)(graphql@16.7.1):
-    resolution: {integrity: sha512-jrALv8ShVZoBBNyIOBCxwRoLM/DAOSD/OBKTWeJa9UigQXUTZniNXvLd4fLXwm+3v00A7cOZ1fFh3b74Ndgxhw==}
-    peerDependencies:
-      '@prisma/client': '>=4.12 <=5'
-      graphql: '16'
-    dependencies:
-      '@prisma/client': 4.15.0(prisma@4.15.0)
-      graphql: 16.7.1
-    dev: false
 
   /prisma-nestjs-graphql@20.0.2:
     resolution: {integrity: sha512-XreGti6mCx14F+rNrhEZ0mBRTBtBniR4EVbRl6pVoO0SzaDqI2tGTKIq6YIdEZxn2bmG3MxpfRykt/uOS7o9vA==}

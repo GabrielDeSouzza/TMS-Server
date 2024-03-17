@@ -22,8 +22,15 @@ export class LegalPersonUseCases {
         'IS NECESSARY A LEGALPERSONID, CORPORATENAME,  CNPJ OR FANTASY NAME',
         { extensions: { code: HttpStatus.BAD_REQUEST } },
       );
+    const legalPerson = await this.legalPersonRepository.findlegalperson(
+      request,
+    );
+    if (!legalPerson)
+      throw new GraphQLError('LEGAL PERSON NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
 
-    return this.legalPersonRepository.findlegalperson(request);
+    return legalPerson;
   }
   async validatePerson(data: CreateLegalPersonDTO | UpdateLegalPersonDTO) {
     const person = await this.legalPersonRepository.ValideLegalPerson({
@@ -58,5 +65,7 @@ export class LegalPersonUseCases {
         });
       }
     }
+
+    return person;
   }
 }

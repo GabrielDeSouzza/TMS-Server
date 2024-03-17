@@ -287,7 +287,7 @@ Table natural_people {
   public_place String [not null]
   address_number String [not null]
   neighborhood String [not null]
-  complement String [not null]
+  complement String
   city String [not null]
   uf String [not null]
   first_phone String [not null]
@@ -299,7 +299,7 @@ Table natural_people {
   OutsourcedDriver outsourced_drivers [not null]
   PhysicalCustomer physical_customers [not null]
   OutsourcedTransportCompanyDriver outsourcedT_transport_company_driver
-  Recipient recipient [not null]
+  Recipient recipient
 }
 
 Table physical_customers {
@@ -360,7 +360,7 @@ Table legal_people {
   MaintenanceCompany maintenance_companies
   CarrierCompany carrier_companies [not null]
   OutsourcedTransportCompany OutsourcedTransportCompany [not null]
-  Recipient recipient [not null]
+  Recipient recipient
 }
 
 Table carrier_companies {
@@ -456,9 +456,9 @@ Table physical_orders {
 
 Table recipient {
   id String [pk]
-  legal_person_id String
+  legal_person_id String [unique]
   LegalPerson legal_people
-  natural_person_id String
+  natural_person_id String [unique]
   NaturalPerson natural_people
   PhysicalCustomerOrder physical_orders [not null]
   created_at DateTime [default: `now()`, not null]
@@ -474,7 +474,7 @@ Table icms {
   id String [pk]
   state_orgin String [not null]
   recipient_state String [not null]
-  aliquot Decimal [not null]
+  aliquot Float [not null]
   effective_date DateTime [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
@@ -825,9 +825,9 @@ Ref: physical_orders.updated_by > users.id
 
 Ref: physical_orders.recipient_id > recipient.id
 
-Ref: recipient.legal_person_id > legal_people.id
+Ref: recipient.legal_person_id - legal_people.id
 
-Ref: recipient.natural_person_id > natural_people.id
+Ref: recipient.natural_person_id - natural_people.id
 
 Ref: recipient.created_by > users.id
 

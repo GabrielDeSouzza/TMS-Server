@@ -90,8 +90,8 @@ model User {
   OrderProcessingLegalClientCreatedBy         OrderProcessingLegalClient[]         @relation("created_by")
   RecipientUpdatedBy                          Recipient[]                          @relation("updated_by")
   RecipientCreatedBy                          Recipient[]                          @relation("created_by")
-  IcmsUpdatedBy                               ICMS[]                               @relation("updated_by")
-  IcmsCreatedBy                               ICMS[]                               @relation("created_by")
+  IcmsUpdatedBy                               Icms[]                               @relation("updated_by")
+  IcmsCreatedBy                               Icms[]                               @relation("created_by")
 
   @@map("users")
 }
@@ -348,7 +348,7 @@ model NaturalPerson {
   public_place   String
   address_number String
   neighborhood   String
-  complement     String
+  complement     String?
   city           String
   uf             String
   first_phone    String
@@ -361,7 +361,7 @@ model NaturalPerson {
   OutsourcedDriver                 OutsourcedDriver[]
   PhysicalCustomer                 PhysicalCustomer[]
   OutsourcedTransportCompanyDriver OutsourcedTransportCompanyDriver?
-  Recipient                        Recipient[]
+  Recipient                        Recipient?
 
   @@map("natural_people")
 }
@@ -429,7 +429,7 @@ model LegalPerson {
   MaintenanceCompany         MaintenanceCompany?
   CarrierCompany             CarrierCompany[]
   OutsourcedTransportCompany OutsourcedTransportCompany[]
-  Recipient                  Recipient[]
+  Recipient                  Recipient?
 
   @@map("legal_people")
 }
@@ -536,9 +536,9 @@ model PhysicalCustomerOrder {
 
 model Recipient {
   id                    String                  @id @default(uuid())
-  legal_person_id       String?
+  legal_person_id       String?                 @unique
   LegalPerson           LegalPerson?            @relation(fields: [legal_person_id], references: [id])
-  natural_person_id     String?
+  natural_person_id     String?                 @unique
   NaturalPerson         NaturalPerson?          @relation(fields: [natural_person_id], references: [id])
   PhysicalCustomerOrder PhysicalCustomerOrder[]
   created_at            DateTime                @default(now())
@@ -552,18 +552,19 @@ model Recipient {
   @@map("recipient")
 }
 
-model ICMS {
-  id                    String                  @id @default(uuid())
-  state_orgin           String
-  recipient_state       String
-  aliquot               Decimal                 @db.Decimal(3, 2)
-  effective_date        DateTime
-  created_at            DateTime                @default(now())
-  updated_at            DateTime                @default(now())
-  CreatedBy             User                    @relation("created_by", fields: [created_by], references: [id])
-  created_by            String
-  updated_by            String
-  UpdatedBy             User                    @relation("updated_by", fields: [updated_by], references: [id])
+model Icms {
+  id              String   @id @default(uuid())
+  state_orgin     String
+  recipient_state String
+  aliquot         Float
+  effective_date  DateTime
+  created_at      DateTime @default(now())
+  updated_at      DateTime @default(now())
+  CreatedBy       User     @relation("created_by", fields: [created_by], references: [id])
+  created_by      String
+  updated_by      String
+  UpdatedBy       User     @relation("updated_by", fields: [updated_by], references: [id])
+
   @@unique([state_orgin, recipient_state])
   @@map("icms")
 }
@@ -693,19 +694,19 @@ model LegalClientMerchandise {
 }
 
 model LegalClientOrder {
-  id                                 String                              @id @default(uuid())
-  order                              String                              @unique
-  LegalClientMerchandise             LegalClientMerchandise[]
-  created_at                         DateTime                            @default(now())
-  updated_at                         DateTime                            @default(now())
-  CreatedBy                          User                                @relation("created_by", fields: [created_by], references: [id])
-  created_by                         String
-  UpdatedBy                          User                                @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by                         String
-  LegalContract                      LegalContract                       @relation(fields: [legal_contract_id], references: [id])
-  legal_contract_id                  String
-  recipient_id                       String
-  Recipient                          Recipient                           @relation(fields: [recipient_id], references: [id])
+  id                     String                   @id @default(uuid())
+  order                  String                   @unique
+  LegalClientMerchandise LegalClientMerchandise[]
+  created_at             DateTime                 @default(now())
+  updated_at             DateTime                 @default(now())
+  CreatedBy              User                     @relation("created_by", fields: [created_by], references: [id])
+  created_by             String
+  UpdatedBy              User                     @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by             String
+  LegalContract          LegalContract            @relation(fields: [legal_contract_id], references: [id])
+  legal_contract_id      String
+  recipient_id           String
+  Recipient              Recipient                @relation(fields: [recipient_id], references: [id])
 
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
   OrderProcessingLegalClient         OrderProcessingLegalClient[]

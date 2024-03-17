@@ -59,8 +59,9 @@ export class NaturalPersonUseCases {
   async valitePerson(data: ValidateNaturalPersonDto) {
     if (!data) return;
     const personExist = await this.naturalPersonRepository.validate(data);
-    console.log(personExist);
     this.validatePersonExist(data, personExist);
+
+    return personExist;
   }
   private validatePersonExist(
     person: CreateNaturalPersonDTO | UpdateNaturalPersonDTO,

@@ -12,6 +12,7 @@ import { CarrierCompanyModule } from 'infra/graphql/entities/CarrierCompanyGraph
 import { CiotForLegalClientModule } from 'infra/graphql/entities/CiotForLegalClientGraphql/CiotForLegalClient.module';
 import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/CompanyVehicle.module';
 import { ContractOutsoucedDriverModule } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.module';
+import { IcmsModule } from 'infra/graphql/entities/IcmsGraphql/Icms.module';
 import { InvoiceForLegalClientModule } from 'infra/graphql/entities/InvoiceForLegalClientGraphql/InvoiceForLegalClient.module';
 import { InvoiceForPhysicalCustomerModule } from 'infra/graphql/entities/InvoiceForPhysicalCustomerGraphql/InvoiceForPhysicalCustomer.module';
 import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/LegalClient.module';
@@ -30,6 +31,7 @@ import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriv
 import { PhysicalCustomerModule } from 'infra/graphql/entities/PhysicalCustomerGraphql/PhysicalCustomer.module';
 import { PhysicalCustomerMerchandiseModule } from 'infra/graphql/entities/PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.module';
 import { PhysicalCustomerOrderModule } from 'infra/graphql/entities/PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.module';
+import { RecipientModule } from 'infra/graphql/entities/RecipientGraphql/Recipient.module';
 import { RouteLegalClientModule } from 'infra/graphql/entities/RouteLegalClientGraphql/RouteLegalClient.module';
 import { RoutePhysicalCustomerModule } from 'infra/graphql/entities/RoutePhysicalCustomerGraphql/RoutePhysicalCustomer.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
@@ -86,6 +88,8 @@ import { AuthModule } from 'infra/guard/auth.module';
     RoutePhysicalCustomerModule,
     OrderProcessingLegalClientModule,
     OrderProcessingPhysicalCustomerModule,
+    IcmsModule,
+    RecipientModule,
   ],
 })
 export class AppModule {}

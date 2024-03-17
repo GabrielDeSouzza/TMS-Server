@@ -68,7 +68,6 @@
     "graphql": "^16.7.1",
     "graphql-upload-minimal": "^1.6.0",
     "passport-jwt": "^4.0.1",
-    "prisma-graphql-type-decimal": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.1",
     "rxjs": "^7.8.1",

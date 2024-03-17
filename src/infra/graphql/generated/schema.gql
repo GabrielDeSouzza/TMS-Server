@@ -361,20 +361,6 @@ input DateTimeNullableFilter {
   notIn: [Timestamp!]
 }
 
-"""An arbitrary-precision Decimal type"""
-scalar Decimal
-
-input DecimalFilter {
-  equals: Decimal
-  gt: Decimal
-  gte: Decimal
-  in: [Decimal!]
-  lt: Decimal
-  lte: Decimal
-  not: NestedDecimalFilter
-  notIn: [Decimal!]
-}
-
 input FloatFilter {
   equals: Float
   gt: Float
@@ -386,23 +372,76 @@ input FloatFilter {
   notIn: [Float!]
 }
 
-input ICMSListRelationFilter {
-  every: ICMSWhereInput
-  none: ICMSWhereInput
-  some: ICMSWhereInput
+input GetLegalPersonInput {
+  cnpj: String
+  corporateName: String
+  fantasyName: String
+  legalPersonId: String
 }
 
-input ICMSOrderByRelationAggregateInput {
+input GetNaturalPersonInput {
+  cpf: String
+  naturalPersonId: String
+  rg: String
+}
+
+input IcmsInput {
+  aliquot: Float!
+  effective_date: Timestamp!
+  recipient_state: String!
+  state_origin: String!
+}
+
+input IcmsListRelationFilter {
+  every: IcmsWhereInput
+  none: IcmsWhereInput
+  some: IcmsWhereInput
+}
+
+type IcmsModel {
+  CreatedUser: UserModelRefereces!
+  UpdatedUser: UserModelRefereces!
+  aliquot: Float!
+  created_by: String!
+  effective_date: Timestamp!
+  id: String!
+  recipient_state: String!
+  state_origin: String!
+  updated_by: String!
+}
+
+input IcmsOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
-input ICMSWhereInput {
-  AND: [ICMSWhereInput!]
+input IcmsOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  aliquot: SortOrder
+  created_at: SortOrder
+  created_by: SortOrder
+  effective_date: SortOrder
+  id: SortOrder
+  recipient_state: SortOrder
+  state_orgin: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
+input IcmsUpdateInput {
+  aliquot: Float
+  effective_date: Timestamp
+  recipient_state: String
+  state_origin: String
+}
+
+input IcmsWhereInput {
+  AND: [IcmsWhereInput!]
   CreatedBy: UserWhereInput
-  NOT: [ICMSWhereInput!]
-  OR: [ICMSWhereInput!]
+  NOT: [IcmsWhereInput!]
+  OR: [IcmsWhereInput!]
   UpdatedBy: UserWhereInput
-  aliquot: DecimalFilter
+  aliquot: FloatFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   effective_date: DateTimeFilter
@@ -967,7 +1006,7 @@ input LegalPersonOrderByWithRelationInput {
   CorporateClient: LegalClientOrderByRelationAggregateInput
   MaintenanceCompany: MaintenanceCompanyOrderByWithRelationInput
   OutsourcedTransportCompany: OutsourcedTransportCompanyOrderByRelationAggregateInput
-  Recipient: RecipientOrderByRelationAggregateInput
+  Recipient: RecipientOrderByWithRelationInput
   address_number: SortOrder
   city: SortOrder
   cnpj: SortOrder
@@ -1012,7 +1051,7 @@ input LegalPersonWhereInput {
   NOT: [LegalPersonWhereInput!]
   OR: [LegalPersonWhereInput!]
   OutsourcedTransportCompany: OutsourcedTransportCompanyListRelationFilter
-  Recipient: RecipientListRelationFilter
+  Recipient: RecipientWhereInput
   address_number: StringFilter
   city: StringFilter
   cnpj: StringFilter
@@ -1107,6 +1146,7 @@ type Mutation {
   createCiotForLegalClient(ciotForLegalClientInput: CiotForLegalClientInput!): CiotForLegalClientModel!
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
   createContractOutsourcedDriver(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
+  createIcms(data: IcmsInput!): IcmsModel!
   createInvoiceForLegalClient(invoiceForLegalClientInput: InvoiceForLegalClientInput!): InvoiceForLegalClientModel!
   createInvoiceForPhysicalCustomer(invoiceForPhysicalCustomerInput: InvoiceForPhysicalCustomerInput!): InvoiceForPhysicalCustomerModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
@@ -1125,6 +1165,7 @@ type Mutation {
   createPhysicalCustomer(data: PhysicalCustomerInput!): PhysicalCustomerModel!
   createPhysicalCustomerMerchandise(data: PhysicalCustomerMerchandiseInput!): PhysicalCustomerMerchandiseModel!
   createPhysicalCustomerOrder(physicalCustomerOrderInput: PhysicalCustomerOrderInput!): PhysicalCustomerOrderModel!
+  createRecipient(data: RecipientInput!): RecipientModel!
   createRouteLegalClient(data: RouteLegalClientInput!): RouteLegalClientModel!
   createRoutePhysicalCustomer(data: RoutePhysicalCustomerInput!): RoutePhysicalCustomerModel!
   createUser(avatar: Upload, createUserInput: UserInput!): UserModel!
@@ -1134,12 +1175,14 @@ type Mutation {
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   login(loginData: AuthInput!): AuthModel!
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
+  updateIcms(id: String!, invoiceForLegalClientInput: IcmsUpdateInput!): IcmsModel!
   updateOrderProcessingLegalClient(data: OrderProcessingLegalClientUpdateInput!, id: String!): OrderProcessingLegalClientModel!
   updateOrderProcessingPhysicalCustomer(data: OrderProcessingPhysicalCustomerUpdateInput!, id: String!): OrderProcessingPhysicalCustomerModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
   updatePhysicalCustomerMerchandise(data: PhysicalCustomerMerchandiseUpdateInput!, id: String!): PhysicalCustomerMerchandiseModel!
+  updateRecipient(data: RecipientUpdateInput!, id: String!): RecipientModel!
   updateRouteLegalClient(data: RouteLegalClientUpdateInput!, id: String!): RouteLegalClientModel!
   updateRoutePhysicalCustomer(data: RoutePhysicalCustomerUpdateInput!, id: String!): RoutePhysicalCustomerModel!
   updateUser(avatar: Upload, id: String!, userUpdate: UserUpdateInput!): UserModel!
@@ -1210,7 +1253,7 @@ input NaturalPersonOrderByWithRelationInput {
   OutsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriverOrderByWithRelationInput
   OwnDriver: OwnDriverOrderByRelationAggregateInput
   PhysicalCustomer: PhysicalCustomerOrderByRelationAggregateInput
-  Recipient: RecipientOrderByRelationAggregateInput
+  Recipient: RecipientOrderByWithRelationInput
   address_number: SortOrder
   cep: SortOrder
   city: SortOrder
@@ -1259,11 +1302,11 @@ input NaturalPersonWhereInput {
   OutsourcedTransportCompanyDriver: OutsourcedTransportCompanyDriverWhereInput
   OwnDriver: OwnDriverListRelationFilter
   PhysicalCustomer: PhysicalCustomerListRelationFilter
-  Recipient: RecipientListRelationFilter
+  Recipient: RecipientWhereInput
   address_number: StringFilter
   cep: StringFilter
   city: StringFilter
-  complement: StringFilter
+  complement: StringNullableFilter
   cpf: StringFilter
   date_birth: DateTimeFilter
   email: StringFilter
@@ -1305,17 +1348,6 @@ input NestedDateTimeNullableFilter {
   lte: Timestamp
   not: NestedDateTimeNullableFilter
   notIn: [Timestamp!]
-}
-
-input NestedDecimalFilter {
-  equals: Decimal
-  gt: Decimal
-  gte: Decimal
-  in: [Decimal!]
-  lt: Decimal
-  lte: Decimal
-  not: NestedDecimalFilter
-  notIn: [Decimal!]
 }
 
 input NestedFloatFilter {
@@ -2333,6 +2365,7 @@ type Query {
   getAllCiotForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: CiotForLegalClientOrderByWithRelationInput, where: CiotForLegalClientWhereInput): [CiotForLegalClientModel!]
   getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!
   getAllContractOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
+  getAllICMS(limit: Int! = 25, offset: Int! = 0, sort: IcmsOrderByWithRelationInput, where: IcmsWhereInput): [IcmsModel!]
   getAllInvoiceForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [InvoiceForLegalClientModel!]
   getAllInvoiceForPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: InvoiceForPhysicalCustomerOrderByWithRelationInput, where: InvoiceForPhysicalCustomerWhereInput): [InvoiceForPhysicalCustomerModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
@@ -2351,6 +2384,7 @@ type Query {
   getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerModel!]!
   getAllPhysicalCustomerMerchandise(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerMerchandiseOrderByWithRelationInput, where: PhysicalCustomerMerchandiseWhereInput): [PhysicalCustomerMerchandiseModel!]
   getAllPhysicalCustomerOrder(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderOrderByWithRelationInput, where: PhysicalCustomerOrderWhereInput): [PhysicalCustomerOrderModel!]
+  getAllRecient(limit: Int! = 25, offset: Int! = 0, sort: RecipientOrderByWithRelationInput, where: RecipientWhereInput): [RecipientModel!]
   getAllRouteLegalClient(limit: Int! = 25, offset: Int! = 0, sort: RoutesLegalClientOrderByWithRelationInput, where: RoutesLegalClientWhereInput): [RouteLegalClientModel!]!
   getAllRoutePhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: RoutesPhysicalCustomerOrderByWithRelationInput, where: RoutesPhysicalCustomerWhereInput): [RoutePhysicalCustomerModel!]!
   getAllVehicleBodywork(limit: Int! = 25, offset: Int! = 0, sort: VehicleBodyworkOrderByWithRelationInput, where: VehicleBodyworkWhereInput): [VehicleBodyworkModel!]
@@ -2361,6 +2395,7 @@ type Query {
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
+  getICMS(StateRelation: StateRelationIcmsArgs, id: String): IcmsModel!
   getInvoiceForLegalClientModel(id: String, invoice_number: String): InvoiceForLegalClientModel!
   getInvoiceForPhysicalCustomerModel(id: String, invoice_number: String): InvoiceForPhysicalCustomerModel!
   getLegalClientMerchandiseModel(codMerchandise: String, id: String): LegalClientMerchandiseModel!
@@ -2377,6 +2412,7 @@ type Query {
   getPhysicalCustomer(cpf: String, id: String, naturalPersonId: String, rg: String): PhysicalCustomerModel
   getPhysicalCustomerMerchandiseModel(codMerchandise: String, id: String): PhysicalCustomerMerchandiseModel!
   getPhysicalCustomerOrderModel(id: String, order: String): PhysicalCustomerOrderModel
+  getRecient(id: String!, legalPerson: GetLegalPersonInput!, naturalPerson: GetNaturalPersonInput!): RecipientModel!
   getRouteLegalClient(id: String): RouteLegalClientModel!
   getRoutePhysicalCustomer(id: String): RoutePhysicalCustomerModel!
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
@@ -2392,10 +2428,29 @@ enum QueryMode {
   insensitive
 }
 
+input RecipientInput {
+  LegalPerson: LegalPersonInput
+  NaturalPerson: NaturalPersonInput
+  legal_person_id: String
+  natural_person_id: String
+}
+
 input RecipientListRelationFilter {
   every: RecipientWhereInput
   none: RecipientWhereInput
   some: RecipientWhereInput
+}
+
+type RecipientModel {
+  CreatedUser: UserModelRefereces!
+  LegalPerson: LegalPersonModel
+  NaturalPerson: NaturalPersonModel
+  UpdatedUser: UserModelRefereces!
+  created_by: String!
+  id: String!
+  legal_person_id: String
+  natural_person_id: String
+  updated_by: String!
 }
 
 input RecipientOrderByRelationAggregateInput {
@@ -2416,6 +2471,11 @@ input RecipientOrderByWithRelationInput {
   natural_person_id: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
+}
+
+input RecipientUpdateInput {
+  LegalPerson: LegalPersonUpdateInput
+  NaturalPerson: NaturalPersonUpdate
 }
 
 input RecipientWhereInput {
@@ -2601,6 +2661,11 @@ enum SortOrder {
   desc
 }
 
+input StateRelationIcmsArgs {
+  recipient_state: String!
+  state_origin: String!
+}
+
 input StringFilter {
   contains: String
   endsWith: String
@@ -2703,8 +2768,8 @@ input UserOrderByWithRelationInput {
   CompanyVehicleUpdatedBy: CompanyVehicleOrderByRelationAggregateInput
   ContractOutsourcedDriverCreatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
   ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
-  IcmsCreatedBy: ICMSOrderByRelationAggregateInput
-  IcmsUpdatedBy: ICMSOrderByRelationAggregateInput
+  IcmsCreatedBy: IcmsOrderByRelationAggregateInput
+  IcmsUpdatedBy: IcmsOrderByRelationAggregateInput
   InvoiceForLegalClientCreatedBy: InvoiceForLegalClientOrderByRelationAggregateInput
   InvoiceForLegalClientUpdatedBy: InvoiceForLegalClientOrderByRelationAggregateInput
   InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalCustomerOrderByRelationAggregateInput
@@ -2781,8 +2846,8 @@ input UserWhereInput {
   CompanyVehicleUpdatedBy: CompanyVehicleListRelationFilter
   ContractOutsourcedDriverCreatedBy: ContractOutsourcedDriverListRelationFilter
   ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverListRelationFilter
-  IcmsCreatedBy: ICMSListRelationFilter
-  IcmsUpdatedBy: ICMSListRelationFilter
+  IcmsCreatedBy: IcmsListRelationFilter
+  IcmsUpdatedBy: IcmsListRelationFilter
   InvoiceForLegalClientCreatedBy: InvoiceForLegalClientListRelationFilter
   InvoiceForLegalClientUpdatedBy: InvoiceForLegalClientListRelationFilter
   InvoiceForPhysicalClientCreatedBy: InvoiceForPhysicalCustomerListRelationFilter
