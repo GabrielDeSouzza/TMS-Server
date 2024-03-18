@@ -19,13 +19,13 @@ export class RecipientPrismaService implements RecipientRepository {
       where: {
         OR: [
           { id: data.id },
-          { NaturalPerson: { cpf: data.naturalPerson.cpf } },
-          { NaturalPerson: { rg: data.naturalPerson.rg } },
-          { NaturalPerson: { id: data.naturalPerson.naturalPersonId } },
-          { LegalPerson: { fantasy_name: data.legalPerson.fantasyName } },
-          { LegalPerson: { corporate_name: data.legalPerson.corporateName } },
-          { LegalPerson: { cnpj: data.legalPerson.cnpj } },
-          { LegalPerson: { id: data.legalPerson.legalPersonId } },
+          { NaturalPerson: { cpf: data.naturalPerson?.cpf } },
+          { NaturalPerson: { rg: data.naturalPerson?.rg } },
+          { NaturalPerson: { id: data.naturalPerson?.naturalPersonId } },
+          { LegalPerson: { fantasy_name: data.legalPerson?.fantasyName } },
+          { LegalPerson: { corporate_name: data.legalPerson?.corporateName } },
+          { LegalPerson: { cnpj: data.legalPerson?.cnpj } },
+          { LegalPerson: { id: data.legalPerson?.legalPersonId } },
         ],
       },
     });

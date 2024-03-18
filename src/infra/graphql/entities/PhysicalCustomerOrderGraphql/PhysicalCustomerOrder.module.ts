@@ -9,6 +9,7 @@ import { PhysicalCustomerOrderPrismaService } from 'infra/database/prisma/servic
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { PhysicalCustomerModule } from '../PhysicalCustomerGraphql/PhysicalCustomer.module';
 import { PhysicalCustomerMerchandiseModule } from '../PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.module';
+import { RecipientModule } from '../RecipientGraphql/Recipient.module';
 import { PhysicalCustomerOrderResolver } from './PhysicalCustomerOrder.resolver';
 
 @Module({
@@ -16,6 +17,7 @@ import { PhysicalCustomerOrderResolver } from './PhysicalCustomerOrder.resolver'
     GraphqlCenterModule,
     PhysicalCustomerModule,
     PhysicalCustomerMerchandiseModule,
+    RecipientModule,
   ],
   providers: [
     {

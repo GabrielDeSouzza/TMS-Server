@@ -4,6 +4,7 @@ import { type IPhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntit
 
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { PhysicalCustomerMerchandiseModel } from '../PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.model';
+import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
 @ObjectType()
@@ -28,6 +29,8 @@ export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   Merchandises: [PhysicalCustomerMerchandiseModel];
   @Field(() => PhysicalCustomerModel)
   PhysicalCustomer: PhysicalCustomerModel;
+  @Field(() => RecipientModel)
+  Recipient: RecipientModel;
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

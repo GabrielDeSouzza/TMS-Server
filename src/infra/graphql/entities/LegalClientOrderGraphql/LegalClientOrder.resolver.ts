@@ -13,6 +13,7 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchandiseDto/LegalClientMerchandisesUseCases';
 import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
+import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalClientOrderWhereArgs } from 'infra/graphql/entities/LegalClientOrderGraphql/Args/WhereLegalClientOrderArgs';
@@ -23,6 +24,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
+import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetLegalClientOrderArgs } from './Args/GetLegalClientOrderArgs';
 import {
@@ -41,6 +43,7 @@ export class LegalClientOrderResolver {
     private userCase: UserUseCases,
     private legalContractUseCase: LegalContractUseCases,
     private legalClientMerchandiseUseCase: LegalClientMerchandiseUseCases,
+    private recipientUseCase: RecipientUseCases,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args() request: GetLegalClientOrderArgs) {
@@ -96,6 +99,15 @@ export class LegalClientOrderResolver {
 
     return this.legalClientMerchandiseUseCase.getLegalClientMerchandises({
       id,
+    });
+  }
+
+  @ResolveField(() => RecipientModel)
+  async Recipient(@Parent() order: LegalClientOrderInput) {
+    const { recipient_id: recipientId } = order;
+
+    return this.recipientUseCase.getRecipient({
+      id: recipientId,
     });
   }
 

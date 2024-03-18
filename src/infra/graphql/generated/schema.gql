@@ -797,6 +797,7 @@ type LegalClientOrderModel {
   LegalClientMerchandise: [LegalClientMerchandiseModel!]!
   LegalContract: LegalContractModel!
   Merchandises: [LegalClientMerchandiseModel!]!
+  Recipient: RecipientModel!
   UpdatedUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!
@@ -2277,6 +2278,7 @@ type PhysicalCustomerOrderModel {
   CreatedUser: UserModelRefereces!
   Merchandises: [PhysicalCustomerMerchandiseModel!]!
   PhysicalCustomer: PhysicalCustomerModel!
+  Recipient: RecipientModel!
   UpdatedUser: UserModelRefereces!
   created_at: Timestamp!
   created_by: String!

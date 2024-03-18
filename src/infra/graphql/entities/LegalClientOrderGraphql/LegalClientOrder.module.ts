@@ -15,10 +15,11 @@ import { LegalContractPrismaService } from 'infra/database/prisma/services/Legal
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { LegalContractModule } from '../LegalContractGraphql/LegalContract.module';
+import { RecipientModule } from '../RecipientGraphql/Recipient.module';
 import { LegalClientOrderResolver } from './LegalClientOrder.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule, LegalContractModule],
+  imports: [GraphqlCenterModule, LegalContractModule, RecipientModule],
   providers: [
     {
       provide: LegalClientOrderRepository,

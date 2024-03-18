@@ -25,6 +25,7 @@ export class PhysicalCustomerOrderPrismaDTO {
   public static EntityToCreatePrisma(
     physicalCustomerOrder: PhysicalCustomerOrder,
   ) {
+    console.log(physicalCustomerOrder.recipient_id);
     const physicalCustomerOrderPrisma: Prisma.PhysicalCustomerOrderCreateInput =
       {
         CreatedBy: { connect: { id: physicalCustomerOrder.created_by } },

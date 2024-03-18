@@ -13,6 +13,7 @@ import { ROLE, User } from 'domain/entities/User/User';
 import { PhysicalCustomerMerchandiseUseCases } from 'app/useCases/PhysicalCustomerMerchandiseDto/PhysicalCustomerMerchandiseUseCases';
 import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 import { PhysicalCustomerUseCases } from 'app/useCases/PhysicalCustomerUseCases/PhysicalCustomerUseCases';
+import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -22,6 +23,7 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { PhysicalCustomerMerchandiseModel } from '../PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.model';
+import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetPhysicalCustomerOrderArgs } from './Args/GetPhysicalCustomerOrderrArgs';
 import { PhysicalCustomerOrderWhereArgs } from './Args/WherePhysicalCustomerOrderArgs';
@@ -41,6 +43,7 @@ export class PhysicalCustomerOrderResolver {
     private userCase: UserUseCases,
     private physicalCustomerMerchandiseUseCase: PhysicalCustomerMerchandiseUseCases,
     private physicalCustomerUseCase: PhysicalCustomerUseCases,
+    private recipientUseCase: RecipientUseCases,
   ) {}
   @Query(() => PhysicalCustomerOrderModel, { nullable: true })
   async getPhysicalCustomerOrderModel(
@@ -96,6 +99,14 @@ export class PhysicalCustomerOrderResolver {
     return this.physicalCustomerMerchandiseUseCase.getMerchandisesForOrder(id);
   }
 
+  @ResolveField(() => RecipientModel)
+  async Recipient(@Parent() order: PhysicalCustomerOrderInput) {
+    const { recipient_id: recipientId } = order;
+
+    return this.recipientUseCase.getRecipient({
+      id: recipientId,
+    });
+  }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: PhysicalCustomerOrderInput) {
     const { created_by: createdBy } = user;

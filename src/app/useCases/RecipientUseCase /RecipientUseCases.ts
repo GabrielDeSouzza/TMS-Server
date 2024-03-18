@@ -34,9 +34,8 @@ export class RecipientUseCases {
       );
     }
 
-    const contract = await this.recipientRepository.findRecipient(request);
-    console.log(contract);
-    if (contract) return contract;
+    const recipient = await this.recipientRepository.findRecipient(request);
+    if (recipient) return recipient;
 
     throw new GraphQLError('RECIPIENT NOT FOUND', {
       extensions: { code: HttpStatus.NOT_FOUND },

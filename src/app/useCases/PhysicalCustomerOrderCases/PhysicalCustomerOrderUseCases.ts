@@ -57,7 +57,7 @@ export class PhysicalCustomerOrderUseCases {
       physicalCustomerId: data.physicalCustomerId,
       updated_by: data.updated_by,
       created_by: data.created_by,
-      recipient_id: data.physicalCustomerId,
+      recipient_id: data.recipient_id,
     });
 
     return this.physicalCustomerOrderRepository.createPhysicalCustomerOrder(

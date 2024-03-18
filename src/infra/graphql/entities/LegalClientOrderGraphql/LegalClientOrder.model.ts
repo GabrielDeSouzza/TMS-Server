@@ -8,6 +8,7 @@ import {
   LegalContractModel,
   type LegalContractReferences,
 } from '../LegalContractGraphql/LegalContract.model';
+import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
 @ObjectType()
@@ -38,4 +39,6 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   Invoices = [InvoiceForLegalClientModel];
   @Field()
   recipient_id: string;
+  @Field(() => RecipientModel)
+  Recipient: RecipientModel;
 }
