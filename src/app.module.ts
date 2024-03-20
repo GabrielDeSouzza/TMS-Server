@@ -11,6 +11,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { CarrierCompanyModule } from 'infra/graphql/entities/CarrierCompanyGraphql/CarrierCompany.module';
 import { CiotForLegalClientModule } from 'infra/graphql/entities/CiotForLegalClientGraphql/CiotForLegalClient.module';
 import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/CompanyVehicle.module';
+import { CompletedOrdersModule } from 'infra/graphql/entities/CompletedOrdersGraphql/CompletedOrders.module';
 import { ContractOutsoucedDriverModule } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.module';
 import { IcmsModule } from 'infra/graphql/entities/IcmsGraphql/Icms.module';
 import { InvoiceForLegalClientModule } from 'infra/graphql/entities/InvoiceForLegalClientGraphql/InvoiceForLegalClient.module';
@@ -19,8 +20,7 @@ import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/Leg
 import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/LegalClientMerchandise.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
-import { OrderProcessingLegalClientModule } from 'infra/graphql/entities/OrderProcessingLegalClientGraphql/OrderProcessingLegalClient.module';
-import { OrderProcessingPhysicalCustomerModule } from 'infra/graphql/entities/OrderProcessingPhysicalCustomerGraphql/OrderProcessingPhysicalCustomer.module';
+import { OrderProcessingModule } from 'infra/graphql/entities/OrderProcessingGraphql/OrderProcessing.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
 import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
 import { OutsourcedTransportCompanyDriverModule } from 'infra/graphql/entities/OutsourcedTransportCompanyDriverGraphql/OutsourcedTransportCompanyDriver.module';
@@ -32,8 +32,6 @@ import { PhysicalCustomerModule } from 'infra/graphql/entities/PhysicalCustomerG
 import { PhysicalCustomerMerchandiseModule } from 'infra/graphql/entities/PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.module';
 import { PhysicalCustomerOrderModule } from 'infra/graphql/entities/PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.module';
 import { RecipientModule } from 'infra/graphql/entities/RecipientGraphql/Recipient.module';
-import { RouteLegalClientModule } from 'infra/graphql/entities/RouteLegalClientGraphql/RouteLegalClient.module';
-import { RoutePhysicalCustomerModule } from 'infra/graphql/entities/RoutePhysicalCustomerGraphql/RoutePhysicalCustomer.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
 import { VehicleBodyworkModule } from 'infra/graphql/entities/VehicleBodyworkGraphql/vehicle-bodywork.module';
 import { VehicleBrandModule } from 'infra/graphql/entities/VehicleBrandGraphql/vehicle-brand.module';
@@ -84,12 +82,11 @@ import { AuthModule } from 'infra/guard/auth.module';
     PhysicalCustomerMerchandiseModule,
     PhysicalCustomerOrderModule,
     InvoiceForPhysicalCustomerModule,
-    RouteLegalClientModule,
-    RoutePhysicalCustomerModule,
-    OrderProcessingLegalClientModule,
-    OrderProcessingPhysicalCustomerModule,
+
+    OrderProcessingModule,
     IcmsModule,
     RecipientModule,
+    CompletedOrdersModule,
   ],
 })
 export class AppModule {}

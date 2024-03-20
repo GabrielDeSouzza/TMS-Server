@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 
-import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetProcessingDto';
-import { type FindAllOrderProcessingWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OrderProcessingRepositoryDto';
+import { type GetCompletedOrdersDTO } from 'domain/dto/repositories/getDataDtos/GetCompletedOrdersDto';
+import { type FindAllCompletedOrdersWhereRequestDTO } from 'domain/dto/repositories/whereDtos/CompletedOrdersRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
-import { type OrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
+import { type CompletedOrders } from 'domain/entities/OrdersEntities/CompletedOrders/CompletedOrders';
 import { type PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
-import { type OrderProcessingRepository } from 'domain/repositories/OrderProcessingRepository';
+import { type CompletedOrdersRepository } from 'domain/repositories/CompletedOrdersRepository';
 
 import { PrismaService } from '../prisma.service';
+import { CompletedOrdersPrismaDTO } from './prismaDTO/CompletedOrdersPrismaDto';
 import { LegalClientOrderPrismaDTO } from './prismaDTO/LegalClientOrderPrismaDto';
-import { OrderProcessingPrismaDTO } from './prismaDTO/OrderProcessingPrismaDto';
 import { PhysicalCustomerOrderPrismaDTO } from './prismaDTO/PhysicalCustomerOrderPrismaDto';
 
 @Injectable()
-export class OrderProcessingPrismaService implements OrderProcessingRepository {
+export class CompletedOrdersPrismaService implements CompletedOrdersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findOrderProcessing(
-    request: GetOrderProcessingDTO,
-  ): Promise<OrderProcessing> {
-    const orderProcessing = await this.prisma.orderProcessing.findFirst({
+  async findCompletedOrders(
+    request: GetCompletedOrdersDTO,
+  ): Promise<CompletedOrders> {
+    const completedOrders = await this.prisma.completedOrders.findFirst({
       where: {
         OR: [
           { id: request.id },
@@ -30,48 +30,48 @@ export class OrderProcessingPrismaService implements OrderProcessingRepository {
       },
     });
 
-    return OrderProcessingPrismaDTO.PrismaToEntity(orderProcessing);
+    return CompletedOrdersPrismaDTO.PrismaToEntity(completedOrders);
   }
-  async createOrderProcessing(
-    orderProcessing: OrderProcessing,
-  ): Promise<OrderProcessing> {
-    const orderprocessingPrisma = await this.prisma.orderProcessing.create({
-      data: OrderProcessingPrismaDTO.EntityToPrisma(orderProcessing),
+  async createCompletedOrders(
+    completedOrders: CompletedOrders,
+  ): Promise<CompletedOrders> {
+    const completedordersPrisma = await this.prisma.completedOrders.create({
+      data: CompletedOrdersPrismaDTO.EntityToPrisma(completedOrders),
     });
 
-    return OrderProcessingPrismaDTO.PrismaToEntity(orderprocessingPrisma);
+    return CompletedOrdersPrismaDTO.PrismaToEntity(completedordersPrisma);
   }
-  async updateOrderProcessing(
+  async updateCompletedOrders(
     id: string,
-    orderProcessing?: OrderProcessing,
-  ): Promise<OrderProcessing> {
-    const orderprocessingPrisma = await this.prisma.orderProcessing.update({
-      data: OrderProcessingPrismaDTO.EntityToPrismaUpdate(orderProcessing),
+    completedOrders?: CompletedOrders,
+  ): Promise<CompletedOrders> {
+    const completedordersPrisma = await this.prisma.completedOrders.update({
+      data: CompletedOrdersPrismaDTO.EntityToPrismaUpdate(completedOrders),
       where: { id },
     });
 
-    return OrderProcessingPrismaDTO.PrismaToEntity(orderprocessingPrisma);
+    return CompletedOrdersPrismaDTO.PrismaToEntity(completedordersPrisma);
   }
 
-  async findAllOrderProcessing(
-    parameters: FindAllOrderProcessingWhereRequestDTO,
-  ): Promise<OrderProcessing[]> {
-    const orderprocessings = await this.prisma.orderProcessing.findMany({
+  async findAllCompletedOrders(
+    parameters: FindAllCompletedOrdersWhereRequestDTO,
+  ): Promise<CompletedOrders[]> {
+    const completedorderss = await this.prisma.completedOrders.findMany({
       take: parameters.limit,
       skip: parameters.offset,
       where: parameters.where,
       orderBy: parameters.sort,
     });
 
-    return orderprocessings.map(orderProcessing =>
-      OrderProcessingPrismaDTO.PrismaToEntity(orderProcessing),
+    return completedorderss.map(completedOrders =>
+      CompletedOrdersPrismaDTO.PrismaToEntity(completedOrders),
     );
   }
 
   async findAllPhysicalCustomerOrder(
-    request: GetOrderProcessingDTO,
+    request: GetCompletedOrdersDTO,
   ): Promise<PhysicalCustomerOrder[]> {
-    const orders = await this.prisma.orderProcessing.findFirst({
+    const orders = await this.prisma.completedOrders.findFirst({
       where: {
         OR: [
           { id: request.id },
@@ -88,9 +88,9 @@ export class OrderProcessingPrismaService implements OrderProcessingRepository {
     );
   }
   async findAllLegalClintOrder(
-    request: GetOrderProcessingDTO,
+    request: GetCompletedOrdersDTO,
   ): Promise<LegalClientOrder[]> {
-    const orders = await this.prisma.orderProcessing.findFirst({
+    const orders = await this.prisma.completedOrders.findFirst({
       where: {
         OR: [
           { id: request.id },
