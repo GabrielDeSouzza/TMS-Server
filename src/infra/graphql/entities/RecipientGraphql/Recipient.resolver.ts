@@ -72,7 +72,7 @@ export class RecipientResolver {
     return this.RecipientUseCase.updateRecipient(id, recipent);
   }
 
-  @ResolveField(() => NaturalPersonModel)
+  @ResolveField(() => NaturalPersonModel, { nullable: true })
   async NaturalPerson(@Parent() recipient: RecipientModel) {
     if (recipient.natural_person_id)
       return await this.naturalPersonUseCase.getNaturalPerson({
@@ -80,7 +80,7 @@ export class RecipientResolver {
       });
   }
 
-  @ResolveField(() => LegalPersonModel)
+  @ResolveField(() => LegalPersonModel, { nullable: true })
   async LegalPerson(@Parent() recipient: RecipientModel) {
     if (recipient.legal_person_id)
       return await this.legalPersonUseCase.getLegalPerson({

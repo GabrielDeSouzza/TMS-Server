@@ -6,7 +6,7 @@ describe('CustomerOrder', () => {
       legal_contract_id: '1231',
       order: '313',
       updated_by: '646',
-      recipient_id: 'kdasds',
+      quote_table_id: '165414',
     });
 
     expect(customerOrder).toBeTruthy();

@@ -6,6 +6,7 @@ export abstract class WhereLegalClientOrderTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   order?: StringFilterDTO;
   legal_contract_id?: StringFilterDTO;
+  quote_table_id?: StringFilterDTO;
   updated_at?: DateTimeFilterDTO;
   created_at?: DateTimeFilterDTO;
   created_by?: StringFilterDTO;
@@ -16,6 +17,7 @@ export abstract class SortByLegalClientOrderTypeDTO {
   id?: 'asc' | 'desc';
   order?: 'asc' | 'desc';
   legal_contract_id?: 'asc' | 'desc';
+  quote_table_id?: 'asc' | 'desc';
   updated_at?: 'asc' | 'desc';
   created_at?: 'asc' | 'desc';
   created_by?: 'asc' | 'desc';

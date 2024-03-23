@@ -1,5 +1,5 @@
 export abstract class UpdatePhysicalCustomerOrderDTO {
   physicalCustomerId?: string;
-  recipient_id?: string;
+  quote_table_id?: string;
   updated_by?: string;
 }

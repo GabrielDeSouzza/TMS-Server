@@ -7,10 +7,10 @@ import { GetNaturalPersonInput } from '../../NaturalPersonGraphql/Args/GetNatura
 
 @ArgsType()
 export class GetRecipientArgs implements GetRecipientDTO {
-  @Field()
+  @Field({ nullable: true })
   id?: string;
-  @Field(() => GetNaturalPersonInput)
+  @Field(() => GetNaturalPersonInput, { nullable: true })
   naturalPerson?: GetNaturalPersonInput;
-  @Field(() => GetLegalPersonInput)
+  @Field(() => GetLegalPersonInput, { nullable: true })
   legalPerson?: GetLegalPersonInput;
 }

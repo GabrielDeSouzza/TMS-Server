@@ -48,16 +48,28 @@ export class OrderProcessingPrismaDTO {
       total_spending_money: orderProcessing.total_spending_money,
       updated_at: orderProcessing.updated_at,
       LegalClientOrder: {
-        connect: { id: orderProcessing.legal_customer_order_id },
-        disconnect: { id: orderProcessing.disconnect_legal_order },
+        connect: orderProcessing.legal_customer_order_id
+          ? { id: orderProcessing.legal_customer_order_id }
+          : undefined,
+        disconnect: orderProcessing.disconnect_legal_order
+          ? { id: orderProcessing.disconnect_legal_order }
+          : undefined,
       },
 
       PhysicalCustomerOrder: {
-        connect: { id: orderProcessing.physical_customer_order_id },
-        disconnect: { id: orderProcessing.disconnect_physical_customer_order },
+        connect: orderProcessing.physical_customer_order_id
+          ? { id: orderProcessing.physical_customer_order_id }
+          : undefined,
+        disconnect: orderProcessing.disconnect_physical_customer_order
+          ? { id: orderProcessing.disconnect_physical_customer_order }
+          : undefined,
       },
 
-      Vehicle: { connect: { id: orderProcessing.vehicle_id } },
+      Vehicle: {
+        connect: orderProcessing.vehicle_id
+          ? { id: orderProcessing.vehicle_id }
+          : undefined,
+      },
     };
 
     return orderprocessingUptate;

@@ -19,13 +19,13 @@ export class PhysicalCustomerOrderPrismaDTO {
       created_by: physicalCustomerOrderPrisma.created_by,
       id: physicalCustomerOrderPrisma.id,
       updated_at: physicalCustomerOrderPrisma.updated_at,
-      recipient_id: physicalCustomerOrderPrisma.recipient_id,
+      quote_table_id: physicalCustomerOrderPrisma.quote_table_id,
     });
   }
   public static EntityToCreatePrisma(
     physicalCustomerOrder: PhysicalCustomerOrder,
   ) {
-    console.log(physicalCustomerOrder.recipient_id);
+    console.log(physicalCustomerOrder.quote_table_id);
     const physicalCustomerOrderPrisma: Prisma.PhysicalCustomerOrderCreateInput =
       {
         CreatedBy: { connect: { id: physicalCustomerOrder.created_by } },
@@ -36,7 +36,9 @@ export class PhysicalCustomerOrderPrismaDTO {
         UpdatedBy: { connect: { id: physicalCustomerOrder.updated_by } },
         created_at: physicalCustomerOrder.created_at,
         updated_at: physicalCustomerOrder.updated_at,
-        Recipient: { connect: { id: physicalCustomerOrder.recipient_id } },
+        PhysicalCustomerQuoteTable: {
+          connect: { id: physicalCustomerOrder.quote_table_id },
+        },
       };
 
     return physicalCustomerOrderPrisma;
@@ -49,8 +51,8 @@ export class PhysicalCustomerOrderPrismaDTO {
         PhysicalCustomer: {
           connect: { id: physicalCustomerOrder.physicalCustomerId },
         },
-        Recipient: physicalCustomerOrder.recipient_id
-          ? { connect: { id: physicalCustomerOrder.recipient_id } }
+        PhysicalCustomerQuoteTable: physicalCustomerOrder.quote_table_id
+          ? { connect: { id: physicalCustomerOrder.quote_table_id } }
           : undefined,
         UpdatedBy: { connect: { id: physicalCustomerOrder.updated_by } },
         updated_at: physicalCustomerOrder.updated_at,

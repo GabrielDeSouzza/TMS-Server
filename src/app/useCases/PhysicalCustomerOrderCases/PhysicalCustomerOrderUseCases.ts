@@ -57,7 +57,7 @@ export class PhysicalCustomerOrderUseCases {
       physicalCustomerId: data.physicalCustomerId,
       updated_by: data.updated_by,
       created_by: data.created_by,
-      recipient_id: data.recipient_id,
+      quote_table_id: data.quote_table_id,
     });
 
     return this.physicalCustomerOrderRepository.createPhysicalCustomerOrder(
@@ -71,7 +71,7 @@ export class PhysicalCustomerOrderUseCases {
       physicalCustomerId: data.physicalCustomerId,
       updated_by: data.updated_by,
       order: null,
-      recipient_id: data.recipient_id,
+      quote_table_id: data.quote_table_id,
     });
 
     return this.physicalCustomerOrderRepository.updatePhysicalCustomerOrder(

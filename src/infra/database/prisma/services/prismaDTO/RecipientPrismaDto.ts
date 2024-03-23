@@ -28,22 +28,14 @@ export class RecipientPrismaDTO {
   ) {
     const recipientPrisma: Prisma.RecipientCreateInput = {
       CreatedBy: { connect: { id: recipient.created_by } },
-      LegalPerson: legalPerson
-        ? {
-            connectOrCreate: {
-              where: { id: recipient.legal_person_id || undefined },
-              create: LegalPersonPrismaDTO.EntityToCreatePrisma(legalPerson),
-            },
-          }
-        : undefined,
-      NaturalPerson: naturalPerson
-        ? {
-            connectOrCreate: {
-              where: { id: recipient.natural_person_id || undefined },
-              create: NaturalPersonPrismaDTO.EntityToPrisma(naturalPerson),
-            },
-          }
-        : undefined,
+      LegalPerson: this.legalPersonQuery(
+        legalPerson,
+        recipient.legal_person_id,
+      ),
+      NaturalPerson: this.naturalPersonQuery(
+        naturalPerson,
+        recipient.natural_person_id,
+      ),
       UpdatedBy: { connect: { id: recipient.updated_by } },
       created_at: recipient.created_at,
       id: recipient.id,
@@ -74,5 +66,31 @@ export class RecipientPrismaDTO {
     };
 
     return recipientUptade;
+  }
+
+  private static legalPersonQuery(
+    legalPerson?: LegalPerson,
+    legalPersonId?: string,
+  ) {
+    if (!legalPerson && !legalPersonId) return;
+    const query: Prisma.LegalPersonCreateNestedOneWithoutRecipientInput =
+      legalPerson
+        ? { create: LegalPersonPrismaDTO.EntityToCreatePrisma(legalPerson) }
+        : { connect: { id: legalPersonId } };
+
+    return query;
+  }
+
+  private static naturalPersonQuery(
+    naturalPerson?: NaturalPerson,
+    natualPersonId?: string,
+  ) {
+    if (!naturalPerson && !natualPersonId) return;
+    const query: Prisma.NaturalPersonCreateNestedOneWithoutRecipientInput =
+      naturalPerson
+        ? { create: NaturalPersonPrismaDTO.EntityToPrisma(naturalPerson) }
+        : { connect: { id: natualPersonId } };
+
+    return query;
   }
 }

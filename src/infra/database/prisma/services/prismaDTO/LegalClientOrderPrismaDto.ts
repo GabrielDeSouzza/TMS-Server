@@ -13,7 +13,7 @@ export class LegalClientOrderPrismaDTO {
       legal_contract_id: legalClientOrderPrisma.legal_contract_id,
       order: legalClientOrderPrisma.order,
       updated_by: legalClientOrderPrisma.updated_by,
-      recipient_id: legalClientOrderPrisma.recipient_id,
+      quote_table_id: legalClientOrderPrisma.quote_table_id,
       created_at: legalClientOrderPrisma.created_at,
       created_by: legalClientOrderPrisma.created_by,
       id: legalClientOrderPrisma.id,
@@ -28,7 +28,7 @@ export class LegalClientOrderPrismaDTO {
       UpdatedBy: { connect: { id: legalClientOrder.updated_by } },
       created_at: legalClientOrder.created_at,
       updated_at: legalClientOrder.updated_at,
-      Recipient: { connect: { id: legalClientOrder.recipient_id } },
+      QuoteTable: { connect: { id: legalClientOrder.quote_table_id } },
     };
 
     return legalClientOrderPrisma;
@@ -40,8 +40,8 @@ export class LegalClientOrderPrismaDTO {
         ? { connect: { id: legalClientOrder.legal_contract_id } }
         : undefined,
       order: legalClientOrder.order,
-      Recipient: legalClientOrder.recipient_id
-        ? { connect: { id: legalClientOrder.recipient_id } }
+      QuoteTable: legalClientOrder.quote_table_id
+        ? { connect: { id: legalClientOrder.quote_table_id } }
         : undefined,
       UpdatedBy: { connect: { id: legalClientOrder.updated_by } },
       updated_at: legalClientOrder.updated_at,

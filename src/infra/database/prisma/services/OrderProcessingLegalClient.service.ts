@@ -23,8 +23,8 @@ export class OrderProcessingPrismaService implements OrderProcessingRepository {
       where: {
         OR: [
           { id: request.id },
-          { Vehicle: { id: request.vehicleData.vehicleId } },
-          { Vehicle: { plate: request.vehicleData.plate } },
+          { Vehicle: { id: request.vehicleData?.vehicleId } },
+          { Vehicle: { plate: request.vehicleData?.plate } },
           { order_processing_number: request.order_processing_number },
         ],
       },

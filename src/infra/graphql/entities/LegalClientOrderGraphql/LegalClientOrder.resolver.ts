@@ -10,10 +10,9 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
-import { LegalClientMerchandiseUseCases } from 'app/useCases/LegalClientMerchandiseDto/LegalClientMerchandisesUseCases';
 import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientQuoteTableUseCases } from 'app/useCases/LegalClientQuoteTableUseCase/LegalClientQuoteTable';
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
-import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalClientOrderWhereArgs } from 'infra/graphql/entities/LegalClientOrderGraphql/Args/WhereLegalClientOrderArgs';
@@ -22,9 +21,8 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
-import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
+import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
-import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetLegalClientOrderArgs } from './Args/GetLegalClientOrderArgs';
 import {
@@ -42,8 +40,7 @@ export class LegalClientOrderResolver {
     private legalClientOrdeUseCase: LegalClientOrderUseCases,
     private userCase: UserUseCases,
     private legalContractUseCase: LegalContractUseCases,
-    private legalClientMerchandiseUseCase: LegalClientMerchandiseUseCases,
-    private recipientUseCase: RecipientUseCases,
+    private legalClientQuoteUseCase: LegalClientQuoteTableUseCases,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args() request: GetLegalClientOrderArgs) {
@@ -93,23 +90,6 @@ export class LegalClientOrderResolver {
       id: order.legal_contract_id,
     });
   }
-  @ResolveField(() => [LegalClientMerchandiseModel])
-  async LegalClientMerchandise(@Parent() order: LegalClientOrderModel) {
-    const { id } = order;
-
-    return this.legalClientMerchandiseUseCase.getLegalClientMerchandises({
-      id,
-    });
-  }
-
-  @ResolveField(() => RecipientModel)
-  async Recipient(@Parent() order: LegalClientOrderInput) {
-    const { recipient_id: recipientId } = order;
-
-    return this.recipientUseCase.getRecipient({
-      id: recipientId,
-    });
-  }
 
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: LegalClientOrderInput) {
@@ -122,5 +102,11 @@ export class LegalClientOrderResolver {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
+  }
+  @ResolveField(() => LegalClientQuoteTableModel)
+  async Quote(@Parent() order: LegalClientOrderInput) {
+    return await this.legalClientQuoteUseCase.getLegalClientQuoteTable({
+      id: order.quote_table_id,
+    });
   }
 }

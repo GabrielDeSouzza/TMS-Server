@@ -2,13 +2,11 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
-import { InvoiceForLegalClientModel } from '../InvoiceForLegalClientGraphql/InvoiceForLegalClient.model';
-import { LegalClientMerchandiseModel } from '../LegalClientMerchandiseGraphql/LegalClientMerchandise.model';
+import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import {
   LegalContractModel,
   type LegalContractReferences,
 } from '../LegalContractGraphql/LegalContract.model';
-import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
 @ObjectType()
@@ -27,18 +25,16 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   created_by: string;
   @Field()
   updated_by: string;
-  @Field(() => [LegalClientMerchandiseModel])
-  Merchandises: [LegalClientMerchandiseModel];
+
   @Field(() => LegalContractModel)
   LegalContract: LegalContractReferences;
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)
   UpdatedUser: UserModelRefereces;
-  @Field(() => [InvoiceForLegalClientModel])
-  Invoices = [InvoiceForLegalClientModel];
+
   @Field()
-  recipient_id: string;
-  @Field(() => RecipientModel)
-  Recipient: RecipientModel;
+  quote_table_id: string;
+  @Field(() => LegalClientQuoteTableModel)
+  Quote: LegalClientQuoteTableModel;
 }

@@ -25,10 +25,13 @@ export class OrderProcessingUseCases {
   ) {}
 
   async getOrderProcessing(request: GetOrderProcessingDTO) {
-    if (!request.id)
-      throw new GraphQLError('IS NECESSARY AN ID', {
-        extensions: { code: HttpStatus.BAD_REQUEST },
-      });
+    if (!request.id && !request.order_processing_number && !request.vehicleData)
+      throw new GraphQLError(
+        'IS NECESSARY AN ID, ORDER PROCESSING NUMBER OR VEHICLE DATA',
+        {
+          extensions: { code: HttpStatus.BAD_REQUEST },
+        },
+      );
     const orderProcessing =
       await this.orderProcessingResitory.findOrderProcessing(request);
 
@@ -54,6 +57,13 @@ export class OrderProcessingUseCases {
   }
 
   async createOrderProcessing(data: CreateOrderProcessingDTO) {
+    const orderProcesingExist = await this.getOrderProcessing({
+      vehicleData: { vehicleId: data.vehicle_id },
+    });
+    if (orderProcesingExist)
+      throw new GraphQLError('VEHICLE ALREADY IN USE IN AN ORDER PROCESSING ', {
+        extensions: { code: HttpStatus.CONFLICT },
+      });
     if (!data.legal_customer_order_id && !data.physical_customer_order_id)
       throw new GraphQLError('ANY ORDER PROCESSING SEND ', {
         extensions: { code: HttpStatus.NOT_FOUND },

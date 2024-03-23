@@ -1,7 +1,7 @@
 import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 export abstract class CreateLegalClientOrderDTO implements ILegalClientOrder {
-  recipient_id: string;
+  quote_table_id: string;
 
   order: string;
 

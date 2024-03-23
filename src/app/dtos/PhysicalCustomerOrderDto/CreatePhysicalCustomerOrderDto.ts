@@ -4,7 +4,7 @@ export abstract class CreatePhysicalCustomerOrderDTO
   implements IPhysicalCustomerOrder
 {
   order: string;
-  recipient_id: string;
+  quote_table_id: string;
   physicalCustomerId: string;
 
   created_by: string;

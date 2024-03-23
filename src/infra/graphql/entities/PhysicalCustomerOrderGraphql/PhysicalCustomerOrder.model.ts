@@ -3,14 +3,13 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { type IPhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
-import { PhysicalCustomerMerchandiseModel } from '../PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.model';
-import { RecipientModel } from '../RecipientGraphql/Recipient.model';
+import { PhysicalCustomerQuoteTableModel } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 
 @ObjectType()
 export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   @Field()
-  recipient_id: string;
+  quote_table_id: string;
   @Field()
   id?: string;
   @Field()
@@ -25,12 +24,10 @@ export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   created_by: string;
   @Field()
   updated_by: string;
-  @Field(() => [PhysicalCustomerMerchandiseModel])
-  Merchandises: [PhysicalCustomerMerchandiseModel];
   @Field(() => PhysicalCustomerModel)
   PhysicalCustomer: PhysicalCustomerModel;
-  @Field(() => RecipientModel)
-  Recipient: RecipientModel;
+  @Field(() => PhysicalCustomerQuoteTableModel)
+  Quote: PhysicalCustomerQuoteTableModel;
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

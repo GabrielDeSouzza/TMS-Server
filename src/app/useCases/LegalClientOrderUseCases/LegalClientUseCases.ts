@@ -51,7 +51,7 @@ export class LegalClientOrderUseCases {
       order: data.order,
       updated_by: data.updated_by,
       created_by: data.created_by,
-      recipient_id: data.recipient_id,
+      quote_table_id: data.quote_table_id,
     });
 
     return this.legalClientOrderRepository.createLegalClientOrder(order);
@@ -61,7 +61,7 @@ export class LegalClientOrderUseCases {
       legal_contract_id: data.legal_contract_id,
       updated_by: data.updated_by,
       created_by: data.updated_by,
-      recipient_id: data.legal_contract_id,
+      quote_table_id: data.legal_contract_id,
       order: null,
     });
 

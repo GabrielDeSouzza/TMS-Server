@@ -46,11 +46,21 @@ export class RecipientUseCases {
     return this.recipientRepository.findAllRecipient(request);
   }
   async createRecipient(data: CreateRecipientDTO) {
-    console.log(data);
-
     if (data.legal_person_id && data.natural_person_id)
       throw new GraphQLError(
         'YOU CAN ONLY PASS ONE NATURAL PERSON OR LEGAL ENTITY ID AND NOT BOTH AT THE SAME TIME',
+        {
+          extensions: { code: HttpStatus.CONFLICT },
+        },
+      );
+    else if (
+      !data.LegalPerson &&
+      !data.NaturalPerson &&
+      !data.legal_person_id &&
+      !data.natural_person_id
+    )
+      throw new GraphQLError(
+        'IS NECESSARY A LEGAL CLIENT OR PHYSICAL CUSTOMER',
         {
           extensions: { code: HttpStatus.CONFLICT },
         },
@@ -114,6 +124,23 @@ export class RecipientUseCases {
   async updateRecipient(id: string, data: UpdateRecipientDTO) {
     let naturalperson: NaturalPerson;
     let legalPerson: LegalPerson;
+    if (!data.LegalPerson && !data.NaturalPerson)
+      throw new GraphQLError('IS NECESSARY SEND DATA', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    const recipientExist = await this.getRecipient({ id });
+    if (!recipientExist)
+      throw new GraphQLError('RECIPIENT NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    else if (data.LegalPerson && recipientExist.natural_person_id)
+      throw new GraphQLError('THIS RECIPIENT IS NOT LEGAL CLIENT', {
+        extensions: { code: HttpStatus.CONFLICT },
+      });
+    else if (data.NaturalPerson && recipientExist.legal_person_id)
+      throw new GraphQLError('THIS RECIPIENT IS NOT NATURAL PERSON', {
+        extensions: { code: HttpStatus.CONFLICT },
+      });
     if (data.LegalPerson && data.NaturalPerson)
       throw new GraphQLError(
         'YOU CAN ONLY PASS ONE NATURAL PERSON OR LEGAL ENTITY AND NOT BOTH AT THE SAME TIME',

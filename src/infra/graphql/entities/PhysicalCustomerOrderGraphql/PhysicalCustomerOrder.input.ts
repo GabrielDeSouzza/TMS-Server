@@ -11,7 +11,7 @@ export class PhysicalCustomerOrderInput
   @Field()
   @IsString()
   @IsNotEmpty()
-  recipient_id: string;
+  quote_table_id: string;
   @HideField()
   @Allow()
   order: string;

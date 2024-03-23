@@ -10,10 +10,9 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
-import { PhysicalCustomerMerchandiseUseCases } from 'app/useCases/PhysicalCustomerMerchandiseDto/PhysicalCustomerMerchandiseUseCases';
 import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
+import { PhysicalCustomerQuoteTableUseCases } from 'app/useCases/PhysicalCustomerQuoteTableUseCase/PhysicalCustomerQuoteTable';
 import { PhysicalCustomerUseCases } from 'app/useCases/PhysicalCustomerUseCases/PhysicalCustomerUseCases';
-import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
@@ -21,9 +20,8 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
-import { PhysicalCustomerMerchandiseModel } from '../PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.model';
-import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetPhysicalCustomerOrderArgs } from './Args/GetPhysicalCustomerOrderrArgs';
 import { PhysicalCustomerOrderWhereArgs } from './Args/WherePhysicalCustomerOrderArgs';
@@ -41,9 +39,8 @@ export class PhysicalCustomerOrderResolver {
   constructor(
     private physicalCustomerOrderUseCase: PhysicalCustomerOrderUseCases,
     private userCase: UserUseCases,
-    private physicalCustomerMerchandiseUseCase: PhysicalCustomerMerchandiseUseCases,
     private physicalCustomerUseCase: PhysicalCustomerUseCases,
-    private recipientUseCase: RecipientUseCases,
+    private physicalCustomerQuoteUseCase: PhysicalCustomerQuoteTableUseCases,
   ) {}
   @Query(() => PhysicalCustomerOrderModel, { nullable: true })
   async getPhysicalCustomerOrderModel(
@@ -92,21 +89,7 @@ export class PhysicalCustomerOrderResolver {
       id: order.physicalCustomerId,
     });
   }
-  @ResolveField(() => [PhysicalCustomerMerchandiseModel])
-  async Merchandises(@Parent() order: PhysicalCustomerOrderModel) {
-    const { id } = order;
 
-    return this.physicalCustomerMerchandiseUseCase.getMerchandisesForOrder(id);
-  }
-
-  @ResolveField(() => RecipientModel)
-  async Recipient(@Parent() order: PhysicalCustomerOrderInput) {
-    const { recipient_id: recipientId } = order;
-
-    return this.recipientUseCase.getRecipient({
-      id: recipientId,
-    });
-  }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: PhysicalCustomerOrderInput) {
     const { created_by: createdBy } = user;
@@ -118,5 +101,13 @@ export class PhysicalCustomerOrderResolver {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
+  }
+  @ResolveField(() => LegalClientQuoteTableModel)
+  async Quote(@Parent() order: PhysicalCustomerOrderInput) {
+    return await this.physicalCustomerQuoteUseCase.getPhysicalCustomerQuoteTable(
+      {
+        id: order.quote_table_id,
+      },
+    );
   }
 }

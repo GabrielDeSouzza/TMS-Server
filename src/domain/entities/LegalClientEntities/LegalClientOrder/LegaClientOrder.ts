@@ -10,7 +10,7 @@ export interface ILegalClientOrder {
   id?: string;
   order: string;
   legal_contract_id: string;
-  recipient_id: string;
+  quote_table_id: string;
   updated_at?: Date;
   created_at?: Date;
   created_by?: string;
@@ -55,8 +55,8 @@ export class LegalClientOrder extends Entity {
         maxLength: 999,
       },
       {
-        field: this.props.recipient_id,
-        fieldName: 'Recipient',
+        field: this.props.quote_table_id,
+        fieldName: 'Quote Table',
         maxLength: 999,
       },
     );
@@ -80,12 +80,12 @@ export class LegalClientOrder extends Entity {
     return this.props.order;
   }
 
-  public get recipient_id(): string {
-    return this.props.recipient_id;
+  public get quote_table_id(): string {
+    return this.props.quote_table_id;
   }
 
-  public set recipient_id(recipient_id: string) {
-    this.props.recipient_id = recipient_id;
+  public set quote_table_id(quote_table_id: string) {
+    this.props.quote_table_id = quote_table_id;
   }
   public set updated_at(updated_at: Date) {
     this.props.updated_at = updated_at;

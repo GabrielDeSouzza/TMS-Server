@@ -6,6 +6,7 @@ export abstract class WherePhysicalCustomerOrderTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   order?: StringFilterDTO;
   physical_contract_id?: StringFilterDTO;
+  quote_table_id?: StringFilterDTO;
   updated_at?: DateTimeFilterDTO;
   created_at?: DateTimeFilterDTO;
   updated_by?: StringFilterDTO;
@@ -16,6 +17,7 @@ export abstract class SortByPhysicalCustomerOrderTypeDTO {
   id?: 'asc' | 'desc';
   order?: 'asc' | 'desc';
   physical_contract_id?: 'asc' | 'desc';
+  quote_table_id?: 'asc' | 'desc';
   updated_at?: 'asc' | 'desc';
   created_at?: 'asc' | 'desc';
   updated_by?: 'asc' | 'desc';

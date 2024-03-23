@@ -14,11 +14,9 @@ import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/Comp
 import { CompletedOrdersModule } from 'infra/graphql/entities/CompletedOrdersGraphql/CompletedOrders.module';
 import { ContractOutsoucedDriverModule } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.module';
 import { IcmsModule } from 'infra/graphql/entities/IcmsGraphql/Icms.module';
-import { InvoiceForLegalClientModule } from 'infra/graphql/entities/InvoiceForLegalClientGraphql/InvoiceForLegalClient.module';
-import { InvoiceForPhysicalCustomerModule } from 'infra/graphql/entities/InvoiceForPhysicalCustomerGraphql/InvoiceForPhysicalCustomer.module';
 import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/LegalClient.module';
-import { LegalClientMerchandiseModule } from 'infra/graphql/entities/LegalClientMerchandiseGraphql/LegalClientMerchandise.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
+import { LegalClientQuoteTableModule } from 'infra/graphql/entities/LegalClientQuoteTableGraphql/LegalClientQuoteTable.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
 import { OrderProcessingModule } from 'infra/graphql/entities/OrderProcessingGraphql/OrderProcessing.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
@@ -29,9 +27,10 @@ import { OutsourcedTransportVehicleModule } from 'infra/graphql/entities/Outsour
 import { OutsourcedVehicleModule } from 'infra/graphql/entities/OutsourcedVehicle/OutsourcedVehicle.module';
 import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriver.module';
 import { PhysicalCustomerModule } from 'infra/graphql/entities/PhysicalCustomerGraphql/PhysicalCustomer.module';
-import { PhysicalCustomerMerchandiseModule } from 'infra/graphql/entities/PhysicalCustomerMerchandiseGraphql/PhysicalCustomerMerchandise.module';
 import { PhysicalCustomerOrderModule } from 'infra/graphql/entities/PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.module';
+import { PhysicalCustomerQuoteTableModule } from 'infra/graphql/entities/PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.module';
 import { RecipientModule } from 'infra/graphql/entities/RecipientGraphql/Recipient.module';
+import { SenderModule } from 'infra/graphql/entities/SenderGraphql/Sender.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
 import { VehicleBodyworkModule } from 'infra/graphql/entities/VehicleBodyworkGraphql/vehicle-bodywork.module';
 import { VehicleBrandModule } from 'infra/graphql/entities/VehicleBrandGraphql/vehicle-brand.module';
@@ -70,8 +69,6 @@ import { AuthModule } from 'infra/guard/auth.module';
     CarrierCompanyModule,
     LegalContractModule,
     LegalClientOrderModule,
-    LegalClientMerchandiseModule,
-    InvoiceForLegalClientModule,
     CiotForLegalClientModule,
     OutsourcedTransportCompanyModule,
     OutsourcedTransportCompanyContractModule,
@@ -79,13 +76,14 @@ import { AuthModule } from 'infra/guard/auth.module';
     OutsourcedTransportCompanyDriverModule,
     ContractOutsoucedDriverModule,
     PhysicalCustomerModule,
-    PhysicalCustomerMerchandiseModule,
     PhysicalCustomerOrderModule,
-    InvoiceForPhysicalCustomerModule,
-
     OrderProcessingModule,
     IcmsModule,
     RecipientModule,
+    SenderModule,
+    LegalClientQuoteTableModule,
+    PhysicalCustomerQuoteTableModule,
+
     CompletedOrdersModule,
   ],
 })
