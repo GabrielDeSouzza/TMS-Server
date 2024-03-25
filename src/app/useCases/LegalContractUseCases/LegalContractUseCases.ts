@@ -32,7 +32,7 @@ export class LegalContractUseCases {
     return this.legalContractRepository.getAllLegalContract(request);
   }
   async createContract(data: CreateLegalContractDTO) {
-    data.contract_number = 'CLC' + generateRandomNumber();
+    data.contract_number = 'CLC' + generateRandomNumber(8);
     const contractNumberExist =
       await this.legalContractRepository.findLegalContract({
         contractNumber: data.contract_number,

@@ -26,6 +26,7 @@ import { OutsourcedTransportCompanyModule } from 'infra/graphql/entities/Outsour
 import { OutsourcedTransportVehicleModule } from 'infra/graphql/entities/OutsourcedTransportVehicleGraphql/OutsourcedTransportVehicle.module';
 import { OutsourcedVehicleModule } from 'infra/graphql/entities/OutsourcedVehicle/OutsourcedVehicle.module';
 import { OwnDriverModule } from 'infra/graphql/entities/OwnDriverGraphql/OwnDriver.module';
+import { PhysicalCustomerCteModule } from 'infra/graphql/entities/PhysicalCustomerCteGraphql/PhysicalCustomerCte.module';
 import { PhysicalCustomerModule } from 'infra/graphql/entities/PhysicalCustomerGraphql/PhysicalCustomer.module';
 import { PhysicalCustomerOrderModule } from 'infra/graphql/entities/PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.module';
 import { PhysicalCustomerQuoteTableModule } from 'infra/graphql/entities/PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.module';
@@ -83,8 +84,8 @@ import { AuthModule } from 'infra/guard/auth.module';
     SenderModule,
     LegalClientQuoteTableModule,
     PhysicalCustomerQuoteTableModule,
-
     CompletedOrdersModule,
+    PhysicalCustomerCteModule,
   ],
 })
 export class AppModule {}

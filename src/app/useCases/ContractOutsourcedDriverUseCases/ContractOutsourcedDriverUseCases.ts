@@ -56,7 +56,7 @@ export class ContractOutsourcedDriverUseCases {
       });
     }
 
-    data.contract_number = generateRandomNumber();
+    data.contract_number = generateRandomNumber(8);
     const newContract = new ContractOutsourcedDriver({
       cpf: data.cpf,
       created_by: data.created_by,

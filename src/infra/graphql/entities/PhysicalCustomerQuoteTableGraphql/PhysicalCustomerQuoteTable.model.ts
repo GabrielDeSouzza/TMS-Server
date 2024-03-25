@@ -10,6 +10,8 @@ export class PhysicalCustomerQuoteTableModel
   implements IPhysicalCustomerQuoteTable
 {
   @Field()
+  id: string;
+  @Field()
   codQuote: string;
   @Field()
   recipientId: string;

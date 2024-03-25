@@ -1121,6 +1121,7 @@ type Mutation {
   createOutsourcedVehicle(OutsourcedVehicleInput: OutsourcedVehicleInput!): OutsourcedVehicleIModel!
   createOwnDriver(ownDriverInput: OwnDriverInput!): OwnDriverModel!
   createPhysicalCustomer(data: PhysicalCustomerInput!): PhysicalCustomerModel!
+  createPhysicalCustomerCte(data: PhysicalCustomerCteInput!): PhysicalCustomerCteModel!
   createPhysicalCustomerOrder(physicalCustomerOrderInput: PhysicalCustomerOrderInput!): PhysicalCustomerOrderModel!
   createPhysicalCustomerQuoteTable(physicalCustomerQuoteTableInput: PhysicalCustomerQuoteTableInput!): PhysicalCustomerQuoteTableModel!
   createRecipient(data: RecipientInput!): RecipientModel!
@@ -1139,6 +1140,7 @@ type Mutation {
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
+  updatePhysicalCustomerCte(id: String!, ownDriverUpdate: PhysicalCustomerCteUpdateInput!): PhysicalCustomerCteModel!
   updatePhysicalCustomerQuoteTable(id: String!, physicalCustomerQuoteTableUpdate: PhysicalCustomerQuoteTableUpdate!): PhysicalCustomerQuoteTableModel!
   updateRecipient(data: RecipientUpdateInput!, id: String!): RecipientModel!
   updateSender(data: SenderUpdateInput!, id: String!): SenderModel!
@@ -1983,6 +1985,21 @@ input OwnDriverWhereInput {
   updated_by: StringFilter
 }
 
+input PhysicalCustomerCteInput {
+  cteType: String!
+  observations: String
+  orderId: String!
+}
+
+type PhysicalCustomerCteModel {
+  acessKey: String!
+  cteNumber: String!
+  cteType: String!
+  id: String!
+  observations: String
+  orderId: String!
+}
+
 input PhysicalCustomerCteOrderByWithRelationInput {
   PhysicalCustomerOrder: PhysicalCustomerOrderOrderByWithRelationInput
   access_key: SortOrder
@@ -1991,6 +2008,12 @@ input PhysicalCustomerCteOrderByWithRelationInput {
   observations: SortOrder
   order_id: SortOrder
   type_cte: SortOrder
+}
+
+input PhysicalCustomerCteUpdateInput {
+  cteType: String
+  observations: String
+  orderId: String
 }
 
 input PhysicalCustomerCteWhereInput {
@@ -2155,6 +2178,7 @@ type PhysicalCustomerQuoteTableModel {
   createdUser: UserModelRefereces!
   created_by: String!
   description: String!
+  id: String!
   mass: Float!
   nf_value: Float!
   postalCodDestiny: String!
@@ -2284,6 +2308,7 @@ type Query {
   getAllOutsourcedVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedVehicleIModel!]!
   getAllOwnDriver(limit: Int! = 25, offset: Int! = 0, sort: OwnDriverOrderByWithRelationInput, where: OwnDriverWhereInput): [OwnDriverModel!]!
   getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerModel!]!
+  getAllPhysicalCustomerCte(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerCteOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerCteModel!]!
   getAllPhysicalCustomerOrder(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderOrderByWithRelationInput, where: PhysicalCustomerOrderWhereInput): [PhysicalCustomerOrderModel!]
   getAllPhysicalCustomerQuoteTable(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerQuoteTableOrderByWithRelationInput, where: PhysicalCustomerQuoteTableWhereInput): [PhysicalCustomerQuoteTableModel!]!
   getAllRecient(limit: Int! = 25, offset: Int! = 0, sort: RecipientOrderByWithRelationInput, where: RecipientWhereInput): [RecipientModel!]
@@ -2309,6 +2334,7 @@ type Query {
   getOutsourcedVehicle(id: String, plate: String, vehicleId: String): OutsourcedVehicleIModel!
   getOwnDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OwnDriverModel
   getPhysicalCustomer(cpf: String, id: String, naturalPersonId: String, rg: String): PhysicalCustomerModel
+  getPhysicalCustomerCte(acessKey: String, cteNumber: String, id: String): PhysicalCustomerCteModel
   getPhysicalCustomerOrderModel(id: String, order: String): PhysicalCustomerOrderModel
   getPhysicalCustomerQuoteTable(cod_quote: String, id: String): PhysicalCustomerQuoteTableModel
   getRecient(id: String, legalPerson: GetLegalPersonInput, naturalPerson: GetNaturalPersonInput): RecipientModel!

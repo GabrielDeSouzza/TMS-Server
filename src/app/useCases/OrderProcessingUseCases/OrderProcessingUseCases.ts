@@ -79,7 +79,7 @@ export class OrderProcessingUseCases {
     await this.vehicleUseCase.getVehicle({
       vehicleId: data.vehicle_id,
     });
-    data.order_processing_number = 'OP' + generateRandomNumber();
+    data.order_processing_number = 'OP' + generateRandomNumber(8);
     const orderProcesingEntity = new OrderProcessing({ ...data });
 
     return this.orderProcessingResitory.createOrderProcessing(

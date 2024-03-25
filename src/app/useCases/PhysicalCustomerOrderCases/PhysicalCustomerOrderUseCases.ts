@@ -53,7 +53,7 @@ export class PhysicalCustomerOrderUseCases {
     }
 
     const order = new PhysicalCustomerOrder({
-      order: 'OR' + generateRandomNumber(),
+      order: 'OR' + generateRandomNumber(8),
       physicalCustomerId: data.physicalCustomerId,
       updated_by: data.updated_by,
       created_by: data.created_by,

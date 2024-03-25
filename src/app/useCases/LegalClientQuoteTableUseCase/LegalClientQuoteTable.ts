@@ -46,7 +46,7 @@ export class LegalClientQuoteTableUseCases {
     );
   }
   async createQuoteTable(data: CreateLegalClientQuoteTableDTO) {
-    data.codQuote = 'QT' + generateRandomNumber();
+    data.codQuote = 'QT' + generateRandomNumber(8);
     const quoteExist =
       await this.legalClientQuoteTableRepository.findLegalClientQuoteTable({
         codQuote: data.codQuote,

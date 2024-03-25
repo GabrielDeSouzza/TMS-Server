@@ -34,7 +34,7 @@ export class LegalClientOrderUseCases {
     return this.legalClientOrderRepository.getAllLegalClientOrder(request);
   }
   async createOrder(data: CreateLegalClientOrderDTO) {
-    data.order = 'OLC' + generateRandomNumber();
+    data.order = 'OLC' + generateRandomNumber(8);
     const orderExist =
       await this.legalClientOrderRepository.findLegalClientOrder({
         order: data.order,

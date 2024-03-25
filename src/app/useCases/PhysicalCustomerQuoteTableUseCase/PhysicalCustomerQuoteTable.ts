@@ -48,7 +48,7 @@ export class PhysicalCustomerQuoteTableUseCases {
     );
   }
   async createQuoteTable(data: CreatePhysicalCustomerQuoteTableDTO) {
-    data.codQuote = 'QT' + generateRandomNumber();
+    data.codQuote = 'QT' + generateRandomNumber(8);
     const quoteExist =
       await this.physicalCustomerQuoteTableRepository.findPhysicalCustomerQuoteTable(
         {

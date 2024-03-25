@@ -69,7 +69,7 @@ export class CompletedOrdersUseCases {
     await this.vehicleUseCase.getVehicle({
       vehicleId: data.vehicle_id,
     });
-    data.order_processing_number = 'OP' + generateRandomNumber();
+    data.order_processing_number = 'OP' + generateRandomNumber(8);
     const orderProcesingEntity = new CompletedOrders({ ...data });
 
     return this.completedOrdersResitory.createCompletedOrders(

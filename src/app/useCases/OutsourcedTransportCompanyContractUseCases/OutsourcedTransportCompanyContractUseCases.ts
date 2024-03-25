@@ -48,7 +48,7 @@ export class OutsourcedTransportCompanyContractUseCases {
     await this.validateCreate(data);
     const contract = new OutsourcedTransportCompanyContract({
       carrierCompanyId: data.carrierCompanyId,
-      contractNumber: generateRandomNumber(),
+      contractNumber: generateRandomNumber(8),
       created_by: data.created_by,
       legalClientOrderId: data.legalClientOrderId,
       outSourcedTransportCompanyId: data.outSourcedTransportCompanyId,
