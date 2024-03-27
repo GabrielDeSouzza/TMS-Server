@@ -14,6 +14,7 @@ import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/Comp
 import { CompletedOrdersModule } from 'infra/graphql/entities/CompletedOrdersGraphql/CompletedOrders.module';
 import { ContractOutsoucedDriverModule } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.module';
 import { IcmsModule } from 'infra/graphql/entities/IcmsGraphql/Icms.module';
+import { LegalClientCteModule } from 'infra/graphql/entities/LegalClientCteGraphql/LegalClientCte.module';
 import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/LegalClient.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalClientQuoteTableModule } from 'infra/graphql/entities/LegalClientQuoteTableGraphql/LegalClientQuoteTable.module';
@@ -86,6 +87,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     PhysicalCustomerQuoteTableModule,
     CompletedOrdersModule,
     PhysicalCustomerCteModule,
+    LegalClientCteModule,
   ],
 })
 export class AppModule {}

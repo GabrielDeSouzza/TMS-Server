@@ -1,4 +1,4 @@
-import { type IPhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte';
+import { type IPhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte/PhysicalCustomerCte';
 
 export abstract class UpdatePhysicalCustomerCteDTO
   implements Partial<Omit<IPhysicalCustomerCte, 'acessKey' | 'cteNumber'>>

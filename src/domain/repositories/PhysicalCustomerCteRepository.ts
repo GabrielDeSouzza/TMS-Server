@@ -1,6 +1,6 @@
 import { type GetPhysicalCustomerCteDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerCteDto';
 import { type FindAllPhysicalCustomerCteWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerCteRepository';
-import { type PhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte';
+import { type PhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte/PhysicalCustomerCte';
 
 export abstract class PhysicalCustomerCteRepository {
   abstract findPhysicalCustomerCte(

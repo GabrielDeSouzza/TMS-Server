@@ -557,6 +557,21 @@ input IntNullableFilter {
   notIn: [Int!]
 }
 
+input LegalClientCteInput {
+  cteType: String!
+  observations: String
+  orderId: String!
+}
+
+type LegalClientCteModel {
+  acessKey: String!
+  cteNumber: String!
+  cteType: String!
+  id: String!
+  observations: String
+  orderId: String!
+}
+
 input LegalClientCteOrderByWithRelationInput {
   LegalClientOrder: LegalClientOrderOrderByWithRelationInput
   access_key: SortOrder
@@ -565,6 +580,12 @@ input LegalClientCteOrderByWithRelationInput {
   observations: SortOrder
   order_id: SortOrder
   type_cte: SortOrder
+}
+
+input LegalClientCteUpdateInput {
+  cteType: String
+  observations: String
+  orderId: String
 }
 
 input LegalClientCteWhereInput {
@@ -1109,6 +1130,7 @@ type Mutation {
   createContractOutsourcedDriver(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
   createIcms(data: IcmsInput!): IcmsModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
+  createLegalClientCte(data: LegalClientCteInput!): LegalClientCteModel!
   createLegalClientOrder(legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
   createLegalClientQuoteTable(legalClientQuoteTableInput: LegalClientQuoteTableInput!): LegalClientQuoteTableModel!
   createLegalContract(legalContractInput: LegalContractInput!): LegalContractModel!
@@ -1135,6 +1157,7 @@ type Mutation {
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateCompletedOrders(data: CompletedOrdersUpdateInput!, id: String!): CompletedOrdersModel!
   updateIcms(id: String!, invoiceForLegalClientInput: IcmsUpdateInput!): IcmsModel!
+  updateLegalClientCte(id: String!, ownDriverUpdate: LegalClientCteUpdateInput!): LegalClientCteModel!
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
@@ -2296,6 +2319,7 @@ type Query {
   getAllContractOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
   getAllICMS(limit: Int! = 25, offset: Int! = 0, sort: IcmsOrderByWithRelationInput, where: IcmsWhereInput): [IcmsModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
+  getAllLegalClientCte(limit: Int! = 25, offset: Int! = 0, sort: LegalClientCteOrderByWithRelationInput, where: OwnDriverWhereInput): [LegalClientCteModel!]!
   getAllLegalClientOrder(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderOrderByWithRelationInput, where: LegalClientOrderWhereInput): [LegalClientOrderModel!]
   getAllLegalClientQuoteTable(limit: Int! = 25, offset: Int! = 0, sort: LegalClientQuoteTableOrderByWithRelationInput, where: LegalClientQuoteTableWhereInput): [LegalClientQuoteTableModel!]!
   getAllLegalContract(limit: Int! = 25, offset: Int! = 0, sort: LegalContractOrderByWithRelationInput, where: LegalContractWhereInput): [LegalContractModel!]
@@ -2322,6 +2346,7 @@ type Query {
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
   getICMS(StateRelation: StateRelationIcmsArgs, id: String): IcmsModel!
+  getLegalClientCte(acessKey: String, cteNumber: String, id: String): LegalClientCteModel
   getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): LegalClientModel!
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
   getLegalClientQuoteTable(cod_quote: String, id: String): LegalClientQuoteTableModel

@@ -2,10 +2,10 @@ import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
 import { Allow, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-import { type IPhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte/PhysicalCustomerCte';
+import { type ILegalClientCte } from 'domain/entities/Cte Entities/LegalClientCte/LegalClientCte';
 
 @InputType()
-export class PhysicalCustomerCteInput implements IPhysicalCustomerCte {
+export class LegalClientCteInput implements ILegalClientCte {
   @Field()
   @IsString()
   @IsNotEmpty()
@@ -27,6 +27,6 @@ export class PhysicalCustomerCteInput implements IPhysicalCustomerCte {
 }
 
 @InputType()
-export class PhysicalCustomerCteUpdateInput extends PartialType(
-  PhysicalCustomerCteInput,
+export class LegalClientCteUpdateInput extends PartialType(
+  LegalClientCteInput,
 ) {}

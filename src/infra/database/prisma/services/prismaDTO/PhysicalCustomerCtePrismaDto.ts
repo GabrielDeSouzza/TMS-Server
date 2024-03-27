@@ -3,7 +3,7 @@ import {
   type PhysicalCustomerCte as PhysicalCustomerCtePrisma,
 } from '@prisma/client';
 
-import { PhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte';
+import { PhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte/PhysicalCustomerCte';
 
 export class PhysicalCustomerCtePrismaDTO {
   public static PrismaToEntity(
