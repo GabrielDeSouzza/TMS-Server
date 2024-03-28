@@ -11,7 +11,7 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 
 import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
-import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { OutsourcedTransportCompanyContractUseCases } from 'app/useCases/OutsourcedTransportCompanyContractUseCases/OutsourcedTransportCompanyContractUseCases';
 import { OutsourcedTransportCompanyUseCases } from 'app/useCases/OutsourcedTransportCompanyUseCases/OutsourcedTransportCompanyUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';

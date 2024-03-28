@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 import { LegalContractRepository } from 'domain/repositories/LegalContract.repository';
 
-import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientOrderUseCases';
 
 import { LegalClientOrderPrismaService } from 'infra/database/prisma/services/LegalClientOrder.service';
 import { LegalContractPrismaService } from 'infra/database/prisma/services/LegalContract.service';

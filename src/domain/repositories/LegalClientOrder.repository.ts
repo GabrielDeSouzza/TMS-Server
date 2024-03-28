@@ -1,6 +1,7 @@
 import { type GetLegalClientOrderDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientOrderDto';
 import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
+import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 
 export abstract class LegalClientOrderRepository {
   abstract findLegalClientOrder(
@@ -19,4 +20,7 @@ export abstract class LegalClientOrderRepository {
   abstract getAllLegalClientOrder(
     parameters: FindAllLegalClientOrderWhereRequestDTO,
   ): Promise<LegalClientOrder[]>;
+  abstract getAllExpenses(
+    request: GetLegalClientOrderDTO,
+  ): Promise<FreightExpense[]>;
 }

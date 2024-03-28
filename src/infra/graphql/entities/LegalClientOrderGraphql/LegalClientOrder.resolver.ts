@@ -10,7 +10,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
-import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { LegalClientQuoteTableUseCases } from 'app/useCases/LegalClientQuoteTableUseCase/LegalClientQuoteTable';
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
@@ -21,6 +21,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -107,6 +108,12 @@ export class LegalClientOrderResolver {
   async Quote(@Parent() order: LegalClientOrderInput) {
     return await this.legalClientQuoteUseCase.getLegalClientQuoteTable({
       id: order.quote_table_id,
+    });
+  }
+  @ResolveField(() => [FreightExpenseModel])
+  async FreightExpenses(@Parent() order: LegalClientOrderInput) {
+    return await this.legalClientOrdeUseCase.getExpenses({
+      order: order.order,
     });
   }
 }

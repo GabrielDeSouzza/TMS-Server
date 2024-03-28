@@ -11,7 +11,7 @@ import { type CreateOrderProcessingDTO } from 'app/dtos/OrderProcessingDto/Creat
 import { type UpdateOrderProcessingDTO } from 'app/dtos/OrderProcessingDto/UpdateOrderProcessingDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
-import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { PhysicalCustomerOrderUseCases } from '../PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 import { VehicleUseCases } from '../VehicleUseCases/VehicleUseCases';
 

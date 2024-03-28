@@ -79,4 +79,21 @@ export class PhysicalCustomerOrderUseCases {
       order,
     );
   }
+
+  async getExpenses(request: GetPhysicalCustomerOrderDTO) {
+    if (!request.id && !request.order) {
+      throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const order = await this.physicalCustomerOrderRepository.getAllExpenses(
+      request,
+    );
+    if (order) return order;
+
+    throw new GraphQLError('ANY EXPENSE FOUND', {
+      extensions: { code: HttpStatus.NOT_FOUND },
+    });
+  }
 }

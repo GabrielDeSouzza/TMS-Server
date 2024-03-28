@@ -439,6 +439,10 @@ input DateTimeNullableFilter {
   notIn: [Timestamp!]
 }
 
+input DeletFreightExpenseInput {
+  id: String!
+}
+
 input FloatFilter {
   equals: Float
   gt: Float
@@ -448,6 +452,61 @@ input FloatFilter {
   lte: Float
   not: NestedFloatFilter
   notIn: [Float!]
+}
+
+input FreightExpenseInput {
+  expenseName: String!
+  legalClientOrderId: String
+  physicalCustomerOrderId: String
+  value: Float!
+}
+
+type FreightExpenseModel {
+  expenseName: String!
+  id: String!
+  legalClientOrderId: String
+  physicalCustomerOrderId: String
+  value: Float!
+}
+
+input FreightExpenseUpdateInput {
+  expenseName: String
+  legalClientOrderId: String
+  physicalCustomerOrderId: String
+  value: Float
+}
+
+input FreightExpensesListRelationFilter {
+  every: FreightExpensesWhereInput
+  none: FreightExpensesWhereInput
+  some: FreightExpensesWhereInput
+}
+
+input FreightExpensesOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FreightExpensesOrderByWithRelationInput {
+  LegalClientOrder: LegalClientOrderOrderByWithRelationInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByWithRelationInput
+  expense_name: SortOrder
+  id: SortOrder
+  legal_client_order_id: SortOrder
+  physical_customer_id: SortOrder
+  value: SortOrder
+}
+
+input FreightExpensesWhereInput {
+  AND: [FreightExpensesWhereInput!]
+  LegalClientOrder: LegalClientOrderWhereInput
+  NOT: [FreightExpensesWhereInput!]
+  OR: [FreightExpensesWhereInput!]
+  PhysicalCustomerOrder: PhysicalCustomerOrderWhereInput
+  expense_name: StringFilter
+  id: StringFilter
+  legal_client_order_id: StringNullableFilter
+  physical_customer_id: StringNullableFilter
+  value: FloatFilter
 }
 
 input GetLegalPersonInput {
@@ -656,6 +715,7 @@ input LegalClientOrderListRelationFilter {
 
 type LegalClientOrderModel {
   CreatedUser: UserModelRefereces!
+  FreightExpenses: [FreightExpenseModel!]!
   LegalContract: LegalContractModel!
   Quote: LegalClientQuoteTableModel!
   UpdatedUser: UserModelRefereces!
@@ -676,6 +736,7 @@ input LegalClientOrderOrderByRelationAggregateInput {
 input LegalClientOrderOrderByWithRelationInput {
   CompletedOrders: CompletedOrdersOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
+  FreightExpenses: FreightExpensesOrderByRelationAggregateInput
   LegalClientCte: LegalClientCteOrderByWithRelationInput
   LegalContract: LegalContractOrderByWithRelationInput
   OrderProcessing: OrderProcessingOrderByWithRelationInput
@@ -703,6 +764,7 @@ input LegalClientOrderWhereInput {
   AND: [LegalClientOrderWhereInput!]
   CompletedOrders: CompletedOrdersWhereInput
   CreatedBy: UserWhereInput
+  FreightExpenses: FreightExpensesListRelationFilter
   LegalClientCte: LegalClientCteWhereInput
   LegalContract: LegalContractWhereInput
   NOT: [LegalClientOrderWhereInput!]
@@ -1128,6 +1190,7 @@ type Mutation {
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
   createCompletedOrders(data: CompletedOrdersInput!): CompletedOrdersModel!
   createContractOutsourcedDriver(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
+  createFreightExpense(data: FreightExpenseInput!): FreightExpenseModel!
   createIcms(data: IcmsInput!): IcmsModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createLegalClientCte(data: LegalClientCteInput!): LegalClientCteModel!
@@ -1153,9 +1216,11 @@ type Mutation {
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
+  deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   login(loginData: AuthInput!): AuthModel!
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateCompletedOrders(data: CompletedOrdersUpdateInput!, id: String!): CompletedOrdersModel!
+  updateFreightExpense(id: String!, upData: FreightExpenseUpdateInput!): FreightExpenseModel!
   updateIcms(id: String!, invoiceForLegalClientInput: IcmsUpdateInput!): IcmsModel!
   updateLegalClientCte(id: String!, ownDriverUpdate: LegalClientCteUpdateInput!): LegalClientCteModel!
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
@@ -2108,6 +2173,7 @@ input PhysicalCustomerOrderListRelationFilter {
 
 type PhysicalCustomerOrderModel {
   CreatedUser: UserModelRefereces!
+  FreightExpenses: [FreightExpenseModel!]!
   PhysicalCustomer: PhysicalCustomerModel!
   Quote: PhysicalCustomerQuoteTableModel!
   UpdatedUser: UserModelRefereces!
@@ -2128,6 +2194,7 @@ input PhysicalCustomerOrderOrderByRelationAggregateInput {
 input PhysicalCustomerOrderOrderByWithRelationInput {
   CompletedOrders: CompletedOrdersOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
+  FreightExpenses: FreightExpensesOrderByRelationAggregateInput
   OrderProcessing: OrderProcessingOrderByWithRelationInput
   PhysicalCustomer: PhysicalCustomerOrderByWithRelationInput
   PhysicalCustomerCte: PhysicalCustomerCteOrderByWithRelationInput
@@ -2154,6 +2221,7 @@ input PhysicalCustomerOrderWhereInput {
   AND: [PhysicalCustomerOrderWhereInput!]
   CompletedOrders: CompletedOrdersWhereInput
   CreatedBy: UserWhereInput
+  FreightExpenses: FreightExpensesListRelationFilter
   NOT: [PhysicalCustomerOrderWhereInput!]
   OR: [PhysicalCustomerOrderWhereInput!]
   OrderProcessing: OrderProcessingWhereInput
@@ -2317,6 +2385,7 @@ type Query {
   getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!
   getAllCompletedOrders(limit: Int! = 25, offset: Int! = 0, sort: CompletedOrdersOrderByWithRelationInput, where: CompletedOrdersWhereInput): [CompletedOrdersModel!]!
   getAllContractOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
+  getAllFreightExpenses(limit: Int! = 25, offset: Int! = 0, sort: FreightExpensesOrderByWithRelationInput, where: FreightExpensesWhereInput): [FreightExpenseModel!]
   getAllICMS(limit: Int! = 25, offset: Int! = 0, sort: IcmsOrderByWithRelationInput, where: IcmsWhereInput): [IcmsModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
   getAllLegalClientCte(limit: Int! = 25, offset: Int! = 0, sort: LegalClientCteOrderByWithRelationInput, where: OwnDriverWhereInput): [LegalClientCteModel!]!
@@ -2345,6 +2414,7 @@ type Query {
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
+  getFreightExpense(id: String): FreightExpenseModel!
   getICMS(StateRelation: StateRelationIcmsArgs, id: String): IcmsModel!
   getLegalClientCte(acessKey: String, cteNumber: String, id: String): LegalClientCteModel
   getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): LegalClientModel!

@@ -12,7 +12,7 @@ import { type UpdateOutsourcedTransportCompanyContractDTO } from 'app/dtos/Outso
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 import { CarrierCompanyUseCases } from '../CarrierCompanyCases/CarrierCompanyUseCases';
-import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { OutsourcedTransportCompanyUseCases } from '../OutsourcedTransportCompanyUseCases/OutsourcedTransportCompanyUseCases';
 
 @Injectable()

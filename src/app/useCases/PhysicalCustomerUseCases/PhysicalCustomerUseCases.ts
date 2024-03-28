@@ -25,8 +25,15 @@ export class PhysicalCustomerUseCases {
         'IS NECESSARY AN ID, CPF, RG OR NATURALPERSON ID',
         { extensions: { code: HttpStatus.BAD_REQUEST } },
       );
+    const physicalCustomerOrder =
+      await this.physicalCustomerRepository.findPhysicalCustomer(request);
+    console.log(request);
+    if (!physicalCustomerOrder)
+      throw new GraphQLError('ORDER NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
 
-    return await this.physicalCustomerRepository.findPhysicalCustomer(request);
+    return physicalCustomerOrder;
   }
   async getAllPhysicalCustomer(request: GetAllPhysicalCustomerDTO) {
     return this.physicalCustomerRepository.findAllPhysicalCustomer(request);

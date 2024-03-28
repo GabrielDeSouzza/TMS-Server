@@ -11,7 +11,7 @@ import { type CreateCompletedOrdersDTO } from 'app/dtos/CompletedOrdersDto/Creat
 import { type UpdateCompletedOrdersDTO } from 'app/dtos/CompletedOrdersDto/UpdateCompletedOrdersDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
-import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { PhysicalCustomerOrderUseCases } from '../PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 import { VehicleUseCases } from '../VehicleUseCases/VehicleUseCases';
 

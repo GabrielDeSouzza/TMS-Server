@@ -3,9 +3,11 @@ import { Injectable } from '@nestjs/common';
 import { type GetLegalClientOrderDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientOrderDto';
 import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
+import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 import { type LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 
 import { PrismaService } from '../prisma.service';
+import { FreightExpensePrismaDTO } from './prismaDTO/FreightExpensePrismaDto';
 import { LegalClientOrderPrismaDTO } from './prismaDTO/LegalClientOrderPrismaDto';
 
 @Injectable()
@@ -13,6 +15,18 @@ export class LegalClientOrderPrismaService
   implements LegalClientOrderRepository
 {
   constructor(private prisma: PrismaService) {}
+  async getAllExpenses(
+    request: GetLegalClientOrderDTO,
+  ): Promise<FreightExpense[]> {
+    const expenses = await this.prisma.legalClientOrder.findFirst({
+      where: { OR: [{ id: request.id }, { order: request.order }] },
+      select: { FreightExpenses: true },
+    });
+
+    return expenses.FreightExpenses.map(expense =>
+      FreightExpensePrismaDTO.PrismaToEntity(expense),
+    );
+  }
   async findOrdersByLegalClient(
     legalClientId: string,
   ): Promise<LegalClientOrder[]> {

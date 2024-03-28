@@ -11,7 +11,7 @@ import { type CreateLegalClientCteDTO } from 'app/dtos/LegalClientCteDto/CreateL
 import { type UpdateLegalClientCteDTO } from 'app/dtos/LegalClientCteDto/UpdateLegalClientCteDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
-import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientUseCases';
+import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientOrderUseCases';
 
 @Injectable()
 export class LegalClientCteUseCase {

@@ -479,6 +479,7 @@ model PhysicalCustomerOrder {
   PhysicalCustomerQuoteTable PhysicalCustomerQuoteTable @relation(fields: [quote_table_id], references: [id])
   quote_table_id             String
   PhysicalCustomerCte        PhysicalCustomerCte?
+  FreightExpenses            FreightExpenses[]
 
   @@map("physical_orders")
 }
@@ -669,9 +670,10 @@ model LegalClientOrder {
 
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
 
-  CompletedOrders     CompletedOrders? @relation(fields: [completed_orders_id], references: [id])
+  CompletedOrders     CompletedOrders?  @relation(fields: [completed_orders_id], references: [id])
   completed_orders_id String?
   LegalClientCte      LegalClientCte?
+  FreightExpenses     FreightExpenses[]
 
   @@map("legal_orders")
 }
@@ -731,6 +733,18 @@ model CompletedOrders {
   LegalClientOrder      LegalClientOrder[]
 
   @@map("completed_orders")
+}
+
+model FreightExpenses {
+  id                    String                 @id @default(uuid())
+  expense_name          String
+  value                 Float
+  legal_client_order_id String?
+  physical_customer_id  String?
+  LegalClientOrder      LegalClientOrder?      @relation(fields: [legal_client_order_id], references: [id], map: "legal_client_order_fk")
+  PhysicalCustomerOrder PhysicalCustomerOrder? @relation(fields: [physical_customer_id], references: [id])
+
+  @@map("freight_expenses")
 }
 
 model TypeOfMaintenance {

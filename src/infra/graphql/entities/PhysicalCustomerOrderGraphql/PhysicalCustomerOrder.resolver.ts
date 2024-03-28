@@ -20,6 +20,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -109,5 +110,11 @@ export class PhysicalCustomerOrderResolver {
         id: order.quote_table_id,
       },
     );
+  }
+  @ResolveField(() => [FreightExpenseModel])
+  async FreightExpenses(@Parent() order: PhysicalCustomerOrderInput) {
+    return await this.physicalCustomerOrderUseCase.getExpenses({
+      order: order.order,
+    });
   }
 }

@@ -67,4 +67,19 @@ export class LegalClientOrderUseCases {
 
     return this.legalClientOrderRepository.updateLegalClientOrder(id, order);
   }
+
+  async getExpenses(request: GetLegalClientOrderDTO) {
+    if (!request.id && !request.order) {
+      throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const order = await this.legalClientOrderRepository.getAllExpenses(request);
+    if (order) return order;
+
+    throw new GraphQLError('ANY EXPENSE FOUND', {
+      extensions: { code: HttpStatus.NOT_FOUND },
+    });
+  }
 }

@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 
 import { type GetPhysicalCustomerOrderDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerOrderDto';
 import { type FindAllPhysicalCustomerOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerOrderRepositoryDto';
+import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 import { type PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 import { type PhysicalCustomerOrderRepository } from 'domain/repositories/PhysicalCustomerOrder.repository';
 
 import { PrismaService } from '../prisma.service';
+import { FreightExpensePrismaDTO } from './prismaDTO/FreightExpensePrismaDto';
 import { PhysicalCustomerOrderPrismaDTO } from './prismaDTO/PhysicalCustomerOrderPrismaDto';
 
 @Injectable()
@@ -78,6 +80,18 @@ export class PhysicalCustomerOrderPrismaService
 
     return physicalCustomerOrders.map(physicalCustomerOrder =>
       PhysicalCustomerOrderPrismaDTO.PrismaToEntity(physicalCustomerOrder),
+    );
+  }
+  async getAllExpenses(
+    request: GetPhysicalCustomerOrderDTO,
+  ): Promise<FreightExpense[]> {
+    const expenses = await this.prisma.physicalCustomerOrder.findFirst({
+      where: { OR: [{ id: request.id }, { order: request.order }] },
+      select: { FreightExpenses: true },
+    });
+
+    return expenses.FreightExpenses.map(expense =>
+      FreightExpensePrismaDTO.PrismaToEntity(expense),
     );
   }
 }

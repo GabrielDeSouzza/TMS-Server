@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
+import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import {
   LegalContractModel,
@@ -37,4 +38,6 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   quote_table_id: string;
   @Field(() => LegalClientQuoteTableModel)
   Quote: LegalClientQuoteTableModel;
+  @Field(() => [FreightExpenseModel])
+  FreightExpenses: FreightExpenseModel[];
 }
