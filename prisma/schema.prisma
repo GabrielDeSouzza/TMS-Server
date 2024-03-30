@@ -460,10 +460,10 @@ model PhysicalCustomerQuoteTable {
 }
 
 model PhysicalCustomerOrder {
-  id         String @id @default(uuid())
-  order      String @unique
-  updated_by String
-
+  id                   String           @id @default(uuid())
+  order                String           @unique
+  updated_by           String
+  acesss_key           String
   physical_customer_id String
   PhysicalCustomer     PhysicalCustomer @relation(fields: [physical_customer_id], references: [id])
   created_at           DateTime         @default(now())

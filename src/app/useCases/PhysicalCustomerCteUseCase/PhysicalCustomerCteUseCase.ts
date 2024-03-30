@@ -20,10 +20,18 @@ export class PhysicalCustomerCteUseCase {
     private physicalCustomerOrderUseCase: PhysicalCustomerOrderUseCases,
   ) {}
   async getPhysicalCustomerCte(request: GetPhysicalCustomerCteDTO) {
-    if (!request.acessKey && !request.cteNumber && !request.id)
-      throw new GraphQLError('IS NECESSARY AN ID, CTE NUMBER OR ACESS KEY', {
-        extensions: { code: HttpStatus.BAD_REQUEST },
-      });
+    if (
+      !request.acessKey &&
+      !request.cteNumber &&
+      !request.id &&
+      !request.orderId
+    )
+      throw new GraphQLError(
+        'IS NECESSARY AN ID, CTE NUMBER, ORDER ID OR ACESS KEY,',
+        {
+          extensions: { code: HttpStatus.BAD_REQUEST },
+        },
+      );
     const cte =
       await this.physicalCustomerCteRepository.findPhysicalCustomerCte(request);
 

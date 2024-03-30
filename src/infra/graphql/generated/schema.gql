@@ -417,6 +417,18 @@ input ContractOutsourcedDriverWhereInput {
   updated_by: StringFilter
 }
 
+type CtePDfModel {
+  cteUrl: String!
+}
+
+input CtePdfLegalClientInput {
+  legalClientOrderId: String!
+}
+
+input CtePdfPhysicalCustomerInput {
+  physicalCustomerOrderId: String!
+}
+
 input DateTimeFilter {
   equals: Timestamp
   gt: Timestamp
@@ -2380,6 +2392,8 @@ input PhysicalCustomerWhereInput {
 type Query {
   GetCompletedOrders(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): CompletedOrdersModel!
   GetOrderProcessing(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): OrderProcessingModel!
+  generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
+  generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]
   getAllCiotForLegalClient(limit: Int! = 25, offset: Int! = 0, sort: CiotForLegalClientOrderByWithRelationInput, where: CiotForLegalClientWhereInput): [CiotForLegalClientModel!]
   getAllCompanyVehicle(limit: Int! = 25, offset: Int! = 0, sort: CompanyVehicleOrderByWithRelationInput, where: CompanyVehicleWhereInput): [CompanyVehicleIModel!]!

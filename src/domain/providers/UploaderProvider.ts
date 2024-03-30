@@ -10,4 +10,9 @@ export abstract class UploaderProvider {
   abstract upload(
     parameters: UploadedFileRequestDTO,
   ): Promise<UploadedFileResponseDTO>;
+
+  abstract uploadPdf(
+    file: Buffer,
+    fileName: string,
+  ): Promise<UploadedFileResponseDTO>;
 }

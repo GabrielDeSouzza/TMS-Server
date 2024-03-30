@@ -24,6 +24,7 @@ export class LegalClientCtePrismaService implements LegalClientCteRepository {
             { id: request.id },
             { access_key: request.acessKey },
             { cte_number: request.acessKey },
+            { order_id: request.orderId },
           ],
         },
       }),

@@ -70,4 +70,41 @@ export class CloudinaryUploaderProvider implements UploaderProvider {
       },
     );
   }
+
+  async uploadPdf(file: Buffer, fileName: string) {
+    try {
+      const upload = await new Promise<CloudinaryResponseProps>(
+        (resolve, reject) => {
+          const timestamp = Date.now();
+          this.client.uploader
+            .upload_stream(
+              {
+                folder: `wolves/cte/`,
+                overwrite: true,
+                timestamp,
+                format: 'pdf',
+                filename_override: fileName,
+                use_filename: true,
+                resource_type: 'raw',
+                unique_filename: false,
+                discard_original_filename: false,
+              },
+              (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+              },
+            )
+            .end(file);
+        },
+      );
+
+      return {
+        path: upload.secure_url as string,
+      };
+    } catch (error) {
+      console.error(error);
+
+      return;
+    }
+  }
 }
