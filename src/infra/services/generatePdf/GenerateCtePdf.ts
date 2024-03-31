@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import PdfPrinter from 'pdfmake';
-import { type TDocumentDefinitions } from 'pdfmake/interfaces';
+import ejs from 'ejs';
+import { GraphQLError } from 'graphql';
+import { type CreateOptions } from 'html-pdf';
+import pdf from 'html-pdf';
+import path from 'path';
 
 import { type CtePdf } from 'domain/entities/Cte Entities/CtePdfEntity/CtePdf';
 import { UploaderProvider } from 'domain/providers/UploaderProvider';
@@ -10,47 +13,38 @@ import { UploaderProvider } from 'domain/providers/UploaderProvider';
 export class GenerateCtePdfService {
   private cteUrl: string;
   constructor(private cloudFilesService: UploaderProvider) {}
+
   async generatePdf(cteData: CtePdf): Promise<string> {
-    const fonts = {
-      Helvetica: {
-        normal: 'Helvetica',
-        bold: 'Helvetica-Bold',
-        italics: 'Helvetica-Oblique',
-        bolditalics: 'Helvetica-BoldOblique',
-      },
+    const options: CreateOptions = {
+      format: 'A4',
+      type: 'pdf',
     };
-    const printer = new PdfPrinter(fonts);
-    const documentDefinitions: TDocumentDefinitions = {
-      defaultStyle: { font: 'Helvetica' },
-      content: [
-        { text: cteData.cteData.cteNumber },
-        { text: cteData.expenses[0].expenseName },
-      ],
-    };
-    const chunks: Uint8Array[] = [];
-    const pdf = printer.createPdfKitDocument(documentDefinitions);
+    const html = await this.compileEjs(cteData);
 
-    pdf.on('data', (chunk: Uint8Array) => {
-      chunks.push(chunk);
-    });
-
-    await new Promise<void>((resolve, reject) => {
-      pdf.on('end', () => {
-        const buffer = Buffer.concat(chunks);
-        this.cloudFilesService
-          .uploadPdf(buffer, cteData.cteData.cteNumber)
-          .then(uploadUrl => {
-            this.cteUrl = uploadUrl.path;
-            resolve();
-          })
-          .catch(error => {
-            console.error('Ocorreu um erro durante o upload do PDF:', error);
-            reject(error);
-          });
+    return new Promise((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      pdf.create(html, options).toBuffer(async (error, buffer) => {
+        if (error) {
+          reject(new GraphQLError('Erro ao Gerar PDF'));
+        } else {
+          try {
+            // Supondo que cloudFilesService.uploadPdf seja uma função assíncrona que faz o upload do PDF
+            const url = await this.cloudFilesService.uploadPdf(buffer, 'test');
+            resolve(url.path);
+          } catch (uploadError) {
+            reject(uploadError);
+          }
+        }
       });
-      pdf.end();
     });
+  }
+  private async compileEjs(cteData: CtePdf) {
+    const html = await ejs.renderFile(
+      path.dirname(process.cwd()) +
+        '/app/src//infra/services/generatePdf/templates/test.ejs',
+      cteData,
+    );
 
-    return this.cteUrl;
+    return html;
   }
 }
