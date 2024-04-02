@@ -12,6 +12,10 @@ export class PhysicalCustomerOrderInput
   @IsString()
   @IsNotEmpty()
   quote_table_id: string;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  carrier_id: string;
   @HideField()
   @Allow()
   order: string;

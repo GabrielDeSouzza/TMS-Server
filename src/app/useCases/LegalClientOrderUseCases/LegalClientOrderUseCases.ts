@@ -11,9 +11,18 @@ import { type GetAllLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/Get
 import { type UpdateLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/UpdateLegalClientOrderDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
+import { CarrierCompanyUseCases } from '../CarrierCompanyCases/CarrierCompanyUseCases';
+import { LegalClientQuoteTableUseCases } from '../LegalClientQuoteTableUseCase/LegalClientQuoteTable';
+import { LegalContractUseCases } from '../LegalContractUseCases/LegalContractUseCases';
+
 @Injectable()
 export class LegalClientOrderUseCases {
-  constructor(private legalClientOrderRepository: LegalClientOrderRepository) {}
+  constructor(
+    private legalClientOrderRepository: LegalClientOrderRepository,
+    private legalContract: LegalContractUseCases,
+    private carrierCompany: CarrierCompanyUseCases,
+    private quoteTable: LegalClientQuoteTableUseCases,
+  ) {}
   async getLegalClientOrder(request: GetLegalClientOrderDTO) {
     if (!request.id && !request.order) {
       throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
@@ -34,6 +43,9 @@ export class LegalClientOrderUseCases {
     return this.legalClientOrderRepository.getAllLegalClientOrder(request);
   }
   async createOrder(data: CreateLegalClientOrderDTO) {
+    await this.legalContract.getContract({ id: data.legal_contract_id });
+    await this.quoteTable.getLegalClientQuoteTable({ id: data.quote_table_id });
+    await this.carrierCompany.getCarrierCompany({ id: data.carrier_id });
     data.order = 'OLC' + generateRandomNumber(8);
     const orderExist =
       await this.legalClientOrderRepository.findLegalClientOrder({
@@ -51,14 +63,24 @@ export class LegalClientOrderUseCases {
       order: data.order,
       updated_by: data.updated_by,
       created_by: data.created_by,
+      carrier_id: data.carrier_id,
       quote_table_id: data.quote_table_id,
     });
 
     return this.legalClientOrderRepository.createLegalClientOrder(order);
   }
   async updateOrder(id: string, data: UpdateLegalClientOrderDTO) {
+    if (data.legal_contract_id)
+      await this.legalContract.getContract({ id: data.legal_contract_id });
+    if (data.quote_table_id)
+      await this.quoteTable.getLegalClientQuoteTable({
+        id: data.quote_table_id,
+      });
+    if (data.carrier_id)
+      await this.carrierCompany.getCarrierCompany({ id: data.carrier_id });
     const order = new LegalClientOrder({
       legal_contract_id: data.legal_contract_id,
+      carrier_id: data.carrier_id,
       updated_by: data.updated_by,
       created_by: data.updated_by,
       quote_table_id: data.legal_contract_id,

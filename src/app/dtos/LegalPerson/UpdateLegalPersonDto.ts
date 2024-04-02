@@ -26,4 +26,6 @@ export abstract class UpdateLegalPersonDTO {
   third_phone?: string;
 
   email?: string;
+
+  id?: string;
 }

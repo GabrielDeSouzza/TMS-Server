@@ -11,10 +11,17 @@ import { type CreatePhysicalCustomerOrderDTO } from 'app/dtos/PhysicalCustomerOr
 import { type UpdatePhysicalCustomerOrderDTO } from 'app/dtos/PhysicalCustomerOrderDto/UpdatePhysicalCustomerOrderDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
+import { CarrierCompanyUseCases } from '../CarrierCompanyCases/CarrierCompanyUseCases';
+import { PhysicalCustomerQuoteTableUseCases } from '../PhysicalCustomerQuoteTableUseCase/PhysicalCustomerQuoteTable';
+import { PhysicalCustomerUseCases } from '../PhysicalCustomerUseCases/PhysicalCustomerUseCases';
+
 @Injectable()
 export class PhysicalCustomerOrderUseCases {
   constructor(
     private physicalCustomerOrderRepository: PhysicalCustomerOrderRepository,
+    private physicalCustomerUseCase: PhysicalCustomerUseCases,
+    private physicalQuoteTableUseCase: PhysicalCustomerQuoteTableUseCases,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   async getPhysicalCustomerOrder(request: GetPhysicalCustomerOrderDTO) {
     if (!request.id && !request.order) {
@@ -41,6 +48,13 @@ export class PhysicalCustomerOrderUseCases {
     );
   }
   async createOrder(data: CreatePhysicalCustomerOrderDTO) {
+    await this.physicalCustomerUseCase.getPhysicalCustomer({
+      id: data.physicalCustomerId,
+    });
+    await this.physicalQuoteTableUseCase.getPhysicalCustomerQuoteTable({
+      id: data.quote_table_id,
+    });
+    await this.carrierCompanyUseCase.getCarrierCompany({ id: data.carrier_id });
     const orderExist =
       await this.physicalCustomerOrderRepository.findPhysicalCustomerOrder({
         order: data.order,
@@ -55,6 +69,7 @@ export class PhysicalCustomerOrderUseCases {
     const order = new PhysicalCustomerOrder({
       order: 'OR' + generateRandomNumber(8),
       physicalCustomerId: data.physicalCustomerId,
+      carrier_id: data.carrier_id,
       updated_by: data.updated_by,
       created_by: data.created_by,
       quote_table_id: data.quote_table_id,
@@ -66,10 +81,23 @@ export class PhysicalCustomerOrderUseCases {
   }
 
   async updateOrder(id: string, data: UpdatePhysicalCustomerOrderDTO) {
+    if (data.physicalCustomerId)
+      await this.physicalCustomerUseCase.getPhysicalCustomer({
+        id: data.physicalCustomerId,
+      });
+    if (data.quote_table_id)
+      await this.physicalQuoteTableUseCase.getPhysicalCustomerQuoteTable({
+        id: data.quote_table_id,
+      });
+    if (data.carrier_id)
+      await this.carrierCompanyUseCase.getCarrierCompany({
+        id: data.carrier_id,
+      });
     const order = new PhysicalCustomerOrder({
       created_by: null,
       physicalCustomerId: data.physicalCustomerId,
       updated_by: data.updated_by,
+      carrier_id: data.carrier_id,
       order: null,
       quote_table_id: data.quote_table_id,
     });

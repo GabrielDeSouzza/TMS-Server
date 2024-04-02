@@ -8,6 +8,7 @@ import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/
 import { LegalClientOrderPrismaService } from 'infra/database/prisma/services/LegalClientOrder.service';
 import { LegalContractPrismaService } from 'infra/database/prisma/services/LegalContract.service';
 
+import { CarrierCompanyModule } from '../CarrierCompanyGraphql/CarrierCompany.module';
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { LegalClientQuoteTableModule } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.module';
 import { LegalContractModule } from '../LegalContractGraphql/LegalContract.module';
@@ -18,6 +19,7 @@ import { LegalClientOrderResolver } from './LegalClientOrder.resolver';
     GraphqlCenterModule,
     LegalContractModule,
     LegalClientQuoteTableModule,
+    CarrierCompanyModule,
   ],
   providers: [
     {

@@ -28,6 +28,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
           },
         },
         LegalClientCte: true,
+        CarrierCompany: { select: { LegalPerson: true, rntrc: true } },
       },
     });
 
@@ -45,7 +46,9 @@ export class CtePdfPrismaService implements CtePdfRepository {
     const sender = recipientLegalClient
       ? new LegalPerson({ ...senderLegalClient })
       : new NaturalPerson({ ...senderPhysicalCustomer });
-
+    const carrierCompany = new LegalPerson({
+      ...cteDataPrisma.CarrierCompany.LegalPerson,
+    });
     const expenses = cteDataPrisma?.FreightExpenses.map(expense => ({
       expenseName: expense.expense_name,
       value: expense.value,
@@ -63,6 +66,8 @@ export class CtePdfPrismaService implements CtePdfRepository {
       cteData,
       recipient,
       sender,
+      carrierCompany,
+      rntrc: cteDataPrisma.CarrierCompany.rntrc,
     });
 
     return ctePdf;
@@ -85,6 +90,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
           },
         },
         PhysicalCustomerCte: true,
+        CarrierCompany: { select: { rntrc: true, LegalPerson: true } },
       },
     });
     console.log(cteDataPrisma);
@@ -108,7 +114,9 @@ export class CtePdfPrismaService implements CtePdfRepository {
       expenseName: expense.expense_name,
       value: expense.value,
     }));
-
+    const carrierCompany = new LegalPerson({
+      ...cteDataPrisma.CarrierCompany.LegalPerson,
+    });
     const cteData = new PhysicalCustomerCte({
       acessKey: cteDataPrisma?.PhysicalCustomerCte?.access_key,
       cteNumber: cteDataPrisma?.PhysicalCustomerCte?.cte_number,
@@ -123,6 +131,8 @@ export class CtePdfPrismaService implements CtePdfRepository {
       cteData,
       recipient,
       sender,
+      carrierCompany,
+      rntrc: cteDataPrisma.CarrierCompany.rntrc,
     });
 
     return data;

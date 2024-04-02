@@ -1,6 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 
-import { randomUUID } from 'crypto';
 import { GraphQLError } from 'graphql';
 
 import { type GetCarrierCompanyDTO } from 'domain/dto/repositories/getDataDtos/GetCarrierCompanyDto';
@@ -54,16 +53,24 @@ export class CarrierCompanyUseCases {
   async createCarrierCompany(
     data: CreateCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
-    await this.legalPersonUseCase.validatePerson(data.LegalPerson);
+    data.LegalPerson;
+    await this.legalPersonUseCase.validatePerson({
+      cnpj: data?.LegalPerson?.cnpj,
+      corporate_name: data?.LegalPerson?.corporate_name,
+      fantasy_name: data?.LegalPerson?.fantasy_name,
+      id: data?.legalPersonId,
+      state_registration: data?.LegalPerson?.state_registration,
+    });
 
     const carrierCompany = new CarrierCompany({
       created_by: data.created_by,
       legalPersonId: data.legalPersonId,
       updated_by: data.updated_by,
       rntrc: data.rntrc,
-      id: randomUUID(),
     });
-    const legalPerson = LegalPersonEntityDto.createEntity(data.LegalPerson);
+    const legalPerson = data.LegalPerson
+      ? LegalPersonEntityDto.createEntity(data.LegalPerson)
+      : undefined;
 
     return this.carrierCompanyRepository.createCarrierCompany(
       carrierCompany,

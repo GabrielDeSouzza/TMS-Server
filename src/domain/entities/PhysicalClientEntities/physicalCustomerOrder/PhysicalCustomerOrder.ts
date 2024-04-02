@@ -11,6 +11,7 @@ export interface IPhysicalCustomerOrder {
   order: string;
   physicalCustomerId: string;
   quote_table_id: string;
+  carrier_id: string;
   updated_at?: Date;
   created_at?: Date;
   updated_by: string;
@@ -82,6 +83,11 @@ export class PhysicalCustomerOrder extends Entity {
         fieldName: 'Updated At',
         maxLength: 200,
       },
+      {
+        field: this.props.carrier_id,
+        fieldName: 'Carrier Company',
+        maxLength: 999,
+      },
     );
 
     this.notification.requiredField('CustomerOrder', fieldsValidation);
@@ -111,6 +117,14 @@ export class PhysicalCustomerOrder extends Entity {
 
   set physicalCustomerId(physicalCustomerId: string) {
     this.props.physicalCustomerId = physicalCustomerId;
+  }
+
+  public get carrier_id(): string {
+    return this.props.carrier_id;
+  }
+
+  public set carrier_id(carrier_id: string) {
+    this.props.carrier_id = carrier_id;
   }
 
   get updated_at(): Date {

@@ -18,6 +18,7 @@ export class LegalClientOrderPrismaDTO {
       created_by: legalClientOrderPrisma.created_by,
       id: legalClientOrderPrisma.id,
       updated_at: legalClientOrderPrisma.updated_at,
+      carrier_id: legalClientOrderPrisma.carrier_id,
     });
   }
   public static EntityToCreatePrisma(legalClientOrder: LegalClientOrder) {
@@ -29,6 +30,7 @@ export class LegalClientOrderPrismaDTO {
       created_at: legalClientOrder.created_at,
       updated_at: legalClientOrder.updated_at,
       QuoteTable: { connect: { id: legalClientOrder.quote_table_id } },
+      CarrierCompany: { connect: { id: legalClientOrder.carrier_id } },
     };
 
     return legalClientOrderPrisma;
@@ -45,6 +47,7 @@ export class LegalClientOrderPrismaDTO {
         : undefined,
       UpdatedBy: { connect: { id: legalClientOrder.updated_by } },
       updated_at: legalClientOrder.updated_at,
+      CarrierCompany: { connect: { id: legalClientOrder.carrier_id } },
     };
 
     return legalClientOrderUptade;

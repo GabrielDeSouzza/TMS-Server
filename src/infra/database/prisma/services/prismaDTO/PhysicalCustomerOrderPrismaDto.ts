@@ -20,6 +20,7 @@ export class PhysicalCustomerOrderPrismaDTO {
       id: physicalCustomerOrderPrisma.id,
       updated_at: physicalCustomerOrderPrisma.updated_at,
       quote_table_id: physicalCustomerOrderPrisma.quote_table_id,
+      carrier_id: physicalCustomerOrderPrisma.carrier_id,
     });
   }
   public static EntityToCreatePrisma(
@@ -39,6 +40,7 @@ export class PhysicalCustomerOrderPrismaDTO {
         PhysicalCustomerQuoteTable: {
           connect: { id: physicalCustomerOrder.quote_table_id },
         },
+        CarrierCompany: { connect: { id: physicalCustomerOrder.carrier_id } },
       };
 
     return physicalCustomerOrderPrisma;
@@ -56,6 +58,9 @@ export class PhysicalCustomerOrderPrismaDTO {
           : undefined,
         UpdatedBy: { connect: { id: physicalCustomerOrder.updated_by } },
         updated_at: physicalCustomerOrder.updated_at,
+        CarrierCompany: physicalCustomerOrder.carrier_id
+          ? { connect: { id: physicalCustomerOrder.carrier_id } }
+          : undefined,
       };
 
     return physicalCustomerOrderPrisma;

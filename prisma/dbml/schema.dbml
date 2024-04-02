@@ -324,6 +324,8 @@ Table carrier_companies {
   UpdatedBy users
   updated_by String [not null]
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract [not null]
+  LegalClientOrder legal_orders [not null]
+  PhysicalCustomerOrder physical_orders [not null]
 }
 
 Table OutsourcedTransportCompany {
@@ -398,6 +400,8 @@ Table physical_orders {
   CreatedBy users [not null]
   created_by String [not null]
   UpdatedBy users [not null]
+  carrier_id String [not null]
+  CarrierCompany carrier_companies [not null]
   order_processing_id String
   OrderProcessing order_procesing
   CompletedOrders completed_orders
@@ -576,6 +580,8 @@ Table legal_orders {
   QuoteTable legal_client_quote [not null]
   order_processing_id String
   OrderProcessing order_procesing
+  carrier_id String [not null]
+  CarrierCompany carrier_companies [not null]
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract
   CompletedOrders completed_orders
   completed_orders_id String
@@ -803,6 +809,8 @@ Ref: physical_orders.created_by > users.id
 
 Ref: physical_orders.updated_by > users.id
 
+Ref: physical_orders.carrier_id > carrier_companies.id
+
 Ref: physical_orders.order_processing_id > order_procesing.id
 
 Ref: physical_orders.completedOrdersId > completed_orders.id
@@ -864,6 +872,8 @@ Ref: legal_orders.legal_contract_id > legal_Contracts.id
 Ref: legal_orders.quote_table_id > legal_client_quote.id
 
 Ref: legal_orders.order_processing_id > order_procesing.id
+
+Ref: legal_orders.carrier_id > carrier_companies.id
 
 Ref: legal_orders.completed_orders_id > completed_orders.id
 

@@ -49,5 +49,10 @@ export class ctePdfUseCase {
       throw new GraphQLError('SENDER NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
+
+    if (!ctePdf.carrierCompany)
+      throw new GraphQLError('CARRIER COMPANY NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

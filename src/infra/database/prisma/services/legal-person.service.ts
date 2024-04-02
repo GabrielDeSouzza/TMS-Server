@@ -45,9 +45,9 @@ export class LegalPersonPrismaService implements LegalPersonRepository {
   }
 
   async ValideLegalPerson(data: ValidateLegalPersonDTO): Promise<LegalPerson> {
+    console.log(data);
     const legalPerson = await this.prisma.legalPerson.findFirst({
       where: {
-        NOT: { id: data.id },
         OR: [
           { cnpj: data.cnpj },
           {
@@ -55,6 +55,7 @@ export class LegalPersonPrismaService implements LegalPersonRepository {
           },
           { corporate_name: data.corporate_name },
           { fantasy_name: data.fantasy_name },
+          { id: data.id },
         ],
       },
     });

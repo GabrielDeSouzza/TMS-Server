@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IPhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 
+import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.model';
 import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { PhysicalCustomerQuoteTableModel } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.model';
@@ -17,6 +18,8 @@ export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   order: string;
   @Field()
   physicalCustomerId: string;
+  @Field()
+  carrier_id: string;
   @Field(() => Date)
   updated_at: Date;
   @Field(() => Date)
@@ -35,4 +38,6 @@ export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   UpdatedUser: UserModelRefereces;
   @Field(() => [FreightExpenseModel])
   FreightExpenses: FreightExpenseModel[];
+  @Field(() => CarrierCompanyModel)
+  CarrierCompany: CarrierCompanyModel;
 }

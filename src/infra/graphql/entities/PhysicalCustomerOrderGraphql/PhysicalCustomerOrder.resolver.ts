@@ -10,6 +10,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 import { PhysicalCustomerQuoteTableUseCases } from 'app/useCases/PhysicalCustomerQuoteTableUseCase/PhysicalCustomerQuoteTable';
 import { PhysicalCustomerUseCases } from 'app/useCases/PhysicalCustomerUseCases/PhysicalCustomerUseCases';
@@ -20,9 +21,10 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.model';
 import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
-import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
+import { PhysicalCustomerQuoteTableModel } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetPhysicalCustomerOrderArgs } from './Args/GetPhysicalCustomerOrderrArgs';
 import { PhysicalCustomerOrderWhereArgs } from './Args/WherePhysicalCustomerOrderArgs';
@@ -42,6 +44,7 @@ export class PhysicalCustomerOrderResolver {
     private userCase: UserUseCases,
     private physicalCustomerUseCase: PhysicalCustomerUseCases,
     private physicalCustomerQuoteUseCase: PhysicalCustomerQuoteTableUseCases,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   @Query(() => PhysicalCustomerOrderModel, { nullable: true })
   async getPhysicalCustomerOrderModel(
@@ -103,13 +106,19 @@ export class PhysicalCustomerOrderResolver {
 
     return await this.userCase.getUser({ id: updatedBy });
   }
-  @ResolveField(() => LegalClientQuoteTableModel)
+  @ResolveField(() => PhysicalCustomerQuoteTableModel)
   async Quote(@Parent() order: PhysicalCustomerOrderInput) {
     return await this.physicalCustomerQuoteUseCase.getPhysicalCustomerQuoteTable(
       {
         id: order.quote_table_id,
       },
     );
+  }
+  @ResolveField(() => CarrierCompanyModel)
+  async CarrierCompany(@Parent() order: PhysicalCustomerOrderInput) {
+    return await this.carrierCompanyUseCase.getCarrierCompany({
+      id: order.carrier_id,
+    });
   }
   @ResolveField(() => [FreightExpenseModel])
   async FreightExpenses(@Parent() order: PhysicalCustomerOrderInput) {

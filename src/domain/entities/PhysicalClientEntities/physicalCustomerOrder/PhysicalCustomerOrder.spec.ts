@@ -8,6 +8,7 @@ describe('CustomerOrder', () => {
       updated_by: 'test',
       physicalCustomerId: '54564654',
       quote_table_id: '454654',
+      carrier_id: '467899',
     });
 
     expect(customerOrder).toBeTruthy();

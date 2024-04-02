@@ -11,6 +11,7 @@ export interface ILegalClientOrder {
   order: string;
   legal_contract_id: string;
   quote_table_id: string;
+  carrier_id: string;
   updated_at?: Date;
   created_at?: Date;
   created_by?: string;
@@ -59,6 +60,11 @@ export class LegalClientOrder extends Entity {
         fieldName: 'Quote Table',
         maxLength: 999,
       },
+      {
+        field: this.props.carrier_id,
+        fieldName: 'Carrier Company',
+        maxLength: 999,
+      },
     );
 
     this.notification.requiredField('LegalClientOrder', fieldsValidation);
@@ -78,6 +84,14 @@ export class LegalClientOrder extends Entity {
   }
   public get order(): string {
     return this.props.order;
+  }
+
+  public get carrier_id(): string {
+    return this.props.carrier_id;
+  }
+
+  public set carrier_id(carrier_id: string) {
+    this.props.carrier_id = carrier_id;
   }
 
   public get quote_table_id(): string {

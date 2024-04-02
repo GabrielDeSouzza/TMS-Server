@@ -14,6 +14,8 @@ export interface ICtePdf {
   sender: LegalPerson | NaturalPerson;
   recipient: LegalPerson | NaturalPerson;
   cteData: PhysicalCustomerCte | LegalClientCte;
+  carrierCompany: LegalPerson;
+  rntrc: string;
 }
 
 export class CtePdf {
@@ -48,5 +50,19 @@ export class CtePdf {
   }
   public set sender(sender: NaturalPerson | LegalPerson) {
     this.props.sender = sender;
+  }
+
+  public get carrierCompany(): LegalPerson {
+    return this.props.carrierCompany;
+  }
+  public set carrierCompany(carrierCompany: LegalPerson) {
+    this.props.carrierCompany = carrierCompany;
+  }
+
+  public get rntrc(): string {
+    return this.props.rntrc;
+  }
+  public set rntrc(rntrc: string) {
+    this.props.rntrc = rntrc;
   }
 }

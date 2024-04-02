@@ -52,9 +52,11 @@ input CarrierCompanyOrderByRelationAggregateInput {
 input CarrierCompanyOrderByWithRelationInput {
   CompanyVehicle: CompanyVehicleOrderByRelationAggregateInput
   CreatedBy: UserOrderByWithRelationInput
+  LegalClientOrder: LegalClientOrderOrderByRelationAggregateInput
   LegalContract: LegalContractOrderByRelationAggregateInput
   LegalPerson: LegalPersonOrderByWithRelationInput
   OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByRelationAggregateInput
+  PhysicalCustomerOrder: PhysicalCustomerOrderOrderByRelationAggregateInput
   UpdatedBy: UserOrderByWithRelationInput
   created_at: SortOrder
   created_by: SortOrder
@@ -75,11 +77,13 @@ input CarrierCompanyWhereInput {
   AND: [CarrierCompanyWhereInput!]
   CompanyVehicle: CompanyVehicleListRelationFilter
   CreatedBy: UserWhereInput
+  LegalClientOrder: LegalClientOrderListRelationFilter
   LegalContract: LegalContractListRelationFilter
   LegalPerson: LegalPersonWhereInput
   NOT: [CarrierCompanyWhereInput!]
   OR: [CarrierCompanyWhereInput!]
   OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractListRelationFilter
+  PhysicalCustomerOrder: PhysicalCustomerOrderListRelationFilter
   UpdatedBy: UserWhereInput
   created_at: DateTimeFilter
   created_by: StringFilter
@@ -715,6 +719,7 @@ input LegalClientOrderByWithRelationInput {
 }
 
 input LegalClientOrderInput {
+  carrier_id: String!
   legal_contract_id: String!
   quote_table_id: String!
 }
@@ -726,11 +731,13 @@ input LegalClientOrderListRelationFilter {
 }
 
 type LegalClientOrderModel {
+  CarrierCompany: CarrierCompanyModel!
   CreatedUser: UserModelRefereces!
   FreightExpenses: [FreightExpenseModel!]!
   LegalContract: LegalContractModel!
   Quote: LegalClientQuoteTableModel!
   UpdatedUser: UserModelRefereces!
+  carrier_id: String!
   created_at: Timestamp!
   created_by: String!
   id: String!
@@ -746,6 +753,7 @@ input LegalClientOrderOrderByRelationAggregateInput {
 }
 
 input LegalClientOrderOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByWithRelationInput
   CompletedOrders: CompletedOrdersOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
   FreightExpenses: FreightExpensesOrderByRelationAggregateInput
@@ -755,6 +763,7 @@ input LegalClientOrderOrderByWithRelationInput {
   OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByWithRelationInput
   QuoteTable: LegalClientQuoteTableOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
+  carrier_id: SortOrder
   completed_orders_id: SortOrder
   created_at: SortOrder
   created_by: SortOrder
@@ -768,12 +777,14 @@ input LegalClientOrderOrderByWithRelationInput {
 }
 
 input LegalClientOrderUpdateInput {
+  carrier_id: String
   legal_contract_id: String
   quote_table_id: String
 }
 
 input LegalClientOrderWhereInput {
   AND: [LegalClientOrderWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
   CompletedOrders: CompletedOrdersWhereInput
   CreatedBy: UserWhereInput
   FreightExpenses: FreightExpensesListRelationFilter
@@ -785,6 +796,7 @@ input LegalClientOrderWhereInput {
   OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractWhereInput
   QuoteTable: LegalClientQuoteTableWhereInput
   UpdatedBy: UserWhereInput
+  carrier_id: StringFilter
   completed_orders_id: StringNullableFilter
   created_at: DateTimeFilter
   created_by: StringFilter
@@ -2173,6 +2185,7 @@ input PhysicalCustomerOrderByWithRelationInput {
 }
 
 input PhysicalCustomerOrderInput {
+  carrier_id: String!
   physicalCustomerId: String!
   quote_table_id: String!
 }
@@ -2184,11 +2197,13 @@ input PhysicalCustomerOrderListRelationFilter {
 }
 
 type PhysicalCustomerOrderModel {
+  CarrierCompany: CarrierCompanyModel!
   CreatedUser: UserModelRefereces!
   FreightExpenses: [FreightExpenseModel!]!
   PhysicalCustomer: PhysicalCustomerModel!
   Quote: PhysicalCustomerQuoteTableModel!
   UpdatedUser: UserModelRefereces!
+  carrier_id: String!
   created_at: Timestamp!
   created_by: String!
   id: String!
@@ -2204,6 +2219,7 @@ input PhysicalCustomerOrderOrderByRelationAggregateInput {
 }
 
 input PhysicalCustomerOrderOrderByWithRelationInput {
+  CarrierCompany: CarrierCompanyOrderByWithRelationInput
   CompletedOrders: CompletedOrdersOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
   FreightExpenses: FreightExpensesOrderByRelationAggregateInput
@@ -2212,6 +2228,7 @@ input PhysicalCustomerOrderOrderByWithRelationInput {
   PhysicalCustomerCte: PhysicalCustomerCteOrderByWithRelationInput
   PhysicalCustomerQuoteTable: PhysicalCustomerQuoteTableOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
+  carrier_id: SortOrder
   completedOrdersId: SortOrder
   created_at: SortOrder
   created_by: SortOrder
@@ -2225,12 +2242,14 @@ input PhysicalCustomerOrderOrderByWithRelationInput {
 }
 
 input PhysicalCustomerOrderUpdateInput {
+  carrier_id: String
   physicalCustomerId: String
   quote_table_id: String
 }
 
 input PhysicalCustomerOrderWhereInput {
   AND: [PhysicalCustomerOrderWhereInput!]
+  CarrierCompany: CarrierCompanyWhereInput
   CompletedOrders: CompletedOrdersWhereInput
   CreatedBy: UserWhereInput
   FreightExpenses: FreightExpensesListRelationFilter
@@ -2241,6 +2260,7 @@ input PhysicalCustomerOrderWhereInput {
   PhysicalCustomerCte: PhysicalCustomerCteWhereInput
   PhysicalCustomerQuoteTable: PhysicalCustomerQuoteTableWhereInput
   UpdatedBy: UserWhereInput
+  carrier_id: StringFilter
   completedOrdersId: StringNullableFilter
   created_at: DateTimeFilter
   created_by: StringFilter

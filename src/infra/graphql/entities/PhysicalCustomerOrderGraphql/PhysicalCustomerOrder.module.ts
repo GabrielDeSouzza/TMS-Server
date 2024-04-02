@@ -6,6 +6,7 @@ import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrde
 
 import { PhysicalCustomerOrderPrismaService } from 'infra/database/prisma/services/PhysicalCustomerOrder.service';
 
+import { CarrierCompanyModule } from '../CarrierCompanyGraphql/CarrierCompany.module';
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { PhysicalCustomerModule } from '../PhysicalCustomerGraphql/PhysicalCustomer.module';
 import { PhysicalCustomerQuoteTableModule } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.module';
@@ -16,6 +17,7 @@ import { PhysicalCustomerOrderResolver } from './PhysicalCustomerOrder.resolver'
     GraphqlCenterModule,
     PhysicalCustomerModule,
     PhysicalCustomerQuoteTableModule,
+    CarrierCompanyModule,
   ],
   providers: [
     {

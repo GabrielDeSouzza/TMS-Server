@@ -10,6 +10,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { LegalClientQuoteTableUseCases } from 'app/useCases/LegalClientQuoteTableUseCase/LegalClientQuoteTable';
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
@@ -21,6 +22,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.model';
 import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import { LegalContractModel } from '../LegalContractGraphql/LegalContract.model';
@@ -42,6 +44,7 @@ export class LegalClientOrderResolver {
     private userCase: UserUseCases,
     private legalContractUseCase: LegalContractUseCases,
     private legalClientQuoteUseCase: LegalClientQuoteTableUseCases,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args() request: GetLegalClientOrderArgs) {
@@ -108,6 +111,12 @@ export class LegalClientOrderResolver {
   async Quote(@Parent() order: LegalClientOrderInput) {
     return await this.legalClientQuoteUseCase.getLegalClientQuoteTable({
       id: order.quote_table_id,
+    });
+  }
+  @ResolveField(() => CarrierCompanyModel)
+  async CarrierCompany(@Parent() order: LegalClientOrderInput) {
+    return await this.carrierCompanyUseCase.getCarrierCompany({
+      id: order.carrier_id,
     });
   }
   @ResolveField(() => [FreightExpenseModel])

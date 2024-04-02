@@ -395,6 +395,8 @@ model CarrierCompany {
   UpdatedBy                          User?                                @relation("updated_by", fields: [updated_by], references: [id])
   updated_by                         String
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract[]
+  LegalClientOrder                   LegalClientOrder[]
+  PhysicalCustomerOrder              PhysicalCustomerOrder[]
 
   @@map("carrier_companies")
 }
@@ -460,18 +462,18 @@ model PhysicalCustomerQuoteTable {
 }
 
 model PhysicalCustomerOrder {
-  id                   String           @id @default(uuid())
-  order                String           @unique
-  updated_by           String
-  acesss_key           String
-  physical_customer_id String
-  PhysicalCustomer     PhysicalCustomer @relation(fields: [physical_customer_id], references: [id])
-  created_at           DateTime         @default(now())
-  updated_at           DateTime         @default(now())
-  CreatedBy            User             @relation("created_by", fields: [created_by], references: [id])
-  created_by           String
-  UpdatedBy            User             @relation("updated_by", fields: [updated_by], references: [id])
-
+  id                         String                     @id @default(uuid())
+  order                      String                     @unique
+  updated_by                 String
+  physical_customer_id       String
+  PhysicalCustomer           PhysicalCustomer           @relation(fields: [physical_customer_id], references: [id])
+  created_at                 DateTime                   @default(now())
+  updated_at                 DateTime                   @default(now())
+  CreatedBy                  User                       @relation("created_by", fields: [created_by], references: [id])
+  created_by                 String
+  UpdatedBy                  User                       @relation("updated_by", fields: [updated_by], references: [id])
+  carrier_id                 String
+  CarrierCompany             CarrierCompany             @relation(fields: [carrier_id], references: [id])
   order_processing_id        String?
   OrderProcessing            OrderProcessing?           @relation(fields: [order_processing_id], references: [id])
   CompletedOrders            CompletedOrders?           @relation(fields: [completedOrdersId], references: [id])
@@ -653,21 +655,22 @@ model LegalClientQuoteTable {
 }
 
 model LegalClientOrder {
-  id                  String                @id @default(uuid())
-  order               String                @unique
-  created_at          DateTime              @default(now())
-  updated_at          DateTime              @default(now())
-  CreatedBy           User                  @relation("created_by", fields: [created_by], references: [id])
-  created_by          String
-  UpdatedBy           User                  @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by          String
-  LegalContract       LegalContract         @relation(fields: [legal_contract_id], references: [id])
-  legal_contract_id   String
-  quote_table_id      String
-  QuoteTable          LegalClientQuoteTable @relation(fields: [quote_table_id], references: [id])
-  order_processing_id String?
-  OrderProcessing     OrderProcessing?      @relation(fields: [order_processing_id], references: [id])
-
+  id                                 String                              @id @default(uuid())
+  order                              String                              @unique
+  created_at                         DateTime                            @default(now())
+  updated_at                         DateTime                            @default(now())
+  CreatedBy                          User                                @relation("created_by", fields: [created_by], references: [id])
+  created_by                         String
+  UpdatedBy                          User                                @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by                         String
+  LegalContract                      LegalContract                       @relation(fields: [legal_contract_id], references: [id])
+  legal_contract_id                  String
+  quote_table_id                     String
+  QuoteTable                         LegalClientQuoteTable               @relation(fields: [quote_table_id], references: [id])
+  order_processing_id                String?
+  OrderProcessing                    OrderProcessing?                    @relation(fields: [order_processing_id], references: [id])
+  carrier_id                         String
+  CarrierCompany                     CarrierCompany                      @relation(fields: [carrier_id], references: [id])
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
 
   CompletedOrders     CompletedOrders?  @relation(fields: [completed_orders_id], references: [id])

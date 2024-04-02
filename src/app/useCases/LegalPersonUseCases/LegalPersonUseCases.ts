@@ -3,10 +3,8 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetLegalPersonDTO } from 'domain/dto/repositories/getDataDtos/GetLegalPersonDto';
+import { type ValidateLegalPersonDTO } from 'domain/dto/repositories/whereDtos/LegalPersonRepository';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
-
-import { type CreateLegalPersonDTO } from 'app/dtos/LegalPerson/CreateLegalPersonDto';
-import { type UpdateLegalPersonDTO } from 'app/dtos/LegalPerson/UpdateLegalPersonDto';
 
 @Injectable()
 export class LegalPersonUseCases {
@@ -32,14 +30,15 @@ export class LegalPersonUseCases {
 
     return legalPerson;
   }
-  async validatePerson(data: CreateLegalPersonDTO | UpdateLegalPersonDTO) {
+  async validatePerson(data: ValidateLegalPersonDTO) {
     const person = await this.legalPersonRepository.ValideLegalPerson({
-      cnpj: data.cnpj,
-      corporate_name: data.corporate_name,
-      fantasy_name: data.fantasy_name,
-      state_registration: data.state_registration,
+      cnpj: data?.cnpj,
+      corporate_name: data?.corporate_name,
+      fantasy_name: data?.fantasy_name,
+      state_registration: data?.state_registration,
+      id: data?.id,
     });
-
+    console.log(data);
     if (person) {
       let errors = '';
 
@@ -64,7 +63,10 @@ export class LegalPersonUseCases {
           extensions: { code: HttpStatus.CONFLICT },
         });
       }
-    }
+    } else if (!person?.id)
+      throw new GraphQLError('LEGAL PERSON NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
 
     return person;
   }
