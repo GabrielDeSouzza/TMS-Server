@@ -15,7 +15,6 @@ interface IMaintenance {
 }
 
 export class Maintenance extends Entity {
-  private _id: string;
   private props: IMaintenance;
 
   constructor(

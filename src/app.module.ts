@@ -35,6 +35,7 @@ import { PhysicalCustomerOrderModule } from 'infra/graphql/entities/PhysicalCust
 import { PhysicalCustomerQuoteTableModule } from 'infra/graphql/entities/PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.module';
 import { RecipientModule } from 'infra/graphql/entities/RecipientGraphql/Recipient.module';
 import { SenderModule } from 'infra/graphql/entities/SenderGraphql/Sender.module';
+import { TypeOfMaintenanceModule } from 'infra/graphql/entities/TypeOfMaintenanceGraphql/TypeOfMaintenance.module';
 import { UserModule } from 'infra/graphql/entities/UserGraphql/user.module';
 import { VehicleBodyworkModule } from 'infra/graphql/entities/VehicleBodyworkGraphql/vehicle-bodywork.module';
 import { VehicleBrandModule } from 'infra/graphql/entities/VehicleBrandGraphql/vehicle-brand.module';
@@ -92,6 +93,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     LegalClientCteModule,
     FreightExpenseModule,
     CtePdfModule,
+    TypeOfMaintenanceModule,
   ],
 })
 export class AppModule {}

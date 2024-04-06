@@ -6,13 +6,21 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface ITypeOfMaintenance {
+export enum TypeMaintenanceProps {
+  CORRECTIVE_MAINTENANCE = 'MANUTENÇÃO CORRETIVA',
+  PREVENTIVE_MAINTENANCE = 'MANUTENÇÃO PREVENTIVA',
+  PREDICTIVE_MAINTENANCE = 'MANUTENÇÃO PREDITIVA',
+  DETECTIVE_MAINTENANCE = 'MANUTENÇÃO DETECTIVA',
+}
+
+export interface ITypeOfMaintenance {
   id?: string;
   description: string;
-  preventive?: boolean;
-  corrective?: boolean;
-  updated_at: Date;
-  created_at: Date;
+  typeMaintenance: TypeMaintenanceProps;
+  updated_at?: Date;
+  created_at?: Date;
+  created_by: string;
+  updated_by: string;
 }
 
 export class TypeOfMaintenance extends Entity {
@@ -51,16 +59,9 @@ export class TypeOfMaintenance extends Entity {
         maxLength: 100,
       },
       {
-        field: this.props.preventive,
-        fieldName: 'Preventive',
-        maxLength: 5,
-        isNullAble: true,
-      },
-      {
-        field: this.props.corrective,
-        fieldName: 'Corrective',
-        maxLength: 5,
-        isNullAble: true,
+        field: this.props.typeMaintenance,
+        fieldName: 'Type Maintenance',
+        maxLength: 50,
       },
     );
 
@@ -82,20 +83,12 @@ export class TypeOfMaintenance extends Entity {
     return this.props.description;
   }
 
-  public set preventive(preventive: boolean | undefined) {
-    this.props.preventive = preventive;
+  public set typeMaintenance(typeMaintenance: TypeMaintenanceProps) {
+    this.props.typeMaintenance = typeMaintenance;
   }
 
-  public get preventive(): boolean | undefined {
-    return this.props.preventive;
-  }
-
-  public set corrective(corrective: boolean | undefined) {
-    this.props.corrective = corrective;
-  }
-
-  public get corrective(): boolean | undefined {
-    return this.props.corrective;
+  public get typeMaintenance(): TypeMaintenanceProps {
+    return this.props.typeMaintenance;
   }
 
   public set updated_at(updatedAt: Date) {
@@ -112,5 +105,20 @@ export class TypeOfMaintenance extends Entity {
 
   public get created_at(): Date {
     return this.props.created_at;
+  }
+  get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  get created_by(): string {
+    return this.props.created_by;
+  }
+
+  set created_by(created_by: string) {
+    this.props.created_by = created_by;
   }
 }

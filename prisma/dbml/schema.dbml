@@ -652,8 +652,7 @@ Table freight_expenses {
 Table types_of_maintenances {
   id String [pk]
   description String [not null]
-  preventive Boolean [not null]
-  corrective Boolean [not null]
+  typeMaintenance String [not null]
   Maintenance maintenance [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
@@ -661,6 +660,10 @@ Table types_of_maintenances {
   created_by String [not null]
   UpdatedBy users [not null]
   updated_by String [not null]
+
+  indexes {
+    (description, typeMaintenance) [unique]
+  }
 }
 
 Table maintenance_companies {

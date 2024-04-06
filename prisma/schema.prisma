@@ -751,10 +751,9 @@ model FreightExpenses {
 }
 
 model TypeOfMaintenance {
-  id          String  @id @default(uuid())
-  description String
-  preventive  Boolean
-  corrective  Boolean
+  id              String @id @default(uuid())
+  description     String
+  typeMaintenance String
 
   Maintenance Maintenance[]
   created_at  DateTime      @default(now())
@@ -764,6 +763,7 @@ model TypeOfMaintenance {
   UpdatedBy   User          @relation("updated_by", fields: [updated_by], references: [id])
   updated_by  String
 
+  @@unique([description, typeMaintenance])
   @@map("types_of_maintenances")
 }
 
