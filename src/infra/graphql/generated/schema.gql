@@ -1138,10 +1138,29 @@ input LegalPersonWhereInput {
   updated_at: DateTimeFilter
 }
 
+input MaintenanceCompanyInput {
+  LegalPerson: LegalPersonInput
+  legal_person_id: String
+  specialty_maintenance: String
+}
+
 input MaintenanceCompanyListRelationFilter {
   every: MaintenanceCompanyWhereInput
   none: MaintenanceCompanyWhereInput
   some: MaintenanceCompanyWhereInput
+}
+
+type MaintenanceCompanyModel {
+  CreatedUser: UserModelRefereces!
+  LegalPerson: LegalPersonModel!
+  UpdatedUser: UserModelRefereces!
+  created_at: Timestamp!
+  created_by: String!
+  id: String!
+  legal_person_id: String!
+  specialty_maintenance: String
+  updated_at: Timestamp!
+  updated_by: String!
 }
 
 input MaintenanceCompanyOrderByRelationAggregateInput {
@@ -1153,13 +1172,18 @@ input MaintenanceCompanyOrderByWithRelationInput {
   LegalPerson: LegalPersonOrderByWithRelationInput
   Maintenance: MaintenanceOrderByRelationAggregateInput
   UpdatedBy: UserOrderByWithRelationInput
-  cnpj: SortOrder
   created_at: SortOrder
   created_by: SortOrder
   id: SortOrder
+  legal_person_id: SortOrder
   specialty_maintenance: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
+}
+
+input MaintenanceCompanyUpdateInput {
+  LegalPerson: LegalPersonUpdateInput!
+  specialty_maintenance: String
 }
 
 input MaintenanceCompanyWhereInput {
@@ -1170,11 +1194,11 @@ input MaintenanceCompanyWhereInput {
   NOT: [MaintenanceCompanyWhereInput!]
   OR: [MaintenanceCompanyWhereInput!]
   UpdatedBy: UserWhereInput
-  cnpj: StringFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
-  specialty_maintenance: StringFilter
+  legal_person_id: StringFilter
+  specialty_maintenance: StringNullableFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
@@ -1201,7 +1225,7 @@ input MaintenanceWhereInput {
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
-  maintenance_company_cnpj: StringFilter
+  maintenance_company_id: StringFilter
   maintenance_process_id: StringFilter
   plate: StringFilter
   updated_at: DateTimeFilter
@@ -1221,6 +1245,7 @@ type Mutation {
   createLegalClientOrder(legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
   createLegalClientQuoteTable(legalClientQuoteTableInput: LegalClientQuoteTableInput!): LegalClientQuoteTableModel!
   createLegalContract(legalContractInput: LegalContractInput!): LegalContractModel!
+  createMaintenanceCompany(maintenancecompanyInput: MaintenanceCompanyInput!): MaintenanceCompanyModel!
   createOrderProcessing(data: OrderProcessingInput!): OrderProcessingModel!
   createOutsourcedDriver(outsourcedDriver: OutsourcedDriverInput!): OutsourcedDriverModel!
   createOutsourcedTransportCompany(outsourcedTransportCompanyInput: OutsourcedTransportCompanyInput!): OutsourcedTransportCompanyModel!
@@ -1249,6 +1274,7 @@ type Mutation {
   updateIcms(id: String!, invoiceForLegalClientInput: IcmsUpdateInput!): IcmsModel!
   updateLegalClientCte(id: String!, ownDriverUpdate: LegalClientCteUpdateInput!): LegalClientCteModel!
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
+  updateMaintenanceCompany(id: String!, maintenancecompanyInput: MaintenanceCompanyUpdateInput!): MaintenanceCompanyModel!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
@@ -2428,6 +2454,7 @@ type Query {
   getAllLegalClientOrder(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderOrderByWithRelationInput, where: LegalClientOrderWhereInput): [LegalClientOrderModel!]
   getAllLegalClientQuoteTable(limit: Int! = 25, offset: Int! = 0, sort: LegalClientQuoteTableOrderByWithRelationInput, where: LegalClientQuoteTableWhereInput): [LegalClientQuoteTableModel!]!
   getAllLegalContract(limit: Int! = 25, offset: Int! = 0, sort: LegalContractOrderByWithRelationInput, where: LegalContractWhereInput): [LegalContractModel!]
+  getAllMaintenanceCompany(limit: Int! = 25, offset: Int! = 0, sort: MaintenanceCompanyOrderByWithRelationInput, where: MaintenanceCompanyWhereInput): [MaintenanceCompanyModel!]
   getAllOrderProcessing(limit: Int! = 25, offset: Int! = 0, sort: OrderProcessingOrderByWithRelationInput, where: OrderProcessingWhereInput): [OrderProcessingModel!]!
   getAllOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedDriverOrderByWithRelationInput, where: OutsourcedDriverWhereInput): [OutsourcedDriverModel!]!
   getAllOutsourcedTransportCompany(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportCompanyOrderByWithRelationInput, where: OutsourcedTransportCompanyWhereInput): [OutsourcedTransportCompanyModel!]
@@ -2458,6 +2485,7 @@ type Query {
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
   getLegalClientQuoteTable(cod_quote: String, id: String): LegalClientQuoteTableModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
+  getMaintenanceCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): MaintenanceCompanyModel!
   getOutsourcedDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedDriverModel!
   getOutsourcedTransportCompanyContractModel(contractNumber: String, id: String): OutsourcedTransportCompanyContractModel
   getOutsourcedTransportCompanyDriverModel(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedTransportCompanyDriverModel!

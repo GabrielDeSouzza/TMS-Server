@@ -6,12 +6,14 @@ import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
 
-interface IMaintenanceCompany {
+export interface IMaintenanceCompany {
   id?: string;
-  specialty_maintenance: string;
+  specialty_maintenance?: string;
   legal_person_id?: string;
   created_at: Date;
   updated_at: Date;
+  created_by: string;
+  updated_by: string;
 }
 
 export class MaintenanceCompany extends Entity {
@@ -96,5 +98,21 @@ export class MaintenanceCompany extends Entity {
 
   public get updated_at(): Date {
     return this.props.updated_at;
+  }
+
+  get updated_by(): string {
+    return this.props.updated_by;
+  }
+
+  set updated_by(updated_by: string) {
+    this.props.updated_by = updated_by;
+  }
+
+  get created_by(): string {
+    return this.props.created_by;
+  }
+
+  set created_by(created_by: string) {
+    this.props.created_by = created_by;
   }
 }

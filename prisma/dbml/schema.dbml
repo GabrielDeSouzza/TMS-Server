@@ -668,10 +668,10 @@ Table types_of_maintenances {
 
 Table maintenance_companies {
   id String [pk]
-  specialty_maintenance String [not null]
+  specialty_maintenance String
   Maintenance maintenance [not null]
   LegalPerson legal_people [not null]
-  cnpj String [unique, not null]
+  legal_person_id String [unique, not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users [not null]
@@ -683,7 +683,7 @@ Table maintenance_companies {
 Table maintenance {
   id String [pk]
   MaintenanceCompany maintenance_companies [not null]
-  maintenance_company_cnpj String [not null]
+  maintenance_company_id String [not null]
   Vehicle vehicles [not null]
   plate String [not null]
   TypeOfMaintenance types_of_maintenances [not null]
@@ -898,13 +898,13 @@ Ref: types_of_maintenances.created_by > users.id
 
 Ref: types_of_maintenances.updated_by > users.id
 
-Ref: maintenance_companies.cnpj - legal_people.cnpj
+Ref: maintenance_companies.legal_person_id - legal_people.id
 
 Ref: maintenance_companies.created_by > users.id
 
 Ref: maintenance_companies.updated_by > users.id
 
-Ref: maintenance.maintenance_company_cnpj > maintenance_companies.cnpj
+Ref: maintenance.maintenance_company_id > maintenance_companies.id
 
 Ref: maintenance.plate > vehicles.plate
 

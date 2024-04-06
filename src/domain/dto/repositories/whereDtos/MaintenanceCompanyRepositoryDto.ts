@@ -6,16 +6,20 @@ export abstract class WhereMaintenanceCompanyTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
   specialty_maintenance?: StringFilterDTO;
   legal_person_id?: StringFilterDTO;
-  created_at?: DateTimeFilterDTO;
   updated_at?: DateTimeFilterDTO;
+  created_at?: DateTimeFilterDTO;
+  updated_by?: StringFilterDTO;
+  created_by?: StringFilterDTO;
 }
 
 export abstract class SortByMaintenanceCompanyTypeDTO {
   id?: 'asc' | 'desc';
   specialty_maintenance?: 'asc' | 'desc';
   legal_person_id?: 'asc' | 'desc';
-  created_at?: 'asc' | 'desc';
   updated_at?: 'asc' | 'desc';
+  created_at?: 'asc' | 'desc';
+  updated_by?: 'asc' | 'desc';
+  created_by?: 'asc' | 'desc';
 }
 
 export class FindAllMaintenanceCompanyWhereRequestDTO {

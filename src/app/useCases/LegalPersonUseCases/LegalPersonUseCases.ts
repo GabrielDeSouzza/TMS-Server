@@ -38,7 +38,7 @@ export class LegalPersonUseCases {
       state_registration: data?.state_registration,
       id: data?.id,
     });
-    console.log(data);
+    console.log(person);
     if (person) {
       let errors = '';
 
@@ -63,7 +63,7 @@ export class LegalPersonUseCases {
           extensions: { code: HttpStatus.CONFLICT },
         });
       }
-    } else if (!person?.id)
+    } else if (person?.id)
       throw new GraphQLError('LEGAL PERSON NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
