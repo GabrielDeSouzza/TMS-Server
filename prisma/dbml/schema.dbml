@@ -685,9 +685,10 @@ Table maintenance {
   MaintenanceCompany maintenance_companies [not null]
   maintenance_company_id String [not null]
   Vehicle vehicles [not null]
-  plate String [not null]
+  vehicle_id String [not null]
   TypeOfMaintenance types_of_maintenances [not null]
-  maintenance_process_id String [not null]
+  type_of_maintenance_id String [not null]
+  finished_at DateTime
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
   CreatedBy users [not null]
@@ -906,9 +907,9 @@ Ref: maintenance_companies.updated_by > users.id
 
 Ref: maintenance.maintenance_company_id > maintenance_companies.id
 
-Ref: maintenance.plate > vehicles.plate
+Ref: maintenance.vehicle_id > vehicles.id
 
-Ref: maintenance.maintenance_process_id > types_of_maintenances.id
+Ref: maintenance.type_of_maintenance_id > types_of_maintenances.id
 
 Ref: maintenance.created_by > users.id
 

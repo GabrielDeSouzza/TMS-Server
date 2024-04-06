@@ -17,7 +17,7 @@ export class VehicleModelService implements VehicleModelRepository {
   constructor(private prisma: PrismaService) {}
 
   async findVehicleModel(request: GetVehicleModelDTO): Promise<VehicleModel> {
-    const vehicleModelPrisma = await this.prisma.vehicleModel.findFirstOrThrow({
+    const vehicleModelPrisma = await this.prisma.vehicleModel.findFirst({
       where: { OR: [{ id: request.id }, { name: request.name }] },
     });
 

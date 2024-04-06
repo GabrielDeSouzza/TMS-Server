@@ -11,6 +11,7 @@ import {
   IsArray,
   IsBoolean,
   IsNotEmpty,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -36,7 +37,7 @@ export class VehicleTypeInput
   updated_by: string;
   @Field(() => [String], { nullable: true })
   @IsArray()
-  @IsNotEmpty()
+  @IsOptional()
   body_work_id: string[];
 }
 

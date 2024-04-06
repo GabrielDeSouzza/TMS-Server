@@ -22,6 +22,7 @@ import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderG
 import { LegalClientQuoteTableModule } from 'infra/graphql/entities/LegalClientQuoteTableGraphql/LegalClientQuoteTable.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
 import { MaintenanceCompanyModule } from 'infra/graphql/entities/MaintenanceCompanyGraphql/MaintenanceCompany.module';
+import { MaintenanceModule } from 'infra/graphql/entities/MaintenanceGraphql/Maintenance.module';
 import { OrderProcessingModule } from 'infra/graphql/entities/OrderProcessingGraphql/OrderProcessing.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
 import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
@@ -96,6 +97,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     CtePdfModule,
     TypeOfMaintenanceModule,
     MaintenanceCompanyModule,
+    MaintenanceModule,
   ],
 })
 export class AppModule {}

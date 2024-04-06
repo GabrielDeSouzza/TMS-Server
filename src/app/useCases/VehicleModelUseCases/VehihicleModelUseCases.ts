@@ -44,7 +44,9 @@ export class VehicleModelUseCases {
   }
 
   async createModel(data: CreateVehicleModelDTO) {
-    const modelExist = await this.getModel({ name: data.name });
+    const modelExist = await this.vehicleModelRepository.findVehicleModel({
+      name: data.name,
+    });
 
     if (modelExist) {
       throw new GraphQLError('NAME ALREADY IN USE', {

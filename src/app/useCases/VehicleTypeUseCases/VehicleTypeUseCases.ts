@@ -35,8 +35,14 @@ export class VehicleTypeUseCases {
     return this.vehicleTypeRepository.getAllVehicleType(request);
   }
   async createVehicleType(data: CreateVehicleTypeDTO) {
-    await this.vehicleBodyWorkUseCase.verifyBodyWorksExists(data.body_work_id);
-    const typeExist = await this.getVehicleType({ name: data.name });
+    console.log(data);
+    if (data.body_work_id)
+      await this.vehicleBodyWorkUseCase.verifyBodyWorksExists(
+        data.body_work_id,
+      );
+    const typeExist = await this.vehicleTypeRepository.findVehicleType({
+      name: data.name,
+    });
     if (typeExist)
       throw new GraphQLError('NAME ALREADY IN USE', {
         extensions: { code: HttpStatus.BAD_REQUEST },
@@ -45,7 +51,7 @@ export class VehicleTypeUseCases {
       bodyWork: data.bodyWork,
       created_by: data.created_by,
       name: data.name,
-      updated_by: data.name,
+      updated_by: data.updated_by,
       body_work_id: data.body_work_id,
     });
 

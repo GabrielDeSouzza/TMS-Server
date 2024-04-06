@@ -12,10 +12,9 @@ import { VehicleBrandPrismaDTO } from './prismaDTO/VehicleBrandPrismaDto';
 export class VehicleBrandService implements VehicleBrandRepository {
   constructor(private prisma: PrismaService) {}
   async findVehicleBrand(request: GetVehicleBrandDTO): Promise<VehicleBrand> {
-    const brand = await this.prisma.vehicleBrand.findFirstOrThrow({
+    const brand = await this.prisma.vehicleBrand.findFirst({
       where: { OR: [{ id: request.id }, { name: request.name }] },
     });
-    console.log(brand);
 
     return VehicleBrandPrismaDTO.PrismaToEntity(brand);
   }

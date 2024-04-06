@@ -39,7 +39,11 @@ export class VehicleBrandUseCases {
     });
   }
   async createBrand(data: CreateVehicleBrandDTO) {
-    const brandExist = await this.getVehicleBrand({ name: data.name });
+    console.error('test', data);
+    const brandExist = await this.vehicleBrandRepository.findVehicleBrand({
+      name: data.name,
+    });
+    console.error('test', brandExist);
     if (brandExist)
       throw new GraphQLError('NAME ALREADY IN USE', {
         extensions: { code: HttpStatus.CONFLICT },

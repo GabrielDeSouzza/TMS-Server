@@ -790,10 +790,11 @@ model Maintenance {
 
   MaintenanceCompany     MaintenanceCompany @relation(fields: [maintenance_company_id], references: [id])
   maintenance_company_id String
-  Vehicle                Vehicle            @relation(fields: [plate], references: [plate])
-  plate                  String
-  TypeOfMaintenance      TypeOfMaintenance  @relation(fields: [maintenance_process_id], references: [id])
-  maintenance_process_id String
+  Vehicle                Vehicle            @relation(fields: [vehicle_id], references: [id])
+  vehicle_id             String
+  TypeOfMaintenance      TypeOfMaintenance  @relation(fields: [type_of_maintenance_id], references: [id])
+  type_of_maintenance_id String
+  finished_at            DateTime?
   created_at             DateTime           @default(now())
   updated_at             DateTime           @default(now())
   CreatedBy              User               @relation("created_by", fields: [created_by], references: [id])
