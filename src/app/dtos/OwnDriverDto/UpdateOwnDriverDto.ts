@@ -14,6 +14,4 @@ export abstract class UpdateOwnDriverDTO {
   NaturalPerson?: UpdateNaturalPersonDTO;
 
   updated_by?: string;
-
-  natural_person_id?: string;
 }

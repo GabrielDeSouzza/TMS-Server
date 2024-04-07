@@ -7,7 +7,8 @@ export abstract class OwnDriverRepository {
   abstract findOwnDriver(request: GetOwnDriverDTO): Promise<OwnDriver>;
   abstract createOwnDriver(
     OwnDriver: OwnDriver,
-    naturalPerson: NaturalPerson,
+    naturalPerson?: NaturalPerson,
+    naturalPersonId?: string,
   ): Promise<OwnDriver>;
   abstract updateOwnDriver(
     id: string,

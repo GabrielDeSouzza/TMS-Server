@@ -28,7 +28,7 @@ export class OwnDriverUseCases {
       !request.rg
     )
       throw new GraphQLError(
-        'IS NECESSARY AN ID, CNH, CPF, RG OR NATURALPERSONID',
+        'IS NECESSARY AN ID, CNH, CPF, RG OR NATURALPERSON ID',
         { extensions: { code: HttpStatus.BAD_REQUEST } },
       );
     const ownDriver = await this.ownDriverRepository.findOwnDriver(request);
@@ -38,14 +38,34 @@ export class OwnDriverUseCases {
   }
 
   async getAllOwnDriver(request: GetAllOwnDriverDTO) {
-    return this.ownDriverRepository.findAllOwnDrivers(request);
+    const ownDrivers = await this.ownDriverRepository.findAllOwnDrivers(
+      request,
+    );
+    if (ownDrivers.length === 0)
+      throw new GraphQLError('ANY OWN DRIVER FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+
+    return ownDrivers;
   }
 
   async createOwnDriver(data: CreateOwnDriverDTO) {
-    await this.validateOwnDriver(data);
-    const naturalPerson = NaturalPersonEntityDto.createEntity(
-      data.NaturalPerson,
-    );
+    let naturalPerson;
+    await this.validadeCNH(data.cnh);
+
+    if (!data.NaturalPerson && !data.natural_person_id)
+      throw new GraphQLError('IS NECESSARY SEND A NATURAL PERSON', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    else if (data.NaturalPerson) {
+      await this.naturalPersonUseCase.valitePerson(data.NaturalPerson);
+      naturalPerson = NaturalPersonEntityDto.createEntity(data.NaturalPerson);
+    } else {
+      await this.naturalPersonUseCase.getNaturalPerson({
+        naturalPersonId: data.natural_person_id,
+      });
+    }
+
     const ownDriver = new OwnDriver({
       cnh: data.cnh,
       cnh_category: data.cnh_category,
@@ -57,20 +77,26 @@ export class OwnDriverUseCases {
       updated_by: data.updated_by,
     });
 
-    return this.ownDriverRepository.createOwnDriver(ownDriver, naturalPerson);
+    return this.ownDriverRepository.createOwnDriver(
+      ownDriver,
+      naturalPerson,
+      data.natural_person_id,
+    );
   }
   async updateOwnDriver(id: string, data: UpdateOwnDriverDTO) {
-    await this.validateOwnDriver(data);
-    await this.naturalPersonUseCase.valitePerson(data.NaturalPerson);
+    console.log(data);
+    if (data.cnh) await this.validadeCNH(data.cnh);
+    else if (data.NaturalPerson)
+      await this.naturalPersonUseCase.valitePerson(data.NaturalPerson);
     const ownDriver = new OwnDriver({
       cnh: data.cnh,
       cnh_category: data.cnh_category,
       cnh_expiration: data.cnh_expiration,
       company_vehicle: data.company_vehicle,
       course_mopp: data.course_mopp,
-      natural_person_id: data.natural_person_id,
       updated_by: data.updated_by,
     });
+
     const naturalPerson = NaturalPersonEntityDto.updateEntity(
       data.NaturalPerson,
     );
@@ -82,16 +108,9 @@ export class OwnDriverUseCases {
     );
   }
 
-  private async validateOwnDriver(
-    data: CreateOwnDriverDTO | UpdateOwnDriverDTO,
-  ) {
-    await this.naturalPersonUseCase.valitePerson({
-      cpf: data.NaturalPerson.cpf,
-      rg: data.NaturalPerson.rg,
-    });
-    const ownDriverExist = await this.getOwnDriver(data);
-
-    if (ownDriverExist && ownDriverExist.cnh == data.cnh)
+  private async validadeCNH(cnh: string) {
+    const cnhInUse = await this.ownDriverRepository.findOwnDriver({ cnh });
+    if (cnhInUse && cnhInUse.cnh)
       throw new GraphQLError('CNH ALREADY IN USE', {
         extensions: { code: HttpStatus.CONFLICT },
       });

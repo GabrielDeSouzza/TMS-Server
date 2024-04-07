@@ -13,7 +13,9 @@ import {
   IsDate,
   IsNotEmpty,
   IsObject,
+  IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type IOwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
@@ -47,9 +49,10 @@ export class OwnDriverInput
   @Field()
   @IsBoolean()
   course_mopp: boolean;
-  @Field(() => NaturalPersonInput)
+  @Field(() => NaturalPersonInput, { nullable: true })
   @Type(() => NaturalPersonInput)
   @IsObject()
+  @IsOptional()
   NaturalPerson: NaturalPersonInput;
   @HideField()
   @Allow()
@@ -57,15 +60,20 @@ export class OwnDriverInput
   @HideField()
   @Allow()
   updated_by: string;
-  @HideField()
-  @Allow()
-  natural_person_id: string;
+  @Field({ nullable: true })
+  @IsUUID()
+  @IsOptional()
+  natural_person_id?: string;
 }
 
 @InputType()
 export class OwnDriverUpdate extends PartialType(
-  OmitType(OwnDriverInput, ['NaturalPerson']),
+  OmitType(OwnDriverInput, [
+    'NaturalPerson',
+    'natural_person_id',
+    'created_by',
+  ]),
 ) {
-  @Field(() => NaturalPersonUpdate)
-  NaturalPersonUpdate: NaturalPersonUpdate;
+  @Field(() => NaturalPersonUpdate, { nullable: true })
+  NaturalPerson?: NaturalPersonUpdate;
 }

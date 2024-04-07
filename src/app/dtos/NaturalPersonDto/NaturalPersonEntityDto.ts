@@ -26,6 +26,8 @@ export class NaturalPersonEntityDto {
     });
   }
   public static updateEntity(update: UpdateNaturalPersonDTO) {
+    console.log(update);
+
     return new NaturalPerson({
       cep: update?.cep,
       cpf: update?.cpf,

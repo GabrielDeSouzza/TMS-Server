@@ -29,11 +29,16 @@ export class OwnDriverService implements OwnDriverRepository {
   }
   async createOwnDriver(
     ownDriver: OwnDriver,
-    naturalPerson: NaturalPerson,
+    naturalPerson?: NaturalPerson,
+    naturalPersonId?: string,
   ): Promise<OwnDriver> {
     return OwnDriverPrismaDTO.PrismaToEntity(
       await this.prisma.ownDriver.create({
-        data: OwnDriverPrismaDTO.EntityToCreatePrisma(ownDriver, naturalPerson),
+        data: OwnDriverPrismaDTO.EntityToCreatePrisma(
+          ownDriver,
+          naturalPerson,
+          naturalPersonId,
+        ),
       }),
     );
   }

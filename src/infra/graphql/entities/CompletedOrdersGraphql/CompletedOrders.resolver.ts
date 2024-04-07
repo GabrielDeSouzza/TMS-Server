@@ -42,7 +42,7 @@ export class CompletedOrdersResolver {
     private vehicleUseCase: VehicleUseCases,
   ) {}
   @Query(() => CompletedOrdersModel)
-  async GetCompletedOrders(@Args() request: GetCompletedOrdersArgs) {
+  async getCompletedOrders(@Args() request: GetCompletedOrdersArgs) {
     return await this.completedOrdersUseCase.getCompletedOrders(request);
   }
   @Query(() => [CompletedOrdersModel])

@@ -8,12 +8,13 @@ import { CompanyVehicleUseCases } from 'app/useCases/CompanyVehicleUseCases/Comp
 import { CompanyVehicleServicePrisma } from 'infra/database/prisma/services/company-vehicle.service';
 import { VehicleService } from 'infra/database/prisma/services/vehicle.service';
 
+import { CarrierCompanyModule } from '../CarrierCompanyGraphql/CarrierCompany.module';
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { VehicleModule } from '../VehicleGraphql/Vehicle.module';
 import { CompanyVehicleResolver } from './CompanyVehicle.resolver';
 
 @Module({
-  imports: [GraphqlCenterModule, VehicleModule],
+  imports: [GraphqlCenterModule, VehicleModule, CarrierCompanyModule],
   providers: [
     {
       provide: CompanyVehicleRepository,

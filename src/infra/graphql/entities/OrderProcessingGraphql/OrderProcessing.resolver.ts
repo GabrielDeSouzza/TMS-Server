@@ -42,7 +42,7 @@ export class OrderProcessingResolver {
     private vehicleUseCase: VehicleUseCases,
   ) {}
   @Query(() => OrderProcessingModel)
-  async GetOrderProcessing(@Args() request: GetOrderProcessingArgs) {
+  async getOrderProcessing(@Args() request: GetOrderProcessingArgs) {
     return await this.orderProcessingUseCase.getOrderProcessing(request);
   }
   @Query(() => [OrderProcessingModel])

@@ -10,6 +10,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
+import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/CarrierCompanyUseCases';
 import { CompanyVehicleUseCases } from 'app/useCases/CompanyVehicleUseCases/CompanyVehicleUseCases';
 import { VehicleUseCases } from 'app/useCases/VehicleUseCases/VehicleUseCases';
 
@@ -33,16 +34,17 @@ import { CompanyVehicleIModel } from './CompanyVehicle.model';
 @Resolver(() => CompanyVehicleIModel)
 export class CompanyVehicleResolver {
   constructor(
-    private companyUseCases: CompanyVehicleUseCases,
+    private companyVehcileUseCases: CompanyVehicleUseCases,
     private vehicleUseCase: VehicleUseCases,
+    private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
   @Query(() => CompanyVehicleIModel)
   async getCompanyVehicle(@Args() request: GetCompanVehicleArgs) {
-    return this.companyUseCases.getCompanyVehicle(request);
+    return this.companyVehcileUseCases.getCompanyVehicle(request);
   }
   @Query(() => [CompanyVehicleIModel])
   async getAllCompanyVehicle(@Args() args: CompanyVehicleWhereArgs) {
-    return await this.companyUseCases.getAllCompanyVehicle({
+    return await this.companyVehcileUseCases.getAllCompanyVehicle({
       limit: args.limit,
       offset: args.offset,
       sort: args.sort,
@@ -57,7 +59,9 @@ export class CompanyVehicleResolver {
     companyVehicle.created_by = user.id;
     companyVehicle.updated_by = user.id;
 
-    return await this.companyUseCases.createCompanyVehicle(companyVehicle);
+    return await this.companyVehcileUseCases.createCompanyVehicle(
+      companyVehicle,
+    );
   }
   @Mutation(() => CompanyVehicleIModel)
   async updatedCompanyVehicle(
@@ -67,12 +71,21 @@ export class CompanyVehicleResolver {
   ) {
     companyVehicle.updated_by = user.id;
 
-    return await this.companyUseCases.updateCompanyVehicle(id, companyVehicle);
+    return await this.companyVehcileUseCases.updateCompanyVehicle(
+      id,
+      companyVehicle,
+    );
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() outsoucedVehicle: CompanyVehicleInput) {
     const { vehicle_id: vehicleId } = outsoucedVehicle;
 
     return await this.vehicleUseCase.getVehicle({ vehicleId: vehicleId });
+  }
+  @ResolveField(() => VehicleCarModel)
+  async CarrierCompany(@Parent() outsoucedVehicle: CompanyVehicleInput) {
+    return await this.carrierCompanyUseCase.getCarrierCompany({
+      id: outsoucedVehicle.carrier_company_id,
+    });
   }
 }

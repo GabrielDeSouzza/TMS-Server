@@ -11,11 +11,11 @@ export abstract class CreateOwnDriverDTO {
 
   course_mopp: boolean;
 
-  NaturalPerson: CreateNaturalPersonDTO;
+  NaturalPerson?: CreateNaturalPersonDTO;
 
   created_by: string;
 
   updated_by: string;
 
-  natural_person_id: string;
+  natural_person_id?: string;
 }

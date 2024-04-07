@@ -24,8 +24,11 @@ export class OwnDriverPrismaDTO {
   public static EntityToCreatePrisma(
     ownDriver: OwnDriver,
     naturalPerson: NaturalPerson,
+    naturalPersonId?: string,
   ) {
+    console.log(naturalPerson);
     const ownDriverPrisma: Prisma.OwnDriverCreateInput = {
+      id: ownDriver.id,
       cnh: ownDriver.cnh,
       cnh_category: ownDriver.cnh_category,
       cnh_expiration: ownDriver.cnh_expiration,
@@ -35,27 +38,30 @@ export class OwnDriverPrismaDTO {
       updated_at: ownDriver.updated_at,
       CreatedBy: { connect: { id: ownDriver.created_by } },
       UpdatedBy: { connect: { id: ownDriver.updated_by } },
-      NaturalPerson: {
-        create: {
-          address_number: naturalPerson.address_number,
-          cep: naturalPerson.cep,
-          city: naturalPerson.city,
-          complement: naturalPerson.complement,
-          cpf: naturalPerson.cpf,
-          date_birth: naturalPerson.date_birth,
-          email: naturalPerson.email,
-          first_phone: naturalPerson.first_phone,
-          gender: naturalPerson.gender,
-          name: naturalPerson.name,
-          nationality: naturalPerson.nationality,
-          neighborhood: naturalPerson.neighborhood,
-          public_place: naturalPerson.public_place,
-          rg: naturalPerson.rg,
-          uf: naturalPerson.uf,
-          second_phone: naturalPerson.second_phone,
-          third_phone: naturalPerson.third_phone,
-        },
-      },
+      NaturalPerson: naturalPersonId
+        ? { connect: { id: naturalPersonId } }
+        : {
+            create: {
+              address_number: naturalPerson?.address_number,
+              cep: naturalPerson?.cep,
+              city: naturalPerson?.city,
+              complement: naturalPerson?.complement,
+              cpf: naturalPerson?.cpf,
+              date_birth: naturalPerson?.date_birth,
+              email: naturalPerson?.email,
+              first_phone: naturalPerson?.first_phone,
+              gender: naturalPerson?.gender,
+              name: naturalPerson?.name,
+              nationality: naturalPerson?.nationality,
+              neighborhood: naturalPerson?.neighborhood,
+              public_place: naturalPerson?.public_place,
+              rg: naturalPerson?.rg,
+              uf: naturalPerson?.uf,
+              second_phone: naturalPerson?.second_phone,
+              third_phone: naturalPerson?.third_phone,
+              id: naturalPerson?.id,
+            },
+          },
     };
 
     return ownDriverPrisma;
@@ -98,6 +104,7 @@ export class OwnDriverPrismaDTO {
           }
         : undefined,
     };
+    console.log(naturalPerson);
 
     return ownDriverUptade;
   }

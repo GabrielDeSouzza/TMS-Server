@@ -42,7 +42,7 @@ export class OwnDriverResolver {
   }
   @Query(() => [OwnDriverModel])
   async getAllOwnDriver(@Args() args: OwnDriverWhereArgs) {
-    return await this.ownDriverUseCase.getAllOwnDriver(args);
+    return this.ownDriverUseCase.getAllOwnDriver(args);
   }
   @Mutation(() => OwnDriverModel)
   async createOwnDriver(

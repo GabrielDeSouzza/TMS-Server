@@ -2093,12 +2093,13 @@ input OutsourcedVehicleWhereInput {
 }
 
 input OwnDriverInput {
-  NaturalPerson: NaturalPersonInput!
+  NaturalPerson: NaturalPersonInput
   cnh: String!
   cnh_category: String!
   cnh_expiration: Timestamp!
   company_vehicle: Boolean!
   course_mopp: Boolean!
+  natural_person_id: String
 }
 
 input OwnDriverListRelationFilter {
@@ -2146,7 +2147,7 @@ input OwnDriverOrderByWithRelationInput {
 }
 
 input OwnDriverUpdate {
-  NaturalPersonUpdate: NaturalPersonUpdate!
+  NaturalPerson: NaturalPersonUpdate
   cnh: String
   cnh_category: String
   cnh_expiration: Timestamp
@@ -2487,8 +2488,6 @@ input PhysicalCustomerWhereInput {
 }
 
 type Query {
-  GetCompletedOrders(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): CompletedOrdersModel!
-  GetOrderProcessing(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): OrderProcessingModel!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]
@@ -2527,6 +2526,7 @@ type Query {
   getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): CarrierCompanyModel!
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
+  getCompletedOrders(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): CompletedOrdersModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
   getFreightExpense(id: String): FreightExpenseModel!
   getICMS(StateRelation: StateRelationIcmsArgs, id: String): IcmsModel!
@@ -2537,6 +2537,7 @@ type Query {
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!
   getMaintenance(id: String!): MaintenanceModel!
   getMaintenanceCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalPersonId: String): MaintenanceCompanyModel!
+  getOrderProcessing(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): OrderProcessingModel!
   getOutsourcedDriver(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedDriverModel!
   getOutsourcedTransportCompanyContractModel(contractNumber: String, id: String): OutsourcedTransportCompanyContractModel
   getOutsourcedTransportCompanyDriverModel(cnh: String, cpf: String, id: String, naturalPersonId: String, rg: String): OutsourcedTransportCompanyDriverModel!
