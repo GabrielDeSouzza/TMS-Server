@@ -68,7 +68,7 @@ input CarrierCompanyOrderByWithRelationInput {
 }
 
 input CarrierCompanyUpdateInput {
-  LegalPerson: LegalPersonUpdateInput!
+  LegalPerson: LegalPersonUpdateInput
   legalPersonId: String
   rntrc: String
 }
@@ -606,6 +606,76 @@ input IcmsWhereInput {
   id: StringFilter
   recipient_state: StringFilter
   state_orgin: StringFilter
+  updated_at: DateTimeFilter
+  updated_by: StringFilter
+}
+
+input IncidentInput {
+  date_incident: Timestamp!
+  date_resolved: Timestamp
+  description: String!
+  order_process_id: String!
+}
+
+input IncidentListRelationFilter {
+  every: IncidentWhereInput
+  none: IncidentWhereInput
+  some: IncidentWhereInput
+}
+
+type IncidentModel {
+  OrderProcessing: OrderProcessingModel!
+  created_at: Timestamp!
+  created_by: String!
+  date_incident: Timestamp!
+  date_resolved: Timestamp
+  description: String!
+  id: String!
+  order_process_id: String!
+  updated_at: Timestamp!
+  updated_by: String!
+}
+
+input IncidentOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input IncidentOrderByWithRelationInput {
+  CreatedBy: UserOrderByWithRelationInput
+  OrderProcess: OrderProcessingOrderByWithRelationInput
+  UpdatedBy: UserOrderByWithRelationInput
+  created_at: SortOrder
+  created_by: SortOrder
+  date_incident: SortOrder
+  date_resolved: SortOrder
+  description: SortOrder
+  id: SortOrder
+  order_process_id: SortOrder
+  updated_at: SortOrder
+  updated_by: SortOrder
+}
+
+input IncidentUpdateInput {
+  date_incident: Timestamp
+  date_resolved: Timestamp
+  description: String
+  order_process_id: String
+}
+
+input IncidentWhereInput {
+  AND: [IncidentWhereInput!]
+  CreatedBy: UserWhereInput
+  NOT: [IncidentWhereInput!]
+  OR: [IncidentWhereInput!]
+  OrderProcess: OrderProcessingWhereInput
+  UpdatedBy: UserWhereInput
+  created_at: DateTimeFilter
+  created_by: StringFilter
+  date_incident: DateTimeFilter
+  date_resolved: DateTimeNullableFilter
+  description: StringFilter
+  id: StringFilter
+  order_process_id: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
@@ -1287,6 +1357,7 @@ type Mutation {
   createContractOutsourcedDriver(CompanyVehicleInput: ContractOutsourcedDriverInput!): ContractOutsourcedDriverModel!
   createFreightExpense(data: FreightExpenseInput!): FreightExpenseModel!
   createIcms(data: IcmsInput!): IcmsModel!
+  createIncident(data: IncidentInput!): IncidentModel!
   createLegalClient(legalclientInput: LegalClientInput!): LegalClientModel!
   createLegalClientCte(data: LegalClientCteInput!): LegalClientCteModel!
   createLegalClientOrder(legalClientOrderInput: LegalClientOrderInput!): LegalClientOrderModel!
@@ -1321,6 +1392,7 @@ type Mutation {
   updateCompletedOrders(data: CompletedOrdersUpdateInput!, id: String!): CompletedOrdersModel!
   updateFreightExpense(id: String!, upData: FreightExpenseUpdateInput!): FreightExpenseModel!
   updateIcms(id: String!, invoiceForLegalClientInput: IcmsUpdateInput!): IcmsModel!
+  updateIncident(id: String!, upData: IncidentUpdateInput!): IncidentModel!
   updateLegalClientCte(id: String!, ownDriverUpdate: LegalClientCteUpdateInput!): LegalClientCteModel!
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
   updateMaintenance(data: MaintenanceUpdateInput!, id: String!): MaintenanceModel!
@@ -1593,6 +1665,7 @@ type OrderProcessingModel {
 }
 
 input OrderProcessingOrderByWithRelationInput {
+  Incident: IncidentOrderByRelationAggregateInput
   LegalClientOrder: LegalClientOrderOrderByRelationAggregateInput
   PhysicalCustomerOrder: PhysicalCustomerOrderOrderByRelationAggregateInput
   Vehicle: VehicleOrderByWithRelationInput
@@ -1625,6 +1698,7 @@ input OrderProcessingUpdateInput {
 
 input OrderProcessingWhereInput {
   AND: [OrderProcessingWhereInput!]
+  Incident: IncidentListRelationFilter
   LegalClientOrder: LegalClientOrderListRelationFilter
   NOT: [OrderProcessingWhereInput!]
   OR: [OrderProcessingWhereInput!]
@@ -2499,6 +2573,7 @@ type Query {
   getAllContractOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: ContractOutsourcedDriverOrderByWithRelationInput, where: ContractOutsourcedDriverWhereInput): [ContractOutsourcedDriverModel!]!
   getAllFreightExpenses(limit: Int! = 25, offset: Int! = 0, sort: FreightExpensesOrderByWithRelationInput, where: FreightExpensesWhereInput): [FreightExpenseModel!]
   getAllICMS(limit: Int! = 25, offset: Int! = 0, sort: IcmsOrderByWithRelationInput, where: IcmsWhereInput): [IcmsModel!]
+  getAllIncidents(limit: Int! = 25, offset: Int! = 0, sort: IncidentOrderByWithRelationInput, where: IncidentWhereInput): [IncidentModel!]
   getAllLegalClient(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderByWithRelationInput, where: LegalClientWhereInput): [LegalClientModel!]
   getAllLegalClientCte(limit: Int! = 25, offset: Int! = 0, sort: LegalClientCteOrderByWithRelationInput, where: OwnDriverWhereInput): [LegalClientCteModel!]!
   getAllLegalClientOrder(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderOrderByWithRelationInput, where: LegalClientOrderWhereInput): [LegalClientOrderModel!]
@@ -2532,6 +2607,7 @@ type Query {
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
   getFreightExpense(id: String): FreightExpenseModel!
   getICMS(StateRelation: StateRelationIcmsArgs, id: String): IcmsModel!
+  getIncident(id: String): IncidentModel!
   getLegalClientCte(acessKey: String, cteNumber: String, id: String): LegalClientCteModel
   getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): LegalClientModel!
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
@@ -2861,6 +2937,8 @@ input UserOrderByWithRelationInput {
   ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverOrderByRelationAggregateInput
   IcmsCreatedBy: IcmsOrderByRelationAggregateInput
   IcmsUpdatedBy: IcmsOrderByRelationAggregateInput
+  IncidentCreatedBy: IncidentOrderByRelationAggregateInput
+  IncidentUpdatedBy: IncidentOrderByRelationAggregateInput
   LegalClientCreatedBy: LegalClientOrderByRelationAggregateInput
   LegalClientCustomerOrderCreatedBy: LegalClientOrderOrderByRelationAggregateInput
   LegalClientCustomerOrderUpdatedBy: LegalClientOrderOrderByRelationAggregateInput
@@ -2946,6 +3024,8 @@ input UserWhereInput {
   ContractOutsourcedDriverUpdatedBy: ContractOutsourcedDriverListRelationFilter
   IcmsCreatedBy: IcmsListRelationFilter
   IcmsUpdatedBy: IcmsListRelationFilter
+  IncidentCreatedBy: IncidentListRelationFilter
+  IncidentUpdatedBy: IncidentListRelationFilter
   LegalClientCreatedBy: LegalClientListRelationFilter
   LegalClientCustomerOrderCreatedBy: LegalClientOrderListRelationFilter
   LegalClientCustomerOrderUpdatedBy: LegalClientOrderListRelationFilter

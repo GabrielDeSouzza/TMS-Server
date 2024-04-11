@@ -16,6 +16,7 @@ import { ContractOutsoucedDriverModule } from 'infra/graphql/entities/ContractOu
 import { FreightExpenseModule } from 'infra/graphql/entities/FreightExpenseGraphql/FreightExpense.module';
 import { CtePdfModule } from 'infra/graphql/entities/GenerateCtePdfGraphql/CtePdf.module';
 import { IcmsModule } from 'infra/graphql/entities/IcmsGraphql/Icms.module';
+import { IncidentModule } from 'infra/graphql/entities/IncidentGraphql/Incident.module';
 import { LegalClientCteModule } from 'infra/graphql/entities/LegalClientCteGraphql/LegalClientCte.module';
 import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/LegalClient.module';
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
@@ -98,6 +99,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     TypeOfMaintenanceModule,
     MaintenanceCompanyModule,
     MaintenanceModule,
+    IncidentModule,
   ],
 })
 export class AppModule {}

@@ -93,6 +93,8 @@ model User {
   LegalClientQuoteTableUpdatedBy      LegalClientQuoteTable[]      @relation("updated_by")
   PhysicalCustomerQuoteTableCreatedBy PhysicalCustomerQuoteTable[] @relation("created_by")
   PhysicalCustomerQuoteTableUpdatedBy PhysicalCustomerQuoteTable[] @relation("updated_by")
+  IncidentUpdatedBy                   Incident[]                   @relation("updated_by")
+  IncidentCreatedBy                   Incident[]                   @relation("created_by")
 
   @@map("users")
 }
@@ -713,8 +715,25 @@ model OrderProcessing {
   updated_by              String
   PhysicalCustomerOrder   PhysicalCustomerOrder[]
   LegalClientOrder        LegalClientOrder[]
+  Incident                Incident[]
 
   @@map("order_procesing")
+}
+
+model Incident {
+  id               String          @id @default(uuid())
+  description      String
+  date_incident    DateTime
+  order_process_id String
+  OrderProcess     OrderProcessing @relation(fields: [order_process_id], references: [id])
+
+  date_resolved DateTime?
+  CreatedBy     User      @relation("created_by", fields: [created_by], references: [id])
+  created_by    String
+  UpdatedBy     User      @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by    String
+  created_at    DateTime
+  updated_at    DateTime
 }
 
 model CompletedOrders {

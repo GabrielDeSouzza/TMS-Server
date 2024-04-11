@@ -42,8 +42,8 @@ export class CarrierCompanyInput
 export class CarrierCompanyUpdateInput extends PartialType(
   OmitType(CarrierCompanyInput, ['LegalPerson', 'LegalPerson']),
 ) {
-  @Field(() => LegalPersonUpdateInput)
-  LegalPerson: LegalPersonUpdateInput;
+  @Field(() => LegalPersonUpdateInput, { nullable: true })
+  LegalPerson?: LegalPersonUpdateInput;
   @HideField()
   updated_by: string;
 }

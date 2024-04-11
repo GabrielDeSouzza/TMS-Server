@@ -68,6 +68,8 @@ Table users {
   LegalClientQuoteTableUpdatedBy legal_client_quote [not null]
   PhysicalCustomerQuoteTableCreatedBy physical_customer_quote [not null]
   PhysicalCustomerQuoteTableUpdatedBy physical_customer_quote [not null]
+  IncidentUpdatedBy Incident [not null]
+  IncidentCreatedBy Incident [not null]
 }
 
 Table vehicles {
@@ -619,6 +621,22 @@ Table order_procesing {
   updated_by String [not null]
   PhysicalCustomerOrder physical_orders [not null]
   LegalClientOrder legal_orders [not null]
+  Incident Incident [not null]
+}
+
+Table Incident {
+  id String [pk]
+  description String [not null]
+  date_incident DateTime [not null]
+  order_process_id String [not null]
+  OrderProcess order_procesing [not null]
+  date_resolved DateTime
+  CreatedBy users [not null]
+  created_by String [not null]
+  UpdatedBy users [not null]
+  updated_by String [not null]
+  created_at DateTime [not null]
+  updated_at DateTime [not null]
 }
 
 Table completed_orders {
@@ -888,6 +906,12 @@ Ref: ciots_for_legal_clients.created_by > users.id
 Ref: ciots_for_legal_clients.updated_by > users.id
 
 Ref: order_procesing.vehicle_id - vehicles.id
+
+Ref: Incident.order_process_id > order_procesing.id
+
+Ref: Incident.created_by > users.id
+
+Ref: Incident.updated_by > users.id
 
 Ref: completed_orders.vehicle_id - vehicles.id
 
