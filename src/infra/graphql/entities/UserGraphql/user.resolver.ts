@@ -8,13 +8,16 @@ import { FileUploadDTO } from 'domain/shared/dtos/FileUploadDto';
 
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { UserWhereArgs } from 'infra/graphql/entities/UserGraphql/Args/WhereUserArgs';
+import {
+  UserCountArgs,
+  UserWhereArgs,
+} from 'infra/graphql/entities/UserGraphql/Args/WhereUserArgs';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { AcessAllowed } from '../../utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from '../../utilities/interceptors/RoleInterceptor';
 import { getUserArgs } from './Args/GetUserArgs';
-import { UserInput, UserUpdateInput } from './user.input';
+import { UserUpdateManyInput, UserInput, UserUpdateInput } from './user.input';
 import { UserModel, UserModelRefereces } from './user.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -27,6 +30,13 @@ export class UserResolver {
   @Query(() => UserModel || UserModelRefereces, { name: 'user' })
   async getUser(@Args() request: getUserArgs) {
     const user = await this.userCases.getUser(request);
+
+    return user;
+  }
+
+  @Query(() => Number)
+  async totalUsers(@Args() request: UserCountArgs) {
+    const user = await this.userCases.count(request);
 
     return user;
   }
@@ -58,5 +68,20 @@ export class UserResolver {
     avatar: FileUploadDTO,
   ) {
     return await this.userCases.updateUser(id, updateUserInput, avatar);
+  }
+
+  @Mutation(() => [UserModel])
+  async updateManyUsers(
+    @Args({ name: 'updateManyUsers', type: () => [UserUpdateManyInput] })
+    updateUserInput: UserUpdateManyInput[],
+  ) {
+    return await this.userCases.updateManyUsers(updateUserInput);
+  }
+
+  @Mutation(() => [UserModel])
+  async deleteManyUsers(
+    @Args({ name: 'deleteManyUsers', type: () => [String] }) ids: string[],
+  ) {
+    return await this.userCases.deleteManyUsers(ids);
   }
 }

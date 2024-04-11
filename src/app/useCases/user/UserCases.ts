@@ -4,13 +4,17 @@ import { hashSync } from 'bcrypt';
 import { GraphQLError } from 'graphql';
 
 import { type getUserDto } from 'domain/dto/repositories/getDataDtos/GetUserDto';
-import { type FindAllUserWhereRequestDTO } from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
+import {
+  type CountAllUserWhereRequestDTO,
+  type FindAllUserWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/UserRepositoryDto';
 import { User } from 'domain/entities/User/User';
 import { UploaderProvider } from 'domain/providers/UploaderProvider';
 import { UserRepository } from 'domain/repositories/UserRepository';
 import { type FileUploadDTO } from 'domain/shared/dtos/FileUploadDto';
 
 import { type CreateUserDto } from 'app/dtos/UsersDto/CreateUserDto';
+import { type UpdateManyUsersDto } from 'app/dtos/UsersDto/UpdateManyUsersDto';
 import { type UpdateUserDto } from 'app/dtos/UsersDto/UpdateUserDto';
 
 @Injectable()
@@ -19,6 +23,10 @@ export class UserUseCases {
     private userRepository: UserRepository,
     private uploaderProvider: UploaderProvider,
   ) {}
+
+  async count(parameters: CountAllUserWhereRequestDTO): Promise<number> {
+    return await this.userRepository.count(parameters);
+  }
 
   async getAllUser(where: FindAllUserWhereRequestDTO): Promise<User[]> {
     return await this.userRepository.findAllUsers(where);
@@ -104,5 +112,17 @@ export class UserUseCases {
     }
 
     return this.userRepository.updateUser(id, userEntity);
+  }
+
+  async updateManyUsers(user: UpdateManyUsersDto[]): Promise<User[]> {
+    const updateUsers = await this.userRepository.updateManyUsers(user);
+
+    return updateUsers;
+  }
+
+  async deleteManyUsers(ids: string[]): Promise<User[]> {
+    const deleteUsers = await this.userRepository.deleteManyUsers(ids);
+
+    return deleteUsers;
   }
 }

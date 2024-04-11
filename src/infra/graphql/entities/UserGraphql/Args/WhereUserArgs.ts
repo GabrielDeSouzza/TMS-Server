@@ -31,3 +31,11 @@ export class UserWhereArgs {
   @IsOptional()
   sort?: UserOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class UserCountArgs {
+  @Field(() => UserWhereInput, { nullable: true })
+  @Type(() => UserWhereInput)
+  @IsOptional()
+  where?: UserWhereInput;
+}

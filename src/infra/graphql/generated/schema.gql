@@ -1315,6 +1315,7 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
+  deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   login(loginData: AuthInput!): AuthModel!
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateCompletedOrders(data: CompletedOrdersUpdateInput!, id: String!): CompletedOrdersModel!
@@ -1324,6 +1325,7 @@ type Mutation {
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
   updateMaintenance(data: MaintenanceUpdateInput!, id: String!): MaintenanceModel!
   updateMaintenanceCompany(id: String!, maintenancecompanyInput: MaintenanceCompanyUpdateInput!): MaintenanceCompanyModel!
+  updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
@@ -2556,6 +2558,7 @@ type Query {
   getVehicleBrand(id: String, name: String): VehicleBrandModel!
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
   getVehicleType(id: String, name: String): VehicleTypeModel!
+  totalUsers(where: UserWhereInput): Float!
   user(email: String, id: String, username: String): UserModel!
   users(limit: Int! = 25, offset: Int! = 0, sort: UserOrderByWithRelationInput, where: UserWhereInput): [UserModel!]!
 }
@@ -2916,6 +2919,15 @@ input UserOrderByWithRelationInput {
 
 input UserUpdateInput {
   email: String
+  name: String
+  password: String
+  role: String
+  username: String
+}
+
+input UserUpdateManyInput {
+  email: String
+  id: String!
   name: String
   password: String
   role: String

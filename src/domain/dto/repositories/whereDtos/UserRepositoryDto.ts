@@ -31,3 +31,17 @@ export abstract class FindAllUserWhereRequestDTO {
   sort?: SortByAddressTypeDTO;
   where?: UserWhereDTO;
 }
+
+export abstract class CountAllUserWhereRequestDTO {
+  where?: UserWhereDTO;
+}
+
+export abstract class UpdateManyUsersDTO {
+  id: string;
+  name?: string;
+  role?: string;
+  email?: string;
+  password?: string;
+  username?: string;
+  avatar_url?: string;
+}

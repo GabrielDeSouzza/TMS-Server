@@ -1,6 +1,6 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql';
 
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 import { type IUser } from '../../../../domain/entities/User/User';
 
@@ -32,3 +32,11 @@ export class UserInput
 
 @InputType()
 export class UserUpdateInput extends PartialType(UserInput) {}
+
+@InputType()
+export class UserUpdateManyInput extends PartialType(UserInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}
