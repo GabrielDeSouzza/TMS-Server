@@ -6,7 +6,14 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsObject, IsOptional, IsString, IsUUID } from 'class-validator';
+import {
+  Allow,
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 import { type ICarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 
@@ -46,4 +53,14 @@ export class CarrierCompanyUpdateInput extends PartialType(
   LegalPerson?: LegalPersonUpdateInput;
   @HideField()
   updated_by: string;
+}
+
+@InputType()
+export class CarrierCompanyUpdateManyInput extends PartialType(
+  CarrierCompanyInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

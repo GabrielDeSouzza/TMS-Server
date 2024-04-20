@@ -9,6 +9,7 @@ import { type User } from '../entities/User/User';
 
 export abstract class UserRepository {
   abstract count(parameters: CountAllUserWhereRequestDTO): Promise<number>;
+  abstract delete(id: string): Promise<User>;
   abstract findUser(request: getUserDto): Promise<User>;
   abstract createUser(user: User): Promise<User>;
   abstract updateUser(id: string, user: User): Promise<User>;

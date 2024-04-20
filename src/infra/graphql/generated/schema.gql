@@ -73,6 +73,13 @@ input CarrierCompanyUpdateInput {
   rntrc: String
 }
 
+input CarrierCompanyUpdateManyInput {
+  LegalPerson: LegalPersonInput
+  id: String!
+  legalPersonId: String
+  rntrc: String
+}
+
 input CarrierCompanyWhereInput {
   AND: [CarrierCompanyWhereInput!]
   CompanyVehicle: CompanyVehicleListRelationFilter
@@ -1385,8 +1392,11 @@ type Mutation {
   createVehicleBrand(vehicleBrandInput: VehicleBrandInput!): VehicleBrandModel!
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
+  deleteCarrierCompany(id: String!): CarrierCompanyModel!
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
+  deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
+  deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateCompletedOrders(data: CompletedOrdersUpdateInput!, id: String!): CompletedOrdersModel!
@@ -1397,6 +1407,7 @@ type Mutation {
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
   updateMaintenance(data: MaintenanceUpdateInput!, id: String!): MaintenanceModel!
   updateMaintenanceCompany(id: String!, maintenancecompanyInput: MaintenanceCompanyUpdateInput!): MaintenanceCompanyModel!
+  updateManyCarrierCompanies(updateManyCarrierCompanies: [CarrierCompanyUpdateManyInput!]!): [CarrierCompanyModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!

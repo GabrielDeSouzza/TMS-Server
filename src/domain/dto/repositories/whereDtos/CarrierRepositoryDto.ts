@@ -20,11 +20,23 @@ export abstract class SortByCarrierCompanyTypeDTO {
   rntrc?: 'asc' | 'desc';
 }
 
+export abstract class CountAllCarrierCompaniesWhereRequestDTO {
+  where?: WhereCarrierCompanyTypeDto;
+}
+
 export abstract class FindAllWhereCarrierCompanyRequestType {
   limit: number;
   offset: number;
   sort?: SortByCarrierCompanyTypeDTO;
   where?: WhereCarrierCompanyTypeDto;
+}
+
+export abstract class UpdateManyCarrierCompaniesDTO {
+  id: string;
+  cnpj?: string;
+  fantasyName?: string;
+  corporateName?: string;
+  rntrc?: string;
 }
 
 export abstract class getCarrierCompanyData {

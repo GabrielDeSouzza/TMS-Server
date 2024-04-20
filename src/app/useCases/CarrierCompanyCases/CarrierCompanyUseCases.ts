@@ -3,9 +3,11 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetCarrierCompanyDTO } from 'domain/dto/repositories/getDataDtos/GetCarrierCompanyDto';
+import { type UpdateManyCarrierCompaniesDTO } from 'domain/dto/repositories/whereDtos/CarrierRepositoryDto';
 import { CarrierCompany } from 'domain/entities/CompanyEntities/carrierCompany/CarrierCompany';
 import { CarrierCompanyRepository } from 'domain/repositories/CarrierCompany.repository';
 
+import { type CountAllCarrierCompaniesWhereRequestDTO } from 'app/dtos/CarrierCompanyDto/CountCarrierCompanyDto';
 import { type CreateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/CreateCarrierCompanyDto';
 import { type FindAllCompaniesUseCaseRequestDTO } from 'app/dtos/CarrierCompanyDto/GetAllCarrierCompanyDto';
 import { type UpdateCarrierCompanyDTO } from 'app/dtos/CarrierCompanyDto/UpdatedCarrierCompanyDto';
@@ -19,6 +21,13 @@ export class CarrierCompanyUseCases {
     private carrierCompanyRepository: CarrierCompanyRepository,
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
+
+  async count(
+    parameters: CountAllCarrierCompaniesWhereRequestDTO,
+  ): Promise<number> {
+    return await this.carrierCompanyRepository.count(parameters);
+  }
+
   async getCarrierCompany(
     request: GetCarrierCompanyDTO,
   ): Promise<CarrierCompany> {
@@ -95,5 +104,27 @@ export class CarrierCompanyUseCases {
       carrierCompany,
       legalPerson,
     );
+  }
+
+  async deleteCarrierCompany(id: string): Promise<CarrierCompany> {
+    return await this.carrierCompanyRepository.delete(id);
+  }
+
+  async updateManyCarrierCompanies(
+    carrierCompanies: UpdateManyCarrierCompaniesDTO[],
+  ): Promise<CarrierCompany[]> {
+    const updateCarrierCompanies =
+      await this.carrierCompanyRepository.updateManyCarriersCompanies(
+        carrierCompanies,
+      );
+
+    return updateCarrierCompanies;
+  }
+
+  async deleteManyCarrierCompanies(ids: string[]): Promise<CarrierCompany[]> {
+    const deleteCarrierCompanies =
+      await this.carrierCompanyRepository.deleteManyCarriersCompanies(ids);
+
+    return deleteCarrierCompanies;
   }
 }

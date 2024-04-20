@@ -27,6 +27,7 @@ import { GetCarrierCompanyArgs } from './Args/GetCarrierCompanyArgs';
 import {
   CarrierCompanyInput,
   CarrierCompanyUpdateInput,
+  CarrierCompanyUpdateManyInput,
 } from './CarrierCompany.input';
 import { CarrierCompanyModel } from './CarrierCompany.model';
 
@@ -92,16 +93,44 @@ export class CarrierCompanyResolver {
 
     return LegalPersonGraphqlDTO.createInputToEntity(legalPerson);
   }
+
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: CarrierCompanyInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
+
   @ResolveField(() => UserModelRefereces)
   async UpdatedUser(@Parent() user: CarrierCompanyModel) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
+  }
+
+  @Mutation(() => [CarrierCompanyModel])
+  async updateManyCarrierCompanies(
+    @Args({
+      name: 'updateManyCarrierCompanies',
+      type: () => [CarrierCompanyUpdateManyInput],
+    })
+    updateUserInput: CarrierCompanyUpdateManyInput[],
+  ) {
+    return await this.carrierCompanyUseCase.updateManyCarrierCompanies(
+      updateUserInput,
+    );
+  }
+
+  @Mutation(() => CarrierCompanyModel)
+  async deleteCarrierCompany(@Args('id', { type: () => String }) id: string) {
+    return await this.carrierCompanyUseCase.deleteCarrierCompany(id);
+  }
+
+  @Mutation(() => [CarrierCompanyModel])
+  async deleteManyCarrierCompanies(
+    @Args({ name: 'deleteManyCarrierCompanies', type: () => [String] })
+    ids: string[],
+  ) {
+    return await this.carrierCompanyUseCase.deleteManyCarrierCompanies(ids);
   }
 }

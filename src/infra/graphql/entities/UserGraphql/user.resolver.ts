@@ -78,6 +78,11 @@ export class UserResolver {
     return await this.userCases.updateManyUsers(updateUserInput);
   }
 
+  @Mutation(() => UserModel)
+  async deleteUser(@Args('id', { type: () => String }) id: string) {
+    return await this.userCases.deleteUser(id);
+  }
+
   @Mutation(() => [UserModel])
   async deleteManyUsers(
     @Args({ name: 'deleteManyUsers', type: () => [String] }) ids: string[],

@@ -19,6 +19,32 @@ import { UserPrismaDTO } from './prismaDTO/UserPrismaDto';
 export class UserPrismaService implements UserRepository {
   constructor(private prisma: PrismaService) {}
 
+  async delete(id: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new GraphQLError('User not found!', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    }
+
+    const userPrisma = await this.prisma.user.delete({
+      where: { id },
+    });
+
+    if (!userPrisma) {
+      throw new GraphQLError('User not deleted!', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const userDomain = UserPrismaDTO.PrismaToEntity(userPrisma);
+
+    return userDomain;
+  }
+
   async count(parameters: CountAllUserWhereRequestDTO): Promise<number> {
     const count = this.prisma.user.count({ where: parameters.where });
 
@@ -143,6 +169,7 @@ export class UserPrismaService implements UserRepository {
   async updateUser(id: string, user: User): Promise<User> {
     try {
       const userPrisma = UserPrismaDTO.EntityToPrismaUpdate(user);
+
       const newUSer = await this.prisma.user.update({
         data: userPrisma,
         where: { id },

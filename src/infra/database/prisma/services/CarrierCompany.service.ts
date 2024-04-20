@@ -1,6 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
+
+import { GraphQLError } from 'graphql';
 
 import {
+  type CountAllCarrierCompaniesWhereRequestDTO,
+  type UpdateManyCarrierCompaniesDTO,
   type getCarrierCompanyData,
   type FindAllWhereCarrierCompanyRequestType,
 } from 'domain/dto/repositories/whereDtos/CarrierRepositoryDto';
@@ -14,6 +18,127 @@ import { CarrierCompanyPrismaDTO } from './prismaDTO/CarrierCompanyPrismaDto';
 @Injectable()
 export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
   constructor(private prisma: PrismaService) {}
+
+  async count(
+    parameters: CountAllCarrierCompaniesWhereRequestDTO,
+  ): Promise<number> {
+    const count = this.prisma.carrierCompany.count({ where: parameters.where });
+
+    return count;
+  }
+
+  async delete(id: string): Promise<CarrierCompany> {
+    const carrierCompany = await this.prisma.carrierCompany.findUnique({
+      where: { id },
+    });
+
+    if (!carrierCompany) {
+      throw new GraphQLError('Carrier Company not found!', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    }
+
+    const carrierCompanyPrisma = await this.prisma.carrierCompany.delete({
+      where: { id },
+    });
+
+    if (!carrierCompanyPrisma) {
+      throw new GraphQLError('Carrier Company not deleted!', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const carrierCompanyDomain =
+      CarrierCompanyPrismaDTO.PrismaToEntity(carrierCompanyPrisma);
+
+    return carrierCompanyDomain;
+  }
+
+  async updateManyCarriersCompanies(
+    carrierCompany: UpdateManyCarrierCompaniesDTO[],
+  ): Promise<CarrierCompany[]> {
+    const carrierCompanies: CarrierCompany[] = [];
+
+    await Promise.all(
+      carrierCompany.map(async item => {
+        const carrierCompany = await this.prisma.carrierCompany.findUnique({
+          where: { id: item.id },
+        });
+
+        if (!carrierCompany) {
+          throw new GraphQLError(
+            `Carrier Company with id "${item.id}" not found!`,
+            {
+              extensions: { code: HttpStatus.NOT_FOUND },
+            },
+          );
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const carrierCompanyPrisma = await tx.carrierCompany.update({
+            where: { id: item.id },
+            data: {
+              ...item,
+              updated_at: new Date(),
+            },
+          });
+
+          if (!carrierCompanyPrisma) {
+            throw new GraphQLError(
+              `carrierCompany with id "${item.id}" not updated!`,
+              {
+                extensions: { code: HttpStatus.BAD_REQUEST },
+              },
+            );
+          }
+
+          const carrierCompanyDomain =
+            CarrierCompanyPrismaDTO.PrismaToEntity(carrierCompanyPrisma);
+
+          carrierCompanies.push(carrierCompanyDomain);
+        });
+      }),
+    );
+
+    return carrierCompanies;
+  }
+
+  async deleteManyCarriersCompanies(ids: string[]): Promise<CarrierCompany[]> {
+    const carrierCompanies: CarrierCompany[] = [];
+
+    await Promise.all(
+      ids.map(async id => {
+        const carrierCompany = await this.prisma.carrierCompany.findUnique({
+          where: { id },
+        });
+
+        if (!carrierCompany) {
+          throw new GraphQLError('Carrier Company not found!', {
+            extensions: { code: HttpStatus.NOT_FOUND },
+          });
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const carrierCompanyPrisma = await tx.carrierCompany.delete({
+            where: { id },
+          });
+
+          if (!carrierCompanyPrisma) {
+            throw new GraphQLError('Carrier ompany not deleted!', {
+              extensions: { code: HttpStatus.BAD_REQUEST },
+            });
+          }
+
+          const carrierCompanyDomain =
+            CarrierCompanyPrismaDTO.PrismaToEntity(carrierCompanyPrisma);
+
+          carrierCompanies.push(carrierCompanyDomain);
+        });
+      }),
+    );
+
+    return carrierCompanies;
+  }
 
   async findCarrierCompany(
     data: getCarrierCompanyData,

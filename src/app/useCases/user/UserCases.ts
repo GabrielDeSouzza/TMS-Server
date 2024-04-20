@@ -32,6 +32,10 @@ export class UserUseCases {
     return await this.userRepository.findAllUsers(where);
   }
 
+  async deleteUser(id: string): Promise<User> {
+    return await this.userRepository.delete(id);
+  }
+
   async getUser(search: getUserDto): Promise<User> {
     if (!search.id && !search.email) {
       throw new GraphQLError('Is necessary  to provide an ID or EMAIL');
@@ -108,7 +112,7 @@ export class UserUseCases {
     }
 
     if (result?.path) {
-      userEntity.password = result.path;
+      userEntity.avatar_url = result.path;
     }
 
     return this.userRepository.updateUser(id, userEntity);
