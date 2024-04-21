@@ -31,3 +31,11 @@ export class ContractOutsourcedDriverWhereArgs {
   @IsOptional()
   sort?: ContractOutsourcedDriverOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class ContractOutsourcedDriverCountArgs {
+  @Field(() => ContractOutsourcedDriverWhereInput, { nullable: true })
+  @Type(() => ContractOutsourcedDriverWhereInput)
+  @IsOptional()
+  where?: ContractOutsourcedDriverWhereInput;
+}

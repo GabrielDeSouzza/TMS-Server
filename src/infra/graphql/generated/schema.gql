@@ -330,6 +330,16 @@ input ContractOutsoucedDriverUpdateInput {
   type: String
 }
 
+input ContractOutsoucedDriverUpdateManyInput {
+  cpf: String
+  end_at: Timestamp
+  id: String!
+  outsourced_driver_id: String
+  situation: String
+  start_at: Timestamp
+  type: String
+}
+
 input ContractOutsourcedDriverInput {
   cpf: String!
   end_at: Timestamp!
@@ -383,20 +393,6 @@ input ContractOutsourcedDriverOrderByWithRelationInput {
   type: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
-}
-
-type ContractOutsourcedDriverRefencesModel {
-  contract_number: String!
-  cpf: String!
-  created_at: Timestamp!
-  created_by: String!
-  end_at: Timestamp!
-  id: String!
-  situation: String!
-  start_at: Timestamp!
-  type: String!
-  updated_at: Timestamp!
-  updated_by: String!
 }
 
 input ContractOutsourcedDriverReferecesInput {
@@ -1393,8 +1389,10 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   deleteCarrierCompany(id: String!): CarrierCompanyModel!
+  deleteContractOutsourcedDriver(id: String!): ContractOutsourcedDriverModel!
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
+  deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
@@ -1423,6 +1421,7 @@ type Mutation {
   updateciotForLegalClient(ciotForLegalClientInput: CiotForLegalClientUpdateInput!, id: String!): CiotForLegalClientModel!
   updatedCompanyVehicle(id: String!, outsourced: CompanyVehicleUpdateInput!): CompanyVehicleIModel!
   updatedContractOutsourcedDriver(id: String!, outsourced: ContractOutsoucedDriverUpdateInput!): ContractOutsourcedDriverModel!
+  updatedManyContractOutsourcedDriver(data: [ContractOutsoucedDriverUpdateManyInput!]!): [ContractOutsourcedDriverModel!]!
   updatedOutsourcedVehicle(id: String!, outsourced: OutsourcedVehicleUpdateInput!): OutsourcedVehicleIModel!
   updatedVehicleBrand(id: String!, vehicleBrandUpdate: VehicleBrandUpdateInput!): VehicleBrandModel!
   updatedVehicleModel(id: String!, vehicleModelUpdate: VehicleModelUpdateInput!): VehicleModelGraphql!
@@ -1748,7 +1747,7 @@ input OutsourcedDriverListRelationFilter {
 
 type OutsourcedDriverModel {
   CompanyVehicle: CompanyVehicleIModel
-  ContractOutsourcedDriver: [ContractOutsourcedDriverRefencesModel!]!
+  ContractOutsourcedDriver: [ContractOutsourcedDriverModel!]!
   CreatedUser: UserModelRefereces!
   NaturalPerson: NaturalPersonModel!
   OutsourcedVehicle: OutsourcedVehicleIModel
@@ -2645,6 +2644,7 @@ type Query {
   getVehicleBrand(id: String, name: String): VehicleBrandModel!
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
   getVehicleType(id: String, name: String): VehicleTypeModel!
+  totalContractOutsourcedDriver(where: ContractOutsourcedDriverWhereInput): Float!
   totalUsers(where: UserWhereInput): Float!
   user(email: String, id: String, username: String): UserModel!
   users(limit: Int! = 25, offset: Int! = 0, sort: UserOrderByWithRelationInput, where: UserWhereInput): [UserModel!]!

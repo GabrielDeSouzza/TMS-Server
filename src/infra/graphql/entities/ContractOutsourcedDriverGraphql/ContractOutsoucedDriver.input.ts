@@ -13,6 +13,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type IContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
@@ -72,5 +73,17 @@ export class ContractOutsourcedDriverReferecesInput extends OmitType(
 export class ContractOutsoucedDriverUpdateInput extends PartialType(
   ContractOutsourcedDriverInput,
 ) {
+  @HideField()
+  @Allow()
   updated_by: string;
+}
+
+@InputType()
+export class ContractOutsoucedDriverUpdateManyInput extends PartialType(
+  ContractOutsourcedDriverInput,
+) {
+  @IsUUID()
+  @IsNotEmpty()
+  @Field()
+  id: string;
 }

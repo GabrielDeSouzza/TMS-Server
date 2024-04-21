@@ -3,7 +3,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { type IOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
 
 import { CompanyVehicleIModel } from '../CompanyVehicle/CompanyVehicle.model';
-import { ContractOutsourcedDriverRefencesModel } from '../ContractOutsourcedDriverGraphql/ContractOutsourcedDriver.model';
+import { ContractOutsourcedDriverModel } from '../ContractOutsourcedDriverGraphql/ContractOutsourcedDriver.model';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import {
   OutsourcedVehicleIModel,
@@ -37,8 +37,8 @@ export class OutsourcedDriverModel
   updated_by: string;
   @Field()
   created_by: string;
-  @Field(() => [ContractOutsourcedDriverRefencesModel])
-  ContractOutsourcedDriver: ContractOutsourcedDriverRefencesModel;
+  @Field(() => [ContractOutsourcedDriverModel])
+  ContractOutsourcedDriver: ContractOutsourcedDriverModel;
   @Field(() => UserModelRefereces)
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)

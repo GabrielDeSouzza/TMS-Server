@@ -14,7 +14,10 @@ import { OutsourcedDriverRepository } from 'domain/repositories/OutsourcedDriver
 import { ContractOutsourcedDriverUseCases } from 'app/useCases/ContractOutsourcedDriverUseCases/ContractOutsourcedDriverUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { ContractOutsourcedDriverWhereArgs } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/Args/WhereContractOutsourcedDriverArgs';
+import {
+  ContractOutsourcedDriverCountArgs,
+  ContractOutsourcedDriverWhereArgs,
+} from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/Args/WhereContractOutsourcedDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -24,6 +27,7 @@ import { OutsourcedDriverModel } from '../OutsourcedDriverGraphql/OutsourcedDriv
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetContractOutsourcedDriverArgs } from './Args/GetContractOutsourcedDriverArgs';
 import {
+  ContractOutsoucedDriverUpdateManyInput,
   ContractOutsoucedDriverUpdateInput,
   ContractOutsourcedDriverInput,
 } from './ContractOutsoucedDriver.input';
@@ -39,6 +43,14 @@ export class ContractOutsoucedDriverResolver {
     private userCase: UserUseCases,
     private outsourcedDriverRepository: OutsourcedDriverRepository,
   ) {}
+  @Query(() => Number)
+  async totalContractOutsourcedDriver(
+    @Args() args: ContractOutsourcedDriverCountArgs,
+  ) {
+    return this.contractOutsourcedDriverUseCases.countContractOutsourcedDriver(
+      args,
+    );
+  }
   @Query(() => ContractOutsourcedDriverModel)
   async getContractOutsourcedDriver(
     @Args() request: GetContractOutsourcedDriverArgs,
@@ -84,6 +96,36 @@ export class ContractOutsoucedDriverResolver {
     return await this.contractOutsourcedDriverUseCases.updateContractOutsourcedDriver(
       id,
       contract,
+    );
+  }
+
+  @Mutation(() => [ContractOutsourcedDriverModel])
+  async updatedManyContractOutsourcedDriver(
+    @Args({
+      name: 'data',
+      type: () => [ContractOutsoucedDriverUpdateManyInput],
+    })
+    data: [ContractOutsoucedDriverUpdateManyInput],
+    @CurrentUser() user: User,
+  ) {
+    return this.contractOutsourcedDriverUseCases.updateManyContractOutsourcedDriver(
+      data,
+      user.id,
+    );
+  }
+
+  @Mutation(() => ContractOutsourcedDriverModel)
+  async deleteContractOutsourcedDriver(@Args('id') id: string) {
+    return this.contractOutsourcedDriverUseCases.deleteContractOutsourcedDriver(
+      id,
+    );
+  }
+  @Mutation(() => [ContractOutsourcedDriverModel])
+  async deleteManyContractOutsourcedDriver(
+    @Args('ids', { type: () => [String] }) ids: string[],
+  ) {
+    return this.contractOutsourcedDriverUseCases.deleteManyContractOutsourcedDriver(
+      ids,
     );
   }
 

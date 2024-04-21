@@ -1,4 +1,4 @@
-import { Field, ObjectType, OmitType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 import { type IContractOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/contractOutsourcedDriver/ContractOutsourcedDriver';
 
@@ -31,9 +31,3 @@ export class ContractOutsourcedDriverModel
   @Field()
   outsourced_driver_id: string;
 }
-
-@ObjectType()
-export class ContractOutsourcedDriverRefencesModel extends OmitType(
-  ContractOutsourcedDriverModel,
-  ['outsourced_driver_id'],
-) {}

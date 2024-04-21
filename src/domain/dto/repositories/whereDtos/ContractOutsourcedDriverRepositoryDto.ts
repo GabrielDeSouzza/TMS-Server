@@ -30,6 +30,10 @@ export abstract class SortByContractOutsourcedDriverTypeDTO {
   outsourced_driver_id?: 'asc' | 'desc';
 }
 
+export abstract class CountAllContractOutsourcedDriverWhereRequestDTO {
+  where?: WhereContractOutsourcedDriverTypeDTO;
+}
+
 export class FindAllContractOutsourcedDriverWhereRequestDTO {
   limit: number;
   offset: number;

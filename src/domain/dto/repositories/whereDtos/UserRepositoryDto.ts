@@ -1,3 +1,4 @@
+import { type IUser } from 'domain/entities/User/User';
 import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
@@ -36,7 +37,7 @@ export abstract class CountAllUserWhereRequestDTO {
   where?: UserWhereDTO;
 }
 
-export abstract class UpdateManyUsersDTO {
+export abstract class UpdateManyUsersDTO implements Partial<IUser> {
   id: string;
   name?: string;
   role?: string;

@@ -18,8 +18,8 @@ export interface IUser {
   username: string;
   password: string;
   avatar_url?: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 export class User extends Entity {
