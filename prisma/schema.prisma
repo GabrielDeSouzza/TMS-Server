@@ -707,6 +707,7 @@ model OrderProcessing {
   total_distance          Float
   total_spend_liters      Float
   total_spending_money    Float
+  status                  String @default("created")
   start_at                DateTime
   end_at                  DateTime?
   updated_at              DateTime

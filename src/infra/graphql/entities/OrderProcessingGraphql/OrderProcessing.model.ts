@@ -6,6 +6,7 @@ import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrd
 import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
+import { statusOrderEmum } from './OrderStatusEnum.enum';
 
 @ObjectType()
 export abstract class OrderProcessingModel implements IOrderProcessing {
@@ -22,6 +23,8 @@ export abstract class OrderProcessingModel implements IOrderProcessing {
   created_at: Date;
   @Field(() => Float)
   total_distance: number;
+  @Field(() => statusOrderEmum)
+  status: statusOrderEmum;
   @Field(() => Float)
   total_spend_liters: number;
   @Field(() => Float)

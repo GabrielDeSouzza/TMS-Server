@@ -1644,9 +1644,10 @@ input NestedStringNullableFilter {
 
 input OrderProcessingInput {
   end_at: Timestamp
-  legal_customer_order_id: String
-  physical_customer_order_id: String
+  legal_customer_order_ids: [String!]
+  physical_customer_order_ids: [String!]
   start_at: Timestamp!
+  status: StatusOrder!
   total_distance: Float!
   total_spend_liters: Float!
   total_spending_money: Float!
@@ -1666,6 +1667,7 @@ type OrderProcessingModel {
   order_processing: String!
   order_processing_number: String!
   start_at: Timestamp!
+  status: StatusOrder!
   total_distance: Float!
   total_spend_liters: Float!
   total_spending_money: Float!
@@ -1685,6 +1687,7 @@ input OrderProcessingOrderByWithRelationInput {
   id: SortOrder
   order_processing_number: SortOrder
   start_at: SortOrder
+  status: SortOrder
   total_distance: SortOrder
   total_spend_liters: SortOrder
   total_spending_money: SortOrder
@@ -1697,9 +1700,10 @@ input OrderProcessingUpdateInput {
   disconnect_legal_client_order: String
   disconnect_physical_customer_order: String
   end_at: Timestamp
-  legal_customer_order_id: String
-  physical_customer_order_id: String
+  legal_customer_order_ids: [String!]
+  physical_customer_order_ids: [String!]
   start_at: Timestamp
+  status: StatusOrder
   total_distance: Float
   total_spend_liters: Float
   total_spending_money: Float
@@ -1720,6 +1724,7 @@ input OrderProcessingWhereInput {
   id: StringFilter
   order_processing_number: StringFilter
   start_at: DateTimeFilter
+  status: StringFilter
   total_distance: FloatFilter
   total_spend_liters: FloatFilter
   total_spending_money: FloatFilter
@@ -2801,6 +2806,14 @@ enum SortOrder {
 input StateRelationIcmsArgs {
   recipient_state: String!
   state_origin: String!
+}
+
+enum StatusOrder {
+  CANCELED
+  COMPLETE
+  CREATED
+  IN_INCIDENT
+  IN_PROCESSING
 }
 
 input StringFilter {

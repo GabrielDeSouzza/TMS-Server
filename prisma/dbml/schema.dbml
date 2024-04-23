@@ -613,6 +613,7 @@ Table order_procesing {
   total_distance Float [not null]
   total_spend_liters Float [not null]
   total_spending_money Float [not null]
+  status String [not null, default: 'created']
   start_at DateTime [not null]
   end_at DateTime
   updated_at DateTime [not null]

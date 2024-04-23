@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
-import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetProcessingDto';
+import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetOrderProcessingDto';
 import { type FindAllOrderProcessingWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OrderProcessingRepositoryDto';
 import { OrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
 import { OrderProcessingRepository } from 'domain/repositories/OrderProcessingRepository';
@@ -57,30 +57,49 @@ export class OrderProcessingUseCases {
   }
 
   async createOrderProcessing(data: CreateOrderProcessingDTO) {
-    const orderProcesingExist = await this.getOrderProcessing({
-      vehicleData: { vehicleId: data.vehicle_id },
-    });
+    const orderProcesingExist =
+      await this.orderProcessingResitory.findOrderProcessing({
+        vehicleData: { vehicleId: data.vehicle_id },
+      });
     if (orderProcesingExist)
       throw new GraphQLError('VEHICLE ALREADY IN USE IN AN ORDER PROCESSING ', {
         extensions: { code: HttpStatus.CONFLICT },
       });
-    if (!data.legal_customer_order_id && !data.physical_customer_order_id)
+    if (
+      data.legal_customer_order_ids?.length === 0 &&
+      data.physical_customer_order_ids?.length === 0
+    )
       throw new GraphQLError('ANY ORDER PROCESSING SEND ', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
-    else if (data.legal_customer_order_id)
-      await this.legalClientOrderUseCase.getLegalClientOrder({
-        id: data.legal_customer_order_id,
-      });
-    else if (data.physical_customer_order_id)
-      await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
-        id: data.physical_customer_order_id,
-      });
+    if (data.legal_customer_order_ids?.length > 0)
+      for (const legalOrderId of data.legal_customer_order_ids)
+        await this.legalClientOrderUseCase.getLegalClientOrder({
+          id: legalOrderId,
+        });
+    if (data.physical_customer_order_ids?.length > 0)
+      for (const physicalCustomerId of data.physical_customer_order_ids)
+        await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
+          id: physicalCustomerId,
+        });
     await this.vehicleUseCase.getVehicle({
       vehicleId: data.vehicle_id,
     });
     data.order_processing_number = 'OP' + generateRandomNumber(8);
-    const orderProcesingEntity = new OrderProcessing({ ...data });
+    const orderProcesingEntity = new OrderProcessing({
+      created_by: data.created_by,
+      order_processing_number: data.order_processing_number,
+      start_at: data.start_at,
+      status: data.status,
+      total_distance: data.total_distance,
+      total_spend_liters: data.total_spend_liters,
+      total_spending_money: data.total_spending_money,
+      updated_by: data.updated_by,
+      vehicle_id: data.vehicle_id,
+      end_at: data.end_at,
+      legal_customer_order_ids: data.legal_customer_order_ids,
+      physical_customer_order_ids: data.physical_customer_order_ids,
+    });
 
     return this.orderProcessingResitory.createOrderProcessing(
       orderProcesingEntity,
@@ -93,15 +112,17 @@ export class OrderProcessingUseCases {
       await this.vehicleUseCase.getVehicle({
         vehicleId: data.vehicle_id,
       });
-    if (data.legal_customer_order_id)
-      await this.legalClientOrderUseCase.getLegalClientOrder({
-        id: data.legal_customer_order_id,
-      });
-    else if (data.physical_customer_order_id)
-      await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
-        id: data.physical_customer_order_id,
-      });
-    else if (data.disconnect_legal_order)
+    if (data.legal_customer_order_ids.length > 0)
+      for (const legalOrderId of data.legal_customer_order_ids)
+        await this.legalClientOrderUseCase.getLegalClientOrder({
+          id: legalOrderId,
+        });
+    if (data.physical_customer_order_ids.length > 0)
+      for (const physicalCustomerId of data.legal_customer_order_ids)
+        await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
+          id: physicalCustomerId,
+        });
+    if (data.disconnect_legal_order)
       await this.legalClientOrderUseCase.getLegalClientOrder({
         id: data.disconnect_legal_order,
       });
@@ -110,8 +131,8 @@ export class OrderProcessingUseCases {
         id: data.disconnect_physical_customer_order,
       });
     const orderProcesingEntity = new OrderProcessing({
-      physical_customer_order_id: data.physical_customer_order_id,
-      legal_customer_order_id: data.legal_customer_order_id,
+      physical_customer_order_ids: data.physical_customer_order_ids,
+      legal_customer_order_ids: data.legal_customer_order_ids,
       start_at: data.start_at,
       total_distance: data.total_distance,
       total_spend_liters: data.total_spend_liters,
@@ -121,6 +142,7 @@ export class OrderProcessingUseCases {
         data.disconnect_physical_customer_order,
       updated_by: data.updated_by,
       vehicle_id: data.vehicle_id,
+      status: data.status,
       end_at: data.end_at,
       created_by: null,
       order_processing_number: null,

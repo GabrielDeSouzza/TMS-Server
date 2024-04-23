@@ -1,6 +1,6 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 
-import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetProcessingDto';
+import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetOrderProcessingDto';
 
 import { GetVehicleTypeArgs } from '../../VehicleGraphql/Args/GetVehicleArgs';
 

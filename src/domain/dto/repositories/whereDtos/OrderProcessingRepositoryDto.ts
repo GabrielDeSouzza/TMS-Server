@@ -8,8 +8,11 @@ export abstract class WhereOrderProcessingTypeDTO extends WhereDTO {
   total_distance?: NumberFilterDTO;
   total_spend_liters?: NumberFilterDTO;
   total_spending_money?: NumberFilterDTO;
+  physical_customer_order_id?: StringFilterDTO[];
+  legal_customer_order_id?: StringFilterDTO[];
   start_at?: DateTimeFilterDTO;
   end_at?: DateTimeFilterDTO;
+  status?: StringFilterDTO;
   order_processing?: StringFilterDTO;
   vehicle_id?: StringFilterDTO;
   updated_at?: DateTimeFilterDTO;
@@ -25,6 +28,7 @@ export abstract class SortByOrderProcessingTypeDTO {
   total_spending_money?: 'asc' | 'desc';
   start_at?: 'asc' | 'desc';
   end_at?: 'asc' | 'desc';
+  status?: 'asc' | 'desc';
   order_processing?: 'asc' | 'desc';
   vehicle_id?: 'asc' | 'desc';
   updated_at?: 'asc' | 'desc';

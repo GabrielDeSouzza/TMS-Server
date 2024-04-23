@@ -14,6 +14,8 @@ export class OrderProcessingPrismaDTO {
     });
   }
   public static EntityToPrisma(orderprocessingEntity: OrderProcessing) {
+    console.log(orderprocessingEntity.physical_customer_order_ids);
+    console.log(orderprocessingEntity);
     const orderprocessingPrisma: Prisma.OrderProcessingCreateInput = {
       created_at: orderprocessingEntity.created_at,
       created_by: orderprocessingEntity.created_by,
@@ -26,12 +28,23 @@ export class OrderProcessingPrismaDTO {
       total_spending_money: orderprocessingEntity.total_spending_money,
       updated_at: orderprocessingEntity.updated_at,
       updated_by: orderprocessingEntity.updated_by,
-      LegalClientOrder: orderprocessingEntity.legal_customer_order_id
-        ? { connect: { id: orderprocessingEntity.legal_customer_order_id } }
-        : undefined,
-      PhysicalCustomerOrder: orderprocessingEntity.physical_customer_order_id
-        ? { connect: { id: orderprocessingEntity.physical_customer_order_id } }
-        : undefined,
+      status: orderprocessingEntity.status,
+      LegalClientOrder:
+        orderprocessingEntity.legal_customer_order_ids?.length > 0
+          ? {
+              connect: orderprocessingEntity.legal_customer_order_ids.map(
+                legalOrderId => ({ id: legalOrderId }),
+              ),
+            }
+          : undefined,
+      PhysicalCustomerOrder:
+        orderprocessingEntity.physical_customer_order_ids?.length > 0
+          ? {
+              connect: orderprocessingEntity.physical_customer_order_ids.map(
+                physicalCustomerId => ({ id: physicalCustomerId }),
+              ),
+            }
+          : undefined,
       Vehicle: { connect: { id: orderprocessingEntity.vehicle_id } },
     };
 
@@ -47,19 +60,26 @@ export class OrderProcessingPrismaDTO {
       total_spend_liters: orderProcessing.total_spend_liters,
       total_spending_money: orderProcessing.total_spending_money,
       updated_at: orderProcessing.updated_at,
+      status: orderProcessing.status,
       LegalClientOrder: {
-        connect: orderProcessing.legal_customer_order_id
-          ? { id: orderProcessing.legal_customer_order_id }
-          : undefined,
+        connect:
+          orderProcessing.legal_customer_order_ids?.length > 0
+            ? orderProcessing.legal_customer_order_ids.map(legalOrderId => ({
+                id: legalOrderId,
+              }))
+            : undefined,
         disconnect: orderProcessing.disconnect_legal_order
           ? { id: orderProcessing.disconnect_legal_order }
           : undefined,
       },
 
       PhysicalCustomerOrder: {
-        connect: orderProcessing.physical_customer_order_id
-          ? { id: orderProcessing.physical_customer_order_id }
-          : undefined,
+        connect:
+          orderProcessing.physical_customer_order_ids?.length > 0
+            ? orderProcessing.physical_customer_order_ids.map(
+                physicalCustomerId => ({ id: physicalCustomerId }),
+              )
+            : undefined,
         disconnect: orderProcessing.disconnect_physical_customer_order
           ? { id: orderProcessing.disconnect_physical_customer_order }
           : undefined,

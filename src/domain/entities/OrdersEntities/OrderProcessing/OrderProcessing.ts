@@ -10,12 +10,13 @@ export interface IOrderProcessing {
   id?: string;
   total_distance: number;
   order_processing_number: string;
-  legal_customer_order_id?: string;
-  physical_customer_order_id?: string;
+  legal_customer_order_ids?: string[];
+  physical_customer_order_ids?: string[];
   disconnect_legal_order?: string;
   disconnect_physical_customer_order?: string;
   total_spend_liters: number;
   total_spending_money: number;
+  status: string;
   start_at: Date;
   end_at?: Date;
   vehicle_id: string;
@@ -137,6 +138,14 @@ export class OrderProcessing extends Entity {
     this.props.end_at = end_at;
   }
 
+  get status(): string {
+    return this.props.status;
+  }
+
+  set status(status: string) {
+    this.props.status = status;
+  }
+
   get vehicle_id(): string {
     return this.props.vehicle_id;
   }
@@ -153,12 +162,12 @@ export class OrderProcessing extends Entity {
     this.props.order_processing_number = order_processing_number;
   }
 
-  get legal_customer_order_id(): string {
-    return this.props.legal_customer_order_id;
+  get legal_customer_order_ids(): string[] {
+    return this.props.legal_customer_order_ids;
   }
 
-  set legal_customer_order_id(legal_customer_order_id: string) {
-    this.props.legal_customer_order_id = legal_customer_order_id;
+  set legal_customer_order_ids(legal_customer_order_ids: string[]) {
+    this.props.legal_customer_order_ids = legal_customer_order_ids;
   }
 
   get disconnect_legal_order(): string {
@@ -169,12 +178,12 @@ export class OrderProcessing extends Entity {
     this.props.disconnect_legal_order = disconnect_legal_order;
   }
 
-  get physical_customer_order_id(): string {
-    return this.props.physical_customer_order_id;
+  get physical_customer_order_ids(): string[] {
+    return this.props.physical_customer_order_ids;
   }
 
-  set physical_customer_order_id(physical_customer_order_id: string) {
-    this.props.physical_customer_order_id = physical_customer_order_id;
+  set physical_customer_order_ids(physical_customer_order_ids: string[]) {
+    this.props.physical_customer_order_ids = physical_customer_order_ids;
   }
 
   get disconnect_physical_customer_order(): string {

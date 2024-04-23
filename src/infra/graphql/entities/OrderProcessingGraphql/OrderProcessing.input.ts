@@ -9,6 +9,7 @@ import {
 import { Type } from 'class-transformer';
 import {
   Allow,
+  IsArray,
   IsDate,
   IsNotEmpty,
   IsNumber,
@@ -18,6 +19,8 @@ import {
 } from 'class-validator';
 
 import { type IOrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
+
+import { statusOrderEmum } from './OrderStatusEnum.enum';
 
 @InputType()
 export class OrderProcessingInput
@@ -30,6 +33,10 @@ export class OrderProcessingInput
   @IsNumber()
   @IsNotEmpty()
   total_distance: number;
+  @Field(() => statusOrderEmum)
+  @IsString()
+  @IsNotEmpty()
+  status: statusOrderEmum;
   @Field(() => Float)
   @IsNumber()
   @IsNotEmpty()
@@ -52,14 +59,14 @@ export class OrderProcessingInput
   @IsString()
   @IsNotEmpty()
   vehicle_id: string;
-  @Field({ nullable: true })
-  @IsString()
+  @Field(() => [String], { nullable: true })
+  @IsArray()
   @IsOptional()
-  physical_customer_order_id?: string;
-  @Field({ nullable: true })
-  @IsString()
+  physical_customer_order_ids?: string[];
+  @Field(() => [String], { nullable: true })
+  @IsArray()
   @IsOptional()
-  legal_customer_order_id?: string;
+  legal_customer_order_ids?: string[];
 
   @HideField()
   @Allow()

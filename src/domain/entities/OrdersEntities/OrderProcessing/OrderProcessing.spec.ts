@@ -15,6 +15,7 @@ describe('OrderProcessing', () => {
       created_by: '123',
       id: '13',
       updated_at: new Date(),
+      status: 'CREATED',
     });
     expect(customerOrder).toBeTruthy();
   });
