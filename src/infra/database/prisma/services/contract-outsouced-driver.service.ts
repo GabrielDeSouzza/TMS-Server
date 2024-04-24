@@ -73,7 +73,6 @@ export class ContractOutsourcedDriverPrismaService
   async updateManyContractOutsourcedDriver(
     data: ContractOutsourcedDriver[],
   ): Promise<ContractOutsourcedDriver[]> {
-    console.log(data);
     const contractsUpdated = await this.prisma.$transaction(async tx => {
       const promises = data.map(async contract => {
         const contractPrisma = await tx.contractOutsourcedDriver.update({

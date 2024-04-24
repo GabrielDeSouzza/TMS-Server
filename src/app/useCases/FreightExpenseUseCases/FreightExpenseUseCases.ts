@@ -3,12 +3,16 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetFreightExpenseDTO } from 'domain/dto/repositories/getDataDtos/GetFreightExpenseDto';
-import { type FindAllFreightExpenseWhereRequestDTO } from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
+import {
+  type CountAllFreightExpenseWhereRequestDTO,
+  type FindAllFreightExpenseWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
 import { FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 import { FreightExpenseRepository } from 'domain/repositories/FreightExpenseResitory';
 
 import { type CreateFreightExpenseDTO } from 'app/dtos/FreightExpenseDto/CreateFreightExpenseDto';
 import { type UpdateFreightExpenseDTO } from 'app/dtos/FreightExpenseDto/UpdateFreightExpenseDto';
+import { type UpdateManyFreightExpenseDTO } from 'app/dtos/FreightExpenseDto/UpdateManyFreightExpenseDto';
 
 import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientOrderUseCases';
 import { PhysicalCustomerOrderUseCases } from '../PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
@@ -20,6 +24,9 @@ export class FreightExpenseUseCases {
     private legalClientOrder: LegalClientOrderUseCases,
     private physicalCustomeOrder: PhysicalCustomerOrderUseCases,
   ) {}
+  async countFreightExpense(request: CountAllFreightExpenseWhereRequestDTO) {
+    return this.freightExpenseRepository.countFreightExpenseRepositoy(request);
+  }
   async getFreightExpense(request: GetFreightExpenseDTO) {
     if (!request.id) {
       throw new GraphQLError('IS NECESSARY AN ID', {
@@ -91,9 +98,26 @@ export class FreightExpenseUseCases {
     );
   }
 
+  async updateManyFreightExpenses(data: UpdateManyFreightExpenseDTO[]) {
+    const expenses = data.map(
+      expense =>
+        new FreightExpense({
+          expenseName: expense.expenseName,
+          value: expense.value,
+          id: expense.id,
+        }),
+    );
+
+    return this.freightExpenseRepository.updateManyFreightExpense(expenses);
+  }
+
   async deleteExpense(data: GetFreightExpenseDTO) {
     await this.getFreightExpense(data);
 
     return this.freightExpenseRepository.delFreightExpense(data);
+  }
+
+  async deleteManyFreightExpenses(ids: string[]) {
+    return this.freightExpenseRepository.deleteManyFreightExpenses(ids);
   }
 }

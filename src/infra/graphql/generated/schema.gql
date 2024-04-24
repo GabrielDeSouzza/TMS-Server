@@ -495,6 +495,14 @@ input FreightExpenseUpdateInput {
   value: Float
 }
 
+input FreightExpenseUpdateManyInput {
+  expenseName: String
+  id: String!
+  legalClientOrderId: String
+  physicalCustomerOrderId: String
+  value: Float
+}
+
 input FreightExpensesListRelationFilter {
   every: FreightExpensesWhereInput
   none: FreightExpensesWhereInput
@@ -1393,6 +1401,7 @@ type Mutation {
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
+  deleteManyFreightExpenses(ids: [String!]!): [FreightExpenseModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
@@ -1406,6 +1415,7 @@ type Mutation {
   updateMaintenance(data: MaintenanceUpdateInput!, id: String!): MaintenanceModel!
   updateMaintenanceCompany(id: String!, maintenancecompanyInput: MaintenanceCompanyUpdateInput!): MaintenanceCompanyModel!
   updateManyCarrierCompanies(updateManyCarrierCompanies: [CarrierCompanyUpdateManyInput!]!): [CarrierCompanyModel!]!
+  updateManyFreightExpenses(Data: [FreightExpenseUpdateManyInput!]!): [FreightExpenseModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
@@ -2579,6 +2589,7 @@ input PhysicalCustomerWhereInput {
 }
 
 type Query {
+  countFreightExpenses(where: FreightExpensesWhereInput): Float!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

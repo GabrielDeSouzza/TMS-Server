@@ -1,6 +1,12 @@
 import { Field, Float, InputType, PartialType } from '@nestjs/graphql';
 
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 import { type IFreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 
@@ -30,3 +36,13 @@ export class FreightExpenseInput
 export class FreightExpenseUpdateInput extends PartialType(
   FreightExpenseInput,
 ) {}
+
+@InputType()
+export class FreightExpenseUpdateManyInput extends PartialType(
+  FreightExpenseInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

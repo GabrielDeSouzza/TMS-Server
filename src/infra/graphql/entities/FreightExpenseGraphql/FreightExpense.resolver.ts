@@ -11,8 +11,12 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { DeletFreightExpenseInput } from './Args/DeleteFreightExpenseInput';
 import { GetFreightExpenseArgs } from './Args/GetFreightExpenseArgs';
-import { FreightExpenseWhereArgs } from './Args/WhereFreightExpenseArgs';
 import {
+  FreightExpenseCountArgs,
+  FreightExpenseWhereArgs,
+} from './Args/WhereFreightExpenseArgs';
+import {
+  FreightExpenseUpdateManyInput,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FreightExpenseInput,
   FreightExpenseUpdateInput,
@@ -25,10 +29,13 @@ import { FreightExpenseModel } from './FreightExpense.model';
 @Resolver(() => FreightExpenseModel)
 export class FreightExpenseResolver {
   constructor(private freightExpenseUseCase: FreightExpenseUseCases) {}
+
+  @Query(() => Number)
+  async countFreightExpenses(@Args() args: FreightExpenseCountArgs) {
+    return this.freightExpenseUseCase.countFreightExpense(args);
+  }
   @Query(() => FreightExpenseModel)
   async getFreightExpense(@Args() request: GetFreightExpenseArgs) {
-    console.log(request);
-
     return this.freightExpenseUseCase.getFreightExpense({
       id: request.id,
     });
@@ -58,11 +65,23 @@ export class FreightExpenseResolver {
       freightExpenseUpInput,
     );
   }
-
+  @Mutation(() => [FreightExpenseModel])
+  async updateManyFreightExpenses(
+    @Args({ name: 'Data', type: () => [FreightExpenseUpdateManyInput] })
+    data: FreightExpenseUpdateManyInput[],
+  ) {
+    return this.freightExpenseUseCase.updateManyFreightExpenses(data);
+  }
   @Mutation(() => FreightExpenseModel)
   async deleteFreightExpense(
     @Args('delData') request: DeletFreightExpenseInput,
   ) {
     return this.freightExpenseUseCase.deleteExpense(request);
+  }
+  @Mutation(() => [FreightExpenseModel])
+  async deleteManyFreightExpenses(
+    @Args({ name: 'ids', type: () => [String] }) ids: string[],
+  ) {
+    return this.freightExpenseUseCase.deleteManyFreightExpenses(ids);
   }
 }

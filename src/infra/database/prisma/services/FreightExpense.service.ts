@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { type GetFreightExpenseDTO } from 'domain/dto/repositories/getDataDtos/GetFreightExpenseDto';
-import { type FindAllFreightExpenseWhereRequestDTO } from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
+import {
+  type CountAllFreightExpenseWhereRequestDTO,
+  type FindAllFreightExpenseWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
 import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 import { type FreightExpenseRepository } from 'domain/repositories/FreightExpenseResitory';
 
@@ -11,11 +14,12 @@ import { FreightExpensePrismaDTO } from './prismaDTO/FreightExpensePrismaDto';
 @Injectable()
 export class FreightExpensePrismaService implements FreightExpenseRepository {
   constructor(private prisma: PrismaService) {}
-
-  async delFreightExpense(data: GetFreightExpenseDTO): Promise<FreightExpense> {
-    return FreightExpensePrismaDTO.PrismaToEntity(
-      await this.prisma.freightExpenses.delete({ where: { id: data.id } }),
-    );
+  countFreightExpenseRepositoy(
+    parameters: CountAllFreightExpenseWhereRequestDTO,
+  ): Promise<number> {
+    return this.prisma.freightExpenses.count({
+      where: parameters.where ?? undefined,
+    });
   }
 
   async getFreightExpense(
@@ -27,6 +31,21 @@ export class FreightExpensePrismaService implements FreightExpenseRepository {
           OR: [{ id: request.id }],
         },
       }),
+    );
+  }
+
+  async findAllFreightExpense(
+    parameters: FindAllFreightExpenseWhereRequestDTO,
+  ): Promise<FreightExpense[]> {
+    const contracts = await this.prisma.freightExpenses.findMany({
+      take: parameters.limit,
+      skip: parameters.offset,
+      where: parameters.where,
+      orderBy: parameters.sort,
+    });
+
+    return contracts.map(contract =>
+      FreightExpensePrismaDTO.PrismaToEntity(contract),
     );
   }
   async createFreightExpense(
@@ -66,18 +85,40 @@ export class FreightExpensePrismaService implements FreightExpenseRepository {
       }),
     );
   }
-  async findAllFreightExpense(
-    parameters: FindAllFreightExpenseWhereRequestDTO,
-  ): Promise<FreightExpense[]> {
-    const contracts = await this.prisma.freightExpenses.findMany({
-      take: parameters.limit,
-      skip: parameters.offset,
-      where: parameters.where,
-      orderBy: parameters.sort,
+  updateManyFreightExpense(data: FreightExpense[]): Promise<FreightExpense[]> {
+    const expensesUpdated = this.prisma.$transaction(async tx => {
+      const promises = data.map(async expense => {
+        const expensePrisma = await tx.freightExpenses.update({
+          data: FreightExpensePrismaDTO.EntityToPrismaUpdate(expense),
+          where: { id: expense.id },
+        });
+
+        return FreightExpensePrismaDTO.PrismaToEntity(expensePrisma);
+      });
+
+      return Promise.all(promises);
     });
 
-    return contracts.map(contract =>
-      FreightExpensePrismaDTO.PrismaToEntity(contract),
+    return expensesUpdated;
+  }
+  async delFreightExpense(data: GetFreightExpenseDTO): Promise<FreightExpense> {
+    return FreightExpensePrismaDTO.PrismaToEntity(
+      await this.prisma.freightExpenses.delete({ where: { id: data.id } }),
     );
+  }
+  deleteManyFreightExpenses(ids: string[]): Promise<FreightExpense[]> {
+    const expensesDeleted = this.prisma.$transaction(async tx => {
+      const promises = ids.map(async expenseId => {
+        const expensePrisma = await tx.freightExpenses.delete({
+          where: { id: expenseId },
+        });
+
+        return FreightExpensePrismaDTO.PrismaToEntity(expensePrisma);
+      });
+
+      return Promise.all(promises);
+    });
+
+    return expensesDeleted;
   }
 }

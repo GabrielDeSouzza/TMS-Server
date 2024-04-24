@@ -32,3 +32,6 @@ export class FindAllFreightExpenseWhereRequestDTO {
   sort?: SortByFreightExpenseTypeDTO;
   where?: WhereFreightExpenseTypeDTO;
 }
+export abstract class CountAllFreightExpenseWhereRequestDTO {
+  where?: WhereFreightExpenseTypeDTO;
+}

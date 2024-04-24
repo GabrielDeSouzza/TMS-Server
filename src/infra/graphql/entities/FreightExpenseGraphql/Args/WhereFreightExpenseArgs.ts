@@ -31,3 +31,11 @@ export class FreightExpenseWhereArgs {
   @IsOptional()
   sort?: FreightExpensesOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class FreightExpenseCountArgs {
+  @Field(() => FreightExpensesWhereInput, { nullable: true })
+  @Type(() => FreightExpenseWhereArgs)
+  @IsOptional()
+  where?: FreightExpensesWhereInput;
+}
