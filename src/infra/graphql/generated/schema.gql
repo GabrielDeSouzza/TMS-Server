@@ -681,6 +681,14 @@ input IncidentUpdateInput {
   order_process_id: String
 }
 
+input IncidentUpdateManyInput {
+  date_incident: Timestamp
+  date_resolved: Timestamp
+  description: String
+  id: String!
+  order_process_id: String
+}
+
 input IncidentWhereInput {
   AND: [IncidentWhereInput!]
   CreatedBy: UserWhereInput
@@ -1408,10 +1416,12 @@ type Mutation {
   deleteContractOutsourcedDriver(id: String!): ContractOutsourcedDriverModel!
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteIcms(id: String!): IcmsModel!
+  deleteIncident(id: String!): IncidentModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
   deleteManyFreightExpenses(ids: [String!]!): [FreightExpenseModel!]!
   deleteManyIcms(ids: [String!]!): [IcmsModel!]!
+  deleteManyIncident(ids: [String!]!): [IncidentModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
@@ -1427,6 +1437,7 @@ type Mutation {
   updateManyCarrierCompanies(updateManyCarrierCompanies: [CarrierCompanyUpdateManyInput!]!): [CarrierCompanyModel!]!
   updateManyFreightExpenses(Data: [FreightExpenseUpdateManyInput!]!): [FreightExpenseModel!]!
   updateManyIcms(data: [IcmsUpdateManyInput!]!): [IcmsModel!]!
+  updateManyIncident(data: [IncidentUpdateManyInput!]!): [IncidentModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
@@ -2602,6 +2613,7 @@ input PhysicalCustomerWhereInput {
 type Query {
   countFreightExpenses(where: FreightExpensesWhereInput): Float!
   countIcms(where: IcmsWhereInput): Float!
+  countIncident(where: IncidentWhereInput): Float!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

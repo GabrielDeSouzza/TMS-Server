@@ -3,12 +3,16 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetIncidentDTO } from 'domain/dto/repositories/getDataDtos/GetIncidentDto';
-import { type FindAllIncidentWhereRequestDTO } from 'domain/dto/repositories/whereDtos/FreightIncidentRepository.Dto';
+import {
+  type CountIncidentRequestDTO,
+  type FindAllIncidentWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/FreightIncidentRepository.Dto';
 import { Incident } from 'domain/entities/OrdersEntities/IncidentEntity/Incident';
 import { IncidentRepository } from 'domain/repositories/IncidentResitory';
 
 import { type CreateIncidentDTO } from 'app/dtos/IncidentDto/CreateIncidentDto';
 import { type UpdateIncidentDTO } from 'app/dtos/IncidentDto/UpdateIncidentDto';
+import { type UpdateManyIncidentDTO } from 'app/dtos/IncidentDto/UpdateManyIncidentDto';
 
 import { OrderProcessingUseCases } from '../OrderProcessingUseCases/OrderProcessingUseCases';
 
@@ -18,6 +22,9 @@ export class IncidentUseCases {
     private incidentRepository: IncidentRepository,
     private orderProcessing: OrderProcessingUseCases,
   ) {}
+  async countIncident(request: CountIncidentRequestDTO) {
+    return this.incidentRepository.countIncident(request);
+  }
   async getIncident(request: GetIncidentDTO) {
     if (!request.id) {
       throw new GraphQLError('IS NECESSARY AN ID', {
@@ -61,5 +68,40 @@ export class IncidentUseCases {
     });
 
     return this.incidentRepository.updateIncident(id, updateExpense);
+  }
+  async updateManyIncident(data: UpdateManyIncidentDTO[], updateBy: string) {
+    for (const incident of data) await this.verifyIncidentExist(incident.id);
+    const incidents = data.map(incident => {
+      const updateIncident = new Incident({
+        created_by: null,
+        date_incident: incident.date_incident,
+        date_resolved: incident.date_resolved,
+        description: incident.description,
+        order_process_id: incident.order_process_id,
+        updated_by: updateBy,
+        id: incident.id,
+      });
+
+      return updateIncident;
+    });
+
+    return this.incidentRepository.updateManyIncident(incidents);
+  }
+  async deleteIncident(id: string) {
+    await this.getIncident({ id });
+
+    return this.incidentRepository.deleteIncident(id);
+  }
+  async deleteManyIncident(ids: string[]) {
+    for (const incidentId of ids) await this.verifyIncidentExist(incidentId);
+
+    return this.incidentRepository.deleteManyIncident(ids);
+  }
+  private async verifyIncidentExist(id: string) {
+    const exist = await this.incidentRepository.getIncident({ id });
+    if (!exist)
+      throw new GraphQLError(`THIS INCIDENT ID ${id} NOT FOUND`, {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

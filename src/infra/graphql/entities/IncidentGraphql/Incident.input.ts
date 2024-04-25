@@ -46,3 +46,10 @@ export class IncidentInput
 
 @InputType()
 export class IncidentUpdateInput extends PartialType(IncidentInput) {}
+@InputType()
+export class IncidentUpdateManyInput extends PartialType(IncidentInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

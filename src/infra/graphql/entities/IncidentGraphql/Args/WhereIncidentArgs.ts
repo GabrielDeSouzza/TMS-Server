@@ -31,3 +31,11 @@ export class IncidentWhereArgs {
   @IsOptional()
   sort?: IncidentOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class IncidentCountArgs {
+  @Field(() => IncidentWhereInput, { nullable: true })
+  @Type(() => IncidentWhereInput)
+  @IsOptional()
+  where?: IncidentWhereInput;
+}

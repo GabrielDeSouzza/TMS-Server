@@ -8,19 +8,24 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 
-import { ROLE } from 'domain/entities/User/User';
+import { ROLE, User } from 'domain/entities/User/User';
 
 import { IncidentUseCases } from 'app/useCases/IncidentUseCases/IncidentUseCases';
 import { OrderProcessingUseCases } from 'app/useCases/OrderProcessingUseCases/OrderProcessingUseCases';
 
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
+import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { OrderProcessingModel } from '../OrderProcessingGraphql/OrderProcessing.model';
 import { GetIncidentArgs } from './Args/GetIncidentArgs';
-import { IncidentWhereArgs } from './Args/WhereIncidentArgs';
-import { IncidentInput, IncidentUpdateInput } from './Incident.input';
+import { IncidentCountArgs, IncidentWhereArgs } from './Args/WhereIncidentArgs';
+import {
+  IncidentInput,
+  IncidentUpdateInput,
+  IncidentUpdateManyInput,
+} from './Incident.input';
 import { IncidentModel } from './Incident.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -32,6 +37,10 @@ export class IncidentResolver {
     private incidentUseCase: IncidentUseCases,
     private orderProcessingUseCase: OrderProcessingUseCases,
   ) {}
+  @Query(() => Number)
+  async countIncident(@Args() request: IncidentCountArgs) {
+    return this.incidentUseCase.countIncident(request);
+  }
   @Query(() => IncidentModel)
   async getIncident(@Args() request: GetIncidentArgs) {
     console.log(request);
@@ -49,17 +58,44 @@ export class IncidentResolver {
   @Mutation(() => IncidentModel)
   async createIncident(
     @Args('data')
-    IncidentInput: IncidentInput,
+    incidentInput: IncidentInput,
+    @CurrentUser() user: User,
   ) {
-    return this.incidentUseCase.createIncident(IncidentInput);
+    incidentInput.created_by = user.id;
+    incidentInput.updated_by = user.id;
+
+    return this.incidentUseCase.createIncident(incidentInput);
   }
   @Mutation(() => IncidentModel)
   async updateIncident(
     @Args('id') id: string,
     @Args('upData')
     incidentUpInput: IncidentUpdateInput,
+    @CurrentUser() user: User,
   ) {
+    incidentUpInput.updated_by = user.id;
+
     return this.incidentUseCase.updateIncident(id, incidentUpInput);
+  }
+  @Mutation(() => [IncidentModel])
+  async updateManyIncident(
+    @Args({ name: 'data', type: () => [IncidentUpdateManyInput] })
+    data: IncidentUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.incidentUseCase.updateManyIncident(data, user.id);
+  }
+  @Mutation(() => IncidentModel)
+  async deleteIncident(@Args('id') id: string) {
+    return this.incidentUseCase.deleteIncident(id);
+  }
+
+  @Mutation(() => [IncidentModel])
+  async deleteManyIncident(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.incidentUseCase.deleteManyIncident(ids);
   }
   @ResolveField(() => OrderProcessingModel)
   OrderProcessing(@Parent() incident: IncidentInput) {

@@ -38,7 +38,9 @@ export class IncidentPrismaDTO {
     const incidentUptade: Prisma.IncidentUpdateInput = {
       date_incident: incident.date_incident,
       description: incident.description,
-      OrderProcess: { connect: { id: incident.order_process_id } },
+      OrderProcess: incident.order_process_id
+        ? { connect: { id: incident.order_process_id } }
+        : undefined,
       updated_at: incident.updated_at,
       date_resolved: incident.date_resolved,
 

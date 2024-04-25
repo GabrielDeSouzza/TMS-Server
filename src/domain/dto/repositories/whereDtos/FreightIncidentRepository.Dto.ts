@@ -22,3 +22,7 @@ export class FindAllIncidentWhereRequestDTO {
   sort?: SortByIncidentTypeDTO;
   where?: WhereIncidentTypeDTO;
 }
+
+export abstract class CountIncidentRequestDTO {
+  where?: WhereIncidentTypeDTO;
+}
