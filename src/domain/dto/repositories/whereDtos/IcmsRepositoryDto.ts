@@ -33,3 +33,7 @@ export class FindAllIcmsWhereRequestDTO {
   sort?: SortByIcmsTypeDTO;
   where?: WhereIcmsTypeDTO;
 }
+
+export class CountIcmsRequestDTO {
+  where?: WhereIcmsTypeDTO;
+}

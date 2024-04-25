@@ -31,3 +31,11 @@ export class IcmsWhereArgs {
   @IsOptional()
   sort?: IcmsOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class IcmsCountArgs {
+  @Field(() => IcmsWhereInput, { nullable: true })
+  @Type(() => IcmsWhereInput)
+  @IsOptional()
+  where?: IcmsWhereInput;
+}

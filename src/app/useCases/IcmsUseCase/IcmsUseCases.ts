@@ -3,19 +3,24 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetIcmsDTO } from 'domain/dto/repositories/getDataDtos/GetIcmsDto';
-import { type FindAllIcmsWhereRequestDTO } from 'domain/dto/repositories/whereDtos/IcmsRepositoryDto';
+import {
+  type CountIcmsRequestDTO,
+  type FindAllIcmsWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/IcmsRepositoryDto';
 import { Icms } from 'domain/entities/ICMSEntity/Icms';
 import { IcmsRepository } from 'domain/repositories/IcmsRepository';
 
 import { type CreateIcmsDTO } from 'app/dtos/IcsmDto/CreateIcmsDto';
 import { type UpdateIcmsDTO } from 'app/dtos/IcsmDto/UpdateIcmsDto';
+import { type UpdateManyIcmsDTO } from 'app/dtos/IcsmDto/UpdateManyIcmsDto';
 
 @Injectable()
 export class IcmsUseCases {
   constructor(private icmsRepository: IcmsRepository) {}
+  async countIcms(request: CountIcmsRequestDTO) {
+    return this.icmsRepository.countIcms(request);
+  }
   async getIcms(request: GetIcmsDTO) {
-    console.log(request.stateRelationIcms);
-
     if (!request.stateRelationIcms && !request.id) {
       throw new GraphQLError('IS NECESSARY AN ID OR STATE RELATION ', {
         extensions: { code: HttpStatus.BAD_REQUEST },
@@ -71,5 +76,41 @@ export class IcmsUseCases {
     });
 
     return this.icmsRepository.updateIcms(id, updateIcms);
+  }
+
+  async updateManyIcms(data: UpdateManyIcmsDTO[], updatedBy: string) {
+    const icmss = data.map(icms => {
+      void this.verifyIcmsExist(icms.id);
+
+      return new Icms({
+        aliquot: icms.aliquot,
+        created_by: null,
+        effective_date: icms.effective_date,
+        recipient_state: icms.recipient_state,
+        state_origin: icms.state_origin,
+        updated_by: updatedBy,
+        id: icms.id,
+      });
+    });
+
+    return this.icmsRepository.updateManyIcms(icmss);
+  }
+
+  async deleteIcms(id: string) {
+    await this.getIcms({ id });
+
+    return this.icmsRepository.deleteIcms(id);
+  }
+  async deleteManyIcms(ids: string[]) {
+    ids.map(id => this.verifyIcmsExist(id));
+
+    return this.icmsRepository.deleteManyIcms(ids);
+  }
+  private async verifyIcmsExist(id: string) {
+    const exist = await this.icmsRepository.findIcms({ id });
+    if (!exist)
+      throw new GraphQLError(`THIS ICMS ID ${id} NOT FOUND`, {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

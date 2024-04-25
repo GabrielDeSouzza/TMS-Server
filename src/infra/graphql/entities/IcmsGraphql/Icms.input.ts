@@ -7,7 +7,14 @@ import {
 } from '@nestjs/graphql';
 
 import { Type } from 'class-transformer';
-import { Allow, IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  Allow,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 import { type IIcms } from 'domain/entities/ICMSEntity/Icms';
 
@@ -41,3 +48,11 @@ export class IcmsInput
 }
 @InputType()
 export class IcmsUpdateInput extends PartialType(IcmsInput) {}
+
+@InputType()
+export class IcmsUpdateManyInput extends PartialType(IcmsInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

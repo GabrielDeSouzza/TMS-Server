@@ -20,8 +20,8 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetIcmsArgs } from './Args/GetIcmsArgs';
-import { IcmsWhereArgs } from './Args/WhereIcmsArgs';
-import { IcmsInput, IcmsUpdateInput } from './Icms.input';
+import { IcmsCountArgs, IcmsWhereArgs } from './Args/WhereIcmsArgs';
+import { IcmsInput, IcmsUpdateInput, IcmsUpdateManyInput } from './Icms.input';
 import { IcmsModel } from './Icms.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -30,14 +30,18 @@ import { IcmsModel } from './Icms.model';
 @Resolver(() => IcmsModel)
 export class IcmsResolver {
   constructor(
-    private IcmsUseCase: IcmsUseCases,
+    private icmsUseCase: IcmsUseCases,
     private userCase: UserUseCases,
   ) {}
+  @Query(() => Number)
+  async countIcms(@Args() request: IcmsCountArgs) {
+    return this.icmsUseCase.countIcms(request);
+  }
   @Query(() => IcmsModel)
   async getICMS(@Args() request: GetIcmsArgs) {
     console.log(request);
 
-    return this.IcmsUseCase.getIcms({
+    return this.icmsUseCase.getIcms({
       id: request.id,
       stateRelationIcms: {
         recipient_state: request.StateRelation.recipient_state,
@@ -47,7 +51,7 @@ export class IcmsResolver {
   }
   @Query(() => [IcmsModel], { nullable: true })
   async getAllICMS(@Args() args: IcmsWhereArgs) {
-    const icms = await this.IcmsUseCase.getAllIcms(args);
+    const icms = await this.icmsUseCase.getAllIcms(args);
 
     return icms.length > 0 ? icms : null;
   }
@@ -60,7 +64,7 @@ export class IcmsResolver {
     IcmsInput.created_by = user.id;
     IcmsInput.updated_by = user.id;
 
-    return this.IcmsUseCase.createIcms(IcmsInput);
+    return this.icmsUseCase.createIcms(IcmsInput);
   }
   @Mutation(() => IcmsModel)
   async updateIcms(
@@ -71,7 +75,29 @@ export class IcmsResolver {
   ) {
     IcmsInput.updated_by = user.id;
 
-    return this.IcmsUseCase.updateIcms(id, IcmsInput);
+    return this.icmsUseCase.updateIcms(id, IcmsInput);
+  }
+
+  @Mutation(() => [IcmsModel])
+  async updateManyIcms(
+    @Args({ name: 'data', type: () => [IcmsUpdateManyInput] })
+    data: IcmsUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.icmsUseCase.updateManyIcms(data, user.id);
+  }
+
+  @Mutation(() => IcmsModel)
+  async deleteIcms(@Args('id') id: string) {
+    return this.icmsUseCase.deleteIcms(id);
+  }
+
+  @Mutation(() => [IcmsModel])
+  async deleteManyIcms(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.icmsUseCase.deleteManyIcms(ids);
   }
 
   @ResolveField(() => UserModelRefereces)
