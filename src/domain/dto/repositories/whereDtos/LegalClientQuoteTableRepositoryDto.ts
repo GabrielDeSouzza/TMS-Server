@@ -49,3 +49,7 @@ export class FindAllLegalClientQuoteTableWhereRequestDTO {
   sort?: SortByLegalClientQuoteTableTypeDTO;
   where?: WhereLegalClientQuoteTableTypeDTO;
 }
+
+export abstract class CountLegalClientQuoteTableRequestDTO {
+  where?: WhereLegalClientQuoteTableTypeDTO;
+}

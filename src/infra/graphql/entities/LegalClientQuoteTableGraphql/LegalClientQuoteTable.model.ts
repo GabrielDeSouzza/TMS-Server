@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 import { type ILegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 
@@ -23,7 +23,7 @@ export class LegalClientQuoteTableModel implements ILegalClientQuoteTable {
   postalCodDestiny: string;
   @Field()
   typeMerchandise: string;
-  @Field()
+  @Field(() => Int)
   amount: number;
   @Field()
   description: string;

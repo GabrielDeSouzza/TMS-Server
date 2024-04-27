@@ -2,11 +2,12 @@ import {
   Field,
   HideField,
   InputType,
+  Int,
   OmitType,
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Allow, IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
 
 import { type ILegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 
@@ -41,7 +42,7 @@ export class LegalClientQuoteTableInput
   @IsString()
   @IsNotEmpty()
   typeMerchandise: string;
-  @Field()
+  @Field(() => Int)
   @IsNumber()
   @IsNotEmpty()
   amount: number;
@@ -74,4 +75,14 @@ export class LegalClientQuoteTableUpdate extends PartialType(
   OmitType(LegalClientQuoteTableInput, ['codQuote', 'created_by']),
 ) {
   updated_by: string;
+}
+
+@InputType()
+export class LegalClientQuoteTableUpdateManyInput extends PartialType(
+  LegalClientQuoteTableInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

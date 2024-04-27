@@ -907,7 +907,7 @@ input LegalClientOrderWhereInput {
 }
 
 input LegalClientQuoteTableInput {
-  amount: Float!
+  amount: Int!
   description: String!
   mass: Float!
   nf_value: Float!
@@ -929,7 +929,7 @@ input LegalClientQuoteTableListRelationFilter {
 type LegalClientQuoteTableModel {
   Recipient: RecipientModel!
   Sender: SenderModel!
-  amount: Float!
+  amount: Int!
   codQuote: String!
   createdUser: UserModelRefereces!
   created_by: String!
@@ -978,8 +978,23 @@ input LegalClientQuoteTableOrderByWithRelationInput {
 }
 
 input LegalClientQuoteTableUpdate {
-  amount: Float
+  amount: Int
   description: String
+  mass: Float
+  nf_value: Float
+  postalCodDestiny: String
+  postalCodOrigin: String
+  recipientId: String
+  senderId: String
+  typeMerchandise: String
+  volume: Float
+  who_pays: String
+}
+
+input LegalClientQuoteTableUpdateManyInput {
+  amount: Int
+  description: String
+  id: String!
   mass: Float
   nf_value: Float
   postalCodDestiny: String
@@ -1417,11 +1432,13 @@ type Mutation {
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteIcms(id: String!): IcmsModel!
   deleteIncident(id: String!): IncidentModel!
+  deleteLegalClientQuoteTable(id: String!): LegalClientQuoteTableModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
   deleteManyFreightExpenses(ids: [String!]!): [FreightExpenseModel!]!
   deleteManyIcms(ids: [String!]!): [IcmsModel!]!
   deleteManyIncident(ids: [String!]!): [IncidentModel!]!
+  deleteManyLegalClientQuoteTable(ids: [String!]!): [LegalClientQuoteTableModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
@@ -1438,6 +1455,7 @@ type Mutation {
   updateManyFreightExpenses(Data: [FreightExpenseUpdateManyInput!]!): [FreightExpenseModel!]!
   updateManyIcms(data: [IcmsUpdateManyInput!]!): [IcmsModel!]!
   updateManyIncident(data: [IncidentUpdateManyInput!]!): [IncidentModel!]!
+  updateManyLegalClientQuoteTable(data: [LegalClientQuoteTableUpdateManyInput!]!): [LegalClientQuoteTableModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
@@ -2614,6 +2632,7 @@ type Query {
   countFreightExpenses(where: FreightExpensesWhereInput): Float!
   countIcms(where: IcmsWhereInput): Float!
   countIncident(where: IncidentWhereInput): Float!
+  countLegalClientQuoteTable(where: LegalClientQuoteTableWhereInput): Float!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

@@ -15,7 +15,10 @@ import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCa
 import { SenderUseCases } from 'app/useCases/SenderUseCase /SenderUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { LegalClientQuoteTableWhereArgs } from 'infra/graphql/entities/LegalClientQuoteTableGraphql/Args/WhereLegalClientQuoteTableArgs';
+import {
+  LegalClientQuoteTableCountArgs,
+  LegalClientQuoteTableWhereArgs,
+} from 'infra/graphql/entities/LegalClientQuoteTableGraphql/Args/WhereLegalClientQuoteTableArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -28,6 +31,7 @@ import { GetLegalClientQuoteTableArgs } from './Args/GetLegalClientQuoteTableArg
 import {
   LegalClientQuoteTableInput,
   LegalClientQuoteTableUpdate,
+  LegalClientQuoteTableUpdateManyInput,
 } from './LegalClientQuoteTable.input';
 import { LegalClientQuoteTableModel } from './LegalClientQuoteTable.model';
 
@@ -42,6 +46,14 @@ export class LegalClientQuoteTableResolver {
     private recipientUseCase: RecipientUseCases,
     private senderUseCase: SenderUseCases,
   ) {}
+  @Query(() => Number)
+  async countLegalClientQuoteTable(
+    @Args() request: LegalClientQuoteTableCountArgs,
+  ) {
+    return this.legalClientQuoteTableUseCase.countLegalClientQuoteTable(
+      request,
+    );
+  }
   @Query(() => LegalClientQuoteTableModel, { nullable: true })
   async getLegalClientQuoteTable(
     @Args() request: GetLegalClientQuoteTableArgs,
@@ -83,6 +95,32 @@ export class LegalClientQuoteTableResolver {
     return this.legalClientQuoteTableUseCase.updateQuoteTable(
       id,
       legalClientQuoteTableUpdate,
+    );
+  }
+
+  @Mutation(() => [LegalClientQuoteTableModel])
+  async updateManyLegalClientQuoteTable(
+    @Args({ name: 'data', type: () => [LegalClientQuoteTableUpdateManyInput] })
+    data: LegalClientQuoteTableUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.legalClientQuoteTableUseCase.updateManyLegalClientQuoteTable(
+      data,
+      user.id,
+    );
+  }
+  @Mutation(() => LegalClientQuoteTableModel)
+  async deleteLegalClientQuoteTable(@Args('id') id: string) {
+    return this.legalClientQuoteTableUseCase.deleteLegalClientQuoteTable(id);
+  }
+
+  @Mutation(() => [LegalClientQuoteTableModel])
+  async deleteManyLegalClientQuoteTable(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.legalClientQuoteTableUseCase.deleteManyLegalClientQuoteTable(
+      ids,
     );
   }
   @ResolveField(() => UserModelRefereces)

@@ -3,12 +3,16 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetLegalClientQuoteTableDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientQuoteTableDto';
-import { type FindAllLegalClientQuoteTableWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientQuoteTableRepositoryDto';
+import {
+  type CountLegalClientQuoteTableRequestDTO,
+  type FindAllLegalClientQuoteTableWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/LegalClientQuoteTableRepositoryDto';
 import { LegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 import { LegalClientQuoteTableRepository } from 'domain/repositories/LegalClientQuoteTable.repository';
 
 import { type CreateLegalClientQuoteTableDTO } from 'app/dtos/LegalClientQuoteTableDto/CreateLegalClientQuoteTableDto';
 import { type UpdateLegalClientQuoteTableDTO } from 'app/dtos/LegalClientQuoteTableDto/UpdateLegalClientQuoteTableDto';
+import { type UpdateManyLegalClientQuoteTableDTO } from 'app/dtos/LegalClientQuoteTableDto/UpdateManyLegalClientQuoteTableDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 import { RecipientUseCases } from '../RecipientUseCase /RecipientUseCases';
@@ -21,6 +25,13 @@ export class LegalClientQuoteTableUseCases {
     private senderUseCase: SenderUseCases,
     private recipientUseCase: RecipientUseCases,
   ) {}
+  async countLegalClientQuoteTable(
+    request: CountLegalClientQuoteTableRequestDTO,
+  ) {
+    return this.legalClientQuoteTableRepository.countLegalClientQuoteTable(
+      request,
+    );
+  }
   async getLegalClientQuoteTable(request: GetLegalClientQuoteTableDTO) {
     if (!request.id && !request.codQuote) {
       throw new GraphQLError('IS NECESSARY AN ID OR COD QUOTE', {
@@ -119,5 +130,60 @@ export class LegalClientQuoteTableUseCases {
       id,
       order,
     );
+  }
+  async updateManyLegalClientQuoteTable(
+    data: UpdateManyLegalClientQuoteTableDTO[],
+    updateBy: string,
+  ) {
+    for (const legalclientquotetable of data)
+      await this.verifyLegalClientQuoteTableExist(legalclientquotetable.id);
+    const legalclientquotetables = data.map(legalclientquotetable => {
+      const updateLegalClientQuoteTable = new LegalClientQuoteTable({
+        amount: legalclientquotetable.amount,
+        codQuote: null,
+        description: legalclientquotetable.description,
+        mass: legalclientquotetable.mass,
+        nf_value: legalclientquotetable.nf_value,
+        postalCodDestiny: legalclientquotetable.postalCodDestiny,
+        postalCodOrigin: legalclientquotetable.postalCodOrigin,
+        recipientId: legalclientquotetable.recipientId,
+        senderId: legalclientquotetable.senderId,
+        typeMerchandise: legalclientquotetable.typeMerchandise,
+        volume: legalclientquotetable.volume,
+        who_pays: legalclientquotetable.who_pays,
+        created_by: null,
+        updated_by: updateBy,
+        id: legalclientquotetable.id,
+      });
+
+      return updateLegalClientQuoteTable;
+    });
+
+    return this.legalClientQuoteTableRepository.updateManyLegalClientQuoteTable(
+      legalclientquotetables,
+    );
+  }
+  async deleteLegalClientQuoteTable(id: string) {
+    await this.getLegalClientQuoteTable({ id });
+
+    return this.legalClientQuoteTableRepository.deleteLegalClientQuoteTable(id);
+  }
+  async deleteManyLegalClientQuoteTable(ids: string[]) {
+    for (const legalclientquotetableId of ids)
+      await this.verifyLegalClientQuoteTableExist(legalclientquotetableId);
+
+    return this.legalClientQuoteTableRepository.deleteManyLegalClientQuoteTable(
+      ids,
+    );
+  }
+  private async verifyLegalClientQuoteTableExist(id: string) {
+    const exist =
+      await this.legalClientQuoteTableRepository.findLegalClientQuoteTable({
+        id,
+      });
+    if (!exist)
+      throw new GraphQLError(`THIS LEGALCLIENTQUOTETABLE ID ${id} NOT FOUND`, {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

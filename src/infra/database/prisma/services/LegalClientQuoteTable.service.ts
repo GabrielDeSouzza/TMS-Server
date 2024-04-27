@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { type GetLegalClientQuoteTableDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientQuoteTableDto';
-import { type FindAllLegalClientQuoteTableWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientQuoteTableRepositoryDto';
+import {
+  type CountLegalClientQuoteTableRequestDTO,
+  type FindAllLegalClientQuoteTableWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/LegalClientQuoteTableRepositoryDto';
 import { type LegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 import { type LegalClientQuoteTableRepository } from 'domain/repositories/LegalClientQuoteTable.repository';
 
@@ -13,6 +16,13 @@ export class LegalClientQuoteTablePrismaService
   implements LegalClientQuoteTableRepository
 {
   constructor(private prisma: PrismaService) {}
+  countLegalClientQuoteTable(
+    request: CountLegalClientQuoteTableRequestDTO,
+  ): Promise<number> {
+    return this.prisma.legalClientQuoteTable.count({
+      where: request.where ?? undefined,
+    });
+  }
   async findLegalClientQuoteTable(
     request: GetLegalClientQuoteTableDTO,
   ): Promise<LegalClientQuoteTable> {
@@ -70,5 +80,57 @@ export class LegalClientQuoteTablePrismaService
     return legalclientquotetables.map(legalclientquotetable =>
       LegalClientQuoteTablePrismaDTO.PrismaToEntity(legalclientquotetable),
     );
+  }
+  updateManyLegalClientQuoteTable(
+    data: LegalClientQuoteTable[],
+  ): Promise<LegalClientQuoteTable[]> {
+    console.log(data);
+    const legalclientquotetableUpdate = this.prisma.$transaction(async tx => {
+      const promises = data.map(async legalclientquotetable => {
+        const legalclientquotetablePrisma =
+          await tx.legalClientQuoteTable.update({
+            data: LegalClientQuoteTablePrismaDTO.EntityToPrismaUpdate(
+              legalclientquotetable,
+            ),
+            where: { id: legalclientquotetable.id },
+          });
+
+        return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+          legalclientquotetablePrisma,
+        );
+      });
+
+      return Promise.all(promises);
+    });
+
+    return legalclientquotetableUpdate;
+  }
+
+  async deleteLegalClientQuoteTable(
+    id: string,
+  ): Promise<LegalClientQuoteTable> {
+    return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+      await this.prisma.legalClientQuoteTable.delete({ where: { id } }),
+    );
+  }
+  deleteManyLegalClientQuoteTable(
+    ids: string[],
+  ): Promise<LegalClientQuoteTable[]> {
+    const legalclientquotetableDeleted = this.prisma.$transaction(async tx => {
+      const promises = ids.map(async icmdsId => {
+        const legalclientquotetablePrisma =
+          await tx.legalClientQuoteTable.delete({
+            where: { id: icmdsId },
+          });
+
+        return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+          legalclientquotetablePrisma,
+        );
+      });
+
+      return Promise.all(promises);
+    });
+
+    return legalclientquotetableDeleted;
   }
 }
