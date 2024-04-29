@@ -3,12 +3,16 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetLegalClientOrderDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientOrderDto';
+import {
+  type CountLegalClientOrderRequestDTO,
+  type FindAllLegalClientOrderWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
 import { LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { LegalClientOrderRepository } from 'domain/repositories/LegalClientOrder.repository';
 
 import { type CreateLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/CreateLegalClientOrderDto';
-import { type GetAllLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/GetAllLegalClientOrderDto';
 import { type UpdateLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/UpdateLegalClientOrderDto';
+import { type UpdateManyLegalClientOrderDTO } from 'app/dtos/LegalClientOrderDto/UpdateManyLegalClientOrderDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 import { CarrierCompanyUseCases } from '../CarrierCompanyCases/CarrierCompanyUseCases';
@@ -23,6 +27,9 @@ export class LegalClientOrderUseCases {
     private carrierCompany: CarrierCompanyUseCases,
     private quoteTable: LegalClientQuoteTableUseCases,
   ) {}
+  async countLegalClientOrder(request: CountLegalClientOrderRequestDTO) {
+    return this.legalClientOrderRepository.countLegalClientOrder(request);
+  }
   async getLegalClientOrder(request: GetLegalClientOrderDTO) {
     if (!request.id && !request.order) {
       throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
@@ -39,7 +46,9 @@ export class LegalClientOrderUseCases {
       extensions: { code: HttpStatus.NOT_FOUND },
     });
   }
-  async getAllLegalClientOrder(request: GetAllLegalClientOrderDTO) {
+  async getAllLegalClientOrder(
+    request: FindAllLegalClientOrderWhereRequestDTO,
+  ) {
     return this.legalClientOrderRepository.getAllLegalClientOrder(request);
   }
   async createOrder(data: CreateLegalClientOrderDTO) {
@@ -90,6 +99,30 @@ export class LegalClientOrderUseCases {
     return this.legalClientOrderRepository.updateLegalClientOrder(id, order);
   }
 
+  async updateManyLegalClientOrder(
+    data: UpdateManyLegalClientOrderDTO[],
+    updateBy: string,
+  ) {
+    for (const legalclientorder of data)
+      await this.verifyLegalClientOrderExist(legalclientorder.id);
+    const legalclientorders = data.map(legalclientorder => {
+      const updateLegalClientOrder = new LegalClientOrder({
+        legal_contract_id: legalclientorder.legal_contract_id,
+        carrier_id: legalclientorder.carrier_id,
+        updated_by: updateBy,
+        quote_table_id: legalclientorder.legal_contract_id,
+        order: null,
+        id: legalclientorder.id,
+      });
+
+      return updateLegalClientOrder;
+    });
+
+    return this.legalClientOrderRepository.updateManyLegalClientOrder(
+      legalclientorders,
+    );
+  }
+
   async getExpenses(request: GetLegalClientOrderDTO) {
     if (!request.id && !request.order) {
       throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
@@ -103,5 +136,26 @@ export class LegalClientOrderUseCases {
     throw new GraphQLError('ANY EXPENSE FOUND', {
       extensions: { code: HttpStatus.NOT_FOUND },
     });
+  }
+
+  async deleteLegalClientOrder(id: string) {
+    await this.getLegalClientOrder({ id });
+
+    return this.legalClientOrderRepository.deleteLegalClientOrder(id);
+  }
+  async deleteManyLegalClientOrder(ids: string[]) {
+    for (const legalclientorderId of ids)
+      await this.verifyLegalClientOrderExist(legalclientorderId);
+
+    return this.legalClientOrderRepository.deleteManyLegalClientOrder(ids);
+  }
+  private async verifyLegalClientOrderExist(id: string) {
+    const exist = await this.legalClientOrderRepository.findLegalClientOrder({
+      id,
+    });
+    if (!exist)
+      throw new GraphQLError(`THIS LEGAL CLIENT ORDER ID ${id} NOT FOUND`, {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

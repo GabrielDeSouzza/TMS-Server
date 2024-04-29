@@ -182,8 +182,11 @@ export class LegalClientQuoteTableUseCases {
         id,
       });
     if (!exist)
-      throw new GraphQLError(`THIS LEGALCLIENTQUOTETABLE ID ${id} NOT FOUND`, {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
+      throw new GraphQLError(
+        `THIS LEGAL CLIENT QUOTETABLE ID ${id} NOT FOUND`,
+        {
+          extensions: { code: HttpStatus.NOT_FOUND },
+        },
+      );
   }
 }

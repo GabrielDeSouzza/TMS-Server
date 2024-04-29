@@ -41,13 +41,14 @@ export class LegalClientOrderPrismaDTO {
       LegalContract: legalClientOrder.legal_contract_id
         ? { connect: { id: legalClientOrder.legal_contract_id } }
         : undefined,
-      order: legalClientOrder.order,
       QuoteTable: legalClientOrder.quote_table_id
         ? { connect: { id: legalClientOrder.quote_table_id } }
         : undefined,
       UpdatedBy: { connect: { id: legalClientOrder.updated_by } },
       updated_at: legalClientOrder.updated_at,
-      CarrierCompany: { connect: { id: legalClientOrder.carrier_id } },
+      CarrierCompany: legalClientOrder.carrier_id
+        ? { connect: { id: legalClientOrder.carrier_id } }
+        : undefined,
     };
 
     return legalClientOrderUptade;

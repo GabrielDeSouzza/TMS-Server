@@ -1,5 +1,8 @@
 import { type GetLegalClientOrderDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientOrderDto';
-import { type FindAllLegalClientOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
+import {
+  type CountLegalClientOrderRequestDTO,
+  type FindAllLegalClientOrderWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/LegalClientOrderRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 
@@ -23,4 +26,15 @@ export abstract class LegalClientOrderRepository {
   abstract getAllExpenses(
     request: GetLegalClientOrderDTO,
   ): Promise<FreightExpense[]>;
+
+  abstract updateManyLegalClientOrder(
+    data: LegalClientOrder[],
+  ): Promise<LegalClientOrder[]>;
+  abstract deleteLegalClientOrder(id: string): Promise<LegalClientOrder>;
+  abstract deleteManyLegalClientOrder(
+    ids: string[],
+  ): Promise<LegalClientOrder[]>;
+  abstract countLegalClientOrder(
+    request: CountLegalClientOrderRequestDTO,
+  ): Promise<number>;
 }

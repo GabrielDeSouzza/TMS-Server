@@ -32,3 +32,7 @@ export class FindAllLegalClientOrderWhereRequestDTO {
   sort?: SortByLegalClientOrderTypeDTO;
   where?: WhereLegalClientOrderTypeDTO;
 }
+
+export abstract class CountLegalClientOrderRequestDTO {
+  where?: WhereLegalClientOrderTypeDTO;
+}

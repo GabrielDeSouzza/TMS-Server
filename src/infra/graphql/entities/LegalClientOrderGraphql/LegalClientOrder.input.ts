@@ -34,3 +34,13 @@ export class LegalClientOrderInput
 export class LegalClientOrderUpdateInput extends PartialType(
   LegalClientOrderInput,
 ) {}
+
+@InputType()
+export class LegalClientOrderUpdateManyInput extends PartialType(
+  LegalClientOrderInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

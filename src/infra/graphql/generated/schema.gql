@@ -879,6 +879,13 @@ input LegalClientOrderUpdateInput {
   quote_table_id: String
 }
 
+input LegalClientOrderUpdateManyInput {
+  carrier_id: String
+  id: String!
+  legal_contract_id: String
+  quote_table_id: String
+}
+
 input LegalClientOrderWhereInput {
   AND: [LegalClientOrderWhereInput!]
   CarrierCompany: CarrierCompanyWhereInput
@@ -1432,12 +1439,14 @@ type Mutation {
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteIcms(id: String!): IcmsModel!
   deleteIncident(id: String!): IncidentModel!
+  deleteLegalClientOrder(id: String!): LegalClientOrderModel!
   deleteLegalClientQuoteTable(id: String!): LegalClientQuoteTableModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
   deleteManyFreightExpenses(ids: [String!]!): [FreightExpenseModel!]!
   deleteManyIcms(ids: [String!]!): [IcmsModel!]!
   deleteManyIncident(ids: [String!]!): [IncidentModel!]!
+  deleteManyLegalClientOrder(ids: [String!]!): [LegalClientOrderModel!]!
   deleteManyLegalClientQuoteTable(ids: [String!]!): [LegalClientQuoteTableModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
@@ -1455,6 +1464,7 @@ type Mutation {
   updateManyFreightExpenses(Data: [FreightExpenseUpdateManyInput!]!): [FreightExpenseModel!]!
   updateManyIcms(data: [IcmsUpdateManyInput!]!): [IcmsModel!]!
   updateManyIncident(data: [IncidentUpdateManyInput!]!): [IncidentModel!]!
+  updateManyLegalClientOrder(data: [LegalClientOrderUpdateManyInput!]!): [LegalClientOrderModel!]!
   updateManyLegalClientQuoteTable(data: [LegalClientQuoteTableUpdateManyInput!]!): [LegalClientQuoteTableModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
@@ -2632,6 +2642,7 @@ type Query {
   countFreightExpenses(where: FreightExpensesWhereInput): Float!
   countIcms(where: IcmsWhereInput): Float!
   countIncident(where: IncidentWhereInput): Float!
+  countLegalClientOrder(where: LegalClientOrderWhereInput): Int!
   countLegalClientQuoteTable(where: LegalClientQuoteTableWhereInput): Float!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!

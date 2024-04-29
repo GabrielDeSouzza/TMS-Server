@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -16,7 +17,10 @@ import { LegalClientQuoteTableUseCases } from 'app/useCases/LegalClientQuoteTabl
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { LegalClientOrderWhereArgs } from 'infra/graphql/entities/LegalClientOrderGraphql/Args/WhereLegalClientOrderArgs';
+import {
+  LegalClientOrderCountArgs,
+  LegalClientOrderWhereArgs,
+} from 'infra/graphql/entities/LegalClientOrderGraphql/Args/WhereLegalClientOrderArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -31,6 +35,7 @@ import { GetLegalClientOrderArgs } from './Args/GetLegalClientOrderArgs';
 import {
   LegalClientOrderInput,
   LegalClientOrderUpdateInput,
+  LegalClientOrderUpdateManyInput,
 } from './LegalClientOrder.input';
 import { LegalClientOrderModel } from './LegalClientOrder.model';
 
@@ -46,6 +51,10 @@ export class LegalClientOrderResolver {
     private legalClientQuoteUseCase: LegalClientQuoteTableUseCases,
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
+  @Query(() => Int)
+  async countLegalClientOrder(@Args() request: LegalClientOrderCountArgs) {
+    return this.legalClientOrdeUseCase.countLegalClientOrder(request);
+  }
   @Query(() => LegalClientOrderModel, { nullable: true })
   async getLegalClientOrderModel(@Args() request: GetLegalClientOrderArgs) {
     return this.legalClientOrdeUseCase.getLegalClientOrder(request);
@@ -85,6 +94,29 @@ export class LegalClientOrderResolver {
       id,
       legalClientOrderInput,
     );
+  }
+  @Mutation(() => [LegalClientOrderModel])
+  async updateManyLegalClientOrder(
+    @Args({ name: 'data', type: () => [LegalClientOrderUpdateManyInput] })
+    data: LegalClientOrderUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.legalClientOrdeUseCase.updateManyLegalClientOrder(
+      data,
+      user.id,
+    );
+  }
+  @Mutation(() => LegalClientOrderModel)
+  async deleteLegalClientOrder(@Args('id') id: string) {
+    return this.legalClientOrdeUseCase.deleteLegalClientOrder(id);
+  }
+
+  @Mutation(() => [LegalClientOrderModel])
+  async deleteManyLegalClientOrder(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.legalClientOrdeUseCase.deleteManyLegalClientOrder(ids);
   }
   @ResolveField(() => LegalContractModel)
   async LegalContract(@Parent() order: LegalClientOrderInput) {
