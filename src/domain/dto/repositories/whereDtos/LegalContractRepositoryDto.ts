@@ -36,3 +36,7 @@ export class FindAllLegalContractWhereRequestDTO {
   sort?: SortByLegalContractTypeDTO;
   where?: WhereLegalContractTypeDTO;
 }
+
+export abstract class CountLegalContractRequestDTO {
+  where?: WhereLegalContractTypeDTO;
+}

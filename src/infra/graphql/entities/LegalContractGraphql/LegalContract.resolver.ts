@@ -6,6 +6,7 @@ import {
   ResolveField,
   Parent,
   Query,
+  Int,
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
@@ -15,7 +16,10 @@ import { LegalClientUseCases } from 'app/useCases/LegalClientUseCases/LegalClien
 import { LegalContractUseCases } from 'app/useCases/LegalContractUseCases/LegalContractUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { LegalContractWhereArgs } from 'infra/graphql/entities/LegalContractGraphql/Args/WhereLegalContractArgs';
+import {
+  LegalContractWhereArgs,
+  LegalContractCountArgs,
+} from 'infra/graphql/entities/LegalContractGraphql/Args/WhereLegalContractArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -27,6 +31,7 @@ import { GetLegalContractArgs } from './Args/GetLegalContractGraphqlArgs';
 import {
   LegalContractInput,
   LegalContractUpdateInput,
+  LegalContractUpdateManyInput,
 } from './LegalContract.input';
 import { LegalContractModel } from './LegalContract.model';
 
@@ -41,6 +46,10 @@ export class LegalContractResolver {
     private userCase: UserUseCases,
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
+  @Query(() => Int)
+  async countLegalContract(@Args() request: LegalContractCountArgs) {
+    return this.legalContractUseCase.countLegalContract(request);
+  }
   @Query(() => LegalContractModel)
   async getLegalContractModel(@Args() request: GetLegalContractArgs) {
     return this.legalContractUseCase.getContract(request);
@@ -75,6 +84,27 @@ export class LegalContractResolver {
     legalContractInput.updated_by = user.id;
 
     return this.legalContractUseCase.updateContract(id, legalContractInput);
+  }
+
+  @Mutation(() => [LegalContractModel])
+  async updateManyLegalContract(
+    @Args({ name: 'data', type: () => [LegalContractUpdateManyInput] })
+    data: LegalContractUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.legalContractUseCase.updateManyLegalContract(data, user.id);
+  }
+  @Mutation(() => LegalContractModel)
+  async deleteLegalContract(@Args('id') id: string) {
+    return this.legalContractUseCase.deleteLegalContract(id);
+  }
+
+  @Mutation(() => [LegalContractModel])
+  async deleteManyLegalContract(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.legalContractUseCase.deleteManyLegalContract(ids);
   }
 
   @ResolveField(() => LegalClientModelRefereces)

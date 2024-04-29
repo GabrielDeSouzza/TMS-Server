@@ -31,3 +31,11 @@ export class LegalContractWhereArgs {
   @IsOptional()
   sort?: LegalContractOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class LegalContractCountArgs {
+  @Field(() => LegalContractWhereInput, { nullable: true })
+  @Type(() => LegalContractWhereInput)
+  @IsOptional()
+  where?: LegalContractWhereInput;
+}

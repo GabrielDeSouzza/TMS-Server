@@ -1,8 +1,14 @@
 import { type GetLegalContractDTO } from 'domain/dto/repositories/getDataDtos/GetLegalContractDto';
-import { type FindAllLegalContractWhereRequestDTO } from 'domain/dto/repositories/whereDtos/LegalContractRepositoryDto';
+import {
+  type CountLegalContractRequestDTO,
+  type FindAllLegalContractWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/LegalContractRepositoryDto';
 import { type LegalContract } from 'domain/entities/LegalClientEntities/LegalContract/LegalContract';
 
 export abstract class LegalContractRepository {
+  abstract countLegalContract(
+    request: CountLegalContractRequestDTO,
+  ): Promise<number>;
   abstract findLegalContract(
     request: GetLegalContractDTO,
   ): Promise<LegalContract>;
@@ -16,4 +22,9 @@ export abstract class LegalContractRepository {
   abstract getAllLegalContract(
     parameters: FindAllLegalContractWhereRequestDTO,
   ): Promise<LegalContract[]>;
+  abstract updateManyLegalContract(
+    data: LegalContract[],
+  ): Promise<LegalContract[]>;
+  abstract deleteLegalContract(id: string): Promise<LegalContract>;
+  abstract deleteManyLegalContract(ids: string[]): Promise<LegalContract[]>;
 }

@@ -56,3 +56,13 @@ export class LegalContractInput
 export class LegalContractUpdateInput extends PartialType(
   OmitType(LegalContractInput, ['contract_number', 'created_by']),
 ) {}
+
+@InputType()
+export class LegalContractUpdateManyInput extends PartialType(
+  LegalContractInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

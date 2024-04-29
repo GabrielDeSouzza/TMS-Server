@@ -53,7 +53,6 @@ export class LegalContractPrismaDTO {
       UpdatedBy: { connect: { id: legalContract.updated_by } },
       observations: legalContract.observations,
       updated_at: legalContract.updated_at,
-      contract_number: legalContract.contract_number,
     };
 
     return legalContractUptade;

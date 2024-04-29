@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -46,7 +47,7 @@ export class LegalClientQuoteTableResolver {
     private recipientUseCase: RecipientUseCases,
     private senderUseCase: SenderUseCases,
   ) {}
-  @Query(() => Number)
+  @Query(() => Int)
   async countLegalClientQuoteTable(
     @Args() request: LegalClientQuoteTableCountArgs,
   ) {
