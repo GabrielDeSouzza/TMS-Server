@@ -50,9 +50,11 @@ export class PhysicalCustomerOrderPrismaDTO {
   ) {
     const physicalCustomerOrderPrisma: Prisma.PhysicalCustomerOrderUpdateInput =
       {
-        PhysicalCustomer: {
-          connect: { id: physicalCustomerOrder.physicalCustomerId },
-        },
+        PhysicalCustomer: physicalCustomerOrder.physicalCustomerId
+          ? {
+              connect: { id: physicalCustomerOrder.physicalCustomerId },
+            }
+          : undefined,
         PhysicalCustomerQuoteTable: physicalCustomerOrder.quote_table_id
           ? { connect: { id: physicalCustomerOrder.quote_table_id } }
           : undefined,

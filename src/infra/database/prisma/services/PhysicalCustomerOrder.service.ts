@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { type GetPhysicalCustomerOrderDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerOrderDto';
-import { type FindAllPhysicalCustomerOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerOrderRepositoryDto';
+import {
+  type CountPhysicalCustomerOrderRequestDTO,
+  type FindAllPhysicalCustomerOrderWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/PhysicalCustomerOrderRepositoryDto';
 import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 import { type PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 import { type PhysicalCustomerOrderRepository } from 'domain/repositories/PhysicalCustomerOrder.repository';
@@ -15,6 +18,13 @@ export class PhysicalCustomerOrderPrismaService
   implements PhysicalCustomerOrderRepository
 {
   constructor(private prisma: PrismaService) {}
+  countPhysicalCustomerOrder(
+    request: CountPhysicalCustomerOrderRequestDTO,
+  ): Promise<number> {
+    return this.prisma.physicalCustomerOrder.count({
+      where: request.where ?? undefined,
+    });
+  }
   async findOrdersByPhyiscalCustomer(
     physicalCustomerId: string,
   ): Promise<PhysicalCustomerOrder[]> {
@@ -93,5 +103,58 @@ export class PhysicalCustomerOrderPrismaService
     return expenses.FreightExpenses.map(expense =>
       FreightExpensePrismaDTO.PrismaToEntity(expense),
     );
+  }
+
+  updateManyPhysicalCustomerOrder(
+    data: PhysicalCustomerOrder[],
+  ): Promise<PhysicalCustomerOrder[]> {
+    console.log(data);
+    const physicalcustomerorderUpdate = this.prisma.$transaction(async tx => {
+      const promises = data.map(async physicalcustomerorder => {
+        const physicalcustomerorderPrisma =
+          await tx.physicalCustomerOrder.update({
+            data: PhysicalCustomerOrderPrismaDTO.EntityToPrismaUpdate(
+              physicalcustomerorder,
+            ),
+            where: { id: physicalcustomerorder.id },
+          });
+
+        return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+          physicalcustomerorderPrisma,
+        );
+      });
+
+      return Promise.all(promises);
+    });
+
+    return physicalcustomerorderUpdate;
+  }
+
+  async deletePhysicalCustomerOrder(
+    id: string,
+  ): Promise<PhysicalCustomerOrder> {
+    return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+      await this.prisma.physicalCustomerOrder.delete({ where: { id } }),
+    );
+  }
+  deleteManyPhysicalCustomerOrder(
+    ids: string[],
+  ): Promise<PhysicalCustomerOrder[]> {
+    const physicalcustomerorderDeleted = this.prisma.$transaction(async tx => {
+      const promises = ids.map(async icmdsId => {
+        const physicalcustomerorderPrisma =
+          await tx.physicalCustomerOrder.delete({
+            where: { id: icmdsId },
+          });
+
+        return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+          physicalcustomerorderPrisma,
+        );
+      });
+
+      return Promise.all(promises);
+    });
+
+    return physicalcustomerorderDeleted;
   }
 }

@@ -32,3 +32,7 @@ export class FindAllPhysicalCustomerOrderWhereRequestDTO {
   sort?: SortByPhysicalCustomerOrderTypeDTO;
   where?: WherePhysicalCustomerOrderTypeDTO;
 }
+
+export abstract class CountPhysicalCustomerOrderRequestDTO {
+  where?: WherePhysicalCustomerOrderTypeDTO;
+}

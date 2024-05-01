@@ -1468,8 +1468,8 @@ type Mutation {
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteIcms(id: String!): IcmsModel!
   deleteIncident(id: String!): IncidentModel!
-  deleteLegalClientOrder(id: String!): LegalClientOrderModel!
   deleteLegalClient(id: String!): LegalClientModel!
+  deleteLegalClientOrder(id: String!): LegalClientOrderModel!
   deleteLegalClientQuoteTable(id: String!): LegalClientQuoteTableModel!
   deleteLegalContract(id: String!): LegalContractModel!
   deleteMaintenance(id: String!): MaintenanceModel!
@@ -1481,18 +1481,28 @@ type Mutation {
   deleteManyIncident(ids: [String!]!): [IncidentModel!]!
   deleteManyLegalClientOrder(ids: [String!]!): [LegalClientOrderModel!]!
   deleteManyLegalClientQuoteTable(ids: [String!]!): [LegalClientQuoteTableModel!]!
+  deleteManyLegalClients(deleteManyLegalClients: [String!]!): [LegalClientModel!]!
   deleteManyLegalContract(ids: [String!]!): [LegalContractModel!]!
   deleteManyMaintenance(ids: [String!]!): [MaintenanceModel!]!
   deleteManyMaintenanceCompany(ids: [String!]!): [MaintenanceCompanyModel!]!
   deleteManyOrderProcessing(ids: [String!]!): [OrderProcessingModel!]!
-  deleteManyLegalClients(deleteManyLegalClients: [String!]!): [LegalClientModel!]!
+  deleteManyOutsourcedDriver(ids: [String!]!): [OutsourcedDriverModel!]!
   deleteManyOwnDrivers(deleteManOwnDrivers: [String!]!): [OwnDriverModel!]!
+  deleteManyPhysicalCustomerOrder(ids: [String!]!): [PhysicalCustomerOrderModel!]!
   deleteManyPhysicalCustomers(deleteManyPhysicalCustomers: [String!]!): [PhysicalCustomerModel!]!
   deleteManyRecipients(deleteManyRecipients: [String!]!): [RecipientModel!]!
   deleteManySenders(deleteManySenders: [String!]!): [SenderModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
+  deleteManyVehicleBrands(deleteManyVehicleBrands: [String!]!): [VehicleBrandModel!]!
+  deleteManyVehicleModels(deleteManyVehicleModels: [String!]!): [VehicleModelGraphql!]!
+  deleteManyVehicleTypes(deleteManyVehicleTypes: [String!]!): [VehicleTypeModel!]!
   deleteOrderProcessing(id: String!): OrderProcessingModel!
   deleteOutsourcedDriver(id: String!): OutsourcedDriverModel!
+  deleteOwnDriver(id: String!): OwnDriverModel!
+  deletePhysicalCustomer(id: String!): PhysicalCustomerModel!
+  deletePhysicalCustomerOrder(id: String!): PhysicalCustomerOrderModel!
+  deleteRecipient(id: String!): RecipientModel!
+  deleteSender(id: String!): SenderModel!
   deleteUser(id: String!): UserModel!
   deleteVehicleBrand(id: String!): VehicleBrandModel!
   deleteVehicleModel(id: String!): VehicleModelGraphql!
@@ -1514,11 +1524,17 @@ type Mutation {
   updateManyIncident(data: [IncidentUpdateManyInput!]!): [IncidentModel!]!
   updateManyLegalClientOrder(data: [LegalClientOrderUpdateManyInput!]!): [LegalClientOrderModel!]!
   updateManyLegalClientQuoteTable(data: [LegalClientQuoteTableUpdateManyInput!]!): [LegalClientQuoteTableModel!]!
+  updateManyLegalClients(updateManyLegalClients: [LegalClientUpdateManyInput!]!): [LegalClientModel!]!
   updateManyLegalContract(data: [LegalContractUpdateManyInput!]!): [LegalContractModel!]!
   updateManyMaintenance(data: [MaintenanceUpdateManyInput!]!): [MaintenanceModel!]!
   updateManyMaintenanceCompany(data: [MaintenanceCompanyUpdateManyInput!]!): [MaintenanceCompanyModel!]!
   updateManyOrderProcessing(data: [OrderProcessingUpdateManyInput!]!): [OrderProcessingModel!]!
   updateManyOutsourcedDriver(data: [OutsourcedDriverUpdateManyInput!]!): [OutsourcedDriverModel!]!
+  updateManyOwnDrivers(updateManyOwnDrivers: [OwnDriverUpdateManyInput!]!): [OwnDriverModel!]!
+  updateManyPhysicalCustomerOrder(data: [PhysicalCustomerOrderUpdateManyInput!]!): [PhysicalCustomerOrderModel!]!
+  updateManyPhysicalCustomers(updateManyPhysicalCustomers: [PhysicalCustomerUpdateManyInput!]!): [PhysicalCustomerModel!]!
+  updateManyRecipients(updateManyRecipients: [RecipientUpdateManyInput!]!): [RecipientModel!]!
+  updateManySenders(updateManySenders: [SenderUpdateManyInput!]!): [SenderModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateManyVehicleBrands(updateManyVehicleBrands: [VehicleBrandUpdateManyInput!]!): [VehicleBrandModel!]!
   updateManyVehicleModels(updateManyVehicleModels: [VehicleModelUpdateManyInput!]!): [VehicleModelGraphql!]!
@@ -2568,6 +2584,13 @@ input PhysicalCustomerOrderUpdateInput {
   quote_table_id: String
 }
 
+input PhysicalCustomerOrderUpdateManyInput {
+  carrier_id: String
+  id: String!
+  physicalCustomerId: String
+  quote_table_id: String
+}
+
 input PhysicalCustomerOrderWhereInput {
   AND: [PhysicalCustomerOrderWhereInput!]
   CarrierCompany: CarrierCompanyWhereInput
@@ -2748,6 +2771,7 @@ type Query {
   countMaintenanceCompany(where: MaintenanceCompanyWhereInput): Int!
   countOrderProcessing(where: OrderProcessingWhereInput): Int!
   countOutsourcedDriver(where: OutsourcedDriverWhereInput): Int!
+  countPhysicalCustomerOrder(where: PhysicalCustomerOrderWhereInput): Int!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

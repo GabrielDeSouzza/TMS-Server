@@ -31,3 +31,10 @@ export class PhysicalCustomerOrderWhereArgs {
   @IsOptional()
   sort?: PhysicalCustomerOrderOrderByWithRelationInput;
 }
+@ArgsType()
+export class PhysicalCustomerOrderCountArgs {
+  @Field(() => PhysicalCustomerOrderWhereInput, { nullable: true })
+  @Type(() => PhysicalCustomerOrderWhereInput)
+  @IsOptional()
+  where?: PhysicalCustomerOrderWhereInput;
+}

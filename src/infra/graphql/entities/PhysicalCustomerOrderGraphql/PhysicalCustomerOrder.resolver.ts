@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -27,10 +28,14 @@ import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustom
 import { PhysicalCustomerQuoteTableModel } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetPhysicalCustomerOrderArgs } from './Args/GetPhysicalCustomerOrderrArgs';
-import { PhysicalCustomerOrderWhereArgs } from './Args/WherePhysicalCustomerOrderArgs';
+import {
+  PhysicalCustomerOrderCountArgs,
+  PhysicalCustomerOrderWhereArgs,
+} from './Args/WherePhysicalCustomerOrderArgs';
 import {
   PhysicalCustomerOrderInput,
   PhysicalCustomerOrderUpdateInput,
+  PhysicalCustomerOrderUpdateManyInput,
 } from './PhysicalCustomerOrder.input';
 import { PhysicalCustomerOrderModel } from './PhysicalCustomerOrder.model';
 
@@ -46,6 +51,14 @@ export class PhysicalCustomerOrderResolver {
     private physicalCustomerQuoteUseCase: PhysicalCustomerQuoteTableUseCases,
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
+  @Query(() => Int)
+  async countPhysicalCustomerOrder(
+    @Args() request: PhysicalCustomerOrderCountArgs,
+  ) {
+    return this.physicalCustomerOrderUseCase.countPhysicalCustomerOrder(
+      request,
+    );
+  }
   @Query(() => PhysicalCustomerOrderModel, { nullable: true })
   async getPhysicalCustomerOrderModel(
     @Args() request: GetPhysicalCustomerOrderArgs,
@@ -83,6 +96,31 @@ export class PhysicalCustomerOrderResolver {
     return await this.physicalCustomerOrderUseCase.updateOrder(
       id,
       physicalCustomerOrderInput,
+    );
+  }
+  @Mutation(() => [PhysicalCustomerOrderModel])
+  async updateManyPhysicalCustomerOrder(
+    @Args({ name: 'data', type: () => [PhysicalCustomerOrderUpdateManyInput] })
+    data: PhysicalCustomerOrderUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.physicalCustomerOrderUseCase.updateManyPhysicalCustomerOrder(
+      data,
+      user.id,
+    );
+  }
+  @Mutation(() => PhysicalCustomerOrderModel)
+  async deletePhysicalCustomerOrder(@Args('id') id: string) {
+    return this.physicalCustomerOrderUseCase.deletePhysicalCustomerOrder(id);
+  }
+
+  @Mutation(() => [PhysicalCustomerOrderModel])
+  async deleteManyPhysicalCustomerOrder(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.physicalCustomerOrderUseCase.deleteManyPhysicalCustomerOrder(
+      ids,
     );
   }
   @ResolveField(() => PhysicalCustomerModel)

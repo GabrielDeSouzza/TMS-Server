@@ -3,11 +3,15 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetPhysicalCustomerOrderDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerOrderDto';
-import { type FindAllPhysicalCustomerOrderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerOrderRepositoryDto';
+import {
+  type CountPhysicalCustomerOrderRequestDTO,
+  type FindAllPhysicalCustomerOrderWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/PhysicalCustomerOrderRepositoryDto';
 import { PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 import { PhysicalCustomerOrderRepository } from 'domain/repositories/PhysicalCustomerOrder.repository';
 
 import { type CreatePhysicalCustomerOrderDTO } from 'app/dtos/PhysicalCustomerOrderDto/CreatePhysicalCustomerOrderDto';
+import { type UpdateManyPhysicalCustomerOrderDTO } from 'app/dtos/PhysicalCustomerOrderDto/UpdateManyPhysicalCustomerOrderDto';
 import { type UpdatePhysicalCustomerOrderDTO } from 'app/dtos/PhysicalCustomerOrderDto/UpdatePhysicalCustomerOrderDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
@@ -23,6 +27,13 @@ export class PhysicalCustomerOrderUseCases {
     private physicalQuoteTableUseCase: PhysicalCustomerQuoteTableUseCases,
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
+  async countPhysicalCustomerOrder(
+    request: CountPhysicalCustomerOrderRequestDTO,
+  ) {
+    return this.physicalCustomerOrderRepository.countPhysicalCustomerOrder(
+      request,
+    );
+  }
   async getPhysicalCustomerOrder(request: GetPhysicalCustomerOrderDTO) {
     if (!request.id && !request.order) {
       throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
@@ -123,5 +134,52 @@ export class PhysicalCustomerOrderUseCases {
     throw new GraphQLError('ANY EXPENSE FOUND', {
       extensions: { code: HttpStatus.NOT_FOUND },
     });
+  }
+  async updateManyPhysicalCustomerOrder(
+    data: UpdateManyPhysicalCustomerOrderDTO[],
+    updateBy: string,
+  ) {
+    for (const physicalcustomerorder of data)
+      await this.verifyPhysicalCustomerOrderExist(physicalcustomerorder.id);
+    const physicalcustomerorders = data.map(physicalcustomerorder => {
+      const physicalcustomerorderUpdated = new PhysicalCustomerOrder({
+        created_by: null,
+        physicalCustomerId: physicalcustomerorder.physicalCustomerId,
+        updated_by: updateBy,
+        carrier_id: physicalcustomerorder.carrier_id,
+        order: null,
+        quote_table_id: physicalcustomerorder.quote_table_id,
+        id: physicalcustomerorder.id,
+      });
+
+      return physicalcustomerorderUpdated;
+    });
+
+    return this.physicalCustomerOrderRepository.updateManyPhysicalCustomerOrder(
+      physicalcustomerorders,
+    );
+  }
+  async deletePhysicalCustomerOrder(id: string) {
+    await this.getPhysicalCustomerOrder({ id });
+
+    return this.physicalCustomerOrderRepository.deletePhysicalCustomerOrder(id);
+  }
+  async deleteManyPhysicalCustomerOrder(ids: string[]) {
+    for (const physicalcustomerorderId of ids)
+      await this.verifyPhysicalCustomerOrderExist(physicalcustomerorderId);
+
+    return this.physicalCustomerOrderRepository.deleteManyPhysicalCustomerOrder(
+      ids,
+    );
+  }
+  private async verifyPhysicalCustomerOrderExist(id: string) {
+    const exist =
+      await this.physicalCustomerOrderRepository.findPhysicalCustomerOrder({
+        id,
+      });
+    if (!exist)
+      throw new GraphQLError(`THIS PHYSICALCUSTOMERORDER ID ${id} NOT FOUND`, {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

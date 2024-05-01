@@ -34,3 +34,12 @@ export class PhysicalCustomerOrderInput
 export class PhysicalCustomerOrderUpdateInput extends PartialType(
   PhysicalCustomerOrderInput,
 ) {}
+@InputType()
+export class PhysicalCustomerOrderUpdateManyInput extends PartialType(
+  PhysicalCustomerOrderInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}
