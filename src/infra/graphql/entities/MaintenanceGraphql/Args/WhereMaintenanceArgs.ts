@@ -31,3 +31,11 @@ export class MaintenanceWhereArgs {
   @IsOptional()
   sort?: MaintenanceOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class MaintenanceCountArgs {
+  @Field(() => MaintenanceWhereInput, { nullable: true })
+  @Type(() => MaintenanceWhereInput)
+  @IsOptional()
+  where?: MaintenanceWhereInput;
+}

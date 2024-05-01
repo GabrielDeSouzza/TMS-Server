@@ -13,6 +13,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type IMaintenance } from 'domain/entities/MaintenceEntities/Maintenance/Maintenance';
@@ -53,4 +54,15 @@ export class MaintenanceUpdateInput extends PartialType(
   @IsDate()
   @IsOptional()
   finished_at?: Date;
+}
+@InputType()
+export class MaintenanceUpdateManyInput extends PartialType(MaintenanceInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+
+  @HideField()
+  @Allow()
+  updated_by: string;
 }

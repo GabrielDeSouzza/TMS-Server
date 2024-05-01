@@ -1393,6 +1393,13 @@ input MaintenanceUpdateInput {
   type_of_maintenance_id: String
 }
 
+input MaintenanceUpdateManyInput {
+  id: String!
+  maintenance_company_id: String
+  type_of_maintenance_id: String
+  vehicle_id: String
+}
+
 input MaintenanceWhereInput {
   AND: [MaintenanceWhereInput!]
   CreatedBy: UserWhereInput
@@ -1457,6 +1464,7 @@ type Mutation {
   deleteLegalClientOrder(id: String!): LegalClientOrderModel!
   deleteLegalClientQuoteTable(id: String!): LegalClientQuoteTableModel!
   deleteLegalContract(id: String!): LegalContractModel!
+  deleteMaintenance(id: String!): MaintenanceModel!
   deleteMaintenanceCompany(id: String!): MaintenanceCompanyModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
@@ -1466,6 +1474,7 @@ type Mutation {
   deleteManyLegalClientOrder(ids: [String!]!): [LegalClientOrderModel!]!
   deleteManyLegalClientQuoteTable(ids: [String!]!): [LegalClientQuoteTableModel!]!
   deleteManyLegalContract(ids: [String!]!): [LegalContractModel!]!
+  deleteManyMaintenance(ids: [String!]!): [MaintenanceModel!]!
   deleteManyMaintenanceCompany(ids: [String!]!): [MaintenanceCompanyModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
@@ -1486,6 +1495,7 @@ type Mutation {
   updateManyLegalClientOrder(data: [LegalClientOrderUpdateManyInput!]!): [LegalClientOrderModel!]!
   updateManyLegalClientQuoteTable(data: [LegalClientQuoteTableUpdateManyInput!]!): [LegalClientQuoteTableModel!]!
   updateManyLegalContract(data: [LegalContractUpdateManyInput!]!): [LegalContractModel!]!
+  updateManyMaintenance(data: [MaintenanceUpdateManyInput!]!): [MaintenanceModel!]!
   updateManyMaintenanceCompany(data: [MaintenanceCompanyUpdateManyInput!]!): [MaintenanceCompanyModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
@@ -2666,6 +2676,7 @@ type Query {
   countLegalClientOrder(where: LegalClientOrderWhereInput): Int!
   countLegalClientQuoteTable(where: LegalClientQuoteTableWhereInput): Int!
   countLegalContract(where: LegalContractWhereInput): Int!
+  countMaintenance(where: MaintenanceWhereInput): Int!
   countMaintenanceCompany(where: MaintenanceCompanyWhereInput): Int!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!

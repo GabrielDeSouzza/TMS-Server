@@ -32,3 +32,7 @@ export class FindAllMaintenanceWhereRequestDTO {
   sort?: SortByMaintenanceTypeDTO;
   where?: WhereMaintenanceTypeDTO;
 }
+
+export abstract class CountMaintenanceRequestDTO {
+  where?: WhereMaintenanceTypeDTO;
+}

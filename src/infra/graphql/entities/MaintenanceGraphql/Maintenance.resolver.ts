@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -26,8 +27,15 @@ import { GetMaintenanceArgs } from '../MaintenanceGraphql/Args/GetMaintenanceArg
 import { TypeOfMaintenanceModel } from '../TypeOfMaintenanceGraphql/TypeOfMaintenance.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
-import { MaintenanceWhereArgs } from './Args/WhereMaintenanceArgs';
-import { MaintenanceInput, MaintenanceUpdateInput } from './Maintenance.input';
+import {
+  MaintenanceCountArgs,
+  MaintenanceWhereArgs,
+} from './Args/WhereMaintenanceArgs';
+import {
+  MaintenanceInput,
+  MaintenanceUpdateInput,
+  MaintenanceUpdateManyInput,
+} from './Maintenance.input';
 import { MaintenanceModel } from './Maintenance.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -36,19 +44,23 @@ import { MaintenanceModel } from './Maintenance.model';
 @Resolver(() => MaintenanceModel)
 export class MaintenanceResolver {
   constructor(
-    private MaintenanceUseCase: MaintenanceUseCases,
+    private maintenanceUseCase: MaintenanceUseCases,
     private userCase: UserUseCases,
     private vehicleUseCase: VehicleUseCases,
     private maintenanceCompanyUseCase: MaintenanceCompanyUseCases,
     private typeOfMaintenanceUseCase: TypeOfMaintenanceUseCases,
   ) {}
+  @Query(() => Int)
+  async countMaintenance(@Args() request: MaintenanceCountArgs) {
+    return this.maintenanceUseCase.countMaintenance(request);
+  }
   @Query(() => MaintenanceModel)
   async getMaintenance(@Args() request: GetMaintenanceArgs) {
-    return this.MaintenanceUseCase.getMaintenance(request);
+    return this.maintenanceUseCase.getMaintenance(request);
   }
   @Query(() => [MaintenanceModel], { nullable: true })
   async getAllMaintenance(@Args() args: MaintenanceWhereArgs) {
-    return await this.MaintenanceUseCase.getAllMaintenance(args);
+    return await this.maintenanceUseCase.getAllMaintenance(args);
   }
   @Mutation(() => MaintenanceModel)
   async createMaintenance(
@@ -59,7 +71,7 @@ export class MaintenanceResolver {
     maintenanceInput.created_by = user.id;
     maintenanceInput.updated_by = user.id;
 
-    return this.MaintenanceUseCase.createMaintenance(maintenanceInput);
+    return this.maintenanceUseCase.createMaintenance(maintenanceInput);
   }
   @Mutation(() => MaintenanceModel)
   async updateMaintenance(
@@ -70,7 +82,27 @@ export class MaintenanceResolver {
   ) {
     recipent.updated_by = user.id;
 
-    return this.MaintenanceUseCase.updateMaintenance(id, recipent);
+    return this.maintenanceUseCase.updateMaintenance(id, recipent);
+  }
+  @Mutation(() => [MaintenanceModel])
+  async updateManyMaintenance(
+    @Args({ name: 'data', type: () => [MaintenanceUpdateManyInput] })
+    data: MaintenanceUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.maintenanceUseCase.updateManyMaintenance(data, user.id);
+  }
+  @Mutation(() => MaintenanceModel)
+  async deleteMaintenance(@Args('id') id: string) {
+    return this.maintenanceUseCase.deleteMaintenance(id);
+  }
+
+  @Mutation(() => [MaintenanceModel])
+  async deleteManyMaintenance(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.maintenanceUseCase.deleteManyMaintenance(ids);
   }
 
   @ResolveField(() => VehicleCarModel)
