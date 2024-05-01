@@ -35,3 +35,17 @@ export abstract class getLegalClientData {
   fantasyName?: string;
   corporateName?: string;
 }
+
+export abstract class CountAllLegalClientsWhereRequestDTO {
+  where?: WhereLegalClientTypeDTO;
+}
+
+export abstract class UpdateManyLegalClientsDTO {
+  id: string;
+  branch?: string;
+  legal_person_id?: string;
+  updated_at?: Date;
+  created_at?: Date;
+  updated_by?: string;
+  created_by?: string;
+}

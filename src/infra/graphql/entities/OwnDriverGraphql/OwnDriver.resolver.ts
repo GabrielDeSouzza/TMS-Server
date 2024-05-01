@@ -14,7 +14,10 @@ import { NaturalPersonUseCases } from 'app/useCases/NaturalPersoUseCases/Natural
 import { OwnDriverUseCases } from 'app/useCases/OwnDriverUseCases/OwnDriverUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { OwnDriverWhereArgs } from 'infra/graphql/entities/OwnDriverGraphql/Args/WhereOwnDriverArgs';
+import {
+  OwnDriverCountArgs,
+  OwnDriverWhereArgs,
+} from 'infra/graphql/entities/OwnDriverGraphql/Args/WhereOwnDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -23,7 +26,11 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { GetOwnDriverArgs } from './Args/GetOwnDriverArgs';
-import { OwnDriverInput, OwnDriverUpdate } from './OwnDriver.input';
+import {
+  OwnDriverInput,
+  OwnDriverUpdate,
+  OwnDriverUpdateManyInput,
+} from './OwnDriver.input';
 import { OwnDriverModel } from './OwnDriver.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -36,14 +43,49 @@ export class OwnDriverResolver {
     private naturalPersonUseCase: NaturalPersonUseCases,
     private userCase: UserUseCases,
   ) {}
+
+  @Query(() => Number)
+  async totalOwnDrivers(@Args() request: OwnDriverCountArgs) {
+    const ownDriver = await this.ownDriverUseCase.count(request);
+
+    return ownDriver;
+  }
+
+  @Mutation(() => [OwnDriverModel])
+  async updateManyOwnDrivers(
+    @Args({
+      name: 'updateManyOwnDrivers',
+      type: () => [OwnDriverUpdateManyInput],
+    })
+    updateOwnDriverInput: OwnDriverUpdateManyInput[],
+  ) {
+    return await this.ownDriverUseCase.updateManyOwnDrivers(
+      updateOwnDriverInput,
+    );
+  }
+
+  @Mutation(() => OwnDriverModel)
+  async deleteOwnDriver(@Args('id', { type: () => String }) id: string) {
+    return await this.ownDriverUseCase.deleteOwnDriver(id);
+  }
+
+  @Mutation(() => [OwnDriverModel])
+  async deleteManyOwnDrivers(
+    @Args({ name: 'deleteManOwnDrivers', type: () => [String] }) ids: string[],
+  ) {
+    return await this.ownDriverUseCase.deleteManyOwnDrivers(ids);
+  }
+
   @Query(() => OwnDriverModel, { nullable: true })
   async getOwnDriver(@Args() request: GetOwnDriverArgs) {
     return await this.ownDriverUseCase.getOwnDriver(request);
   }
+
   @Query(() => [OwnDriverModel])
   async getAllOwnDriver(@Args() args: OwnDriverWhereArgs) {
     return this.ownDriverUseCase.getAllOwnDriver(args);
   }
+
   @Mutation(() => OwnDriverModel)
   async createOwnDriver(
     @Args('ownDriverInput') ownDriverInput: OwnDriverInput,
@@ -54,6 +96,7 @@ export class OwnDriverResolver {
 
     return await this.ownDriverUseCase.createOwnDriver(ownDriverInput);
   }
+
   @Mutation(() => OwnDriverModel)
   async updateOwnDriver(
     @Args('id') id: string,
@@ -64,12 +107,14 @@ export class OwnDriverResolver {
 
     return this.ownDriverUseCase.updateOwnDriver(id, ownDriverUpdate);
   }
+
   @ResolveField(() => UserModelRefereces)
   async createdUser(@Parent() user: OwnDriverInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
+
   @ResolveField(() => UserModelRefereces)
   async updatedUser(@Parent() user: OwnDriverInput) {
     const { updated_by: updatedBy } = user;

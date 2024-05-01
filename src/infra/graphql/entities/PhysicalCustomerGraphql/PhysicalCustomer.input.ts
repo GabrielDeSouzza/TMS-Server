@@ -6,6 +6,8 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
+import { IsNotEmpty, IsUUID } from 'class-validator';
+
 import { type IPhysicalCustomer } from 'domain/entities/PhysicalClientEntities/physicalCustomer/PhysicalCustomer';
 
 import {
@@ -40,4 +42,14 @@ export class PhysicalCustomerUpdateInput extends PartialType(
   @Field(() => NaturalPersonUpdate, { nullable: true })
   NaturalPerson?: NaturalPersonUpdate;
   updated_by: string;
+}
+
+@InputType()
+export class PhysicalCustomerUpdateManyInput extends PartialType(
+  PhysicalCustomerInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

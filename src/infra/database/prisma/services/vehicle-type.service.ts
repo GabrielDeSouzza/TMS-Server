@@ -1,7 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
+
+import { GraphQLError } from 'graphql';
 
 import { type GetVehicleTypeDTO } from 'domain/dto/repositories/getDataDtos/GetVehicleTypeDto';
-import { type FindAllVehicleTypeWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleTypeRepositoryDto';
+import {
+  type CountAllVehicleTypesWhereRequestDTO,
+  type UpdateManyVehicleTypesDTO,
+  type FindAllVehicleTypeWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/VehicleTypeRepositoryDto';
 import { type VehicleType } from 'domain/entities/VehicleEntities/vehicleTypes/VehicleTypes';
 import { type VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository';
 
@@ -11,6 +17,127 @@ import { VehicleTypePrismaDTO } from './prismaDTO/VehicleTypePrismaDto.ts';
 @Injectable()
 export class VehicleTypeService implements VehicleTypeRepository {
   constructor(private prisma: PrismaService) {}
+
+  async count(
+    parameters: CountAllVehicleTypesWhereRequestDTO,
+  ): Promise<number> {
+    const count = this.prisma.vehicleType.count({ where: parameters.where });
+
+    return count;
+  }
+
+  async delete(id: string): Promise<VehicleType> {
+    const vehicleType = await this.prisma.vehicleType.findUnique({
+      where: { id },
+    });
+
+    if (!vehicleType) {
+      throw new GraphQLError('vehicleType not found!', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    }
+
+    const vehicleTypePrisma = await this.prisma.vehicleType.delete({
+      where: { id },
+    });
+
+    if (!vehicleTypePrisma) {
+      throw new GraphQLError('vehicleType not deleted!', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const vehicleTypeDomain =
+      VehicleTypePrismaDTO.PrismaToEntity(vehicleTypePrisma);
+
+    return vehicleTypeDomain;
+  }
+
+  async updateMany(
+    vehicleType: UpdateManyVehicleTypesDTO[],
+  ): Promise<VehicleType[]> {
+    const vehicleTypes: VehicleType[] = [];
+
+    await Promise.all(
+      vehicleType.map(async item => {
+        const vehicleType = await this.prisma.vehicleType.findUnique({
+          where: { id: item.id },
+        });
+
+        if (!vehicleType) {
+          throw new GraphQLError(
+            `Vehicle Type with id "${item.id}" not found!`,
+            {
+              extensions: { code: HttpStatus.NOT_FOUND },
+            },
+          );
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const vehicleTypePrisma = await tx.vehicleType.update({
+            where: { id: item.id },
+            data: {
+              ...item,
+              updated_at: new Date(),
+            },
+          });
+
+          if (!vehicleTypePrisma) {
+            throw new GraphQLError(
+              `Vehicle Type with id "${item.id}" not updated!`,
+              {
+                extensions: { code: HttpStatus.BAD_REQUEST },
+              },
+            );
+          }
+
+          const vehicleTypeDomain =
+            VehicleTypePrismaDTO.PrismaToEntity(vehicleTypePrisma);
+
+          vehicleTypes.push(vehicleTypeDomain);
+        });
+      }),
+    );
+
+    return vehicleTypes;
+  }
+
+  async deleteMany(ids: string[]): Promise<VehicleType[]> {
+    const vehicleTypes: VehicleType[] = [];
+
+    await Promise.all(
+      ids.map(async id => {
+        const vehicleType = await this.prisma.vehicleType.findUnique({
+          where: { id },
+        });
+
+        if (!vehicleType) {
+          throw new GraphQLError('Vehicle Type not found!', {
+            extensions: { code: HttpStatus.NOT_FOUND },
+          });
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const vehicleTypePrisma = await tx.vehicleType.delete({
+            where: { id },
+          });
+
+          if (!vehicleTypePrisma) {
+            throw new GraphQLError('Vehicle Type not deleted!', {
+              extensions: { code: HttpStatus.BAD_REQUEST },
+            });
+          }
+
+          const vehicleTypeDomain =
+            VehicleTypePrismaDTO.PrismaToEntity(vehicleTypePrisma);
+
+          vehicleTypes.push(vehicleTypeDomain);
+        });
+      }),
+    );
+
+    return vehicleTypes;
+  }
 
   async findVehicleType(request: GetVehicleTypeDTO): Promise<VehicleType> {
     const vehicleTypePrisma = await this.prisma.vehicleType.findFirst({

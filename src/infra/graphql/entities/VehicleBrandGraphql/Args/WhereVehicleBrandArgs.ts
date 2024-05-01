@@ -31,3 +31,11 @@ export class VehicleBrandWhereArgs {
   @IsOptional()
   sort?: VehicleBrandOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class VehicleBrandCountArgs {
+  @Field(() => VehicleBrandWhereInput, { nullable: true })
+  @Type(() => VehicleBrandWhereInput)
+  @IsOptional()
+  where?: VehicleBrandWhereInput;
+}

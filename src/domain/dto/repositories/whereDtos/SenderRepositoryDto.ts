@@ -28,3 +28,17 @@ export class FindAllSenderWhereRequestDTO {
   sort?: SortBySenderTypeDTO;
   where?: WhereSenderTypeDTO;
 }
+
+export abstract class CountAllSendersWhereRequestDTO {
+  where?: WhereSenderTypeDTO;
+}
+
+export abstract class UpdateManySendersDTO {
+  id: string;
+  legal_person_id?: string;
+  natural_person_id?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  created_by?: string;
+  updated_by?: string;
+}

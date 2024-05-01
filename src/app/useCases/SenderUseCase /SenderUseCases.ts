@@ -3,7 +3,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetSenderDTO } from 'domain/dto/repositories/getDataDtos/GetSendertDto';
-import { type FindAllSenderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/SenderRepositoryDto';
+import {
+  type CountAllSendersWhereRequestDTO,
+  type FindAllSenderWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/SenderRepositoryDto';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { Sender } from 'domain/entities/Sender/Sender';
@@ -12,6 +15,7 @@ import { SenderRepository } from 'domain/repositories/SenderRepository';
 import { LegalPersonEntityDto } from 'app/dtos/LegalPerson/LegalPersonEntityDto';
 import { NaturalPersonEntityDto } from 'app/dtos/NaturalPersonDto/NaturalPersonEntityDto';
 import { type CreateSenderDTO } from 'app/dtos/SenderDto/CreateSenderDto';
+import { type UpdateManySendersDto } from 'app/dtos/SenderDto/UpdateManySendersDto';
 import { type UpdateSenderDTO } from 'app/dtos/SenderDto/UpdateSenderDto';
 
 import { LegalPersonUseCases } from '../LegalPersonUseCases/LegalPersonUseCases';
@@ -24,6 +28,26 @@ export class SenderUseCases {
     private legalPersonUseCase: LegalPersonUseCases,
     private naturalPersonUseCase: NaturalPersonUseCases,
   ) {}
+  async count(parameters: CountAllSendersWhereRequestDTO): Promise<number> {
+    return await this.senderRepository.count(parameters);
+  }
+
+  async updateManySenders(senders: UpdateManySendersDto[]): Promise<Sender[]> {
+    const updateSenders = await this.senderRepository.updateMany(senders);
+
+    return updateSenders;
+  }
+
+  async deleteSender(id: string): Promise<Sender> {
+    return await this.senderRepository.delete(id);
+  }
+
+  async deleteManySenders(ids: string[]): Promise<Sender[]> {
+    const deleteSenders = await this.senderRepository.deleteMany(ids);
+
+    return deleteSenders;
+  }
+
   async getSender(request: GetSenderDTO) {
     if (!request.legalPerson && !request.id && !request.naturalPerson) {
       throw new GraphQLError(

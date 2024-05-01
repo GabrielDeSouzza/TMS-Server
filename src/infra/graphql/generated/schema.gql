@@ -1047,6 +1047,13 @@ input LegalClientUpdateInput {
   legal_person_id: String
 }
 
+input LegalClientUpdateManyInput {
+  LegalPerson: LegalPersonInput
+  branch: String
+  id: String!
+  legal_person_id: String
+}
+
 input LegalClientWhereInput {
   AND: [LegalClientWhereInput!]
   CreatedBy: UserWhereInput
@@ -1462,6 +1469,7 @@ type Mutation {
   deleteIcms(id: String!): IcmsModel!
   deleteIncident(id: String!): IncidentModel!
   deleteLegalClientOrder(id: String!): LegalClientOrderModel!
+  deleteLegalClient(id: String!): LegalClientModel!
   deleteLegalClientQuoteTable(id: String!): LegalClientQuoteTableModel!
   deleteLegalContract(id: String!): LegalContractModel!
   deleteMaintenance(id: String!): MaintenanceModel!
@@ -1477,15 +1485,24 @@ type Mutation {
   deleteManyMaintenance(ids: [String!]!): [MaintenanceModel!]!
   deleteManyMaintenanceCompany(ids: [String!]!): [MaintenanceCompanyModel!]!
   deleteManyOrderProcessing(ids: [String!]!): [OrderProcessingModel!]!
+  deleteManyLegalClients(deleteManyLegalClients: [String!]!): [LegalClientModel!]!
+  deleteManyOwnDrivers(deleteManOwnDrivers: [String!]!): [OwnDriverModel!]!
+  deleteManyPhysicalCustomers(deleteManyPhysicalCustomers: [String!]!): [PhysicalCustomerModel!]!
+  deleteManyRecipients(deleteManyRecipients: [String!]!): [RecipientModel!]!
+  deleteManySenders(deleteManySenders: [String!]!): [SenderModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteOrderProcessing(id: String!): OrderProcessingModel!
   deleteUser(id: String!): UserModel!
+  deleteVehicleBrand(id: String!): VehicleBrandModel!
+  deleteVehicleModel(id: String!): VehicleModelGraphql!
+  deleteVehicleType(id: String!): VehicleTypeModel!
   login(loginData: AuthInput!): AuthModel!
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
   updateCompletedOrders(data: CompletedOrdersUpdateInput!, id: String!): CompletedOrdersModel!
   updateFreightExpense(id: String!, upData: FreightExpenseUpdateInput!): FreightExpenseModel!
   updateIcms(id: String!, invoiceForLegalClientInput: IcmsUpdateInput!): IcmsModel!
   updateIncident(id: String!, upData: IncidentUpdateInput!): IncidentModel!
+  updateLegalClient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
   updateLegalClientCte(id: String!, ownDriverUpdate: LegalClientCteUpdateInput!): LegalClientCteModel!
   updateLegalClientQuoteTable(id: String!, legalClientQuoteTableUpdate: LegalClientQuoteTableUpdate!): LegalClientQuoteTableModel!
   updateMaintenance(data: MaintenanceUpdateInput!, id: String!): MaintenanceModel!
@@ -1501,6 +1518,9 @@ type Mutation {
   updateManyMaintenanceCompany(data: [MaintenanceCompanyUpdateManyInput!]!): [MaintenanceCompanyModel!]!
   updateManyOrderProcessing(data: [OrderProcessingUpdateManyInput!]!): [OrderProcessingModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
+  updateManyVehicleBrands(updateManyVehicleBrands: [VehicleBrandUpdateManyInput!]!): [VehicleBrandModel!]!
+  updateManyVehicleModels(updateManyVehicleModels: [VehicleModelUpdateManyInput!]!): [VehicleModelGraphql!]!
+  updateManyVehicleTypes(updateManyVehicleTypes: [VehicleTypeUpdateManyInput!]!): [VehicleTypeModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
@@ -1522,7 +1542,6 @@ type Mutation {
   updatedVehicleType(id: String!, vehicleTypeInput: VehicleTypeUpdateInput!): VehicleTypeModel!
   updatelegalClientOrder(id: String!, legalClientOrderInput: LegalClientOrderUpdateInput!): LegalClientOrderModel!
   updatelegalContract(id: String!, legalContractInput: LegalContractUpdateInput!): LegalContractModel!
-  updatelegalclient(id: String!, legalclientInput: LegalClientUpdateInput!): LegalClientModel!
   updateoutsourcedTransportCompany(data: OutsourcedTransportCompanyUpdateInput!, id: String!): OutsourcedTransportCompanyModel!
   updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
   updateoutsourcedTransportCompanyDriver(data: OutsourcedTransportCompanyDriverUpdateInput!, id: String!): OutsourcedTransportCompanyDriverModel!
@@ -2355,6 +2374,17 @@ input OwnDriverUpdate {
   course_mopp: Boolean
 }
 
+input OwnDriverUpdateManyInput {
+  NaturalPerson: NaturalPersonInput
+  cnh: String
+  cnh_category: String
+  cnh_expiration: Timestamp
+  company_vehicle: Boolean
+  course_mopp: Boolean
+  id: String!
+  natural_person_id: String
+}
+
 input OwnDriverWhereInput {
   AND: [OwnDriverWhereInput!]
   CreatedBy: UserWhereInput
@@ -2670,6 +2700,13 @@ input PhysicalCustomerUpdateInput {
   natural_person_id: String
 }
 
+input PhysicalCustomerUpdateManyInput {
+  NaturalPerson: NaturalPersonInput
+  branch: String
+  id: String!
+  natural_person_id: String
+}
+
 input PhysicalCustomerWhereInput {
   AND: [PhysicalCustomerWhereInput!]
   CreatedBy: UserWhereInput
@@ -2722,11 +2759,11 @@ type Query {
   getAllOutsourcedTransportVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedTransportVehicleModel!]
   getAllOutsourcedVehicle(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportVehicleOrderByWithRelationInput, where: OutsourcedTransportVehicleWhereInput): [OutsourcedVehicleIModel!]!
   getAllOwnDriver(limit: Int! = 25, offset: Int! = 0, sort: OwnDriverOrderByWithRelationInput, where: OwnDriverWhereInput): [OwnDriverModel!]!
-  getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerModel!]!
+  getAllPhysicalCustomer(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderByWithRelationInput, where: PhysicalCustomerWhereInput): [PhysicalCustomerModel!]!
   getAllPhysicalCustomerCte(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerCteOrderByWithRelationInput, where: OwnDriverWhereInput): [PhysicalCustomerCteModel!]!
   getAllPhysicalCustomerOrder(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerOrderOrderByWithRelationInput, where: PhysicalCustomerOrderWhereInput): [PhysicalCustomerOrderModel!]
   getAllPhysicalCustomerQuoteTable(limit: Int! = 25, offset: Int! = 0, sort: PhysicalCustomerQuoteTableOrderByWithRelationInput, where: PhysicalCustomerQuoteTableWhereInput): [PhysicalCustomerQuoteTableModel!]!
-  getAllRecient(limit: Int! = 25, offset: Int! = 0, sort: RecipientOrderByWithRelationInput, where: RecipientWhereInput): [RecipientModel!]
+  getAllRecipient(limit: Int! = 25, offset: Int! = 0, sort: RecipientOrderByWithRelationInput, where: RecipientWhereInput): [RecipientModel!]
   getAllSender(limit: Int! = 25, offset: Int! = 0, sort: SenderOrderByWithRelationInput, where: SenderWhereInput): [SenderModel!]
   getAllTypeOfMaintenance(limit: Int! = 25, offset: Int! = 0, sort: TypeOfMaintenanceOrderByWithRelationInput, where: TypeOfMaintenanceWhereInput): [TypeOfMaintenanceModel!]
   getAllVehicleBodywork(limit: Int! = 25, offset: Int! = 0, sort: VehicleBodyworkOrderByWithRelationInput, where: VehicleBodyworkWhereInput): [VehicleBodyworkModel!]
@@ -2760,15 +2797,24 @@ type Query {
   getPhysicalCustomerCte(acessKey: String, cteNumber: String, id: String): PhysicalCustomerCteModel
   getPhysicalCustomerOrderModel(id: String, order: String): PhysicalCustomerOrderModel
   getPhysicalCustomerQuoteTable(cod_quote: String, id: String): PhysicalCustomerQuoteTableModel
-  getRecient(id: String, legalPerson: GetLegalPersonInput, naturalPerson: GetNaturalPersonInput): RecipientModel!
+  getRecipient(id: String, legalPerson: GetLegalPersonInput, naturalPerson: GetNaturalPersonInput): RecipientModel!
   getSender(id: String, legalPerson: GetLegalPersonInput, naturalPerson: GetNaturalPersonInput): SenderModel!
   getTypeOfMaintenance(id: String): TypeOfMaintenanceModel!
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
   getVehicleBrand(id: String, name: String): VehicleBrandModel!
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
   getVehicleType(id: String, name: String): VehicleTypeModel!
+  totalCarrierCompanies(where: CarrierCompanyWhereInput): Float!
   totalContractOutsourcedDriver(where: ContractOutsourcedDriverWhereInput): Float!
+  totalLegalClients(where: LegalClientWhereInput): Float!
+  totalOwnDrivers(where: OwnDriverWhereInput): Float!
+  totalPhysicalCustomers(where: PhysicalCustomerWhereInput): Float!
+  totalRecipients(where: RecipientWhereInput): Float!
+  totalSenders(where: SenderWhereInput): Float!
   totalUsers(where: UserWhereInput): Float!
+  totalVehicleBrands(where: VehicleBrandWhereInput): Float!
+  totalVehicleModels(where: VehicleModelWhereInput): Float!
+  totalVehicleTypes(where: VehicleTypeWhereInput): Float!
   user(email: String, id: String, username: String): UserModel!
   users(limit: Int! = 25, offset: Int! = 0, sort: UserOrderByWithRelationInput, where: UserWhereInput): [UserModel!]!
 }
@@ -2826,6 +2872,14 @@ input RecipientOrderByWithRelationInput {
 input RecipientUpdateInput {
   LegalPerson: LegalPersonUpdateInput
   NaturalPerson: NaturalPersonUpdate
+}
+
+input RecipientUpdateManyInput {
+  LegalPerson: LegalPersonInput
+  NaturalPerson: NaturalPersonInput
+  id: String!
+  legal_person_id: String
+  natural_person_id: String
 }
 
 input RecipientWhereInput {
@@ -2895,6 +2949,14 @@ input SenderOrderByWithRelationInput {
 input SenderUpdateInput {
   LegalPerson: LegalPersonUpdateInput
   NaturalPerson: NaturalPersonUpdate
+}
+
+input SenderUpdateManyInput {
+  LegalPerson: LegalPersonInput
+  NaturalPerson: NaturalPersonInput
+  id: String!
+  legal_person_id: String
+  natural_person_id: String
 }
 
 input SenderWhereInput {
@@ -3345,6 +3407,11 @@ input VehicleBrandUpdateInput {
   name: String
 }
 
+input VehicleBrandUpdateManyInput {
+  id: String!
+  name: String
+}
+
 input VehicleBrandWhereInput {
   AND: [VehicleBrandWhereInput!]
   CreatedBy: UserWhereInput
@@ -3474,6 +3541,17 @@ input VehicleModelUpdateInput {
   weight: Float
 }
 
+input VehicleModelUpdateManyInput {
+  axles: Float
+  brand_id: String
+  capacity_max: Float
+  capacity_per_axle: Int
+  id: String!
+  name: String
+  type_id: String
+  weight: Float
+}
+
 input VehicleModelWhereInput {
   AND: [VehicleModelWhereInput!]
   Brand: VehicleBrandWhereInput
@@ -3569,6 +3647,13 @@ input VehicleTypeUpdateInput {
   bodyWork: Boolean
   body_work_id: [String!]
   del_body_id: [String!]
+  name: String
+}
+
+input VehicleTypeUpdateManyInput {
+  bodyWork: Boolean
+  body_work_id: [String!]
+  id: String!
   name: String
 }
 

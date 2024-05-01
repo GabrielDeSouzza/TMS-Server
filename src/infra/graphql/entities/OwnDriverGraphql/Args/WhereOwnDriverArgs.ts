@@ -31,3 +31,11 @@ export class OwnDriverWhereArgs {
   @IsOptional()
   sort?: OwnDriverOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class OwnDriverCountArgs {
+  @Field(() => OwnDriverWhereInput, { nullable: true })
+  @Type(() => OwnDriverWhereInput)
+  @IsOptional()
+  where?: OwnDriverWhereInput;
+}

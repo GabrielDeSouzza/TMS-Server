@@ -31,3 +31,11 @@ export class CarrierCompanyWhereArgs {
   @IsOptional()
   sort?: CarrierCompanyOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class CarrierCompanyCountArgs {
+  @Field(() => CarrierCompanyWhereInput, { nullable: true })
+  @Type(() => CarrierCompanyWhereInput)
+  @IsOptional()
+  where?: CarrierCompanyWhereInput;
+}

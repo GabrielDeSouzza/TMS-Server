@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
+import { type CountAllOwnDriversWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OwnDriverRepositoryDto';
 import { OwnDriver } from 'domain/entities/CompanyEntities/ownDriver/OwnDriver';
 import { OwnDriverRepository } from 'domain/repositories/OwnDriverRepository';
 
@@ -9,6 +10,7 @@ import { NaturalPersonEntityDto } from 'app/dtos/NaturalPersonDto/NaturalPersonE
 import { type CreateOwnDriverDTO } from 'app/dtos/OwnDriverDto/CreateOwnDriverDto';
 import { type GetAllOwnDriverDTO } from 'app/dtos/OwnDriverDto/GetAllOwnDriverDto';
 import { type GetOwnDriverDTO } from 'app/dtos/OwnDriverDto/GetOwnDriverDto';
+import { type UpdateManyOwnDriversDto } from 'app/dtos/OwnDriverDto/UpdateManyOwnDriversDto';
 import { type UpdateOwnDriverDTO } from 'app/dtos/OwnDriverDto/UpdateOwnDriverDto';
 
 import { NaturalPersonUseCases } from '../NaturalPersoUseCases/NaturalPersonUseCases';
@@ -19,6 +21,31 @@ export class OwnDriverUseCases {
     private ownDriverRepository: OwnDriverRepository,
     private naturalPersonUseCase: NaturalPersonUseCases,
   ) {}
+
+  async count(parameters: CountAllOwnDriversWhereRequestDTO): Promise<number> {
+    return await this.ownDriverRepository.count(parameters);
+  }
+
+  async updateManyOwnDrivers(
+    ownDrivers: UpdateManyOwnDriversDto[],
+  ): Promise<OwnDriver[]> {
+    const updateOwnDrivers = await this.ownDriverRepository.updateMany(
+      ownDrivers,
+    );
+
+    return updateOwnDrivers;
+  }
+
+  async deleteOwnDriver(id: string): Promise<OwnDriver> {
+    return await this.ownDriverRepository.delete(id);
+  }
+
+  async deleteManyOwnDrivers(ids: string[]): Promise<OwnDriver[]> {
+    const deleteOwnDrivers = await this.ownDriverRepository.deleteMany(ids);
+
+    return deleteOwnDrivers;
+  }
+
   async getOwnDriver(request: GetOwnDriverDTO) {
     if (
       !request.cnh &&
@@ -41,10 +68,6 @@ export class OwnDriverUseCases {
     const ownDrivers = await this.ownDriverRepository.findAllOwnDrivers(
       request,
     );
-    if (ownDrivers.length === 0)
-      throw new GraphQLError('ANY OWN DRIVER FOUND', {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
 
     return ownDrivers;
   }

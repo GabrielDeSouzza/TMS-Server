@@ -4,8 +4,7 @@ import { Type } from 'class-transformer';
 import { Max, Min, IsOptional } from 'class-validator';
 
 import { PhysicalCustomerOrderByWithRelationInput } from 'infra/graphql/prisma-generated/physical-customer/physical-customer-order-by-with-relation.input';
-
-import { OwnDriverWhereInput } from '../../../prisma-generated/own-driver/own-driver-where.input';
+import { PhysicalCustomerWhereInput } from 'infra/graphql/prisma-generated/physical-customer/physical-customer-where.input';
 
 @ArgsType()
 export class PhysicalCustomerWhereArgs {
@@ -20,10 +19,10 @@ export class PhysicalCustomerWhereArgs {
   @Max(50)
   limit = 25;
 
-  @Field(() => OwnDriverWhereInput, { nullable: true })
-  @Type(() => OwnDriverWhereInput)
+  @Field(() => PhysicalCustomerWhereInput, { nullable: true })
+  @Type(() => PhysicalCustomerWhereInput)
   @IsOptional()
-  where?: OwnDriverWhereInput;
+  where?: PhysicalCustomerWhereInput;
 
   @Field(() => PhysicalCustomerOrderByWithRelationInput, {
     nullable: true,
@@ -31,4 +30,12 @@ export class PhysicalCustomerWhereArgs {
   @Type(() => PhysicalCustomerOrderByWithRelationInput)
   @IsOptional()
   sort?: PhysicalCustomerOrderByWithRelationInput;
+}
+
+@ArgsType()
+export class PhysicalCustomerCountArgs {
+  @Field(() => PhysicalCustomerWhereInput, { nullable: true })
+  @Type(() => PhysicalCustomerWhereInput)
+  @IsOptional()
+  where?: PhysicalCustomerWhereInput;
 }

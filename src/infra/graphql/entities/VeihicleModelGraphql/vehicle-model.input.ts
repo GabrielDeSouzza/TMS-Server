@@ -14,6 +14,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type IVehicleModel } from 'domain/entities/VehicleEntities/vehicleModel/VehicleModel';
@@ -61,4 +62,14 @@ export class VehicleModelInput
 @InputType()
 export class VehicleModelUpdateInput extends PartialType(VehicleModelInput) {
   updated_by: string;
+}
+
+@InputType()
+export class VehicleModelUpdateManyInput extends PartialType(
+  VehicleModelInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

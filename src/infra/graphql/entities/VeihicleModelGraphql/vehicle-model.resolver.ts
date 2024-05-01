@@ -15,7 +15,10 @@ import { VehicleBrandUseCases } from 'app/useCases/VehicleBrandCases/VehicleBran
 import { VehicleModelUseCases } from 'app/useCases/VehicleModelUseCases/VehihicleModelUseCases';
 import { VehicleTypeUseCases } from 'app/useCases/VehicleTypeUseCases/VehicleTypeUseCases';
 
-import { VehicleModelWhereArgs } from 'infra/graphql/entities/VeihicleModelGraphql/Args/WhereVeihicleModelArgs';
+import {
+  VehicleModelCountArgs,
+  VehicleModelWhereArgs,
+} from 'infra/graphql/entities/VeihicleModelGraphql/Args/WhereVeihicleModelArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -28,6 +31,7 @@ import { GetVehicleModelArgs } from './Args/GetVehicleModelArgs';
 import {
   VehicleModelInput,
   VehicleModelUpdateInput,
+  VehicleModelUpdateManyInput,
 } from './vehicle-model.input';
 import { VehicleModelGraphql } from './vehicle-model.model';
 
@@ -42,16 +46,25 @@ export class VehicleModelResolver {
     private vehicleTypeUseCase: VehicleTypeUseCases,
     private vehicleBrandUseCase: VehicleBrandUseCases,
   ) {}
+  @Query(() => Number)
+  async totalVehicleModels(@Args() request: VehicleModelCountArgs) {
+    const vehicleModel = await this.vehicleModelUseCase.count(request);
+
+    return vehicleModel;
+  }
+
   @Query(() => VehicleModelGraphql)
   async getVehicleModel(@Args() request: GetVehicleModelArgs) {
     return await this.vehicleModelUseCase.getModel(request);
   }
+
   @Query(() => [VehicleModelGraphql], { nullable: true })
   async getAllVehicleModel(@Args() args: VehicleModelWhereArgs) {
     const models = await this.vehicleModelUseCase.getAllModels(args);
 
     return models;
   }
+
   @Mutation(() => VehicleModelGraphql)
   async createVehicleModel(
     @Args('vehicleModelInput') vehicleModelInput: VehicleModelInput,
@@ -62,6 +75,7 @@ export class VehicleModelResolver {
 
     return await this.vehicleModelUseCase.createModel(vehicleModelInput);
   }
+
   @Mutation(() => VehicleModelGraphql)
   async updatedVehicleModel(
     @Args('id') id: string,
@@ -72,24 +86,54 @@ export class VehicleModelResolver {
 
     return await this.vehicleModelUseCase.updateModel(id, vehicleModelUpdate);
   }
+
+  @Mutation(() => [VehicleModelGraphql])
+  async updateManyVehicleModels(
+    @Args({
+      name: 'updateManyVehicleModels',
+      type: () => [VehicleModelUpdateManyInput],
+    })
+    updateVehicleModelInput: VehicleModelUpdateManyInput[],
+  ) {
+    return await this.vehicleModelUseCase.updateManyVehicleModels(
+      updateVehicleModelInput,
+    );
+  }
+
+  @Mutation(() => VehicleModelGraphql)
+  async deleteVehicleModel(@Args('id', { type: () => String }) id: string) {
+    return await this.vehicleModelUseCase.deleteVehicleModel(id);
+  }
+
+  @Mutation(() => [VehicleModelGraphql])
+  async deleteManyVehicleModels(
+    @Args({ name: 'deleteManyVehicleModels', type: () => [String] })
+    ids: string[],
+  ) {
+    return await this.vehicleModelUseCase.deleteManyVehicleModels(ids);
+  }
+
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: VehicleModelGraphql) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
+
   @ResolveField(() => UserModelRefereces)
   async UpdatedUser(@Parent() user: VehicleModelInput) {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
   }
+
   @ResolveField(() => VehicleTypeModel)
   async VehicleType(@Parent() vehicleModel: VehicleModelInput) {
     const { type_id: typeID } = vehicleModel;
 
     return await this.vehicleTypeUseCase.getVehicleType({ id: typeID });
   }
+
   @ResolveField(() => VehicleBrandReferences)
   async VehicleBrand(@Parent() vehicleModel: VehicleModelInput) {
     const { brand_id: brandId } = vehicleModel;

@@ -26,3 +26,16 @@ export class FindAllVehicleBrandWhereRequestDTO {
   sort?: SortByVehicleBrandTypeDTO;
   where?: WhereVehicleBrandTypeDTO;
 }
+
+export abstract class CountAllVehicleBrandsWhereRequestDTO {
+  where?: WhereVehicleBrandTypeDTO;
+}
+
+export abstract class UpdateManyVehicleBrandsDTO {
+  id: string;
+  name?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  updated_by?: string;
+  created_by?: string;
+}

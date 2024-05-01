@@ -3,7 +3,11 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetVehicleBrandDTO } from 'domain/dto/repositories/getDataDtos/GetVehicleBrandDto';
-import { type FindAllVehicleBrandWhereRequestDTO } from 'domain/dto/repositories/whereDtos/VehicleBrandRepositoryDto';
+import {
+  type CountAllVehicleBrandsWhereRequestDTO,
+  type UpdateManyVehicleBrandsDTO,
+  type FindAllVehicleBrandWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/VehicleBrandRepositoryDto';
 import { VehicleBrand } from 'domain/entities/VehicleEntities/vehicleBrand/VehicleBrand';
 import { VehicleBrandRepository } from 'domain/repositories/VehicleBrandRepository';
 
@@ -13,6 +17,34 @@ import { type UpdateVehicleBrandDTO } from 'app/dtos/VehicleBrandDto/UpdateVehic
 @Injectable()
 export class VehicleBrandUseCases {
   constructor(private vehicleBrandRepository: VehicleBrandRepository) {}
+  async count(
+    parameters: CountAllVehicleBrandsWhereRequestDTO,
+  ): Promise<number> {
+    return await this.vehicleBrandRepository.count(parameters);
+  }
+
+  async updateManyVehicleBrands(
+    VehicleBrands: UpdateManyVehicleBrandsDTO[],
+  ): Promise<VehicleBrand[]> {
+    const updateVehicleBrands = await this.vehicleBrandRepository.updateMany(
+      VehicleBrands,
+    );
+
+    return updateVehicleBrands;
+  }
+
+  async deleteVehicleBrand(id: string): Promise<VehicleBrand> {
+    return await this.vehicleBrandRepository.delete(id);
+  }
+
+  async deleteManyVehicleBrands(ids: string[]): Promise<VehicleBrand[]> {
+    const deleteVehicleBrands = await this.vehicleBrandRepository.deleteMany(
+      ids,
+    );
+
+    return deleteVehicleBrands;
+  }
+
   async getVehicleBrand(request: GetVehicleBrandDTO) {
     if (!request.id && !request.name) {
       throw new GraphQLError('IS NECESSARY AN ID OR BRAND NAME', {
@@ -32,11 +64,8 @@ export class VehicleBrandUseCases {
     const brands = await this.vehicleBrandRepository.getAllVehicleBrand(
       request,
     );
-    if (brands.length > 0) return brands;
 
-    throw new GraphQLError('NO BRAND FOUND', {
-      extensions: { code: HttpStatus.NOT_FOUND },
-    });
+    return brands;
   }
   async createBrand(data: CreateVehicleBrandDTO) {
     console.error('test', data);

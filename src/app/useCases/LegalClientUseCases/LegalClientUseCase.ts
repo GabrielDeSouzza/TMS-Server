@@ -3,6 +3,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetLegalClientDTO } from 'domain/dto/repositories/getDataDtos/GetLegalClientDto';
+import {
+  type CountAllLegalClientsWhereRequestDTO,
+  type UpdateManyLegalClientsDTO,
+} from 'domain/dto/repositories/whereDtos/LegalClientRepositoryDto';
 import { LegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
 import { LegalClientRepository } from 'domain/repositories/LegalClientRepositoy';
 
@@ -19,6 +23,32 @@ export class LegalClientUseCases {
     private legalClientRepository: LegalClientRepository,
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
+  async count(
+    parameters: CountAllLegalClientsWhereRequestDTO,
+  ): Promise<number> {
+    return await this.legalClientRepository.count(parameters);
+  }
+
+  async updateManyLegalClients(
+    LegalClients: UpdateManyLegalClientsDTO[],
+  ): Promise<LegalClient[]> {
+    const updateLegalClients = await this.legalClientRepository.updateMany(
+      LegalClients,
+    );
+
+    return updateLegalClients;
+  }
+
+  async deleteLegalClient(id: string): Promise<LegalClient> {
+    return await this.legalClientRepository.delete(id);
+  }
+
+  async deleteManyLegalClients(ids: string[]): Promise<LegalClient[]> {
+    const deleteLegalClients = await this.legalClientRepository.deleteMany(ids);
+
+    return deleteLegalClients;
+  }
+
   async getClient(request: GetLegalClientDTO) {
     if (
       !request.cnpj &&

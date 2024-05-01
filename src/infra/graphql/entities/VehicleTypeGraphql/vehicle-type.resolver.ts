@@ -15,7 +15,10 @@ import { VehicleBodyworkRepository } from 'domain/repositories/VehicleBodyWorkRe
 import { UserUseCases } from 'app/useCases/user/UserCases';
 import { VehicleTypeUseCases } from 'app/useCases/VehicleTypeUseCases/VehicleTypeUseCases';
 
-import { VehicleTypeWhereArgs } from 'infra/graphql/entities/VehicleTypeGraphql/Args/WhereVehicleTypeArgs';
+import {
+  VehicleTypeCountArgs,
+  VehicleTypeWhereArgs,
+} from 'infra/graphql/entities/VehicleTypeGraphql/Args/WhereVehicleTypeArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -24,7 +27,11 @@ import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleBodyworkModel } from '../VehicleBodyworkGraphql/vehicle-bodywork.model';
 import { GetVehicleTypeArgs } from './Args/GetVehicleTypeArgs';
-import { VehicleTypeInput, VehicleTypeUpdateInput } from './vehicle-type.input';
+import {
+  VehicleTypeInput,
+  VehicleTypeUpdateInput,
+  VehicleTypeUpdateManyInput,
+} from './vehicle-type.input';
 import { VehicleTypeModel } from './vehicle-type.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -37,17 +44,25 @@ export class VehicleTypeResolver {
     private vehicleBodyworkRepository: VehicleBodyworkRepository,
     private userCase: UserUseCases,
   ) {}
+  @Query(() => Number)
+  async totalVehicleTypes(@Args() request: VehicleTypeCountArgs) {
+    const vehicleType = await this.vehicleTypeUseCase.count(request);
+
+    return vehicleType;
+  }
 
   @Query(() => VehicleTypeModel)
   async getVehicleType(@Args() request: GetVehicleTypeArgs) {
     return this.vehicleTypeUseCase.getVehicleType(request);
   }
+
   @Query(() => [VehicleTypeModel], { nullable: true })
   async getAllVehicleTypes(@Args() args: VehicleTypeWhereArgs) {
     const vehicleTypes = await this.vehicleTypeUseCase.getAllVehicleType(args);
 
     return vehicleTypes;
   }
+
   @Mutation(() => VehicleTypeModel)
   async createVehicleType(
     @Args('vehicleTypeCreate') vehicleTypeInput: VehicleTypeInput,
@@ -62,6 +77,7 @@ export class VehicleTypeResolver {
 
     return type;
   }
+
   @Mutation(() => VehicleTypeModel)
   async updatedVehicleType(
     @Args('id') id: string,
@@ -75,6 +91,32 @@ export class VehicleTypeResolver {
     );
 
     return type;
+  }
+
+  @Mutation(() => [VehicleTypeModel])
+  async updateManyVehicleTypes(
+    @Args({
+      name: 'updateManyVehicleTypes',
+      type: () => [VehicleTypeUpdateManyInput],
+    })
+    updateVehicleTypeInput: VehicleTypeUpdateManyInput[],
+  ) {
+    return await this.vehicleTypeUseCase.updateManyVehicleTypes(
+      updateVehicleTypeInput,
+    );
+  }
+
+  @Mutation(() => VehicleTypeModel)
+  async deleteVehicleType(@Args('id', { type: () => String }) id: string) {
+    return await this.vehicleTypeUseCase.deleteVehicleType(id);
+  }
+
+  @Mutation(() => [VehicleTypeModel])
+  async deleteManyVehicleTypes(
+    @Args({ name: 'deleteManyVehicleTypes', type: () => [String] })
+    ids: string[],
+  ) {
+    return await this.vehicleTypeUseCase.deleteManyVehicleTypes(ids);
   }
 
   @ResolveField(() => [VehicleBodyworkModel], { nullable: true })

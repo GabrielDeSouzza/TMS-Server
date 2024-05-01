@@ -24,8 +24,15 @@ import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import { GetRecipientArgs } from '../RecipientGraphql/Args/GetRecipientArgs';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { RecipientWhereArgs } from './Args/WhereRecipientArgs';
-import { RecipientInput, RecipientUpdateInput } from './Recipient.input';
+import {
+  RecipientCountArgs,
+  RecipientWhereArgs,
+} from './Args/WhereRecipientArgs';
+import {
+  RecipientInput,
+  RecipientUpdateInput,
+  RecipientUpdateManyInput,
+} from './Recipient.input';
 import { RecipientModel } from './Recipient.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -39,16 +46,26 @@ export class RecipientResolver {
     private naturalPersonUseCase: NaturalPersonUseCases,
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
+
+  @Query(() => Number)
+  async totalRecipients(@Args() request: RecipientCountArgs) {
+    const recipient = await this.RecipientUseCase.count(request);
+
+    return recipient;
+  }
+
   @Query(() => RecipientModel)
-  async getRecient(@Args() request: GetRecipientArgs) {
+  async getRecipient(@Args() request: GetRecipientArgs) {
     return this.RecipientUseCase.getRecipient(request);
   }
+
   @Query(() => [RecipientModel], { nullable: true })
-  async getAllRecient(@Args() args: RecipientWhereArgs) {
+  async getAllRecipient(@Args() args: RecipientWhereArgs) {
     const recipient = await this.RecipientUseCase.getAllRecipient(args);
 
     return recipient.length > 0 ? recipient : null;
   }
+
   @Mutation(() => RecipientModel)
   async createRecipient(
     @Args('data')
@@ -60,6 +77,7 @@ export class RecipientResolver {
 
     return this.RecipientUseCase.createRecipient(recipientInput);
   }
+
   @Mutation(() => RecipientModel)
   async updateRecipient(
     @Args('id') id: string,
@@ -70,6 +88,31 @@ export class RecipientResolver {
     recipent.updated_by = user.id;
 
     return this.RecipientUseCase.updateRecipient(id, recipent);
+  }
+
+  @Mutation(() => [RecipientModel])
+  async updateManyRecipients(
+    @Args({
+      name: 'updateManyRecipients',
+      type: () => [RecipientUpdateManyInput],
+    })
+    updateRecipientInput: RecipientUpdateManyInput[],
+  ) {
+    return await this.RecipientUseCase.updateManyRecipients(
+      updateRecipientInput,
+    );
+  }
+
+  @Mutation(() => RecipientModel)
+  async deleteRecipient(@Args('id', { type: () => String }) id: string) {
+    return await this.RecipientUseCase.deleteRecipient(id);
+  }
+
+  @Mutation(() => [RecipientModel])
+  async deleteManyRecipients(
+    @Args({ name: 'deleteManyRecipients', type: () => [String] }) ids: string[],
+  ) {
+    return await this.RecipientUseCase.deleteManyRecipients(ids);
   }
 
   @ResolveField(() => NaturalPersonModel, { nullable: true })

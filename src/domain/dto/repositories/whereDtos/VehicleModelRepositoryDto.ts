@@ -39,3 +39,22 @@ export class FindAllVehicleModelWhereRequestDTO {
   sort?: SortByVehicleModelTypeDTO;
   where?: WhereVehicleModelTypeDTO;
 }
+
+export abstract class CountAllVehicleModelsWhereRequestDTO {
+  where?: WhereVehicleModelTypeDTO;
+}
+
+export abstract class UpdateManyVehicleModelsDTO {
+  id: string;
+  name?: string;
+  weight?: number;
+  capacity_max?: number;
+  axles?: number;
+  capacity_per_axle?: number;
+  brand_id?: string;
+  type_id?: string;
+  created_at?: Date;
+  created_by?: string;
+  updated_at?: Date;
+  updated_by?: string;
+}

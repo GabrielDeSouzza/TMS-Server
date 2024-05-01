@@ -31,3 +31,11 @@ export class RecipientWhereArgs {
   @IsOptional()
   sort?: RecipientOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class RecipientCountArgs {
+  @Field(() => RecipientWhereInput, { nullable: true })
+  @Type(() => RecipientWhereInput)
+  @IsOptional()
+  where?: RecipientWhereInput;
+}

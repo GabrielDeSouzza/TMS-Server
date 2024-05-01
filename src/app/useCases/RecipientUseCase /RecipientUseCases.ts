@@ -3,7 +3,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetRecipientDTO } from 'domain/dto/repositories/getDataDtos/GetRecipientDto';
-import { type FindAllRecipientWhereRequestDTO } from 'domain/dto/repositories/whereDtos/RecipientRepositoryDto';
+import {
+  type CountAllRecipientsWhereRequestDTO,
+  type FindAllRecipientWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/RecipientRepositoryDto';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { Recipient } from 'domain/entities/Recipient/Recipient';
@@ -12,6 +15,7 @@ import { RecipientRepository } from 'domain/repositories/RecipientRepository ';
 import { LegalPersonEntityDto } from 'app/dtos/LegalPerson/LegalPersonEntityDto';
 import { NaturalPersonEntityDto } from 'app/dtos/NaturalPersonDto/NaturalPersonEntityDto';
 import { type CreateRecipientDTO } from 'app/dtos/RecipientDto/CreateRecipientDto';
+import { type UpdateManyRecipientsDto } from 'app/dtos/RecipientDto/UpdateManyRecipientsDto';
 import { type UpdateRecipientDTO } from 'app/dtos/RecipientDto/UpdateRecipientDto';
 
 import { LegalPersonUseCases } from '../LegalPersonUseCases/LegalPersonUseCases';
@@ -24,6 +28,14 @@ export class RecipientUseCases {
     private legalPersonUseCase: LegalPersonUseCases,
     private naturalPersonUseCase: NaturalPersonUseCases,
   ) {}
+  async count(parameters: CountAllRecipientsWhereRequestDTO): Promise<number> {
+    return await this.recipientRepository.count(parameters);
+  }
+
+  async deleteRecipient(id: string): Promise<Recipient> {
+    return await this.recipientRepository.delete(id);
+  }
+
   async getRecipient(request: GetRecipientDTO) {
     if (!request.legalPerson && !request.id && !request.naturalPerson) {
       throw new GraphQLError(
@@ -186,5 +198,21 @@ export class RecipientUseCases {
         naturalPersonEntity,
       );
     }
+  }
+
+  async updateManyRecipients(
+    Recipient: UpdateManyRecipientsDto[],
+  ): Promise<Recipient[]> {
+    const updateRecipients = await this.recipientRepository.updateMany(
+      Recipient,
+    );
+
+    return updateRecipients;
+  }
+
+  async deleteManyRecipients(ids: string[]): Promise<Recipient[]> {
+    const deleteRecipients = await this.recipientRepository.deleteMany(ids);
+
+    return deleteRecipients;
   }
 }

@@ -3,6 +3,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetPhysicalCustomerDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerDto';
+import {
+  type CountAllPhysicalCustomersWhereRequestDTO,
+  type UpdateManyPhysicalCustomersDTO,
+} from 'domain/dto/repositories/whereDtos/PhysicalCustomerRepositoryDto';
 import { PhysicalCustomer } from 'domain/entities/PhysicalClientEntities/physicalCustomer/PhysicalCustomer';
 import { PhysicalCustomerRepository } from 'domain/repositories/PhysicalCustomerRepository';
 
@@ -19,6 +23,34 @@ export class PhysicalCustomerUseCases {
     private physicalCustomerRepository: PhysicalCustomerRepository,
     private naturalPersonUseCase: NaturalPersonUseCases,
   ) {}
+  async count(
+    parameters: CountAllPhysicalCustomersWhereRequestDTO,
+  ): Promise<number> {
+    return await this.physicalCustomerRepository.count(parameters);
+  }
+
+  async updateManyPhysicalCustomers(
+    PhysicalCustomers: UpdateManyPhysicalCustomersDTO[],
+  ): Promise<PhysicalCustomer[]> {
+    const updatePhysicalCustomers =
+      await this.physicalCustomerRepository.updateMany(PhysicalCustomers);
+
+    return updatePhysicalCustomers;
+  }
+
+  async deletePhysicalCustomer(id: string): Promise<PhysicalCustomer> {
+    return await this.physicalCustomerRepository.delete(id);
+  }
+
+  async deleteManyPhysicalCustomers(
+    ids: string[],
+  ): Promise<PhysicalCustomer[]> {
+    const deletePhysicalCustomers =
+      await this.physicalCustomerRepository.deleteMany(ids);
+
+    return deletePhysicalCustomers;
+  }
+
   async getPhysicalCustomer(request: GetPhysicalCustomerDTO) {
     if (!request.cpf && !request.id && !request.naturalPersonId && !request.rg)
       throw new GraphQLError(

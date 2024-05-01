@@ -15,7 +15,10 @@ import { LegalPersonUseCases } from 'app/useCases/LegalPersonUseCases/LegalPerso
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
-import { CarrierCompanyWhereArgs } from 'infra/graphql/entities/CarrierCompanyGraphql/Args/WhereCarrierCompanyArgs';
+import {
+  CarrierCompanyCountArgs,
+  CarrierCompanyWhereArgs,
+} from 'infra/graphql/entities/CarrierCompanyGraphql/Args/WhereCarrierCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -41,12 +44,14 @@ export class CarrierCompanyResolver {
     private userCase: UserUseCases,
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
+
   @Query(() => CarrierCompanyModel)
   async getCarrierCompanyModel(
     @Args() carrierCompanySearch: GetCarrierCompanyArgs,
   ) {
     return this.carrierCompanyUseCase.getCarrierCompany(carrierCompanySearch);
   }
+
   @Query(() => [CarrierCompanyModel], { nullable: true })
   async getAllCarrierCompany(@Args() args: CarrierCompanyWhereArgs) {
     const carrierCompany =
@@ -82,6 +87,14 @@ export class CarrierCompanyResolver {
       carrierCompanyInput,
     );
   }
+
+  @Query(() => Number)
+  async totalCarrierCompanies(@Args() request: CarrierCompanyCountArgs) {
+    const carrierCompanies = await this.carrierCompanyUseCase.count(request);
+
+    return carrierCompanies;
+  }
+
   @ResolveField(() => LegalPersonModel)
   async LegalPerson(
     @Parent() legalClient: CarrierCompanyInput | CarrierCompanyUpdateInput,

@@ -31,3 +31,11 @@ export class SenderWhereArgs {
   @IsOptional()
   sort?: SenderOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class SenderCountArgs {
+  @Field(() => SenderWhereInput, { nullable: true })
+  @Type(() => SenderWhereInput)
+  @IsOptional()
+  where?: SenderWhereInput;
+}

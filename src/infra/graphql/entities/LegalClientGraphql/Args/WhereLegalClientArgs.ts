@@ -31,3 +31,11 @@ export class LegalClientWhereArgs {
   @IsOptional()
   sort?: LegalClientOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class LegalClientCountArgs {
+  @Field(() => LegalClientWhereInput, { nullable: true })
+  @Type(() => LegalClientWhereInput)
+  @IsOptional()
+  where?: LegalClientWhereInput;
+}

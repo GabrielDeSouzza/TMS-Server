@@ -24,8 +24,12 @@ import { LegalPersonModel } from '../LegalPersonGraphql/LegalPerson.model';
 import { NaturalPersonModel } from '../NaturalPersonGraphql/NaturalPerson.model';
 import { GetSenderArgs } from '../SenderGraphql/Args/GetSenderArgs';
 import { UserModelRefereces } from '../UserGraphql/user.model';
-import { SenderWhereArgs } from './Args/WhereSenderArgs';
-import { SenderInput, SenderUpdateInput } from './Sender.input';
+import { SenderCountArgs, SenderWhereArgs } from './Args/WhereSenderArgs';
+import {
+  SenderInput,
+  SenderUpdateInput,
+  SenderUpdateManyInput,
+} from './Sender.input';
 import { SenderModel } from './Sender.model';
 
 @UseGuards(GraphQLAuthGuard)
@@ -39,16 +43,26 @@ export class SenderResolver {
     private naturalPersonUseCase: NaturalPersonUseCases,
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
+
+  @Query(() => Number)
+  async totalSenders(@Args() request: SenderCountArgs) {
+    const sender = await this.SenderUseCase.count(request);
+
+    return sender;
+  }
+
   @Query(() => SenderModel)
   async getSender(@Args() request: GetSenderArgs) {
     return this.SenderUseCase.getSender(request);
   }
+
   @Query(() => [SenderModel], { nullable: true })
   async getAllSender(@Args() args: SenderWhereArgs) {
     const sender = await this.SenderUseCase.getAllSender(args);
 
     return sender.length > 0 ? sender : null;
   }
+
   @Mutation(() => SenderModel)
   async createSender(
     @Args('data')
@@ -60,6 +74,7 @@ export class SenderResolver {
 
     return this.SenderUseCase.createSender(senderInput);
   }
+
   @Mutation(() => SenderModel)
   async updateSender(
     @Args('id') id: string,
@@ -70,6 +85,29 @@ export class SenderResolver {
     recipent.updated_by = user.id;
 
     return this.SenderUseCase.updateSender(id, recipent);
+  }
+
+  @Mutation(() => [SenderModel])
+  async updateManySenders(
+    @Args({
+      name: 'updateManySenders',
+      type: () => [SenderUpdateManyInput],
+    })
+    updateSenderInput: SenderUpdateManyInput[],
+  ) {
+    return await this.SenderUseCase.updateManySenders(updateSenderInput);
+  }
+
+  @Mutation(() => SenderModel)
+  async deleteSender(@Args('id', { type: () => String }) id: string) {
+    return await this.SenderUseCase.deleteSender(id);
+  }
+
+  @Mutation(() => [SenderModel])
+  async deleteManySenders(
+    @Args({ name: 'deleteManySenders', type: () => [String] }) ids: string[],
+  ) {
+    return await this.SenderUseCase.deleteManySenders(ids);
   }
 
   @ResolveField(() => NaturalPersonModel, { nullable: true })
@@ -94,6 +132,7 @@ export class SenderResolver {
 
     return await this.userCase.getUser({ id: createdBy });
   }
+
   @ResolveField(() => UserModelRefereces)
   async UpdatedUser(@Parent() user: SenderInput) {
     const { updated_by: updatedBy } = user;

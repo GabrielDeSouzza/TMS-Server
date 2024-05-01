@@ -28,3 +28,17 @@ export class FindAllPhysicalCustomerWhereRequestDTO {
   sort?: SortByPhysicalCustomerTypeDTO;
   where?: WherePhysicalCustomerTypeDTO;
 }
+
+export abstract class CountAllPhysicalCustomersWhereRequestDTO {
+  where?: WherePhysicalCustomerTypeDTO;
+}
+
+export abstract class UpdateManyPhysicalCustomersDTO {
+  id: string;
+  branch?: string;
+  natural_person_id?: string;
+  updated_at?: Date;
+  created_at?: Date;
+  created_by?: string;
+  updated_by?: string;
+}

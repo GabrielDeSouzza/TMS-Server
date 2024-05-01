@@ -7,7 +7,14 @@ import {
 } from '@nestjs/graphql';
 
 import { Type } from 'class-transformer';
-import { Allow, IsObject, IsOptional, IsString } from 'class-validator';
+import {
+  Allow,
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 import { type IRecipient } from 'domain/entities/Recipient/Recipient';
 
@@ -67,4 +74,12 @@ export class RecipientUpdateInput extends PartialType(
   NaturalPerson: NaturalPersonUpdate;
   @Field(() => LegalPersonUpdateInput, { nullable: true })
   LegalPerson: LegalPersonUpdateInput;
+}
+
+@InputType()
+export class RecipientUpdateManyInput extends PartialType(RecipientInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

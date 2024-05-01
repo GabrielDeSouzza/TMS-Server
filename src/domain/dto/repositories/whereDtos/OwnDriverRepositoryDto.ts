@@ -34,3 +34,20 @@ export class FindAllOwnDriverWhereRequestDTO {
   sort?: SortByOwnDriverTypeDTO;
   where?: WhereOwnDriverTypeDTO;
 }
+
+export abstract class CountAllOwnDriversWhereRequestDTO {
+  where?: WhereOwnDriverTypeDTO;
+}
+
+export abstract class UpdateManyOwnDriversDTO {
+  id: string;
+  natural_person_id?: string;
+  cnh?: string;
+  cnh_category?: string;
+  company_vehicle?: boolean;
+  course_mopp?: boolean;
+  created_at?: Date;
+  updated_at?: Date;
+  updated_by?: string;
+  created_by?: string;
+}

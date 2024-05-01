@@ -12,6 +12,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type ILegalClient } from 'domain/entities/LegalClientEntities/LegalClient/LegalClient';
@@ -52,4 +53,12 @@ export class LegalClientUpdateInput extends PartialType(
 ) {
   @Field(() => LegalPersonUpdateInput)
   LegalPerson: LegalPersonUpdateInput;
+}
+
+@InputType()
+export class LegalClientUpdateManyInput extends PartialType(LegalClientInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }

@@ -77,3 +77,11 @@ export class OwnDriverUpdate extends PartialType(
   @Field(() => NaturalPersonUpdate, { nullable: true })
   NaturalPerson?: NaturalPersonUpdate;
 }
+
+@InputType()
+export class OwnDriverUpdateManyInput extends PartialType(OwnDriverInput) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

@@ -22,6 +22,10 @@ export abstract class SortByRecipientTypeDTO {
   updated_by?: 'asc' | 'desc';
 }
 
+export abstract class CountAllRecipientsWhereRequestDTO {
+  where?: WhereRecipientTypeDTO;
+}
+
 export class FindAllRecipientWhereRequestDTO {
   limit: number;
   offset: number;

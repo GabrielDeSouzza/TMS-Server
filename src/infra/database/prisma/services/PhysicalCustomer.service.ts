@@ -1,7 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
+
+import { GraphQLError } from 'graphql';
 
 import { type GetPhysicalCustomerDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerDto';
-import { type FindAllPhysicalCustomerWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerRepositoryDto';
+import {
+  type CountAllPhysicalCustomersWhereRequestDTO,
+  type UpdateManyPhysicalCustomersDTO,
+  type FindAllPhysicalCustomerWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/PhysicalCustomerRepositoryDto';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type PhysicalCustomer } from 'domain/entities/PhysicalClientEntities/physicalCustomer/PhysicalCustomer';
 import { type PhysicalCustomerRepository } from 'domain/repositories/PhysicalCustomerRepository';
@@ -14,6 +20,131 @@ export class PhysicalCustomerPrismaService
   implements PhysicalCustomerRepository
 {
   constructor(private prisma: PrismaService) {}
+
+  async count(
+    parameters: CountAllPhysicalCustomersWhereRequestDTO,
+  ): Promise<number> {
+    const count = this.prisma.physicalCustomer.count({
+      where: parameters.where,
+    });
+
+    return count;
+  }
+
+  async delete(id: string): Promise<PhysicalCustomer> {
+    const physicalCustomer = await this.prisma.physicalCustomer.findUnique({
+      where: { id },
+    });
+
+    if (!physicalCustomer) {
+      throw new GraphQLError('Physical Customer not found!', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    }
+
+    const physicalCustomerPrisma = await this.prisma.physicalCustomer.delete({
+      where: { id },
+    });
+
+    if (!physicalCustomerPrisma) {
+      throw new GraphQLError('Physical Customer not deleted!', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const physicalCustomerDomain = PhysicalCustomerPrismaDTO.PrismaToEntity(
+      physicalCustomerPrisma,
+    );
+
+    return physicalCustomerDomain;
+  }
+
+  async updateMany(
+    physicalCustomer: UpdateManyPhysicalCustomersDTO[],
+  ): Promise<PhysicalCustomer[]> {
+    const physicalCustomers: PhysicalCustomer[] = [];
+
+    await Promise.all(
+      physicalCustomer.map(async item => {
+        const physicalCustomer = await this.prisma.physicalCustomer.findUnique({
+          where: { id: item.id },
+        });
+
+        if (!physicalCustomer) {
+          throw new GraphQLError(
+            `Physical Customer with id "${item.id}" not found!`,
+            {
+              extensions: { code: HttpStatus.NOT_FOUND },
+            },
+          );
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const physicalCustomerPrisma = await tx.physicalCustomer.update({
+            where: { id: item.id },
+            data: {
+              ...item,
+              updated_at: new Date(),
+            },
+          });
+
+          if (!physicalCustomerPrisma) {
+            throw new GraphQLError(
+              `Physical Customer with id "${item.id}" not updated!`,
+              {
+                extensions: { code: HttpStatus.BAD_REQUEST },
+              },
+            );
+          }
+
+          const physicalCustomerDomain =
+            PhysicalCustomerPrismaDTO.PrismaToEntity(physicalCustomerPrisma);
+
+          physicalCustomers.push(physicalCustomerDomain);
+        });
+      }),
+    );
+
+    return physicalCustomers;
+  }
+
+  async deleteMany(ids: string[]): Promise<PhysicalCustomer[]> {
+    const physicalCustomers: PhysicalCustomer[] = [];
+
+    await Promise.all(
+      ids.map(async id => {
+        const physicalCustomer = await this.prisma.physicalCustomer.findUnique({
+          where: { id },
+        });
+
+        if (!physicalCustomer) {
+          throw new GraphQLError('Physical Customer not found!', {
+            extensions: { code: HttpStatus.NOT_FOUND },
+          });
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const physicalCustomerPrisma = await tx.physicalCustomer.delete({
+            where: { id },
+          });
+
+          if (!physicalCustomerPrisma) {
+            throw new GraphQLError('Physical Customer not deleted!', {
+              extensions: { code: HttpStatus.BAD_REQUEST },
+            });
+          }
+
+          const physicalCustomerDomain =
+            PhysicalCustomerPrismaDTO.PrismaToEntity(physicalCustomerPrisma);
+
+          physicalCustomers.push(physicalCustomerDomain);
+        });
+      }),
+    );
+
+    return physicalCustomers;
+  }
+
   async findPhysicalCustomer(
     request: GetPhysicalCustomerDTO,
   ): Promise<PhysicalCustomer> {

@@ -1,7 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
+
+import { GraphQLError } from 'graphql';
 
 import { type GetSenderDTO } from 'domain/dto/repositories/getDataDtos/GetSendertDto';
-import { type FindAllSenderWhereRequestDTO } from 'domain/dto/repositories/whereDtos/SenderRepositoryDto';
+import {
+  type CountAllSendersWhereRequestDTO,
+  type UpdateManySendersDTO,
+  type FindAllSenderWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/SenderRepositoryDto';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type Sender } from 'domain/entities/Sender/Sender';
@@ -13,6 +19,114 @@ import { SenderPrismaDTO } from './prismaDTO/SenderPrismaDto';
 @Injectable()
 export class SenderPrismaService implements SenderRepository {
   constructor(private prisma: PrismaService) {}
+
+  async count(parameters: CountAllSendersWhereRequestDTO): Promise<number> {
+    const count = this.prisma.sender.count({ where: parameters.where });
+
+    return count;
+  }
+
+  async delete(id: string): Promise<Sender> {
+    const sender = await this.prisma.sender.findUnique({
+      where: { id },
+    });
+
+    if (!sender) {
+      throw new GraphQLError('Sender not found!', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    }
+
+    const senderPrisma = await this.prisma.sender.delete({
+      where: { id },
+    });
+
+    if (!senderPrisma) {
+      throw new GraphQLError('Sender not deleted!', {
+        extensions: { code: HttpStatus.BAD_REQUEST },
+      });
+    }
+
+    const senderDomain = SenderPrismaDTO.PrismaToEntity(senderPrisma);
+
+    return senderDomain;
+  }
+
+  async updateMany(sender: UpdateManySendersDTO[]): Promise<Sender[]> {
+    const senders: Sender[] = [];
+
+    await Promise.all(
+      sender.map(async item => {
+        const sender = await this.prisma.sender.findUnique({
+          where: { id: item.id },
+        });
+
+        if (!sender) {
+          throw new GraphQLError(`Sender with id "${item.id}" not found!`, {
+            extensions: { code: HttpStatus.NOT_FOUND },
+          });
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const senderPrisma = await tx.sender.update({
+            where: { id: item.id },
+            data: {
+              ...item,
+              updated_at: new Date(),
+            },
+          });
+
+          if (!senderPrisma) {
+            throw new GraphQLError(`Sender with id "${item.id}" not updated!`, {
+              extensions: { code: HttpStatus.BAD_REQUEST },
+            });
+          }
+
+          const senderDomain = SenderPrismaDTO.PrismaToEntity(senderPrisma);
+
+          senders.push(senderDomain);
+        });
+      }),
+    );
+
+    return senders;
+  }
+
+  async deleteMany(ids: string[]): Promise<Sender[]> {
+    const senders: Sender[] = [];
+
+    await Promise.all(
+      ids.map(async id => {
+        const sender = await this.prisma.sender.findUnique({
+          where: { id },
+        });
+
+        if (!sender) {
+          throw new GraphQLError('Sender not found!', {
+            extensions: { code: HttpStatus.NOT_FOUND },
+          });
+        }
+
+        await this.prisma.$transaction(async tx => {
+          const senderPrisma = await tx.sender.delete({
+            where: { id },
+          });
+
+          if (!senderPrisma) {
+            throw new GraphQLError('Sender not deleted!', {
+              extensions: { code: HttpStatus.BAD_REQUEST },
+            });
+          }
+
+          const senderDomain = SenderPrismaDTO.PrismaToEntity(senderPrisma);
+
+          senders.push(senderDomain);
+        });
+      }),
+    );
+
+    return senders;
+  }
 
   async findSender(data: GetSenderDTO): Promise<Sender> {
     const sender = await this.prisma.sender.findFirst({
