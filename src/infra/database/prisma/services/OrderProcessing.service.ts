@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetOrderProcessingDto';
-import { type FindAllOrderProcessingWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OrderProcessingRepositoryDto';
+import {
+  type CountOrderProcessingRequestDTO,
+  type FindAllOrderProcessingWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/OrderProcessingRepositoryDto';
 import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { type OrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
 import { type PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
@@ -15,7 +18,13 @@ import { PhysicalCustomerOrderPrismaDTO } from './prismaDTO/PhysicalCustomerOrde
 @Injectable()
 export class OrderProcessingPrismaService implements OrderProcessingRepository {
   constructor(private prisma: PrismaService) {}
-
+  countOrderProcessing(
+    request: CountOrderProcessingRequestDTO,
+  ): Promise<number> {
+    return this.prisma.orderProcessing.count({
+      where: request.where ?? undefined,
+    });
+  }
   async findOrderProcessing(
     request: GetOrderProcessingDTO,
   ): Promise<OrderProcessing> {
@@ -105,5 +114,45 @@ export class OrderProcessingPrismaService implements OrderProcessingRepository {
     return orders.LegalClientOrder.map(order =>
       LegalClientOrderPrismaDTO.PrismaToEntity(order),
     );
+  }
+  updateManyOrderProcessing(
+    data: OrderProcessing[],
+  ): Promise<OrderProcessing[]> {
+    console.log(data);
+    const orderprocessingUpdate = this.prisma.$transaction(async tx => {
+      const promises = data.map(async orderprocessing => {
+        const orderprocessingPrisma = await tx.orderProcessing.update({
+          data: OrderProcessingPrismaDTO.EntityToPrismaUpdate(orderprocessing),
+          where: { id: orderprocessing.id },
+        });
+
+        return OrderProcessingPrismaDTO.PrismaToEntity(orderprocessingPrisma);
+      });
+
+      return Promise.all(promises);
+    });
+
+    return orderprocessingUpdate;
+  }
+
+  async deleteOrderProcessing(id: string): Promise<OrderProcessing> {
+    return OrderProcessingPrismaDTO.PrismaToEntity(
+      await this.prisma.orderProcessing.delete({ where: { id } }),
+    );
+  }
+  deleteManyOrderProcessing(ids: string[]): Promise<OrderProcessing[]> {
+    const orderprocessingDeleted = this.prisma.$transaction(async tx => {
+      const promises = ids.map(async icmdsId => {
+        const orderprocessingPrisma = await tx.orderProcessing.delete({
+          where: { id: icmdsId },
+        });
+
+        return OrderProcessingPrismaDTO.PrismaToEntity(orderprocessingPrisma);
+      });
+
+      return Promise.all(promises);
+    });
+
+    return orderprocessingDeleted;
   }
 }

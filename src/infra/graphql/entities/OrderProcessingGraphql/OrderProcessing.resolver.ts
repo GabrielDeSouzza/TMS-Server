@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -24,10 +25,14 @@ import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/Phys
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
 import { GetOrderProcessingArgs } from './Args/GetOrderProcessingArgs';
-import { OrderProcessingWhereArgs } from './Args/WhereOrderProcessingArgs';
+import {
+  OrderProcessingCountArgs,
+  OrderProcessingWhereArgs,
+} from './Args/WhereOrderProcessingArgs';
 import {
   OrderProcessingUpdateInput,
   OrderProcessingInput,
+  OrderProcessingUpdateManyInput,
 } from './OrderProcessing.input';
 import { OrderProcessingModel } from './OrderProcessing.model';
 
@@ -41,6 +46,10 @@ export class OrderProcessingResolver {
     private userCase: UserUseCases,
     private vehicleUseCase: VehicleUseCases,
   ) {}
+  @Query(() => Int)
+  async countOrderProcessing(@Args() request: OrderProcessingCountArgs) {
+    return this.orderProcessingUseCase.countOrderProcessing(request);
+  }
   @Query(() => OrderProcessingModel)
   async getOrderProcessing(@Args() request: GetOrderProcessingArgs) {
     return await this.orderProcessingUseCase.getOrderProcessing(request);
@@ -69,6 +78,26 @@ export class OrderProcessingResolver {
     data.updated_by = user.id;
 
     return this.orderProcessingUseCase.updateOrderProcessing(id, data);
+  }
+  @Mutation(() => [OrderProcessingModel])
+  async updateManyOrderProcessing(
+    @Args({ name: 'data', type: () => [OrderProcessingUpdateManyInput] })
+    data: OrderProcessingUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.orderProcessingUseCase.updateManyOrderProcessing(data, user.id);
+  }
+  @Mutation(() => OrderProcessingModel)
+  async deleteOrderProcessing(@Args('id') id: string) {
+    return this.orderProcessingUseCase.deleteOrderProcessing(id);
+  }
+
+  @Mutation(() => [OrderProcessingModel])
+  async deleteManyOrderProcessing(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.orderProcessingUseCase.deleteManyOrderProcessing(ids);
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() orderProcessing: OrderProcessingInput) {

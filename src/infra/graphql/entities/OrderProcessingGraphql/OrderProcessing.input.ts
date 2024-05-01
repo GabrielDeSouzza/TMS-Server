@@ -92,3 +92,25 @@ export class OrderProcessingUpdateInput extends PartialType(
   @IsUUID()
   disconnect_physical_customer_order?: string;
 }
+
+@InputType()
+export class OrderProcessingUpdateManyInput extends PartialType(
+  OrderProcessingInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+
+  @HideField()
+  @Allow()
+  updated_by: string;
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsUUID()
+  disconnect_legal_client_order: string;
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsUUID()
+  disconnect_physical_customer_order?: string;
+}

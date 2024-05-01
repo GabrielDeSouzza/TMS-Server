@@ -43,3 +43,6 @@ export class FindAllOrderProcessingWhereRequestDTO {
   sort?: SortByOrderProcessingTypeDTO;
   where?: WhereOrderProcessingTypeDTO;
 }
+export abstract class CountOrderProcessingRequestDTO {
+  where?: WhereOrderProcessingTypeDTO;
+}

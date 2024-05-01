@@ -3,12 +3,16 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetOrderProcessingDTO } from 'domain/dto/repositories/getDataDtos/GetOrderProcessingDto';
-import { type FindAllOrderProcessingWhereRequestDTO } from 'domain/dto/repositories/whereDtos/OrderProcessingRepositoryDto';
+import {
+  type CountOrderProcessingRequestDTO,
+  type FindAllOrderProcessingWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/OrderProcessingRepositoryDto';
 import { OrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
 import { OrderProcessingRepository } from 'domain/repositories/OrderProcessingRepository';
 
 import { type CreateOrderProcessingDTO } from 'app/dtos/OrderProcessingDto/CreateOrderProcessingDto';
 import { type UpdateOrderProcessingDTO } from 'app/dtos/OrderProcessingDto/UpdateOrderProcessingDto';
+import { type UpdateManyOrderProcessingDTO } from 'app/dtos/OrderProcessingDto/UpdateUpdateManyOrderProcessingDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
 import { LegalClientOrderUseCases } from '../LegalClientOrderUseCases/LegalClientOrderUseCases';
@@ -23,7 +27,9 @@ export class OrderProcessingUseCases {
     private legalClientOrderUseCase: LegalClientOrderUseCases,
     private physicalCusotmerOrderUseCase: PhysicalCustomerOrderUseCases,
   ) {}
-
+  async countOrderProcessing(request: CountOrderProcessingRequestDTO) {
+    return this.orderProcessingResitory.countOrderProcessing(request);
+  }
   async getOrderProcessing(request: GetOrderProcessingDTO) {
     if (!request.id && !request.order_processing_number && !request.vehicleData)
       throw new GraphQLError(
@@ -159,5 +165,59 @@ export class OrderProcessingUseCases {
   }
   async getAllPhysicalCustomerOrders(request: GetOrderProcessingDTO) {
     return this.orderProcessingResitory.findAllPhysicalCustomerOrder(request);
+  }
+  async updateManyOrderProcessing(
+    data: UpdateManyOrderProcessingDTO[],
+    updateBy: string,
+  ) {
+    for (const orderprocessing of data)
+      await this.verifyOrderProcessingExist(orderprocessing.id);
+    const orderprocessings = data.map(orderprocessing => {
+      const orderprocessingUpdated = new OrderProcessing({
+        id: orderprocessing.id,
+        physical_customer_order_ids:
+          orderprocessing.physical_customer_order_ids,
+        legal_customer_order_ids: orderprocessing.legal_customer_order_ids,
+        start_at: orderprocessing.start_at,
+        total_distance: orderprocessing.total_distance,
+        total_spend_liters: orderprocessing.total_spend_liters,
+        total_spending_money: orderprocessing.total_spending_money,
+        disconnect_legal_order: orderprocessing.disconnect_legal_order,
+        disconnect_physical_customer_order:
+          orderprocessing.disconnect_physical_customer_order,
+        updated_by: updateBy,
+        vehicle_id: orderprocessing.vehicle_id,
+        status: orderprocessing.status,
+        end_at: orderprocessing.end_at,
+        created_by: null,
+        order_processing_number: null,
+      });
+
+      return orderprocessingUpdated;
+    });
+
+    return this.orderProcessingResitory.updateManyOrderProcessing(
+      orderprocessings,
+    );
+  }
+  async deleteOrderProcessing(id: string) {
+    await this.getOrderProcessing({ id });
+
+    return this.orderProcessingResitory.deleteOrderProcessing(id);
+  }
+  async deleteManyOrderProcessing(ids: string[]) {
+    for (const orderprocessingId of ids)
+      await this.verifyOrderProcessingExist(orderprocessingId);
+
+    return this.orderProcessingResitory.deleteManyOrderProcessing(ids);
+  }
+  private async verifyOrderProcessingExist(id: string) {
+    const exist = await this.orderProcessingResitory.findOrderProcessing({
+      id,
+    });
+    if (!exist)
+      throw new GraphQLError(`THIS ORDERPROCESSING ID ${id} NOT FOUND`, {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
   }
 }

@@ -31,3 +31,10 @@ export class OrderProcessingWhereArgs {
   @IsOptional()
   sort?: OrderProcessingOrderByWithRelationInput;
 }
+@ArgsType()
+export class OrderProcessingCountArgs {
+  @Field(() => OrderProcessingWhereInput, { nullable: true })
+  @Type(() => OrderProcessingWhereInput)
+  @IsOptional()
+  where?: OrderProcessingWhereInput;
+}

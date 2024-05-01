@@ -1476,7 +1476,9 @@ type Mutation {
   deleteManyLegalContract(ids: [String!]!): [LegalContractModel!]!
   deleteManyMaintenance(ids: [String!]!): [MaintenanceModel!]!
   deleteManyMaintenanceCompany(ids: [String!]!): [MaintenanceCompanyModel!]!
+  deleteManyOrderProcessing(ids: [String!]!): [OrderProcessingModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
+  deleteOrderProcessing(id: String!): OrderProcessingModel!
   deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
   updateCarriercompany(data: CarrierCompanyUpdateInput!, id: String!): CarrierCompanyModel!
@@ -1497,6 +1499,7 @@ type Mutation {
   updateManyLegalContract(data: [LegalContractUpdateManyInput!]!): [LegalContractModel!]!
   updateManyMaintenance(data: [MaintenanceUpdateManyInput!]!): [MaintenanceModel!]!
   updateManyMaintenanceCompany(data: [MaintenanceCompanyUpdateManyInput!]!): [MaintenanceCompanyModel!]!
+  updateManyOrderProcessing(data: [OrderProcessingUpdateManyInput!]!): [OrderProcessingModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
@@ -1791,6 +1794,21 @@ input OrderProcessingUpdateInput {
   disconnect_legal_client_order: String
   disconnect_physical_customer_order: String
   end_at: Timestamp
+  legal_customer_order_ids: [String!]
+  physical_customer_order_ids: [String!]
+  start_at: Timestamp
+  status: StatusOrder
+  total_distance: Float
+  total_spend_liters: Float
+  total_spending_money: Float
+  vehicle_id: String
+}
+
+input OrderProcessingUpdateManyInput {
+  disconnect_legal_client_order: String
+  disconnect_physical_customer_order: String
+  end_at: Timestamp
+  id: String!
   legal_customer_order_ids: [String!]
   physical_customer_order_ids: [String!]
   start_at: Timestamp
@@ -2678,6 +2696,7 @@ type Query {
   countLegalContract(where: LegalContractWhereInput): Int!
   countMaintenance(where: MaintenanceWhereInput): Int!
   countMaintenanceCompany(where: MaintenanceCompanyWhereInput): Int!
+  countOrderProcessing(where: OrderProcessingWhereInput): Int!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

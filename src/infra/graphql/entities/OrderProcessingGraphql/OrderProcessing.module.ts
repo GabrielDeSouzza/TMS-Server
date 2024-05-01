@@ -4,7 +4,7 @@ import { OrderProcessingRepository } from 'domain/repositories/OrderProcessingRe
 
 import { OrderProcessingUseCases } from 'app/useCases/OrderProcessingUseCases/OrderProcessingUseCases';
 
-import { OrderProcessingPrismaService } from 'infra/database/prisma/services/OrderProcessingLegalClient.service';
+import { OrderProcessingPrismaService } from 'infra/database/prisma/services/OrderProcessing.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { LegalClientOrderModule } from '../LegalClientOrderGraphql/LegalClientOrder.module';
