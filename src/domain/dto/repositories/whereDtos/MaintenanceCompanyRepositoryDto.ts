@@ -28,3 +28,7 @@ export class FindAllMaintenanceCompanyWhereRequestDTO {
   sort?: SortByMaintenanceCompanyTypeDTO;
   where?: WhereMaintenanceCompanyTypeDTO;
 }
+
+export abstract class CountMaintenanceCompanyRequestDTO {
+  where?: WhereMaintenanceCompanyTypeDTO;
+}

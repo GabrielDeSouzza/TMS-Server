@@ -1314,6 +1314,12 @@ input MaintenanceCompanyUpdateInput {
   specialty_maintenance: String
 }
 
+input MaintenanceCompanyUpdateManyInput {
+  LegalPerson: LegalPersonUpdateInput
+  id: String!
+  specialty_maintenance: String
+}
+
 input MaintenanceCompanyWhereInput {
   AND: [MaintenanceCompanyWhereInput!]
   CreatedBy: UserWhereInput
@@ -1451,6 +1457,7 @@ type Mutation {
   deleteLegalClientOrder(id: String!): LegalClientOrderModel!
   deleteLegalClientQuoteTable(id: String!): LegalClientQuoteTableModel!
   deleteLegalContract(id: String!): LegalContractModel!
+  deleteMaintenanceCompany(id: String!): MaintenanceCompanyModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
   deleteManyFreightExpenses(ids: [String!]!): [FreightExpenseModel!]!
@@ -1459,6 +1466,7 @@ type Mutation {
   deleteManyLegalClientOrder(ids: [String!]!): [LegalClientOrderModel!]!
   deleteManyLegalClientQuoteTable(ids: [String!]!): [LegalClientQuoteTableModel!]!
   deleteManyLegalContract(ids: [String!]!): [LegalContractModel!]!
+  deleteManyMaintenanceCompany(ids: [String!]!): [MaintenanceCompanyModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteUser(id: String!): UserModel!
   login(loginData: AuthInput!): AuthModel!
@@ -1478,6 +1486,7 @@ type Mutation {
   updateManyLegalClientOrder(data: [LegalClientOrderUpdateManyInput!]!): [LegalClientOrderModel!]!
   updateManyLegalClientQuoteTable(data: [LegalClientQuoteTableUpdateManyInput!]!): [LegalClientQuoteTableModel!]!
   updateManyLegalContract(data: [LegalContractUpdateManyInput!]!): [LegalContractModel!]!
+  updateManyMaintenanceCompany(data: [MaintenanceCompanyUpdateManyInput!]!): [MaintenanceCompanyModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateOrderProcessing(data: OrderProcessingUpdateInput!, id: String!): OrderProcessingModel!
   updateOutsourcedDriver(id: String!, outsourcedDriver: OutsourcedDriverUpdateInput!): OutsourcedDriverModel!
@@ -2657,6 +2666,7 @@ type Query {
   countLegalClientOrder(where: LegalClientOrderWhereInput): Int!
   countLegalClientQuoteTable(where: LegalClientQuoteTableWhereInput): Int!
   countLegalContract(where: LegalContractWhereInput): Int!
+  countMaintenanceCompany(where: MaintenanceCompanyWhereInput): Int!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

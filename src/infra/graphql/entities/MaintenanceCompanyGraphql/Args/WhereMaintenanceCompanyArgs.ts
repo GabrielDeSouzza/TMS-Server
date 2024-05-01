@@ -31,3 +31,10 @@ export class MaintenanceCompanyWhereArgs {
   @IsOptional()
   sort?: MaintenanceCompanyOrderByWithRelationInput;
 }
+@ArgsType()
+export class MaintenanceCompanyCountArgs {
+  @Field(() => MaintenanceCompanyWhereInput, { nullable: true })
+  @Type(() => MaintenanceCompanyWhereInput)
+  @IsOptional()
+  where?: MaintenanceCompanyWhereInput;
+}

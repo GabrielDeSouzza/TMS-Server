@@ -6,7 +6,7 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsObject, IsOptional, IsString } from 'class-validator';
+import { Allow, IsObject, IsOptional, IsString, IsUUID } from 'class-validator';
 
 import { type IMaintenanceCompany } from 'domain/entities/MaintenceEntities/MaintenanceCompany/MaintenanceCompany';
 
@@ -20,7 +20,7 @@ export class MaintenanceCompanyInput
   implements Omit<IMaintenanceCompany, 'id' | 'created_at' | 'updated_at'>
 {
   @Field({ nullable: true })
-  @IsString()
+  @IsUUID()
   @IsOptional()
   legal_person_id?: string;
   @Field({ nullable: true })
@@ -44,4 +44,15 @@ export class MaintenanceCompanyUpdateInput extends PartialType(
 ) {
   @Field(() => LegalPersonUpdateInput)
   LegalPerson: LegalPersonUpdateInput;
+}
+
+@InputType()
+export class MaintenanceCompanyUpdateManyInput extends PartialType(
+  OmitType(MaintenanceCompanyInput, ['LegalPerson', 'legal_person_id']),
+) {
+  @Field()
+  id: string;
+
+  @Field(() => LegalPersonUpdateInput, { nullable: true })
+  LegalPerson?: LegalPersonUpdateInput;
 }

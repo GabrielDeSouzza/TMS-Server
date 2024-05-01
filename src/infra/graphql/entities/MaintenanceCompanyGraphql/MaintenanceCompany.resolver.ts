@@ -6,6 +6,7 @@ import {
   ResolveField,
   Parent,
   Query,
+  Int,
 } from '@nestjs/graphql';
 
 import { ROLE, User } from 'domain/entities/User/User';
@@ -15,7 +16,10 @@ import { MaintenanceCompanyUseCases } from 'app/useCases/MaintenanceCompanyUseCa
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { GetMaintenanceCompanyArgs } from 'infra/graphql/entities/MaintenanceCompanyGraphql/Args/GetMaintenanceCompanyArgs';
-import { MaintenanceCompanyWhereArgs } from 'infra/graphql/entities/MaintenanceCompanyGraphql/Args/WhereMaintenanceCompanyArgs';
+import {
+  MaintenanceCompanyCountArgs,
+  MaintenanceCompanyWhereArgs,
+} from 'infra/graphql/entities/MaintenanceCompanyGraphql/Args/WhereMaintenanceCompanyArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -26,6 +30,7 @@ import { UserModelRefereces } from '../UserGraphql/user.model';
 import {
   MaintenanceCompanyInput,
   MaintenanceCompanyUpdateInput,
+  MaintenanceCompanyUpdateManyInput,
 } from './MaintenanceCompany.input';
 import { MaintenanceCompanyModel } from './MaintenanceCompany.model';
 
@@ -39,6 +44,10 @@ export class MaintenanceCompanyResolver {
     private userCase: UserUseCases,
     private legalPersonUseCase: LegalPersonUseCases,
   ) {}
+  @Query(() => Int)
+  async countMaintenanceCompany(@Args() request: MaintenanceCompanyCountArgs) {
+    return this.maintenanceCompanyUseCase.countMaintenanceCompany(request);
+  }
   @Query(() => MaintenanceCompanyModel)
   async getMaintenanceCompanyModel(
     @Args() maintenanceCompanySearch: GetMaintenanceCompanyArgs,
@@ -85,6 +94,29 @@ export class MaintenanceCompanyResolver {
       id,
       maintenancecompanyInput,
     );
+  }
+  @Mutation(() => [MaintenanceCompanyModel])
+  async updateManyMaintenanceCompany(
+    @Args({ name: 'data', type: () => [MaintenanceCompanyUpdateManyInput] })
+    data: MaintenanceCompanyUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.maintenanceCompanyUseCase.updateManyMaintenanceCompany(
+      data,
+      user.id,
+    );
+  }
+  @Mutation(() => MaintenanceCompanyModel)
+  async deleteMaintenanceCompany(@Args('id') id: string) {
+    return this.maintenanceCompanyUseCase.deleteMaintenanceCompany(id);
+  }
+
+  @Mutation(() => [MaintenanceCompanyModel])
+  async deleteManyMaintenanceCompany(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.maintenanceCompanyUseCase.deleteManyMaintenanceCompany(ids);
   }
   @ResolveField(() => LegalPersonModel)
   async LegalPerson(
