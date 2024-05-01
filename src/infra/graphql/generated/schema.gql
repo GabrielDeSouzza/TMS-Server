@@ -1492,6 +1492,7 @@ type Mutation {
   deleteManySenders(deleteManySenders: [String!]!): [SenderModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
   deleteOrderProcessing(id: String!): OrderProcessingModel!
+  deleteOutsourcedDriver(id: String!): OutsourcedDriverModel!
   deleteUser(id: String!): UserModel!
   deleteVehicleBrand(id: String!): VehicleBrandModel!
   deleteVehicleModel(id: String!): VehicleModelGraphql!
@@ -1517,6 +1518,7 @@ type Mutation {
   updateManyMaintenance(data: [MaintenanceUpdateManyInput!]!): [MaintenanceModel!]!
   updateManyMaintenanceCompany(data: [MaintenanceCompanyUpdateManyInput!]!): [MaintenanceCompanyModel!]!
   updateManyOrderProcessing(data: [OrderProcessingUpdateManyInput!]!): [OrderProcessingModel!]!
+  updateManyOutsourcedDriver(data: [OutsourcedDriverUpdateManyInput!]!): [OutsourcedDriverModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
   updateManyVehicleBrands(updateManyVehicleBrands: [VehicleBrandUpdateManyInput!]!): [VehicleBrandModel!]!
   updateManyVehicleModels(updateManyVehicleModels: [VehicleModelUpdateManyInput!]!): [VehicleModelGraphql!]!
@@ -1929,6 +1931,17 @@ input OutsourcedDriverUpdateInput {
   cnh_expiration: Timestamp
   company_vehicle_id: String
   course_mopp: Boolean
+  outsourced_vehicle_id: String
+}
+
+input OutsourcedDriverUpdateManyInput {
+  NaturalPerson: NaturalPersonUpdate
+  cnh: String
+  cnh_category: String
+  cnh_expiration: Timestamp
+  company_vehicle_id: String
+  course_mopp: Boolean
+  id: String!
   outsourced_vehicle_id: String
 }
 
@@ -2734,6 +2747,7 @@ type Query {
   countMaintenance(where: MaintenanceWhereInput): Int!
   countMaintenanceCompany(where: MaintenanceCompanyWhereInput): Int!
   countOrderProcessing(where: OrderProcessingWhereInput): Int!
+  countOutsourcedDriver(where: OutsourcedDriverWhereInput): Int!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

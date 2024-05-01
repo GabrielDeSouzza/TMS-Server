@@ -16,6 +16,7 @@ import {
   IsObject,
   IsOptional,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type IOutsourcedDriver } from 'domain/entities/OutsourcedDriverEntities/outsourcedDriver/OutsourcedDriver';
@@ -82,4 +83,25 @@ export class OutsourcedDriverUpdateInput extends PartialType(
 ) {
   @Field(() => NaturalPersonUpdate, { nullable: true })
   NaturalPerson: NaturalPersonUpdate;
+}
+@InputType()
+export class OutsourcedDriverUpdateManyInput extends PartialType(
+  OmitType(OutsourcedDriverInput, [
+    'ContractOutsourcedDriver',
+    'NaturalPerson',
+  ]),
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+
+  @HideField()
+  @Allow()
+  updated_by: string;
+
+  @Field(() => NaturalPersonUpdate, { nullable: true })
+  @IsObject()
+  @IsOptional()
+  NaturalPerson?: NaturalPersonUpdate;
 }

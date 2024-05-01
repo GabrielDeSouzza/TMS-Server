@@ -39,3 +39,6 @@ export class FindAllOutsourcedDriverWhereRequestDTO {
   sort?: SortByOutsourcedDriverTypeDTO;
   where?: WhereOutsourcedDriverTypeDTO;
 }
+export abstract class CountOutsourcedDriverRequestDTO {
+  where?: WhereOutsourcedDriverTypeDTO;
+}

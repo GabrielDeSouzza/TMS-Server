@@ -31,3 +31,10 @@ export class OutsourcedDriverWhereArgs {
   @IsOptional()
   sort?: OutsourcedDriverOrderByWithRelationInput;
 }
+@ArgsType()
+export class OutsourcedDriverCountArgs {
+  @Field(() => OutsourcedDriverWhereInput, { nullable: true })
+  @Type(() => OutsourcedDriverWhereInput)
+  @IsOptional()
+  where?: OutsourcedDriverWhereInput;
+}

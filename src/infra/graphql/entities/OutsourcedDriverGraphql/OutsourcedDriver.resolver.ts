@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -16,7 +17,10 @@ import { OutsourcedVehicleUseCases } from 'app/useCases/OutsoucedVehicleUseCases
 import { OutsourcedDriverUseCases } from 'app/useCases/OutsourcedDriverUseCases/OutsourcedDriverUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { OutsourcedDriverWhereArgs } from 'infra/graphql/entities/OutsourcedDriverGraphql/Args/WhereOutsourcedDriverArgs';
+import {
+  OutsourcedDriverCountArgs,
+  OutsourcedDriverWhereArgs,
+} from 'infra/graphql/entities/OutsourcedDriverGraphql/Args/WhereOutsourcedDriverArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -30,6 +34,7 @@ import { GetOutsoucedDriverArgs } from './Args/GetOutsourcedDriverArgs';
 import {
   OutsourcedDriverUpdateInput,
   OutsourcedDriverInput,
+  OutsourcedDriverUpdateManyInput,
 } from './OutsourcedDriver.input';
 import { OutsourcedDriverModel } from './OutsourcedDriver.model';
 
@@ -45,6 +50,10 @@ export class OutsourcedDriverResolver {
     private outsourcedVehicleUseCase: OutsourcedVehicleUseCases,
     private companyVehicleUseCase: CompanyVehicleUseCases,
   ) {}
+  @Query(() => Int)
+  async countOutsourcedDriver(@Args() request: OutsourcedDriverCountArgs) {
+    return this.outsourcedDriverUseCase.countOutsourcedDriver(request);
+  }
   @Query(() => OutsourcedDriverModel)
   async getOutsourcedDriver(@Args() request: GetOutsoucedDriverArgs) {
     return await this.outsourcedDriverUseCase.getOutsourcedDriver(request);
@@ -78,6 +87,29 @@ export class OutsourcedDriverResolver {
       id,
       outsourcedDriver,
     );
+  }
+  @Mutation(() => [OutsourcedDriverModel])
+  async updateManyOutsourcedDriver(
+    @Args({ name: 'data', type: () => [OutsourcedDriverUpdateManyInput] })
+    data: OutsourcedDriverUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.outsourcedDriverUseCase.updateManyOutsourcedDriver(
+      data,
+      user.id,
+    );
+  }
+  @Mutation(() => OutsourcedDriverModel)
+  async deleteOutsourcedDriver(@Args('id') id: string) {
+    return this.outsourcedDriverUseCase.deleteOutsourcedDriver(id);
+  }
+
+  @Mutation(() => [OutsourcedDriverModel])
+  async deleteManyOutsourcedDriver(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.outsourcedDriverUseCase.deleteManyOutsourcedDriver(ids);
   }
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: OutsourcedDriverInput) {
