@@ -33,3 +33,19 @@ export class FindAllVehicleBodyworkWhereRequestDTO {
   sort?: SortByVehicleBodyworkTypeDTO;
   where?: WhereVehicleBodyworkTypeDTO;
 }
+
+export abstract class CountAllVehicleBodyworksWhereRequestDTO {
+  where?: WhereVehicleBodyworkTypeDTO;
+}
+
+export abstract class UpdateManyVehicleBodyworksDTO {
+  id: string;
+  name?: string;
+  axles?: number;
+  mass?: number;
+  volume?: number;
+  created_at?: Date;
+  updated_at?: Date;
+  created_by?: string;
+  updated_by?: string;
+}

@@ -68,11 +68,8 @@ export class VehicleModelUseCases {
     const models = await this.vehicleModelRepository.getAllVehicleModel(
       request,
     );
-    if (models.length > 0) return models;
 
-    throw new GraphQLError('NO MODELS  FOUND', {
-      extensions: { code: HttpStatus.NOT_FOUND },
-    });
+    return models ?? [];
   }
 
   async createModel(data: CreateVehicleModelDTO) {

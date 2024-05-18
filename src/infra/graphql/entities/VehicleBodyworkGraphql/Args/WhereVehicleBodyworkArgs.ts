@@ -31,3 +31,11 @@ export class VehicleBodyworkWhereArgs {
   @IsOptional()
   sort?: VehicleBodyworkOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class VehicleBodyworkCountArgs {
+  @Field(() => VehicleBodyworkWhereInput, { nullable: true })
+  @Type(() => VehicleBodyworkWhereInput)
+  @IsOptional()
+  where?: VehicleBodyworkWhereInput;
+}

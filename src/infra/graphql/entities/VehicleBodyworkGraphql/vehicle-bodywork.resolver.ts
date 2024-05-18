@@ -15,7 +15,10 @@ import { VehicleTypeRepository } from 'domain/repositories/VehicleTypeRepository
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
 import { VehicleBodyworkGraphDTO } from 'infra/graphql/DTO/VehicleBodywork';
-import { VehicleBodyworkWhereArgs } from 'infra/graphql/entities/VehicleBodyworkGraphql/Args/WhereVehicleBodyworkArgs';
+import {
+  VehicleBodyworkCountArgs,
+  VehicleBodyworkWhereArgs,
+} from 'infra/graphql/entities/VehicleBodyworkGraphql/Args/WhereVehicleBodyworkArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -27,6 +30,7 @@ import { GetVehicleBodyWorkArgs } from './Args/GetVehicleBodyWorkArgs';
 import {
   VehicleBodyworkInput,
   VehicleBodyworkUpdateInput,
+  VehicleBodyworkUpdateManyInput,
 } from './vehicle-bodywork.input';
 import { VehicleBodyworkModel } from './vehicle-bodywork.model';
 
@@ -40,10 +44,19 @@ export class VehicleBodyworkResolver {
     private vehicleTypeRepository: VehicleTypeRepository,
     private userCase: UserUseCases,
   ) {}
+
+  @Query(() => Number)
+  async totalVehicleBodyworks(@Args() request: VehicleBodyworkCountArgs) {
+    const vehicleBodywork = await this.vehicleBodyworkRepository.count(request);
+
+    return vehicleBodywork;
+  }
+
   @Query(() => VehicleBodyworkModel)
   async getVehicleBodyworkModel(@Args() request: GetVehicleBodyWorkArgs) {
     return this.vehicleBodyworkRepository.findVehicleBodywork(request);
   }
+
   @Query(() => [VehicleBodyworkModel], { nullable: true })
   async getAllVehicleBodywork(@Args() args: VehicleBodyworkWhereArgs) {
     const bodyworks =
@@ -56,6 +69,7 @@ export class VehicleBodyworkResolver {
 
     return bodyworks.length > 0 ? bodyworks : null;
   }
+
   @Mutation(() => VehicleBodyworkModel)
   async createVehicleBodywork(
     @Args('vehicleBodyworkInput') vehicleBodyworkInput: VehicleBodyworkInput,
@@ -70,6 +84,7 @@ export class VehicleBodyworkResolver {
       vehicleBodyworkEntity,
     );
   }
+
   @Mutation(() => VehicleBodyworkModel)
   async updateVehicleBodywork(
     @Args('id') id: string,
@@ -87,12 +102,40 @@ export class VehicleBodyworkResolver {
       vehicleBodyworkEntity,
     );
   }
+
+  @Mutation(() => [VehicleBodyworkModel])
+  async updateManyVehicleBodyworks(
+    @Args({
+      name: 'updateManyVehicleBodyworks',
+      type: () => [VehicleBodyworkUpdateManyInput],
+    })
+    updateVehicleBodyworkInput: VehicleBodyworkUpdateManyInput[],
+  ) {
+    return await this.vehicleBodyworkRepository.updateMany(
+      updateVehicleBodyworkInput,
+    );
+  }
+
+  @Mutation(() => VehicleBodyworkModel)
+  async deleteVehicleBodywork(@Args('id', { type: () => String }) id: string) {
+    return await this.vehicleBodyworkRepository.delete(id);
+  }
+
+  @Mutation(() => [VehicleBodyworkModel])
+  async deleteManyVehicleBodyworks(
+    @Args({ name: 'deleteManyVehicleBodyworks', type: () => [String] })
+    ids: string[],
+  ) {
+    return await this.vehicleBodyworkRepository.deleteMany(ids);
+  }
+
   @ResolveField(() => UserModelRefereces)
   async CreatedUser(@Parent() user: VehicleBodyworkInput) {
     const { created_by: createdBy } = user;
 
     return await this.userCase.getUser({ id: createdBy });
   }
+
   @ResolveField(() => UserModelRefereces)
   async UpdatedUser(@Parent() user: VehicleBodyworkInput) {
     const { updated_by: updatedBy } = user;
