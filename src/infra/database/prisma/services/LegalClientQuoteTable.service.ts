@@ -31,9 +31,14 @@ export class LegalClientQuoteTablePrismaService
         where: {
           OR: [{ id: request.id }, { cod_quote: request.codQuote }],
         },
+        include: { AdressDestiny: true, AdressOrigin: true },
       });
 
-    return LegalClientQuoteTablePrismaDTO.PrismaToEntity(legalclientquotetable);
+    return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+      legalclientquotetable,
+      legalclientquotetable?.AdressOrigin,
+      legalclientquotetable?.AdressDestiny,
+    );
   }
   async createLegalClientQuoteTable(
     legalclientquotetable: LegalClientQuoteTable,
@@ -43,10 +48,13 @@ export class LegalClientQuoteTablePrismaService
         data: LegalClientQuoteTablePrismaDTO.EntityToCreatePrisma(
           legalclientquotetable,
         ),
+        include: { AdressDestiny: true, AdressOrigin: true },
       });
 
     return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
       legalclientquotetablePrisma,
+      legalclientquotetablePrisma.AdressOrigin,
+      legalclientquotetablePrisma.AdressDestiny,
     );
   }
   async updateLegalClientQuoteTable(
@@ -58,11 +66,14 @@ export class LegalClientQuoteTablePrismaService
         data: LegalClientQuoteTablePrismaDTO.EntityToPrismaUpdate(
           legalclientquotetable,
         ),
+        include: { AdressDestiny: true, AdressOrigin: true },
         where: { id },
       });
 
     return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
       legalclientquotetablePrisma,
+      legalclientquotetablePrisma.AdressOrigin,
+      legalclientquotetablePrisma.AdressDestiny,
     );
   }
 
@@ -75,10 +86,15 @@ export class LegalClientQuoteTablePrismaService
         skip: parameters.offset,
         where: parameters.where,
         orderBy: parameters.sort,
+        include: { AdressDestiny: true, AdressOrigin: true },
       });
 
     return legalclientquotetables.map(legalclientquotetable =>
-      LegalClientQuoteTablePrismaDTO.PrismaToEntity(legalclientquotetable),
+      LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+        legalclientquotetable,
+        legalclientquotetable.AdressOrigin,
+        legalclientquotetable.AdressDestiny,
+      ),
     );
   }
   updateManyLegalClientQuoteTable(
@@ -93,10 +109,13 @@ export class LegalClientQuoteTablePrismaService
               legalclientquotetable,
             ),
             where: { id: legalclientquotetable.id },
+            include: { AdressDestiny: true, AdressOrigin: true },
           });
 
         return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
           legalclientquotetablePrisma,
+          legalclientquotetablePrisma.AdressOrigin,
+          legalclientquotetablePrisma.AdressDestiny,
         );
       });
 
@@ -109,8 +128,15 @@ export class LegalClientQuoteTablePrismaService
   async deleteLegalClientQuoteTable(
     id: string,
   ): Promise<LegalClientQuoteTable> {
+    const data = await this.prisma.legalClientQuoteTable.delete({
+      where: { id },
+      include: { AdressDestiny: true, AdressOrigin: true },
+    });
+
     return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
-      await this.prisma.legalClientQuoteTable.delete({ where: { id } }),
+      data,
+      data.AdressOrigin,
+      data.AdressDestiny,
     );
   }
   deleteManyLegalClientQuoteTable(
@@ -121,10 +147,13 @@ export class LegalClientQuoteTablePrismaService
         const legalclientquotetablePrisma =
           await tx.legalClientQuoteTable.delete({
             where: { id: icmdsId },
+            include: { AdressDestiny: true, AdressOrigin: true },
           });
 
         return LegalClientQuoteTablePrismaDTO.PrismaToEntity(
           legalclientquotetablePrisma,
+          legalclientquotetablePrisma.AdressOrigin,
+          legalclientquotetablePrisma.AdressDestiny,
         );
       });
 

@@ -1,29 +1,21 @@
-import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
+import { type NumberFilterDTO } from 'domain/shared/dtos/NumberFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
 export abstract class WhereFreightExpenseTypeDTO extends WhereDTO {
   id?: StringFilterDTO;
-  description?: string;
-  date_incident?: Date;
-  order_process_id?: string;
-  date_resolved?: DateTimeFilterDTO;
-  created_by?: StringFilterDTO;
-  updated_by?: StringFilterDTO;
-  updated_at?: DateTimeFilterDTO;
-  created_at?: DateTimeFilterDTO;
+  expense_name?: StringFilterDTO;
+  value?: NumberFilterDTO;
+  order_id?: StringFilterDTO;
+  physical_customer_id?: StringFilterDTO;
+  legal_client_order_id?: StringFilterDTO;
 }
 
 export abstract class SortByFreightExpenseTypeDTO {
   id?: 'asc' | 'desc';
-  description?: 'asc' | 'desc';
-  date_incident?: 'asc' | 'desc';
-  order_process_id?: 'asc' | 'desc';
-  date_resolved?: 'asc' | 'desc';
-  created_by?: 'asc' | 'desc';
-  updated_by?: 'asc' | 'desc';
-  updated_at?: 'asc' | 'desc';
-  created_at?: 'asc' | 'desc';
+  expense_name?: 'asc' | 'desc';
+  value?: 'asc' | 'desc';
+  order_id?: 'asc' | 'desc';
 }
 
 export class FindAllFreightExpenseWhereRequestDTO {
@@ -32,6 +24,7 @@ export class FindAllFreightExpenseWhereRequestDTO {
   sort?: SortByFreightExpenseTypeDTO;
   where?: WhereFreightExpenseTypeDTO;
 }
-export abstract class CountAllFreightExpenseWhereRequestDTO {
+
+export abstract class CountFreightExpenseRequestDTO {
   where?: WhereFreightExpenseTypeDTO;
 }

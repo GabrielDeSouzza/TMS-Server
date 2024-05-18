@@ -26,11 +26,14 @@ export class PhysicalCustomerPrismaDTO {
     physicalCustomer: PhysicalCustomer,
     naturalPerson: NaturalPerson,
   ) {
+    console.log(physicalCustomer);
+    console.log();
     const physicalCustomerPrisma: Prisma.PhysicalCustomerCreateInput = {
       branch: physicalCustomer.branch,
-      NaturalPerson: {
-        create: NaturalPersonPrismaDTO.EntityToPrisma(naturalPerson),
-      },
+      NaturalPerson: this.naturalPersonQuery(
+        naturalPerson,
+        physicalCustomer.natural_person_id,
+      ),
       CreatedBy: { connect: { id: physicalCustomer.created_by } },
       created_at: physicalCustomer.created_at,
       UpdatedBy: { connect: { id: physicalCustomer.updated_by } },
@@ -59,52 +62,16 @@ export class PhysicalCustomerPrismaDTO {
     return outsourcedDriverUptade;
   }
 
-  /*private static createOrUpdateContract(contract: ContractOutsourcedDriver) {
-    if (contract.id) {
-      console.log(contract);
-      const updateContract: Prisma.Enumerable<Prisma.ContractOutsourcedDriverUpdateWithWhereUniqueWithoutOutsourcedDriverInput> =
-        {
-          data: {
-            cpf: contract.cpf,
-            situation: contract.situation,
-            start_at: contract.start_at,
-            type: contract.type,
-            created_at: contract.created_at,
-            created_by: contract.created_by,
-            end_at: contract.end_at,
-            updated_by: contract.updated_by,
-            updated_at: contract.updated_at,
-          },
-          where: { id: contract.id },
-        };
-      const queryPrisma: Prisma.ContractOutsourcedDriverUpdateManyWithoutOutsourcedDriverNestedInput =
-        {
-          update: updateContract,
-        };
+  private static naturalPersonQuery(
+    naturalPerson?: NaturalPerson,
+    natualPersonId?: string,
+  ) {
+    if (!naturalPerson && !natualPersonId) return;
+    const query: Prisma.NaturalPersonCreateNestedOneWithoutRecipientInput =
+      naturalPerson
+        ? { create: NaturalPersonPrismaDTO.EntityToPrisma(naturalPerson) }
+        : { connect: { id: natualPersonId } };
 
-      return queryPrisma;
-    } else {
-      const createContract: Prisma.XOR<
-        Prisma.Enumerable<Prisma.ContractOutsourcedDriverCreateWithoutOutsourcedDriverInput>,
-        Prisma.Enumerable<Prisma.ContractOutsourcedDriverUncheckedCreateWithoutOutsourcedDriverInput>
-      > = {
-        contract_number: contract.contract_number,
-        cpf: contract.cpf,
-        situation: contract.situation,
-        start_at: contract.start_at,
-        type: contract.type,
-        created_at: contract.created_at,
-        created_by: contract.created_by,
-        end_at: contract.end_at,
-        updated_by: contract.updated_by,
-        updated_at: contract.updated_at,
-      };
-      const queryPrisma: Prisma.ContractOutsourcedDriverUpdateManyWithoutOutsourcedDriverNestedInput =
-        {
-          create: createContract,
-        };
-
-      return queryPrisma;
-    }
-  }*/
+    return query;
+  }
 }

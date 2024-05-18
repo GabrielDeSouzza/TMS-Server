@@ -15,3 +15,13 @@ export class FreightExpenseModel implements IFreightExpense {
   @Field({ nullable: true })
   legalClientOrderId?: string;
 }
+
+@ObjectType()
+export class FreightExpenseOrderModel implements IFreightExpense {
+  @Field({ nullable: true })
+  id?: string;
+  @Field()
+  expenseName: string;
+  @Field(() => Float)
+  value: number;
+}

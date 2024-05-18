@@ -1,9 +1,9 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 
 import { type ILegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.model';
-import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
+import { FreightExpenseOrderModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { LegalClientQuoteTableModel } from '../LegalClientQuoteTableGraphql/LegalClientQuoteTable.model';
 import {
   LegalContractModel,
@@ -29,6 +29,12 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   updated_by: string;
   @Field()
   carrier_id: string;
+  @Field(() => Float, { nullable: true })
+  total_shipping_cost?: number;
+  @Field(() => Float, { nullable: true })
+  total_receivable?: number;
+  @Field(() => Float, { nullable: true })
+  total_tax_payable?: number;
   @Field(() => LegalContractModel)
   LegalContract: LegalContractReferences;
   @Field(() => UserModelRefereces)
@@ -40,8 +46,22 @@ export class LegalClientOrderModel implements ILegalClientOrder {
   quote_table_id: string;
   @Field(() => LegalClientQuoteTableModel)
   Quote: LegalClientQuoteTableModel;
-  @Field(() => [FreightExpenseModel])
-  FreightExpenses: FreightExpenseModel[];
+
   @Field(() => CarrierCompanyModel)
   CarrierCompany: CarrierCompanyModel;
+  @Field(() => Float)
+  calculate_cofins?: number;
+  @Field(() => Float)
+  calculated_pis?: number;
+  @Field(() => Float)
+  cofins_tax?: number;
+  @Field(() => Float)
+  calculate_icms?: number;
+  @Field(() => Float)
+  pis_tax?: number;
+  @Field(() => Float)
+  icms_tax?: number;
+
+  @Field(() => [FreightExpenseOrderModel], { nullable: true })
+  expenses?: FreightExpenseOrderModel[];
 }

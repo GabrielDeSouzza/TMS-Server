@@ -17,9 +17,8 @@ import {
 } from './Args/WhereFreightExpenseArgs';
 import {
   FreightExpenseUpdateManyInput,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  FreightExpenseInput,
   FreightExpenseUpdateInput,
+  FreightExpenseInput,
 } from './FreightExpense.input';
 import { FreightExpenseModel } from './FreightExpense.model';
 
@@ -50,9 +49,9 @@ export class FreightExpenseResolver {
   @Mutation(() => FreightExpenseModel)
   async createFreightExpense(
     @Args('data')
-    FreightExpenseInput: FreightExpenseInput,
+    freightExpenseInput: FreightExpenseInput,
   ) {
-    return this.freightExpenseUseCase.createFreightExpense(FreightExpenseInput);
+    return this.freightExpenseUseCase.createFreightExpense(freightExpenseInput);
   }
   @Mutation(() => FreightExpenseModel)
   async updateFreightExpense(

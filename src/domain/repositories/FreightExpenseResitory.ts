@@ -1,13 +1,13 @@
 import { type GetFreightExpenseDTO } from 'domain/dto/repositories/getDataDtos/GetFreightExpenseDto';
 import {
-  type CountAllFreightExpenseWhereRequestDTO,
+  type CountFreightExpenseRequestDTO,
   type FindAllFreightExpenseWhereRequestDTO,
 } from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
 import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 
 export abstract class FreightExpenseRepository {
   abstract countFreightExpenseRepositoy(
-    parameters: CountAllFreightExpenseWhereRequestDTO,
+    parameters: CountFreightExpenseRequestDTO,
   ): Promise<number>;
   abstract getFreightExpense(
     request: GetFreightExpenseDTO,

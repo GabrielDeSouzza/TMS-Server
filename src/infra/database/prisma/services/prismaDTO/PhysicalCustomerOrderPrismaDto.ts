@@ -1,6 +1,7 @@
 import {
   type Prisma,
   type PhysicalCustomerOrder as PhysicalCustomerOrderPrisma,
+  type FreightExpenses as FreightExpensePrisma,
 } from '@prisma/client';
 
 import { PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
@@ -8,6 +9,8 @@ import { PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/ph
 export class PhysicalCustomerOrderPrismaDTO {
   public static PrismaToEntity(
     physicalCustomerOrderPrisma: PhysicalCustomerOrderPrisma,
+    expensesPrisma?: FreightExpensePrisma[],
+    icms?: number,
   ) {
     if (!physicalCustomerOrderPrisma) return null;
 
@@ -21,12 +24,21 @@ export class PhysicalCustomerOrderPrismaDTO {
       updated_at: physicalCustomerOrderPrisma.updated_at,
       quote_table_id: physicalCustomerOrderPrisma.quote_table_id,
       carrier_id: physicalCustomerOrderPrisma.carrier_id,
+      total_receivable: physicalCustomerOrderPrisma.total_receivable,
+      total_shipping_cost: physicalCustomerOrderPrisma.total_shipping_cost,
+      total_tax_payable: physicalCustomerOrderPrisma.total_tax_payable,
+      expenses: expensesPrisma?.map(expense => ({
+        expenseName: expense.expense_name,
+        value: expense.value,
+        id: expense.id,
+      })),
+      icms_tax: icms,
     });
   }
   public static EntityToCreatePrisma(
     physicalCustomerOrder: PhysicalCustomerOrder,
   ) {
-    console.log(physicalCustomerOrder.quote_table_id);
+    console.log(physicalCustomerOrder.expenses);
     const physicalCustomerOrderPrisma: Prisma.PhysicalCustomerOrderCreateInput =
       {
         CreatedBy: { connect: { id: physicalCustomerOrder.created_by } },
@@ -41,6 +53,17 @@ export class PhysicalCustomerOrderPrismaDTO {
           connect: { id: physicalCustomerOrder.quote_table_id },
         },
         CarrierCompany: { connect: { id: physicalCustomerOrder.carrier_id } },
+        total_receivable: physicalCustomerOrder.total_receivable,
+        total_shipping_cost: physicalCustomerOrder.total_shipping_cost,
+        total_tax_payable: physicalCustomerOrder.total_tax_payable,
+        FreightExpenses: {
+          createMany: {
+            data: physicalCustomerOrder.expenses.map(expense => ({
+              expense_name: expense.expenseName,
+              value: expense.value,
+            })),
+          },
+        },
       };
 
     return physicalCustomerOrderPrisma;
@@ -62,6 +85,24 @@ export class PhysicalCustomerOrderPrismaDTO {
         updated_at: physicalCustomerOrder.updated_at,
         CarrierCompany: physicalCustomerOrder.carrier_id
           ? { connect: { id: physicalCustomerOrder.carrier_id } }
+          : undefined,
+        total_receivable: physicalCustomerOrder.total_receivable,
+        total_shipping_cost: physicalCustomerOrder.total_shipping_cost,
+        total_tax_payable: physicalCustomerOrder.total_tax_payable,
+        FreightExpenses: physicalCustomerOrder.expenses
+          ? {
+              upsert: physicalCustomerOrder.expenses.map(expense => ({
+                create: {
+                  expense_name: expense.expenseName,
+                  value: expense.value,
+                },
+                update: {
+                  expense_name: expense.expenseName,
+                  value: expense.value,
+                },
+                where: { id: expense.id ?? '' },
+              })),
+            }
           : undefined,
       };
 

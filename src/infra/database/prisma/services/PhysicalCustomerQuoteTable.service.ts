@@ -21,10 +21,13 @@ export class PhysicalCustomerQuoteTablePrismaService
         where: {
           OR: [{ id: request.id }, { cod_quote: request.codQuote }],
         },
+        include: { AdressDestiny: true, AdressOrigin: true },
       });
 
     return PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
       physicalcustomerquotetable,
+      physicalcustomerquotetable?.AdressOrigin,
+      physicalcustomerquotetable?.AdressDestiny,
     );
   }
   async createPhysicalCustomerQuoteTable(
@@ -35,10 +38,13 @@ export class PhysicalCustomerQuoteTablePrismaService
         data: PhysicalCustomerQuoteTablePrismaDTO.EntityToCreatePrisma(
           physicalcustomerquotetable,
         ),
+        include: { AdressDestiny: true, AdressOrigin: true },
       });
 
     return PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
       physicalcustomerquotetablePrisma,
+      physicalcustomerquotetablePrisma.AdressOrigin,
+      physicalcustomerquotetablePrisma.AdressDestiny,
     );
   }
   async updatePhysicalCustomerQuoteTable(
@@ -50,11 +56,14 @@ export class PhysicalCustomerQuoteTablePrismaService
         data: PhysicalCustomerQuoteTablePrismaDTO.EntityToPrismaUpdate(
           physicalcustomerquotetable,
         ),
+        include: { AdressDestiny: true, AdressOrigin: true },
         where: { id },
       });
 
     return PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
       physicalcustomerquotetablePrisma,
+      physicalcustomerquotetablePrisma.AdressOrigin,
+      physicalcustomerquotetablePrisma.AdressDestiny,
     );
   }
 
@@ -67,11 +76,14 @@ export class PhysicalCustomerQuoteTablePrismaService
         skip: parameters.offset,
         where: parameters.where,
         orderBy: parameters.sort,
+        include: { AdressDestiny: true, AdressOrigin: true },
       });
 
     return physicalcustomerquotetables.map(physicalcustomerquotetable =>
       PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
         physicalcustomerquotetable,
+        physicalcustomerquotetable.AdressOrigin,
+        physicalcustomerquotetable.AdressDestiny,
       ),
     );
   }

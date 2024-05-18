@@ -83,7 +83,11 @@ export class PhysicalCustomerOrderUseCases {
       carrier_id: data.carrier_id,
       updated_by: data.updated_by,
       created_by: data.created_by,
+      total_receivable: data.total_receivable,
+      total_shipping_cost: data.total_shipping_cost,
+      total_tax_payable: data.total_tax_payable,
       quote_table_id: data.quote_table_id,
+      expenses: data.expenses,
     });
 
     return this.physicalCustomerOrderRepository.createPhysicalCustomerOrder(
@@ -109,8 +113,12 @@ export class PhysicalCustomerOrderUseCases {
       physicalCustomerId: data.physicalCustomerId,
       updated_by: data.updated_by,
       carrier_id: data.carrier_id,
+      total_receivable: data.total_receivable,
+      total_shipping_cost: data.total_shipping_cost,
+      total_tax_payable: data.total_tax_payable,
       order: null,
       quote_table_id: data.quote_table_id,
+      expenses: data.expenses,
     });
 
     return this.physicalCustomerOrderRepository.updatePhysicalCustomerOrder(
@@ -147,9 +155,13 @@ export class PhysicalCustomerOrderUseCases {
         physicalCustomerId: physicalcustomerorder.physicalCustomerId,
         updated_by: updateBy,
         carrier_id: physicalcustomerorder.carrier_id,
+        total_receivable: physicalcustomerorder.total_receivable,
+        total_shipping_cost: physicalcustomerorder.total_shipping_cost,
+        total_tax_payable: physicalcustomerorder.total_tax_payable,
         order: null,
         quote_table_id: physicalcustomerorder.quote_table_id,
         id: physicalcustomerorder.id,
+        expenses: physicalcustomerorder.expenses,
       });
 
       return physicalcustomerorderUpdated;

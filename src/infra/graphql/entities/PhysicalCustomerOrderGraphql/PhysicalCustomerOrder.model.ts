@@ -1,9 +1,9 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 
 import { type IPhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 
 import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.model';
-import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
+import { FreightExpenseOrderModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { PhysicalCustomerQuoteTableModel } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -36,8 +36,14 @@ export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)
   UpdatedUser: UserModelRefereces;
-  @Field(() => [FreightExpenseModel])
-  FreightExpenses: FreightExpenseModel[];
+  @Field(() => [FreightExpenseOrderModel])
+  expenses: FreightExpenseOrderModel[];
   @Field(() => CarrierCompanyModel)
   CarrierCompany: CarrierCompanyModel;
+  @Field(() => Float, { nullable: true })
+  total_shipping_cost?: number;
+  @Field(() => Float, { nullable: true })
+  total_receivable?: number;
+  @Field(() => Float, { nullable: true })
+  total_tax_payable?: number;
 }

@@ -42,27 +42,53 @@ export class LegalClientOrderPrismaService
   ): Promise<LegalClientOrder[]> {
     const orders = await this.prisma.legalClientOrder.findMany({
       where: { LegalContract: { legal_client_id: legalClientId } },
+      include: {
+        FreightExpenses: true,
+        QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+      },
     });
 
-    return orders.map(order => LegalClientOrderPrismaDTO.PrismaToEntity(order));
+    return orders.map(legalClientOrder =>
+      LegalClientOrderPrismaDTO.PrismaToEntity(
+        legalClientOrder,
+        legalClientOrder.FreightExpenses,
+        legalClientOrder.QuoteTable.Icms.aliquot,
+      ),
+    );
   }
   async findLegalClientOrder(
     request: GetLegalClientOrderDTO,
   ): Promise<LegalClientOrder> {
     const legalClientOrder = await this.prisma.legalClientOrder.findFirst({
       where: { OR: [{ id: request.id }, { order: request.order }] },
+      include: {
+        FreightExpenses: true,
+        QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+      },
     });
 
-    return LegalClientOrderPrismaDTO.PrismaToEntity(legalClientOrder);
+    return LegalClientOrderPrismaDTO.PrismaToEntity(
+      legalClientOrder,
+      legalClientOrder.FreightExpenses,
+      legalClientOrder.QuoteTable.Icms.aliquot,
+    );
   }
   async createLegalClientOrder(
     legalClientOrder: LegalClientOrder,
   ): Promise<LegalClientOrder> {
     const legalClientOrderPrisma = await this.prisma.legalClientOrder.create({
       data: LegalClientOrderPrismaDTO.EntityToCreatePrisma(legalClientOrder),
+      include: {
+        FreightExpenses: true,
+        QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+      },
     });
 
-    return LegalClientOrderPrismaDTO.PrismaToEntity(legalClientOrderPrisma);
+    return LegalClientOrderPrismaDTO.PrismaToEntity(
+      legalClientOrderPrisma,
+      legalClientOrderPrisma.FreightExpenses,
+      legalClientOrderPrisma.QuoteTable.Icms.aliquot,
+    );
   }
   async updateLegalClientOrder(
     id: string,
@@ -71,9 +97,17 @@ export class LegalClientOrderPrismaService
     const legalClientOrderPrisma = await this.prisma.legalClientOrder.update({
       data: LegalClientOrderPrismaDTO.EntityToPrismaUpdate(legalClientOrder),
       where: { id },
+      include: {
+        FreightExpenses: true,
+        QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+      },
     });
 
-    return LegalClientOrderPrismaDTO.PrismaToEntity(legalClientOrderPrisma);
+    return LegalClientOrderPrismaDTO.PrismaToEntity(
+      legalClientOrderPrisma,
+      legalClientOrderPrisma.FreightExpenses,
+      legalClientOrderPrisma.QuoteTable.Icms.aliquot,
+    );
   }
 
   async getAllLegalClientOrder(
@@ -84,10 +118,18 @@ export class LegalClientOrderPrismaService
       skip: parameters.offset,
       where: parameters.where,
       orderBy: parameters.sort,
+      include: {
+        FreightExpenses: true,
+        QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+      },
     });
 
     return legalClientOrders.map(legalClientOrder =>
-      LegalClientOrderPrismaDTO.PrismaToEntity(legalClientOrder),
+      LegalClientOrderPrismaDTO.PrismaToEntity(
+        legalClientOrder,
+        legalClientOrder.FreightExpenses,
+        legalClientOrder.QuoteTable.Icms.aliquot,
+      ),
     );
   }
   updateManyLegalClientOrder(
@@ -96,14 +138,22 @@ export class LegalClientOrderPrismaService
     console.log(data);
     const legalclientorderUpdate = this.prisma.$transaction(async tx => {
       const promises = data.map(async legalclientorder => {
-        const legalclientorderPrisma = await tx.legalClientOrder.update({
+        const legalClientOrderPrisma = await tx.legalClientOrder.update({
           data: LegalClientOrderPrismaDTO.EntityToPrismaUpdate(
             legalclientorder,
           ),
           where: { id: legalclientorder.id },
+          include: {
+            FreightExpenses: true,
+            QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+          },
         });
 
-        return LegalClientOrderPrismaDTO.PrismaToEntity(legalclientorderPrisma);
+        return LegalClientOrderPrismaDTO.PrismaToEntity(
+          legalClientOrderPrisma,
+          legalClientOrderPrisma.FreightExpenses,
+          legalClientOrderPrisma.QuoteTable.Icms.aliquot,
+        );
       });
 
       return Promise.all(promises);
@@ -113,18 +163,36 @@ export class LegalClientOrderPrismaService
   }
 
   async deleteLegalClientOrder(id: string): Promise<LegalClientOrder> {
+    const legalClientOrderPrisma = await this.prisma.legalClientOrder.delete({
+      where: { id },
+      include: {
+        FreightExpenses: true,
+        QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+      },
+    });
+
     return LegalClientOrderPrismaDTO.PrismaToEntity(
-      await this.prisma.legalClientOrder.delete({ where: { id } }),
+      legalClientOrderPrisma,
+      legalClientOrderPrisma.FreightExpenses,
+      legalClientOrderPrisma.QuoteTable.Icms.aliquot,
     );
   }
   deleteManyLegalClientOrder(ids: string[]): Promise<LegalClientOrder[]> {
     const legalclientorderDeleted = this.prisma.$transaction(async tx => {
       const promises = ids.map(async icmdsId => {
-        const legalclientorderPrisma = await tx.legalClientOrder.delete({
+        const legalClientOrderPrisma = await tx.legalClientOrder.delete({
           where: { id: icmdsId },
+          include: {
+            FreightExpenses: true,
+            QuoteTable: { select: { Icms: { select: { aliquot: true } } } },
+          },
         });
 
-        return LegalClientOrderPrismaDTO.PrismaToEntity(legalclientorderPrisma);
+        return LegalClientOrderPrismaDTO.PrismaToEntity(
+          legalClientOrderPrisma,
+          legalClientOrderPrisma.FreightExpenses,
+          legalClientOrderPrisma.QuoteTable.Icms.aliquot,
+        );
       });
 
       return Promise.all(promises);

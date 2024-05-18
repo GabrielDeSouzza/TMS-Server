@@ -7,6 +7,7 @@ import { LegalClientQuoteTableUseCases } from 'app/useCases/LegalClientQuoteTabl
 import { LegalClientQuoteTablePrismaService } from 'infra/database/prisma/services/LegalClientQuoteTable.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { IcmsModule } from '../IcmsGraphql/Icms.module';
 import { RecipientModule } from '../RecipientGraphql/Recipient.module';
 import { SenderModule } from '../SenderGraphql/Sender.module';
 import { LegalClientQuoteTableResolver } from './LegalClientQuoteTable.resolver';
@@ -20,7 +21,7 @@ import { LegalClientQuoteTableResolver } from './LegalClientQuoteTable.resolver'
     LegalClientQuoteTableResolver,
     LegalClientQuoteTableUseCases,
   ],
-  imports: [GraphqlCenterModule, SenderModule, RecipientModule],
+  imports: [GraphqlCenterModule, SenderModule, RecipientModule, IcmsModule],
   exports: [LegalClientQuoteTableUseCases],
 })
 export class LegalClientQuoteTableModule {}

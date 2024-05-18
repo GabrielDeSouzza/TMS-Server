@@ -4,8 +4,8 @@ import { GraphQLError } from 'graphql';
 
 import { type GetIncidentDTO } from 'domain/dto/repositories/getDataDtos/GetIncidentDto';
 import {
-  type CountIncidentRequestDTO,
-  type FindAllIncidentWhereRequestDTO,
+  type FindAllFreightIncidentWhereRequestDTO,
+  type CountFreightIncidentWhereRequestDTO,
 } from 'domain/dto/repositories/whereDtos/FreightIncidentRepository.Dto';
 import { Incident } from 'domain/entities/OrdersEntities/IncidentEntity/Incident';
 import { IncidentRepository } from 'domain/repositories/IncidentResitory';
@@ -22,7 +22,7 @@ export class IncidentUseCases {
     private incidentRepository: IncidentRepository,
     private orderProcessing: OrderProcessingUseCases,
   ) {}
-  async countIncident(request: CountIncidentRequestDTO) {
+  async countIncident(request: CountFreightIncidentWhereRequestDTO) {
     return this.incidentRepository.countIncident(request);
   }
   async getIncident(request: GetIncidentDTO) {
@@ -41,7 +41,7 @@ export class IncidentUseCases {
     });
   }
 
-  async getAllIncident(request: FindAllIncidentWhereRequestDTO) {
+  async getAllIncident(request: FindAllFreightIncidentWhereRequestDTO) {
     return this.incidentRepository.findAllIncident(request);
   }
   async createIncident(data: CreateIncidentDTO) {

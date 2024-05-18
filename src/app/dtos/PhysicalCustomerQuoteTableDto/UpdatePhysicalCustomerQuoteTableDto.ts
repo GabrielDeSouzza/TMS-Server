@@ -1,14 +1,18 @@
+import { type AdressesType } from 'domain/entities/QuoteTables/AdressesType';
 import { type IPhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 
 export abstract class UpdatePhysicalCustomerQuoteTableDTO
   implements Partial<IPhysicalCustomerQuoteTable>
 {
-  id?: string;
   recipientId?: string;
+  kindService?: string;
+  typeCte?: string;
+  natureService?: string;
+  formPayment?: string;
   senderId?: string;
   who_pays?: string;
-  postalCodOrigin?: string;
-  postalCodDestiny?: string;
+  adressDestiny?: AdressesType;
+  adressOrigin?: AdressesType;
   typeMerchandise?: string;
   amount?: number;
   description?: string;
@@ -16,4 +20,5 @@ export abstract class UpdatePhysicalCustomerQuoteTableDTO
   volume?: number;
   nf_value?: number;
   updated_by: string;
+  icms_id?: string;
 }

@@ -6,15 +6,39 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  Allow,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsString,
+} from 'class-validator';
 
 import { type IPhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
+
+import { AdressInput } from '../AdressesGraphql/Adresses.input';
 
 @InputType()
 export class PhysicalCustomerQuoteTableInput
   implements
     Omit<IPhysicalCustomerQuoteTable, 'id' | 'created_at' | 'updated_at'>
 {
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  kindService: string;
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  typeCte: string;
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  natureService: string;
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  formPayment: string;
   @HideField()
   @Allow()
   codQuote: string;
@@ -30,14 +54,14 @@ export class PhysicalCustomerQuoteTableInput
   @IsString()
   @IsNotEmpty()
   who_pays: string;
-  @Field()
-  @IsString()
+  @Field(() => AdressInput)
+  @IsObject()
   @IsNotEmpty()
-  postalCodOrigin: string;
-  @Field()
-  @IsString()
+  adressOrigin: AdressInput;
+  @Field(() => AdressInput)
+  @IsObject()
   @IsNotEmpty()
-  postalCodDestiny: string;
+  adressDestiny: AdressInput;
   @Field()
   @IsString()
   @IsNotEmpty()

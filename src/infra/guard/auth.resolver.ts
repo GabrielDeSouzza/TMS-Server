@@ -13,7 +13,7 @@ export class AuthResolver {
   constructor(private authRepository: AuthRepository) {}
   @Mutation(() => AuthModel)
   async login(@Args('loginData') userData: AuthInput) {
-    console.log(hashSync('1234', 10));
+    console.log(hashSync('123456789', 10));
     const response = await this.authRepository.signIn(userData);
 
     const resolver: IJWTResolver = {

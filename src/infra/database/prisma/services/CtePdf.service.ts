@@ -1,140 +1,215 @@
 import { Injectable } from '@nestjs/common';
 
-import { CtePdf } from 'domain/entities/Cte Entities/CtePdfEntity/CtePdf';
+import { CteLegalClientPdf } from 'domain/entities/Cte Entities/CtePdfLegalClient/CtePdfLegalClient';
+import { CtePhyscialCustomerPdf } from 'domain/entities/Cte Entities/CtePdfPhysicalClient/CtePdfPhysicalCustomer';
 import { LegalClientCte } from 'domain/entities/Cte Entities/LegalClientCte/LegalClientCte';
-import { PhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte/PhysicalCustomerCte';
 import { LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
-import { NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type CtePdfRepository } from 'domain/repositories/CtePdfRepository';
 
 import { PrismaService } from '../prisma.service';
+import { LegalClientQuoteTablePrismaDTO } from './prismaDTO/LegalClientQuoteTablePrismaDto';
+import { LegalPersonPrismaDTO } from './prismaDTO/LegalPersonPrismaDto';
+import { NaturalPersonPrismaDTO } from './prismaDTO/NaturalPersonPrismaDto';
+import { PhysicalCustomerQuoteTablePrismaDTO } from './prismaDTO/PhysicalCustomerQuoteTablePrismaDto';
 
 @Injectable()
 export class CtePdfPrismaService implements CtePdfRepository {
   constructor(private prisma: PrismaService) {}
-  async getDataForGenerateCtePdfLegalClient(orderId: string): Promise<CtePdf> {
-    const cteDataPrisma = await this.prisma.legalClientOrder.findFirst({
-      where: { id: orderId },
+  async getDataForGenerateCtePdfLegalClient(
+    cteId: string,
+  ): Promise<CteLegalClientPdf> {
+    console.log(cteId);
+    const cteDataPrisma = await this.prisma.legalClientCte.findFirst({
+      where: { id: cteId },
       select: {
-        FreightExpenses: { select: { value: true, expense_name: true } },
-        QuoteTable: {
-          include: {
-            Recipient: {
-              select: { NaturalPerson: true, LegalPerson: true },
+        LegalClientOrder: {
+          select: {
+            total_receivable: true,
+            total_shipping_cost: true,
+            total_tax_payable: true,
+            FreightExpenses: { select: { value: true, expense_name: true } },
+            LegalContract: {
+              select: { LegalClient: { select: { LegalPerson: true } } },
             },
-            Sender: {
-              select: { NaturalPerson: true, LegalPerson: true },
+            QuoteTable: {
+              include: {
+                AdressDestiny: true,
+                AdressOrigin: true,
+                Recipient: {
+                  select: { NaturalPerson: true, LegalPerson: true },
+                },
+                Sender: {
+                  select: { NaturalPerson: true, LegalPerson: true },
+                },
+              },
             },
+            CarrierCompany: { select: { LegalPerson: true, rntrc: true } },
           },
         },
-        LegalClientCte: true,
-        CarrierCompany: { select: { LegalPerson: true, rntrc: true } },
+        access_key: true,
+        cte_number: true,
+        id: true,
+        observations: true,
+        type_cte: true,
+        order_id: true,
       },
     });
+    const recipientLegalPerson =
+      cteDataPrisma?.LegalClientOrder.QuoteTable?.Recipient.LegalPerson;
+    const recipientNaturalPerson =
+      cteDataPrisma?.LegalClientOrder.QuoteTable?.Recipient.NaturalPerson;
 
-    const recipientLegalClient =
-      cteDataPrisma?.QuoteTable?.Recipient.LegalPerson;
-    const recipientPhysicalCustomer =
-      cteDataPrisma?.QuoteTable?.Recipient.NaturalPerson;
-    const recipient = recipientLegalClient
-      ? new LegalPerson({ ...recipientLegalClient })
-      : new NaturalPerson({ ...recipientPhysicalCustomer });
+    const originAdress = cteDataPrisma.LegalClientOrder.QuoteTable.AdressOrigin;
 
-    const senderLegalClient = cteDataPrisma?.QuoteTable?.Sender.LegalPerson;
-    const senderPhysicalCustomer =
-      cteDataPrisma?.QuoteTable?.Sender.NaturalPerson;
-    const sender = recipientLegalClient
-      ? new LegalPerson({ ...senderLegalClient })
-      : new NaturalPerson({ ...senderPhysicalCustomer });
+    const destinyAdress =
+      cteDataPrisma.LegalClientOrder.QuoteTable.AdressDestiny;
+
+    const senderLegalPerson =
+      cteDataPrisma?.LegalClientOrder.QuoteTable?.Sender.LegalPerson;
+    const senderNaturalPerson =
+      cteDataPrisma?.LegalClientOrder.QuoteTable?.Sender.NaturalPerson;
+
     const carrierCompany = new LegalPerson({
-      ...cteDataPrisma.CarrierCompany.LegalPerson,
+      ...cteDataPrisma.LegalClientOrder.CarrierCompany.LegalPerson,
     });
-    const expenses = cteDataPrisma?.FreightExpenses.map(expense => ({
-      expenseName: expense.expense_name,
-      value: expense.value,
-    }));
+
+    const legalClientPrisma =
+      cteDataPrisma.LegalClientOrder.LegalContract.LegalClient.LegalPerson;
+    const expenses = cteDataPrisma?.LegalClientOrder.FreightExpenses.map(
+      expense => ({
+        expenseName: expense.expense_name,
+        value: expense.value,
+      }),
+    );
+    const order = LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+      cteDataPrisma.LegalClientOrder.QuoteTable,
+      originAdress,
+      destinyAdress,
+    );
     const cteData = new LegalClientCte({
-      acessKey: cteDataPrisma?.LegalClientCte?.access_key,
-      cteNumber: cteDataPrisma?.LegalClientCte?.cte_number,
-      cteType: cteDataPrisma?.LegalClientCte?.type_cte,
-      orderId: cteDataPrisma?.LegalClientCte?.order_id,
-      observations: cteDataPrisma?.LegalClientCte?.observations,
-      id: cteDataPrisma?.LegalClientCte?.id,
+      acessKey: cteDataPrisma?.access_key,
+      cteNumber: cteDataPrisma?.cte_number,
+      cteType: cteDataPrisma?.type_cte,
+      orderId: cteDataPrisma?.order_id,
+      observations: cteDataPrisma?.observations,
+      id: cteDataPrisma?.id,
     });
-    const ctePdf = new CtePdf({
+    const ctePdf = new CteLegalClientPdf({
       expenses,
       cteData,
-      recipient,
-      sender,
+      recipientLegalPerson:
+        LegalPersonPrismaDTO.PrismaToEntity(recipientLegalPerson),
+      recipientNaturalPerson: NaturalPersonPrismaDTO.PrismaToEntity(
+        recipientNaturalPerson,
+      ),
+      senderLegalPerson: LegalPersonPrismaDTO.PrismaToEntity(senderLegalPerson),
+      senderNaturalPerson:
+        NaturalPersonPrismaDTO.PrismaToEntity(senderNaturalPerson),
+      legalClient: LegalPersonPrismaDTO.PrismaToEntity(legalClientPrisma),
       carrierCompany,
-      rntrc: cteDataPrisma.CarrierCompany.rntrc,
+      rntrc: cteDataPrisma.LegalClientOrder.CarrierCompany.rntrc,
+      orderData: order,
     });
 
     return ctePdf;
   }
   async getDataForGenerateCtePdfPhysicalCustomer(
-    orderId: string,
-  ): Promise<CtePdf> {
-    const cteDataPrisma = await this.prisma.physicalCustomerOrder.findFirst({
-      where: { id: orderId },
+    cteId: string,
+  ): Promise<CtePhyscialCustomerPdf> {
+    const cteDataPrisma = await this.prisma.physicalCustomerCte.findFirst({
+      where: { id: cteId },
       select: {
-        FreightExpenses: { select: { value: true, expense_name: true } },
-        PhysicalCustomerQuoteTable: {
-          include: {
-            Recipient: {
-              select: { NaturalPerson: true, LegalPerson: true },
+        PhysicalCustomerOrder: {
+          select: {
+            FreightExpenses: { select: { value: true, expense_name: true } },
+            PhysicalCustomer: { select: { NaturalPerson: true } },
+            PhysicalCustomerQuoteTable: {
+              include: {
+                AdressDestiny: true,
+                AdressOrigin: true,
+                Recipient: {
+                  select: { NaturalPerson: true, LegalPerson: true },
+                },
+                Sender: {
+                  select: { NaturalPerson: true, LegalPerson: true },
+                },
+              },
             },
-            Sender: {
-              select: { NaturalPerson: true, LegalPerson: true },
-            },
+            CarrierCompany: { select: { LegalPerson: true, rntrc: true } },
           },
         },
-        PhysicalCustomerCte: true,
-        CarrierCompany: { select: { rntrc: true, LegalPerson: true } },
+        access_key: true,
+        cte_number: true,
+        id: true,
+        observations: true,
+        type_cte: true,
+        order_id: true,
       },
     });
-    console.log(cteDataPrisma);
-    const recipientLegalClient =
-      cteDataPrisma?.PhysicalCustomerQuoteTable?.Recipient.LegalPerson;
-    const recipientPhysicalCustomer =
-      cteDataPrisma?.PhysicalCustomerQuoteTable?.Recipient.NaturalPerson;
-    const recipient = recipientLegalClient
-      ? new LegalPerson({ ...recipientLegalClient })
-      : new NaturalPerson({ ...recipientPhysicalCustomer });
+    const recipientLegalPerson =
+      cteDataPrisma?.PhysicalCustomerOrder.PhysicalCustomerQuoteTable?.Recipient
+        .LegalPerson;
+    const recipientNaturalPerson =
+      cteDataPrisma?.PhysicalCustomerOrder.PhysicalCustomerQuoteTable?.Recipient
+        .NaturalPerson;
 
-    const senderLegalClient =
-      cteDataPrisma?.PhysicalCustomerQuoteTable?.Sender.LegalPerson;
-    const senderPhysicalCustomer =
-      cteDataPrisma?.PhysicalCustomerQuoteTable?.Sender.NaturalPerson;
-    const sender = recipientLegalClient
-      ? new LegalPerson({ ...senderLegalClient })
-      : new NaturalPerson({ ...senderPhysicalCustomer });
+    const senderLegalPerson =
+      cteDataPrisma?.PhysicalCustomerOrder.PhysicalCustomerQuoteTable?.Sender
+        .LegalPerson;
+    const senderNaturalPerson =
+      cteDataPrisma?.PhysicalCustomerOrder.PhysicalCustomerQuoteTable?.Sender
+        .NaturalPerson;
 
-    const expenses = cteDataPrisma?.FreightExpenses.map(expense => ({
-      expenseName: expense.expense_name,
-      value: expense.value,
-    }));
     const carrierCompany = new LegalPerson({
-      ...cteDataPrisma.CarrierCompany.LegalPerson,
-    });
-    const cteData = new PhysicalCustomerCte({
-      acessKey: cteDataPrisma?.PhysicalCustomerCte?.access_key,
-      cteNumber: cteDataPrisma?.PhysicalCustomerCte?.cte_number,
-      cteType: cteDataPrisma?.PhysicalCustomerCte?.type_cte,
-      orderId: cteDataPrisma?.PhysicalCustomerCte?.order_id,
-      observations: cteDataPrisma?.PhysicalCustomerCte?.observations,
-      id: cteDataPrisma?.PhysicalCustomerCte?.id,
+      ...cteDataPrisma?.PhysicalCustomerOrder?.CarrierCompany.LegalPerson,
     });
 
-    const data = new CtePdf({
+    const legalClientPrisma =
+      cteDataPrisma?.PhysicalCustomerOrder?.PhysicalCustomer.NaturalPerson;
+    const expenses = cteDataPrisma?.PhysicalCustomerOrder.FreightExpenses.map(
+      expense => ({
+        expenseName: expense.expense_name,
+        value: expense.value,
+      }),
+    );
+    const originAdress =
+      cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable
+        .AdressOrigin;
+
+    const destinyAdress =
+      cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable
+        .AdressDestiny;
+    const cteData = new LegalClientCte({
+      acessKey: cteDataPrisma?.access_key,
+      cteNumber: cteDataPrisma?.cte_number,
+      cteType: cteDataPrisma?.type_cte,
+      orderId: cteDataPrisma?.order_id,
+      observations: cteDataPrisma?.observations,
+      id: cteDataPrisma?.id,
+    });
+    const order = PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
+      cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable,
+      originAdress,
+      destinyAdress,
+    );
+    const ctePdf = new CtePhyscialCustomerPdf({
       expenses,
       cteData,
-      recipient,
-      sender,
+      recipientLegalPerson:
+        LegalPersonPrismaDTO.PrismaToEntity(recipientLegalPerson),
+      recipientNaturalPerson: NaturalPersonPrismaDTO.PrismaToEntity(
+        recipientNaturalPerson,
+      ),
+      senderLegalPerson: LegalPersonPrismaDTO.PrismaToEntity(senderLegalPerson),
+      senderNaturalPerson:
+        NaturalPersonPrismaDTO.PrismaToEntity(senderNaturalPerson),
+      physicalCustomer:
+        NaturalPersonPrismaDTO.PrismaToEntity(legalClientPrisma),
       carrierCompany,
-      rntrc: cteDataPrisma.CarrierCompany.rntrc,
+      rntrc: cteDataPrisma?.PhysicalCustomerOrder?.CarrierCompany.rntrc,
+      orderData: order,
     });
 
-    return data;
+    return ctePdf;
   }
 }

@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
+import { type IExpense } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
+
 import { type Replace } from 'helpers/Replace';
 
 import { Entity } from '../../../shared/entities/Entity';
@@ -10,12 +12,22 @@ export interface IPhysicalCustomerOrder {
   id?: string;
   order: string;
   physicalCustomerId: string;
+  total_shipping_cost?: number;
+  icms_tax?: number;
+  cofins_tax?: number;
+  pis_tax?: number;
+  calculated_pis?: number;
+  calculate_cofins?: number;
+  calculate_icms?: number;
+  total_receivable?: number;
+  total_tax_payable?: number;
   quote_table_id: string;
   carrier_id: string;
   updated_at?: Date;
   created_at?: Date;
   updated_by: string;
   created_by: string;
+  expenses?: IExpense[];
 }
 
 export class PhysicalCustomerOrder extends Entity {
@@ -88,6 +100,21 @@ export class PhysicalCustomerOrder extends Entity {
         fieldName: 'Carrier Company',
         maxLength: 999,
       },
+      {
+        field: this.props.total_receivable,
+        fieldName: 'Total Receivable',
+        maxLength: 999,
+      },
+      {
+        field: this.props.total_shipping_cost,
+        fieldName: 'Total Shipping Cost',
+        maxLength: 999,
+      },
+      {
+        field: this.props.total_tax_payable,
+        fieldName: 'Total Tax Payable',
+        maxLength: 999,
+      },
     );
 
     this.notification.requiredField('CustomerOrder', fieldsValidation);
@@ -104,12 +131,33 @@ export class PhysicalCustomerOrder extends Entity {
     this.props.quote_table_id = quote_table_id;
   }
 
+  public get expenses(): IExpense[] {
+    return this.props.expenses;
+  }
+  public set expenses(expenses: IExpense[]) {
+    this.props.expenses = expenses;
+  }
   get order(): string {
     return this.props.order;
   }
 
   set order(order: string) {
     this.props.order = order;
+  }
+  public get total_shipping_cost(): number {
+    return this.props.total_shipping_cost | 0;
+  }
+  public set total_shipping_cost(total_shipping_cost: number) {
+    this.props.total_shipping_cost = total_shipping_cost;
+  }
+  public get total_receivable(): number {
+    return (this.total_shipping_cost + this.total_tax_payable) | 0;
+  }
+
+  public get total_tax_payable(): number {
+    return (
+      (this.calculate_cofins + this.calculate_icms + this.calculated_pis) | 0
+    );
   }
   get physicalCustomerId(): string {
     return this.props.physicalCustomerId;
@@ -149,5 +197,55 @@ export class PhysicalCustomerOrder extends Entity {
 
   set created_by(created_by: string) {
     this.props.created_by = created_by;
+  }
+
+  public set icms_tax(icms_tax: number) {
+    this.props.icms_tax = icms_tax;
+  }
+
+  public get icms_tax(): number {
+    return this.props.icms_tax;
+  }
+
+  public set pis_tax(pis_tax: number) {
+    this.props.pis_tax = pis_tax;
+  }
+
+  public get pis_tax(): number {
+    return this.props.pis_tax;
+  }
+  public set cofins_tax(cofins_tax: number) {
+    this.props.cofins_tax = cofins_tax;
+  }
+
+  public get cofins_tax(): number {
+    return this.props.cofins_tax;
+  }
+
+  public set calculated_pis(calculated_pis: number) {
+    this.props.calculated_pis = calculated_pis;
+  }
+
+  public get calculated_pis(): number {
+    return this.aroundValues(this.props.calculated_pis);
+  }
+
+  public set calculate_icms(calculate_icms: number) {
+    this.props.calculate_icms = calculate_icms;
+  }
+
+  public get calculate_icms(): number {
+    return this.aroundValues(this.props.calculate_icms);
+  }
+  public set calculate_cofins(calculate_cofins: number) {
+    this.props.calculate_cofins = calculate_cofins;
+  }
+
+  public get calculate_cofins(): number {
+    return this.aroundValues(this.props.calculate_cofins);
+  }
+
+  private aroundValues(value: number): number {
+    return Number.parseFloat(value?.toFixed(2));
   }
 }

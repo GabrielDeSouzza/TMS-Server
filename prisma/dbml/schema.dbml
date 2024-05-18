@@ -164,7 +164,6 @@ Table outsourced_vehicles {
   vehicle_id String [unique, not null]
   order_processing_id String
   OutsourcedDriver outsourced_drivers
-  orderProcessingLegalClientId String
 }
 
 Table company_vehicles {
@@ -180,7 +179,6 @@ Table company_vehicles {
   Vehicle vehicles [not null]
   vehicle_id String [unique, not null]
   OutsourcedDriver outsourced_drivers [not null]
-  orderProcessingLegalClientId String
 }
 
 Table outsourced_transport_vehicle {
@@ -365,13 +363,19 @@ Table OutsourcedTransportCompanyContract {
 Table physical_customer_quote {
   id String [pk]
   cod_quote String [not null]
+  kind_service String [not null]
+  type_cte String [not null]
+  natute_service String [not null]
+  form_payment String [not null]
   recipient_id String [not null]
   Recipient recipient [not null]
   Sender sender [not null]
   senderId String [not null]
   who_pays String [not null]
-  postal_cod_origin String [not null]
-  postal_cod_destiny String [not null]
+  adress_origin_id String [not null]
+  AdressOrigin adresses [not null]
+  adress_destiny_id String [not null]
+  AdressDestiny adresses [not null]
   type_merchandise String [not null]
   amount Int [not null]
   description String [not null]
@@ -385,10 +389,8 @@ Table physical_customer_quote {
   updated_by String [not null]
   UpdatedBy users [not null]
   PhysicalCustomerOrder physical_orders [not null]
-
-  indexes {
-    (postal_cod_destiny, postal_cod_origin) [unique]
-  }
+  icms_id String [not null]
+  Icms icms [not null]
 }
 
 Table physical_orders {
@@ -396,6 +398,9 @@ Table physical_orders {
   order String [unique, not null]
   updated_by String [not null]
   physical_customer_id String [not null]
+  total_shipping_cost Float [not null]
+  total_receivable Float [not null]
+  total_tax_payable Float [not null]
   PhysicalCustomer physical_customers [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
@@ -468,6 +473,8 @@ Table icms {
   created_by String [not null]
   updated_by String [not null]
   UpdatedBy users [not null]
+  PhysicalCustomerQuoteTable physical_customer_quote [not null]
+  LegalClientQuoteTable legal_client_quote [not null]
 
   indexes {
     (state_orgin, recipient_state) [unique]
@@ -545,13 +552,19 @@ Table legal_Contracts {
 Table legal_client_quote {
   id String [pk]
   cod_quote String [not null]
+  kind_service String [not null]
+  type_cte String [not null]
+  nature_service String [not null]
+  form_payment String [not null]
   recipient_id String [not null]
   Recipient recipient [not null]
   Sender sender [not null]
   sender_id String [not null]
   who_pays String [not null]
-  postal_cod_origin String [not null]
-  postal_cod_destiny String [not null]
+  adress_origin_id String [not null]
+  AdressOrigin adresses [not null]
+  AdressDestiny adresses [not null]
+  adress_destiny_id String [not null]
   type_merchandise String [not null]
   amount Int [not null]
   description String [not null]
@@ -565,6 +578,27 @@ Table legal_client_quote {
   created_by String [not null]
   UpdatedBy users [not null]
   updated_by String [not null]
+  icms_id String [not null]
+  Icms icms [not null]
+}
+
+Table adresses {
+  id String [pk]
+  postal_cod String [not null]
+  street String [not null]
+  address_number String [not null]
+  neighborhood String [not null]
+  complement String
+  city String [not null]
+  uf String [not null]
+  LegalClientQuoteTableOrigin legal_client_quote [not null]
+  LegalClientQuoteTablesDestiny legal_client_quote [not null]
+  PhysicalCustomerQuoteTableOrigin physical_customer_quote [not null]
+  PhysicalCustomerQuoteTableDestiny physical_customer_quote [not null]
+
+  indexes {
+    (postal_cod, address_number) [unique]
+  }
 }
 
 Table legal_orders {
@@ -572,6 +606,9 @@ Table legal_orders {
   order String [unique, not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [default: `now()`, not null]
+  total_shipping_cost Float [not null]
+  total_receivable Float [not null]
+  total_tax_payable Float [not null]
   CreatedBy users [not null]
   created_by String [not null]
   UpdatedBy users [not null]
@@ -822,9 +859,15 @@ Ref: physical_customer_quote.recipient_id > recipient.id
 
 Ref: physical_customer_quote.senderId > sender.id
 
+Ref: physical_customer_quote.adress_origin_id > adresses.id
+
+Ref: physical_customer_quote.adress_destiny_id > adresses.id
+
 Ref: physical_customer_quote.created_by > users.id
 
 Ref: physical_customer_quote.updated_by > users.id
+
+Ref: physical_customer_quote.icms_id > icms.id
 
 Ref: physical_orders.physical_customer_id > physical_customers.id
 
@@ -882,9 +925,15 @@ Ref: legal_client_quote.recipient_id > recipient.id
 
 Ref: legal_client_quote.sender_id > sender.id
 
+Ref: legal_client_quote.adress_origin_id > adresses.id
+
+Ref: legal_client_quote.adress_destiny_id > adresses.id
+
 Ref: legal_client_quote.created_by > users.id
 
 Ref: legal_client_quote.updated_by > users.id
+
+Ref: legal_client_quote.icms_id > icms.id
 
 Ref: legal_orders.created_by > users.id
 

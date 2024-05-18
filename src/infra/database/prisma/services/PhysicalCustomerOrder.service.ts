@@ -28,23 +28,44 @@ export class PhysicalCustomerOrderPrismaService
   async findOrdersByPhyiscalCustomer(
     physicalCustomerId: string,
   ): Promise<PhysicalCustomerOrder[]> {
-    const orders = await this.prisma.physicalCustomerOrder.findMany({
-      where: { physical_customer_id: physicalCustomerId },
-    });
+    const physicalCustomerOrders =
+      await this.prisma.physicalCustomerOrder.findMany({
+        where: { physical_customer_id: physicalCustomerId },
+        include: {
+          FreightExpenses: true,
+          PhysicalCustomerQuoteTable: {
+            select: { Icms: { select: { aliquot: true } } },
+          },
+        },
+      });
 
-    return orders.map(order =>
-      PhysicalCustomerOrderPrismaDTO.PrismaToEntity(order),
+    return physicalCustomerOrders.map(order =>
+      PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+        order,
+        order.FreightExpenses,
+        order.PhysicalCustomerQuoteTable.Icms.aliquot,
+      ),
     );
   }
   async findPhysicalCustomerOrder(
     request: GetPhysicalCustomerOrderDTO,
   ): Promise<PhysicalCustomerOrder> {
-    const physicalCustomerOrder =
+    const physicalCustomerOrderPrisma =
       await this.prisma.physicalCustomerOrder.findFirst({
         where: { OR: [{ id: request.id }, { order: request.order }] },
+        include: {
+          FreightExpenses: true,
+          PhysicalCustomerQuoteTable: {
+            select: { Icms: { select: { aliquot: true } } },
+          },
+        },
       });
 
-    return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(physicalCustomerOrder);
+    return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+      physicalCustomerOrderPrisma,
+      physicalCustomerOrderPrisma?.FreightExpenses,
+      physicalCustomerOrderPrisma?.PhysicalCustomerQuoteTable.Icms.aliquot,
+    );
   }
   async createPhysicalCustomerOrder(
     physicalCustomerOrder: PhysicalCustomerOrder,
@@ -54,10 +75,18 @@ export class PhysicalCustomerOrderPrismaService
         data: PhysicalCustomerOrderPrismaDTO.EntityToCreatePrisma(
           physicalCustomerOrder,
         ),
+        include: {
+          FreightExpenses: true,
+          PhysicalCustomerQuoteTable: {
+            select: { Icms: { select: { aliquot: true } } },
+          },
+        },
       });
 
     return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
       physicalCustomerOrderPrisma,
+      physicalCustomerOrderPrisma?.FreightExpenses,
+      physicalCustomerOrderPrisma?.PhysicalCustomerQuoteTable.Icms.aliquot,
     );
   }
   async updatePhysicalCustomerOrder(
@@ -70,10 +99,18 @@ export class PhysicalCustomerOrderPrismaService
           physicalCustomerOrder,
         ),
         where: { id },
+        include: {
+          FreightExpenses: true,
+          PhysicalCustomerQuoteTable: {
+            select: { Icms: { select: { aliquot: true } } },
+          },
+        },
       });
 
     return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
       physicalCustomerOrderPrisma,
+      physicalCustomerOrderPrisma?.FreightExpenses,
+      physicalCustomerOrderPrisma?.PhysicalCustomerQuoteTable.Icms.aliquot,
     );
   }
 
@@ -86,10 +123,20 @@ export class PhysicalCustomerOrderPrismaService
         skip: parameters.offset,
         where: parameters.where,
         orderBy: parameters.sort,
+        include: {
+          FreightExpenses: true,
+          PhysicalCustomerQuoteTable: {
+            select: { Icms: { select: { aliquot: true } } },
+          },
+        },
       });
 
-    return physicalCustomerOrders.map(physicalCustomerOrder =>
-      PhysicalCustomerOrderPrismaDTO.PrismaToEntity(physicalCustomerOrder),
+    return physicalCustomerOrders.map(order =>
+      PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+        order,
+        order?.FreightExpenses,
+        order?.PhysicalCustomerQuoteTable.Icms.aliquot,
+      ),
     );
   }
   async getAllExpenses(
@@ -108,7 +155,6 @@ export class PhysicalCustomerOrderPrismaService
   updateManyPhysicalCustomerOrder(
     data: PhysicalCustomerOrder[],
   ): Promise<PhysicalCustomerOrder[]> {
-    console.log(data);
     const physicalcustomerorderUpdate = this.prisma.$transaction(async tx => {
       const promises = data.map(async physicalcustomerorder => {
         const physicalcustomerorderPrisma =
@@ -117,10 +163,18 @@ export class PhysicalCustomerOrderPrismaService
               physicalcustomerorder,
             ),
             where: { id: physicalcustomerorder.id },
+            include: {
+              FreightExpenses: true,
+              PhysicalCustomerQuoteTable: {
+                select: { Icms: { select: { aliquot: true } } },
+              },
+            },
           });
 
         return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
           physicalcustomerorderPrisma,
+          physicalcustomerorderPrisma?.FreightExpenses,
+          physicalcustomerorderPrisma?.PhysicalCustomerQuoteTable.Icms.aliquot,
         );
       });
 
@@ -133,8 +187,21 @@ export class PhysicalCustomerOrderPrismaService
   async deletePhysicalCustomerOrder(
     id: string,
   ): Promise<PhysicalCustomerOrder> {
+    const physicalcustomerorderPrisma =
+      await this.prisma.physicalCustomerOrder.delete({
+        where: { id },
+        include: {
+          FreightExpenses: true,
+          PhysicalCustomerQuoteTable: {
+            select: { Icms: { select: { aliquot: true } } },
+          },
+        },
+      });
+
     return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
-      await this.prisma.physicalCustomerOrder.delete({ where: { id } }),
+      physicalcustomerorderPrisma,
+      physicalcustomerorderPrisma?.FreightExpenses,
+      physicalcustomerorderPrisma?.PhysicalCustomerQuoteTable.Icms.aliquot,
     );
   }
   deleteManyPhysicalCustomerOrder(
@@ -145,10 +212,18 @@ export class PhysicalCustomerOrderPrismaService
         const physicalcustomerorderPrisma =
           await tx.physicalCustomerOrder.delete({
             where: { id: icmdsId },
+            include: {
+              FreightExpenses: true,
+              PhysicalCustomerQuoteTable: {
+                select: { Icms: { select: { aliquot: true } } },
+              },
+            },
           });
 
         return PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
           physicalcustomerorderPrisma,
+          physicalcustomerorderPrisma?.FreightExpenses,
+          physicalcustomerorderPrisma?.PhysicalCustomerQuoteTable.Icms.aliquot,
         );
       });
 

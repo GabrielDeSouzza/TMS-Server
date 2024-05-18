@@ -5,15 +5,20 @@ import { type Replace } from 'helpers/Replace';
 import { Entity } from '../../../shared/entities/Entity';
 import { type IValidationField } from '../../../shared/notification/Notification';
 import { NotificationError } from '../../../shared/notification/NotificationError';
+import { type AdressesType } from '../AdressesType';
 
 export interface IPhysicalCustomerQuoteTable {
   id?: string;
   codQuote: string;
+  kindService: string;
+  typeCte: string;
+  natureService: string;
+  formPayment: string;
   recipientId: string;
   senderId: string;
   who_pays: string;
-  postalCodOrigin: string;
-  postalCodDestiny: string;
+  adressDestiny: AdressesType;
+  adressOrigin: AdressesType;
   typeMerchandise: string;
   amount: number;
   description: string;
@@ -24,6 +29,7 @@ export interface IPhysicalCustomerQuoteTable {
   updated_at?: Date;
   created_by: string;
   updated_by: string;
+  icms_id?: string;
 }
 
 export class PhysicalCustomerQuoteTable extends Entity {
@@ -77,13 +83,13 @@ export class PhysicalCustomerQuoteTable extends Entity {
         maxLength: 8,
       },
       {
-        field: this.props.postalCodDestiny,
-        fieldName: 'Postal Cod Destiny',
+        field: this.props.adressDestiny.postalCod,
+        fieldName: 'Adress Destiny',
         maxLength: 9,
       },
       {
-        field: this.props.postalCodOrigin,
-        fieldName: 'Postal Cod Origin',
+        field: this.props.adressOrigin.postalCod,
+        fieldName: 'Adress Origin',
         maxLength: 9,
       },
       {
@@ -133,6 +139,37 @@ export class PhysicalCustomerQuoteTable extends Entity {
   set codQuote(codQuote: string) {
     this.props.codQuote = codQuote;
   }
+  get kindService(): string {
+    return this.props.kindService;
+  }
+
+  set kindService(value: string) {
+    this.props.kindService = value;
+  }
+
+  get typeCte(): string {
+    return this.props.typeCte;
+  }
+
+  set typeCte(value: string) {
+    this.props.typeCte = value;
+  }
+
+  get natureService(): string {
+    return this.props.natureService;
+  }
+
+  set natureService(value: string) {
+    this.props.natureService = value;
+  }
+
+  get formPayment(): string {
+    return this.props.formPayment;
+  }
+
+  set formPayment(value: string) {
+    this.props.formPayment = value;
+  }
   get recipientId(): string {
     return this.props.recipientId;
   }
@@ -157,20 +194,20 @@ export class PhysicalCustomerQuoteTable extends Entity {
     this.props.who_pays = who_pays;
   }
 
-  get postalCodOrigin(): string {
-    return this.props.postalCodOrigin;
+  get adressDestiny(): AdressesType {
+    return this.props.adressDestiny;
   }
 
-  set postalCodOrigin(postalCodOrigin: string) {
-    this.props.postalCodOrigin = postalCodOrigin;
+  set adressDestiny(adressDestiny: AdressesType) {
+    this.props.adressDestiny = adressDestiny;
   }
 
-  get postalCodDestiny(): string {
-    return this.props.postalCodDestiny;
+  get adressOrigin(): AdressesType {
+    return this.props.adressOrigin;
   }
 
-  set postalCodDestiny(postalCodDestiny: string) {
-    this.props.postalCodDestiny = postalCodDestiny;
+  set adressOrigin(adressOrigin: AdressesType) {
+    this.props.adressOrigin = adressOrigin;
   }
 
   get typeMerchandise(): string {
@@ -251,5 +288,13 @@ export class PhysicalCustomerQuoteTable extends Entity {
 
   set created_by(created_by: string | undefined) {
     this.props.created_by = created_by;
+  }
+
+  get icms_id(): string {
+    return this.props.icms_id;
+  }
+
+  set icms_id(icms_id: string) {
+    this.props.icms_id = icms_id;
   }
 }

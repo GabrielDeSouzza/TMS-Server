@@ -2,7 +2,8 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 
 import { GraphQLError } from 'graphql';
 
-import { type CtePdf } from 'domain/entities/Cte Entities/CtePdfEntity/CtePdf';
+import { type CteLegalClientPdf } from 'domain/entities/Cte Entities/CtePdfLegalClient/CtePdfLegalClient';
+import { type CtePhyscialCustomerPdf } from 'domain/entities/Cte Entities/CtePdfPhysicalClient/CtePdfPhysicalCustomer';
 import { CtePdfRepository } from 'domain/repositories/CtePdfRepository';
 
 import { GenerateCtePdfService } from 'infra/services/generatePdf/GenerateCtePdf';
@@ -13,25 +14,25 @@ export class ctePdfUseCase {
     private ctePdfRepository: CtePdfRepository,
     private uploader: GenerateCtePdfService,
   ) {}
-  async getCteUrlLegalClient(orderId: string) {
+  async getCteUrlLegalClient(cteId: string) {
     const ctePdf =
-      await this.ctePdfRepository.getDataForGenerateCtePdfLegalClient(orderId);
+      await this.ctePdfRepository.getDataForGenerateCtePdfLegalClient(cteId);
     this.validateCtePdfData(ctePdf);
 
     return await this.uploader.generatePdf(ctePdf);
   }
 
-  async getCteUrlPhysicalCustomer(orderId: string) {
+  async getCteUrlPhysicalCustomer(cteId: string) {
     const ctePdf =
       await this.ctePdfRepository.getDataForGenerateCtePdfPhysicalCustomer(
-        orderId,
+        cteId,
       );
-    this.validateCtePdfData(ctePdf);
+    this.validateCtePdfDataPhyscialCustomer(ctePdf);
 
     return await this.uploader.generatePdf(ctePdf);
   }
 
-  private validateCtePdfData(ctePdf: CtePdf) {
+  private validateCtePdfData(ctePdf: CteLegalClientPdf) {
     if (!ctePdf.cteData)
       throw new GraphQLError('CTE NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
@@ -41,17 +42,49 @@ export class ctePdfUseCase {
       throw new GraphQLError('EXPENSES NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
-    if (!ctePdf.recipient)
+    if (!ctePdf.recipientLegalPerson && !ctePdf.recipientNaturalPerson)
       throw new GraphQLError('RECIPIENT NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
-    if (!ctePdf.sender)
+    if (!ctePdf.senderLegalPerson && !ctePdf.senderNaturalPerson)
       throw new GraphQLError('SENDER NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
 
     if (!ctePdf.carrierCompany)
       throw new GraphQLError('CARRIER COMPANY NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    if (!ctePdf.legalClient)
+      throw new GraphQLError('LEGAL CLIENT NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+  }
+  private validateCtePdfDataPhyscialCustomer(ctePdf: CtePhyscialCustomerPdf) {
+    if (!ctePdf.cteData)
+      throw new GraphQLError('CTE NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+
+    if (!ctePdf.expenses)
+      throw new GraphQLError('EXPENSES NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    if (!ctePdf.recipientLegalPerson && !ctePdf.recipientNaturalPerson)
+      throw new GraphQLError('RECIPIENT NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    if (!ctePdf.senderLegalPerson && !ctePdf.senderNaturalPerson)
+      throw new GraphQLError('SENDER NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+
+    if (!ctePdf.carrierCompany)
+      throw new GraphQLError('CARRIER COMPANY NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    if (!ctePdf.physicalCustomer)
+      throw new GraphQLError('PHYSICAL CUSTOMER NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
   }

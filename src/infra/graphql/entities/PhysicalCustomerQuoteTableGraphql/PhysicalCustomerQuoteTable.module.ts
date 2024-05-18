@@ -7,6 +7,7 @@ import { PhysicalCustomerQuoteTableUseCases } from 'app/useCases/PhysicalCustome
 import { PhysicalCustomerQuoteTablePrismaService } from 'infra/database/prisma/services/PhysicalCustomerQuoteTable.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { IcmsModule } from '../IcmsGraphql/Icms.module';
 import { RecipientModule } from '../RecipientGraphql/Recipient.module';
 import { SenderModule } from '../SenderGraphql/Sender.module';
 import { PhysicalCustomerQuoteTableResolver } from './PhysicalCustomerQuoteTable.resolver';
@@ -20,7 +21,7 @@ import { PhysicalCustomerQuoteTableResolver } from './PhysicalCustomerQuoteTable
     PhysicalCustomerQuoteTableResolver,
     PhysicalCustomerQuoteTableUseCases,
   ],
-  imports: [GraphqlCenterModule, SenderModule, RecipientModule],
+  imports: [GraphqlCenterModule, SenderModule, RecipientModule, IcmsModule],
   exports: [PhysicalCustomerQuoteTableUseCases],
 })
 export class PhysicalCustomerQuoteTableModule {}

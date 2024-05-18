@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 
 import { type GetIncidentDTO } from 'domain/dto/repositories/getDataDtos/GetIncidentDto';
 import {
-  type CountIncidentRequestDTO,
-  type FindAllIncidentWhereRequestDTO,
+  type FindAllFreightIncidentWhereRequestDTO,
+  type CountFreightIncidentWhereRequestDTO,
 } from 'domain/dto/repositories/whereDtos/FreightIncidentRepository.Dto';
 import { type Incident } from 'domain/entities/OrdersEntities/IncidentEntity/Incident';
 import { type IncidentRepository } from 'domain/repositories/IncidentResitory';
@@ -14,7 +14,7 @@ import { IncidentPrismaDTO } from './prismaDTO/IncidentPrismaDto';
 @Injectable()
 export class IncidentPrismaService implements IncidentRepository {
   constructor(private prisma: PrismaService) {}
-  countIncident(request: CountIncidentRequestDTO): Promise<number> {
+  countIncident(request: CountFreightIncidentWhereRequestDTO): Promise<number> {
     return this.prisma.incident.count({
       where: request.where ?? undefined,
     });
@@ -29,7 +29,7 @@ export class IncidentPrismaService implements IncidentRepository {
     );
   }
   async findAllIncident(
-    parameters: FindAllIncidentWhereRequestDTO,
+    parameters: FindAllFreightIncidentWhereRequestDTO,
   ): Promise<Incident[]> {
     const incidents = await this.prisma.incident.findMany({
       take: parameters.limit,

@@ -1,8 +1,17 @@
 import { Field, HideField, InputType, PartialType } from '@nestjs/graphql';
 
-import { Allow, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  Allow,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 import { type IPhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
+
+import { FreightExpenseUpdateOrderInput } from '../FreightExpenseGraphql/FreightExpense.input';
 
 @InputType()
 export class PhysicalCustomerOrderInput
@@ -29,11 +38,32 @@ export class PhysicalCustomerOrderInput
   @HideField()
   @Allow()
   updated_by: string;
+  @HideField()
+  @Allow()
+  @IsOptional()
+  total_shipping_cost?: number;
+  @HideField()
+  @Allow()
+  @IsOptional()
+  total_receivable?: number;
+  @HideField()
+  @Allow()
+  @IsOptional()
+  total_tax_payable?: number;
+  @Field(() => [FreightExpenseUpdateOrderInput], { nullable: true })
+  @IsOptional()
+  @Type(() => FreightExpenseUpdateOrderInput)
+  expenses?: FreightExpenseUpdateOrderInput[];
 }
 @InputType()
 export class PhysicalCustomerOrderUpdateInput extends PartialType(
   PhysicalCustomerOrderInput,
-) {}
+) {
+  @Field(() => [FreightExpenseUpdateOrderInput], { nullable: true })
+  @IsOptional()
+  @Type(() => FreightExpenseUpdateOrderInput)
+  expenses?: FreightExpenseUpdateOrderInput[];
+}
 @InputType()
 export class PhysicalCustomerOrderUpdateManyInput extends PartialType(
   PhysicalCustomerOrderInput,
@@ -42,4 +72,8 @@ export class PhysicalCustomerOrderUpdateManyInput extends PartialType(
   @IsUUID()
   @IsNotEmpty()
   id: string;
+  @Field(() => [FreightExpenseUpdateOrderInput], { nullable: true })
+  @IsOptional()
+  @Type(() => FreightExpenseUpdateOrderInput)
+  expenses?: FreightExpenseUpdateOrderInput[];
 }

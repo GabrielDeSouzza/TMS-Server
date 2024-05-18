@@ -11,6 +11,7 @@ import {
 
 import { ROLE, User } from 'domain/entities/User/User';
 
+import { IcmsUseCases } from 'app/useCases/IcmsUseCase/IcmsUseCases';
 import { LegalClientQuoteTableUseCases } from 'app/useCases/LegalClientQuoteTableUseCase/LegalClientQuoteTable';
 import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCases';
 import { SenderUseCases } from 'app/useCases/SenderUseCase /SenderUseCases';
@@ -25,6 +26,7 @@ import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { IcmsModel } from '../IcmsGraphql/Icms.model';
 import { RecipientModel } from '../RecipientGraphql/Recipient.model';
 import { SenderModel } from '../SenderGraphql/Sender.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -46,6 +48,7 @@ export class LegalClientQuoteTableResolver {
     private userCase: UserUseCases,
     private recipientUseCase: RecipientUseCases,
     private senderUseCase: SenderUseCases,
+    private icmsUseCase: IcmsUseCases,
   ) {}
   @Query(() => Int)
   async countLegalClientQuoteTable(
@@ -147,5 +150,9 @@ export class LegalClientQuoteTableResolver {
     return this.senderUseCase.getSender({
       id: quote.senderId,
     });
+  }
+  @ResolveField(() => IcmsModel)
+  Icms(@Parent() quote: LegalClientQuoteTableModel) {
+    return this.icmsUseCase.getIcms({ id: quote.icms_id });
   }
 }

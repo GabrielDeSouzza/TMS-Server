@@ -6,19 +6,22 @@ import { type CreateOptions } from 'html-pdf';
 import pdf from 'html-pdf';
 import path from 'path';
 
-import { type CtePdf } from 'domain/entities/Cte Entities/CtePdfEntity/CtePdf';
+import { type CteLegalClientPdf } from 'domain/entities/Cte Entities/CtePdfLegalClient/CtePdfLegalClient';
+import { type CtePhyscialCustomerPdf } from 'domain/entities/Cte Entities/CtePdfPhysicalClient/CtePdfPhysicalCustomer';
 import { UploaderProvider } from 'domain/providers/UploaderProvider';
 
 @Injectable()
 export class GenerateCtePdfService {
-  private cteUrl: string;
   constructor(private cloudFilesService: UploaderProvider) {}
 
-  async generatePdf(cteData: CtePdf): Promise<string> {
+  async generatePdf(
+    cteData: CteLegalClientPdf | CtePhyscialCustomerPdf,
+  ): Promise<string> {
     const options: CreateOptions = {
       format: 'A4',
       type: 'pdf',
     };
+    console.log(cteData.orderData.natureService);
     const html = await this.compileEjs(cteData);
 
     return new Promise((resolve, reject) => {
@@ -28,7 +31,6 @@ export class GenerateCtePdfService {
           reject(new GraphQLError('Erro ao Gerar PDF'));
         } else {
           try {
-            // Supondo que cloudFilesService.uploadPdf seja uma função assíncrona que faz o upload do PDF
             const url = await this.cloudFilesService.uploadPdf(buffer, 'test');
             resolve(url.path);
           } catch (uploadError) {
@@ -38,7 +40,9 @@ export class GenerateCtePdfService {
       });
     });
   }
-  private async compileEjs(cteData: CtePdf) {
+  private async compileEjs(
+    cteData: CteLegalClientPdf | CtePhyscialCustomerPdf,
+  ) {
     const html = await ejs.renderFile(
       path.dirname(process.cwd()) +
         '/app/src//infra/services/generatePdf/templates/test.ejs',

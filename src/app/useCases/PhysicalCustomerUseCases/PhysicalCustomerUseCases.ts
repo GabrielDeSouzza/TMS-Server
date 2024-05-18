@@ -78,9 +78,9 @@ export class PhysicalCustomerUseCases {
       branch: data.branch,
       created_by: data.created_by,
     });
-    const naturalPerson = NaturalPersonEntityDto.createEntity(
-      data.NaturalPerson,
-    );
+    const naturalPerson = data.NaturalPerson
+      ? NaturalPersonEntityDto.createEntity(data.NaturalPerson)
+      : undefined;
 
     return this.physicalCustomerRepository.createPhysicalCustomer(
       physicalCustomer,

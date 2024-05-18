@@ -2,6 +2,60 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AdressInput {
+  address_number: String!
+  city: String!
+  complement: String
+  neighborhood: String!
+  postalCod: String!
+  street: String!
+  uf: String!
+}
+
+type AdressModel {
+  address_number: String!
+  city: String!
+  complement: String
+  id: String!
+  neighborhood: String!
+  postalCod: String!
+  street: String!
+  uf: String!
+}
+
+input AdressesOrderByWithRelationInput {
+  LegalClientQuoteTableOrigin: LegalClientQuoteTableOrderByRelationAggregateInput
+  LegalClientQuoteTablesDestiny: LegalClientQuoteTableOrderByRelationAggregateInput
+  PhysicalCustomerQuoteTableDestiny: PhysicalCustomerQuoteTableOrderByRelationAggregateInput
+  PhysicalCustomerQuoteTableOrigin: PhysicalCustomerQuoteTableOrderByRelationAggregateInput
+  address_number: SortOrder
+  city: SortOrder
+  complement: SortOrder
+  id: SortOrder
+  neighborhood: SortOrder
+  postal_cod: SortOrder
+  street: SortOrder
+  uf: SortOrder
+}
+
+input AdressesWhereInput {
+  AND: [AdressesWhereInput!]
+  LegalClientQuoteTableOrigin: LegalClientQuoteTableListRelationFilter
+  LegalClientQuoteTablesDestiny: LegalClientQuoteTableListRelationFilter
+  NOT: [AdressesWhereInput!]
+  OR: [AdressesWhereInput!]
+  PhysicalCustomerQuoteTableDestiny: PhysicalCustomerQuoteTableListRelationFilter
+  PhysicalCustomerQuoteTableOrigin: PhysicalCustomerQuoteTableListRelationFilter
+  address_number: StringFilter
+  city: StringFilter
+  complement: StringNullableFilter
+  id: StringFilter
+  neighborhood: StringFilter
+  postal_cod: StringFilter
+  street: StringFilter
+  uf: StringFilter
+}
+
 input AuthInput {
   email: String!
   password: String!
@@ -206,7 +260,6 @@ input CompanyVehicleOrderByWithRelationInput {
   created_at: SortOrder
   created_by: SortOrder
   id: SortOrder
-  orderProcessingLegalClientId: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
   vehicle_id: SortOrder
@@ -231,7 +284,6 @@ input CompanyVehicleWhereInput {
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
-  orderProcessingLegalClientId: StringNullableFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
   vehicle_id: StringFilter
@@ -429,11 +481,11 @@ type CtePDfModel {
 }
 
 input CtePdfLegalClientInput {
-  legalClientOrderId: String!
+  cteLegalPersonId: String!
 }
 
 input CtePdfPhysicalCustomerInput {
-  physicalCustomerOrderId: String!
+  ctePhysicalCustomerId: String!
 }
 
 input DateTimeFilter {
@@ -488,6 +540,17 @@ type FreightExpenseModel {
   value: Float!
 }
 
+input FreightExpenseOrderInput {
+  expenseName: String!
+  value: Float!
+}
+
+type FreightExpenseOrderModel {
+  expenseName: String!
+  id: String
+  value: Float!
+}
+
 input FreightExpenseUpdateInput {
   expenseName: String
   legalClientOrderId: String
@@ -501,6 +564,12 @@ input FreightExpenseUpdateManyInput {
   legalClientOrderId: String
   physicalCustomerOrderId: String
   value: Float
+}
+
+input FreightExpenseUpdateOrderInput {
+  expenseName: String!
+  id: String
+  value: Float!
 }
 
 input FreightExpensesListRelationFilter {
@@ -585,6 +654,8 @@ input IcmsOrderByRelationAggregateInput {
 
 input IcmsOrderByWithRelationInput {
   CreatedBy: UserOrderByWithRelationInput
+  LegalClientQuoteTable: LegalClientQuoteTableOrderByRelationAggregateInput
+  PhysicalCustomerQuoteTable: PhysicalCustomerQuoteTableOrderByRelationAggregateInput
   UpdatedBy: UserOrderByWithRelationInput
   aliquot: SortOrder
   created_at: SortOrder
@@ -615,8 +686,10 @@ input IcmsUpdateManyInput {
 input IcmsWhereInput {
   AND: [IcmsWhereInput!]
   CreatedBy: UserWhereInput
+  LegalClientQuoteTable: LegalClientQuoteTableListRelationFilter
   NOT: [IcmsWhereInput!]
   OR: [IcmsWhereInput!]
+  PhysicalCustomerQuoteTable: PhysicalCustomerQuoteTableListRelationFilter
   UpdatedBy: UserWhereInput
   aliquot: FloatFilter
   created_at: DateTimeFilter
@@ -817,8 +890,12 @@ input LegalClientOrderByWithRelationInput {
 
 input LegalClientOrderInput {
   carrier_id: String!
+  expenses: [FreightExpenseOrderInput!]!
   legal_contract_id: String!
   quote_table_id: String!
+  total_receivable: Float
+  total_shipping_cost: Float
+  total_tax_payable: Float
 }
 
 input LegalClientOrderListRelationFilter {
@@ -830,17 +907,26 @@ input LegalClientOrderListRelationFilter {
 type LegalClientOrderModel {
   CarrierCompany: CarrierCompanyModel!
   CreatedUser: UserModelRefereces!
-  FreightExpenses: [FreightExpenseModel!]!
   LegalContract: LegalContractModel!
   Quote: LegalClientQuoteTableModel!
   UpdatedUser: UserModelRefereces!
+  calculate_cofins: Float!
+  calculate_icms: Float!
+  calculated_pis: Float!
   carrier_id: String!
+  cofins_tax: Float!
   created_at: Timestamp!
   created_by: String!
+  expenses: [FreightExpenseOrderModel!]
+  icms_tax: Float!
   id: String!
   legal_contract_id: String!
   order: String!
+  pis_tax: Float!
   quote_table_id: String!
+  total_receivable: Float
+  total_shipping_cost: Float
+  total_tax_payable: Float
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -869,21 +955,32 @@ input LegalClientOrderOrderByWithRelationInput {
   order: SortOrder
   order_processing_id: SortOrder
   quote_table_id: SortOrder
+  total_receivable: SortOrder
+  total_shipping_cost: SortOrder
+  total_tax_payable: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
 }
 
 input LegalClientOrderUpdateInput {
   carrier_id: String
+  expenses: [FreightExpenseUpdateOrderInput!]
   legal_contract_id: String
   quote_table_id: String
+  total_receivable: Float
+  total_shipping_cost: Float
+  total_tax_payable: Float
 }
 
 input LegalClientOrderUpdateManyInput {
   carrier_id: String
+  expenses: [FreightExpenseUpdateOrderInput!]
   id: String!
   legal_contract_id: String
   quote_table_id: String
+  total_receivable: Float
+  total_shipping_cost: Float
+  total_tax_payable: Float
 }
 
 input LegalClientOrderWhereInput {
@@ -909,19 +1006,26 @@ input LegalClientOrderWhereInput {
   order: StringFilter
   order_processing_id: StringNullableFilter
   quote_table_id: StringFilter
+  total_receivable: FloatFilter
+  total_shipping_cost: FloatFilter
+  total_tax_payable: FloatFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
 
 input LegalClientQuoteTableInput {
+  adressDestiny: AdressInput!
+  adressOrigin: AdressInput!
   amount: Int!
   description: String!
+  formPayment: String!
+  kindService: String!
   mass: Float!
+  natureService: String!
   nf_value: Float!
-  postalCodDestiny: String!
-  postalCodOrigin: String!
   recipientId: String!
   senderId: String!
+  typeCte: String!
   typeMerchandise: String!
   volume: Float!
   who_pays: String!
@@ -934,22 +1038,30 @@ input LegalClientQuoteTableListRelationFilter {
 }
 
 type LegalClientQuoteTableModel {
+  Icms: IcmsModel!
   Recipient: RecipientModel!
   Sender: SenderModel!
+  adressDestiny: AdressModel!
+  adressOrigin: AdressModel!
   amount: Int!
   codQuote: String!
   createdUser: UserModelRefereces!
+  created_at: Timestamp!
   created_by: String!
   description: String!
+  formPayment: String!
+  icms_id: String!
   id: String!
+  kindService: String!
   mass: Float!
+  natureService: String!
   nf_value: Float!
-  postalCodDestiny: String!
-  postalCodOrigin: String!
   recipientId: String!
   senderId: String!
+  typeCte: String!
   typeMerchandise: String!
   updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
   updated_by: String!
   volume: Float!
   who_pays: String!
@@ -960,23 +1072,31 @@ input LegalClientQuoteTableOrderByRelationAggregateInput {
 }
 
 input LegalClientQuoteTableOrderByWithRelationInput {
+  AdressDestiny: AdressesOrderByWithRelationInput
+  AdressOrigin: AdressesOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
+  Icms: IcmsOrderByWithRelationInput
   LegalClientOrder: LegalClientOrderOrderByRelationAggregateInput
   Recipient: RecipientOrderByWithRelationInput
   Sender: SenderOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
+  adress_destiny_id: SortOrder
+  adress_origin_id: SortOrder
   amount: SortOrder
   cod_quote: SortOrder
   created_at: SortOrder
   created_by: SortOrder
   description: SortOrder
+  form_payment: SortOrder
+  icms_id: SortOrder
   id: SortOrder
+  kind_service: SortOrder
   mass: SortOrder
+  nature_service: SortOrder
   nf_value: SortOrder
-  postal_cod_destiny: SortOrder
-  postal_cod_origin: SortOrder
   recipient_id: SortOrder
   sender_id: SortOrder
+  type_cte: SortOrder
   type_merchandise: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
@@ -985,29 +1105,37 @@ input LegalClientQuoteTableOrderByWithRelationInput {
 }
 
 input LegalClientQuoteTableUpdate {
+  adressDestiny: AdressInput
+  adressOrigin: AdressInput
   amount: Int
   description: String
+  formPayment: String
+  kindService: String
   mass: Float
+  natureService: String
   nf_value: Float
-  postalCodDestiny: String
-  postalCodOrigin: String
   recipientId: String
   senderId: String
+  typeCte: String
   typeMerchandise: String
   volume: Float
   who_pays: String
 }
 
 input LegalClientQuoteTableUpdateManyInput {
+  adressDestiny: AdressInput
+  adressOrigin: AdressInput
   amount: Int
   description: String
+  formPayment: String
   id: String!
+  kindService: String
   mass: Float
+  natureService: String
   nf_value: Float
-  postalCodDestiny: String
-  postalCodOrigin: String
   recipientId: String
   senderId: String
+  typeCte: String
   typeMerchandise: String
   volume: Float
   who_pays: String
@@ -1015,25 +1143,33 @@ input LegalClientQuoteTableUpdateManyInput {
 
 input LegalClientQuoteTableWhereInput {
   AND: [LegalClientQuoteTableWhereInput!]
+  AdressDestiny: AdressesWhereInput
+  AdressOrigin: AdressesWhereInput
   CreatedBy: UserWhereInput
+  Icms: IcmsWhereInput
   LegalClientOrder: LegalClientOrderListRelationFilter
   NOT: [LegalClientQuoteTableWhereInput!]
   OR: [LegalClientQuoteTableWhereInput!]
   Recipient: RecipientWhereInput
   Sender: SenderWhereInput
   UpdatedBy: UserWhereInput
+  adress_destiny_id: StringFilter
+  adress_origin_id: StringFilter
   amount: IntFilter
   cod_quote: StringFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   description: StringFilter
+  form_payment: StringFilter
+  icms_id: StringFilter
   id: StringFilter
+  kind_service: StringFilter
   mass: FloatFilter
+  nature_service: StringFilter
   nf_value: FloatFilter
-  postal_cod_destiny: StringFilter
-  postal_cod_origin: StringFilter
   recipient_id: StringFilter
   sender_id: StringFilter
+  type_cte: StringFilter
   type_merchandise: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
@@ -2311,7 +2447,6 @@ input OutsourcedVehicleOrderByWithRelationInput {
   created_at: SortOrder
   created_by: SortOrder
   id: SortOrder
-  orderProcessingLegalClientId: SortOrder
   order_processing_id: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
@@ -2333,7 +2468,6 @@ input OutsourcedVehicleWhereInput {
   created_at: DateTimeFilter
   created_by: StringFilter
   id: StringFilter
-  orderProcessingLegalClientId: StringNullableFilter
   order_processing_id: StringNullableFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
@@ -2523,6 +2657,7 @@ input PhysicalCustomerOrderByWithRelationInput {
 
 input PhysicalCustomerOrderInput {
   carrier_id: String!
+  expenses: [FreightExpenseUpdateOrderInput!]
   physicalCustomerId: String!
   quote_table_id: String!
 }
@@ -2536,17 +2671,20 @@ input PhysicalCustomerOrderListRelationFilter {
 type PhysicalCustomerOrderModel {
   CarrierCompany: CarrierCompanyModel!
   CreatedUser: UserModelRefereces!
-  FreightExpenses: [FreightExpenseModel!]!
   PhysicalCustomer: PhysicalCustomerModel!
   Quote: PhysicalCustomerQuoteTableModel!
   UpdatedUser: UserModelRefereces!
   carrier_id: String!
   created_at: Timestamp!
   created_by: String!
+  expenses: [FreightExpenseOrderModel!]!
   id: String!
   order: String!
   physicalCustomerId: String!
   quote_table_id: String!
+  total_receivable: Float
+  total_shipping_cost: Float
+  total_tax_payable: Float
   updated_at: Timestamp!
   updated_by: String!
 }
@@ -2574,18 +2712,23 @@ input PhysicalCustomerOrderOrderByWithRelationInput {
   order_processing_id: SortOrder
   physical_customer_id: SortOrder
   quote_table_id: SortOrder
+  total_receivable: SortOrder
+  total_shipping_cost: SortOrder
+  total_tax_payable: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
 }
 
 input PhysicalCustomerOrderUpdateInput {
   carrier_id: String
+  expenses: [FreightExpenseUpdateOrderInput!]
   physicalCustomerId: String
   quote_table_id: String
 }
 
 input PhysicalCustomerOrderUpdateManyInput {
   carrier_id: String
+  expenses: [FreightExpenseUpdateOrderInput!]
   id: String!
   physicalCustomerId: String
   quote_table_id: String
@@ -2613,19 +2756,26 @@ input PhysicalCustomerOrderWhereInput {
   order_processing_id: StringNullableFilter
   physical_customer_id: StringFilter
   quote_table_id: StringFilter
+  total_receivable: FloatFilter
+  total_shipping_cost: FloatFilter
+  total_tax_payable: FloatFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
 }
 
 input PhysicalCustomerQuoteTableInput {
+  adressDestiny: AdressInput!
+  adressOrigin: AdressInput!
   amount: Float!
   description: String!
+  formPayment: String!
+  kindService: String!
   mass: Float!
+  natureService: String!
   nf_value: Float!
-  postalCodDestiny: String!
-  postalCodOrigin: String!
   recipientId: String!
   senderId: String!
+  typeCte: String!
   typeMerchandise: String!
   volume: Float!
   who_pays: String!
@@ -2638,22 +2788,30 @@ input PhysicalCustomerQuoteTableListRelationFilter {
 }
 
 type PhysicalCustomerQuoteTableModel {
+  Icms: IcmsModel!
   Recipient: RecipientModel!
   Sender: SenderModel!
+  adressDestiny: AdressModel!
+  adressOrigin: AdressModel!
   amount: Float!
   codQuote: String!
   createdUser: UserModelRefereces!
+  created_at: Timestamp!
   created_by: String!
   description: String!
+  formPayment: String!
+  icms_id: String!
   id: String!
+  kindService: String!
   mass: Float!
+  natureService: String!
   nf_value: Float!
-  postalCodDestiny: String!
-  postalCodOrigin: String!
   recipientId: String!
   senderId: String!
+  typeCte: String!
   typeMerchandise: String!
   updatedUser: UserModelRefereces!
+  updated_at: Timestamp!
   updated_by: String!
   volume: Float!
   who_pays: String!
@@ -2664,23 +2822,31 @@ input PhysicalCustomerQuoteTableOrderByRelationAggregateInput {
 }
 
 input PhysicalCustomerQuoteTableOrderByWithRelationInput {
+  AdressDestiny: AdressesOrderByWithRelationInput
+  AdressOrigin: AdressesOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
+  Icms: IcmsOrderByWithRelationInput
   PhysicalCustomerOrder: PhysicalCustomerOrderOrderByRelationAggregateInput
   Recipient: RecipientOrderByWithRelationInput
   Sender: SenderOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
+  adress_destiny_id: SortOrder
+  adress_origin_id: SortOrder
   amount: SortOrder
   cod_quote: SortOrder
   created_at: SortOrder
   created_by: SortOrder
   description: SortOrder
+  form_payment: SortOrder
+  icms_id: SortOrder
   id: SortOrder
+  kind_service: SortOrder
   mass: SortOrder
+  natute_service: SortOrder
   nf_value: SortOrder
-  postal_cod_destiny: SortOrder
-  postal_cod_origin: SortOrder
   recipient_id: SortOrder
   senderId: SortOrder
+  type_cte: SortOrder
   type_merchandise: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
@@ -2689,14 +2855,18 @@ input PhysicalCustomerQuoteTableOrderByWithRelationInput {
 }
 
 input PhysicalCustomerQuoteTableUpdate {
+  adressDestiny: AdressInput
+  adressOrigin: AdressInput
   amount: Float
   description: String
+  formPayment: String
+  kindService: String
   mass: Float
+  natureService: String
   nf_value: Float
-  postalCodDestiny: String
-  postalCodOrigin: String
   recipientId: String
   senderId: String
+  typeCte: String
   typeMerchandise: String
   volume: Float
   who_pays: String
@@ -2704,25 +2874,33 @@ input PhysicalCustomerQuoteTableUpdate {
 
 input PhysicalCustomerQuoteTableWhereInput {
   AND: [PhysicalCustomerQuoteTableWhereInput!]
+  AdressDestiny: AdressesWhereInput
+  AdressOrigin: AdressesWhereInput
   CreatedBy: UserWhereInput
+  Icms: IcmsWhereInput
   NOT: [PhysicalCustomerQuoteTableWhereInput!]
   OR: [PhysicalCustomerQuoteTableWhereInput!]
   PhysicalCustomerOrder: PhysicalCustomerOrderListRelationFilter
   Recipient: RecipientWhereInput
   Sender: SenderWhereInput
   UpdatedBy: UserWhereInput
+  adress_destiny_id: StringFilter
+  adress_origin_id: StringFilter
   amount: IntFilter
   cod_quote: StringFilter
   created_at: DateTimeFilter
   created_by: StringFilter
   description: StringFilter
+  form_payment: StringFilter
+  icms_id: StringFilter
   id: StringFilter
+  kind_service: StringFilter
   mass: FloatFilter
+  natute_service: StringFilter
   nf_value: FloatFilter
-  postal_cod_destiny: StringFilter
-  postal_cod_origin: StringFilter
   recipient_id: StringFilter
   senderId: StringFilter
+  type_cte: StringFilter
   type_merchandise: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter

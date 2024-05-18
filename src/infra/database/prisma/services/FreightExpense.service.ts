@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 
 import { type GetFreightExpenseDTO } from 'domain/dto/repositories/getDataDtos/GetFreightExpenseDto';
 import {
-  type CountAllFreightExpenseWhereRequestDTO,
   type FindAllFreightExpenseWhereRequestDTO,
+  type CountFreightExpenseRequestDTO,
 } from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
 import { type FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 import { type FreightExpenseRepository } from 'domain/repositories/FreightExpenseResitory';
@@ -15,7 +15,7 @@ import { FreightExpensePrismaDTO } from './prismaDTO/FreightExpensePrismaDto';
 export class FreightExpensePrismaService implements FreightExpenseRepository {
   constructor(private prisma: PrismaService) {}
   countFreightExpenseRepositoy(
-    parameters: CountAllFreightExpenseWhereRequestDTO,
+    parameters: CountFreightExpenseRequestDTO,
   ): Promise<number> {
     return this.prisma.freightExpenses.count({
       where: parameters.where ?? undefined,

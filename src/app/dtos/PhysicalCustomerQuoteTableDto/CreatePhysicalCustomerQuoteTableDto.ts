@@ -1,15 +1,19 @@
+import { type AdressesType } from 'domain/entities/QuoteTables/AdressesType';
 import { type IPhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 
 export abstract class CreatePhysicalCustomerQuoteTableDTO
   implements IPhysicalCustomerQuoteTable
 {
-  id?: string;
+  kindService: string;
+  typeCte: string;
+  natureService: string;
+  formPayment: string;
   codQuote: string;
   recipientId: string;
   senderId: string;
   who_pays: string;
-  postalCodOrigin: string;
-  postalCodDestiny: string;
+  adressDestiny: AdressesType;
+  adressOrigin: AdressesType;
   typeMerchandise: string;
   amount: number;
   description: string;
@@ -18,4 +22,5 @@ export abstract class CreatePhysicalCustomerQuoteTableDTO
   nf_value: number;
   created_by: string;
   updated_by: string;
+  icms_id?: string;
 }

@@ -4,7 +4,7 @@ import { GraphQLError } from 'graphql';
 
 import { type GetFreightExpenseDTO } from 'domain/dto/repositories/getDataDtos/GetFreightExpenseDto';
 import {
-  type CountAllFreightExpenseWhereRequestDTO,
+  type CountFreightExpenseRequestDTO,
   type FindAllFreightExpenseWhereRequestDTO,
 } from 'domain/dto/repositories/whereDtos/FreightExpenseRepository.Dto';
 import { FreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
@@ -24,7 +24,7 @@ export class FreightExpenseUseCases {
     private legalClientOrder: LegalClientOrderUseCases,
     private physicalCustomeOrder: PhysicalCustomerOrderUseCases,
   ) {}
-  async countFreightExpense(request: CountAllFreightExpenseWhereRequestDTO) {
+  async countFreightExpense(request: CountFreightExpenseRequestDTO) {
     return this.freightExpenseRepository.countFreightExpenseRepositoy(request);
   }
   async getFreightExpense(request: GetFreightExpenseDTO) {

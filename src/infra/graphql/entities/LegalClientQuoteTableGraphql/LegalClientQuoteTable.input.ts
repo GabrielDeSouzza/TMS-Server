@@ -7,14 +7,47 @@ import {
   PartialType,
 } from '@nestjs/graphql';
 
-import { Allow, IsNotEmpty, IsNumber, IsString, IsUUID } from 'class-validator';
+import {
+  Allow,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 import { type ILegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
+
+import { AdressInput } from '../AdressesGraphql/Adresses.input';
 
 @InputType()
 export class LegalClientQuoteTableInput
   implements Omit<ILegalClientQuoteTable, 'id' | 'created_at' | 'updated_at'>
 {
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  kindService: string;
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  typeCte: string;
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  natureService: string;
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  formPayment: string;
+  @Field(() => AdressInput)
+  @IsObject()
+  @IsNotEmpty()
+  adressOrigin: AdressInput;
+  @Field(() => AdressInput)
+  @IsObject()
+  @IsNotEmpty()
+  adressDestiny: AdressInput;
   @HideField()
   @Allow()
   codQuote: string;
@@ -30,14 +63,7 @@ export class LegalClientQuoteTableInput
   @IsString()
   @IsNotEmpty()
   who_pays: string;
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  postalCodOrigin: string;
-  @Field()
-  @IsString()
-  @IsNotEmpty()
-  postalCodDestiny: string;
+
   @Field()
   @IsString()
   @IsNotEmpty()

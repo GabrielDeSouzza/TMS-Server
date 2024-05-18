@@ -46,3 +46,25 @@ export class FreightExpenseUpdateManyInput extends PartialType(
   @IsNotEmpty()
   id: string;
 }
+
+@InputType()
+export class FreightExpenseOrderInput
+  implements Omit<IFreightExpense, 'id' | 'created_at' | 'updated_at'>
+{
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  expenseName: string;
+  @Field(() => Float)
+  @IsNumber()
+  @IsNotEmpty()
+  value: number;
+}
+
+@InputType()
+export class FreightExpenseUpdateOrderInput extends FreightExpenseOrderInput {
+  @Field({ nullable: true })
+  @IsUUID()
+  @IsOptional()
+  id?: string;
+}

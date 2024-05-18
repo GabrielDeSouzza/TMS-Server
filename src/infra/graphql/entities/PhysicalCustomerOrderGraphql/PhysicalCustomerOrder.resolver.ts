@@ -23,7 +23,6 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { CarrierCompanyModel } from '../CarrierCompanyGraphql/CarrierCompany.model';
-import { FreightExpenseModel } from '../FreightExpenseGraphql/FreightExpense.model';
 import { PhysicalCustomerModel } from '../PhysicalCustomerGraphql/PhysicalCustomer.model';
 import { PhysicalCustomerQuoteTableModel } from '../PhysicalCustomerQuoteTableGraphql/PhysicalCustomerQuoteTable.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
@@ -156,12 +155,6 @@ export class PhysicalCustomerOrderResolver {
   async CarrierCompany(@Parent() order: PhysicalCustomerOrderInput) {
     return await this.carrierCompanyUseCase.getCarrierCompany({
       id: order.carrier_id,
-    });
-  }
-  @ResolveField(() => [FreightExpenseModel])
-  async FreightExpenses(@Parent() order: PhysicalCustomerOrderInput) {
-    return await this.physicalCustomerOrderUseCase.getExpenses({
-      order: order.order,
     });
   }
 }

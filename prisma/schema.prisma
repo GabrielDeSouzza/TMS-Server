@@ -201,15 +201,14 @@ model OutsourcedVehicle {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  CreatedBy                    User?             @relation("created_by", fields: [created_by], references: [id])
-  created_by                   String
-  UpdatedBy                    User?             @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by                   String
-  Vehicle                      Vehicle           @relation(fields: [vehicle_id], references: [id])
-  vehicle_id                   String            @unique
-  order_processing_id          String?
-  OutsourcedDriver             OutsourcedDriver?
-  orderProcessingLegalClientId String?
+  CreatedBy           User?             @relation("created_by", fields: [created_by], references: [id])
+  created_by          String
+  UpdatedBy           User?             @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by          String
+  Vehicle             Vehicle           @relation(fields: [vehicle_id], references: [id])
+  vehicle_id          String            @unique
+  order_processing_id String?
+  OutsourcedDriver    OutsourcedDriver?
 
   @@map("outsourced_vehicles")
 }
@@ -227,8 +226,7 @@ model CompanyVehicle {
   Vehicle        Vehicle        @relation(fields: [vehicle_id], references: [id])
   vehicle_id     String         @unique
 
-  OutsourcedDriver             OutsourcedDriver[]
-  orderProcessingLegalClientId String?
+  OutsourcedDriver OutsourcedDriver[]
 
   @@map("company_vehicles")
 }
@@ -436,15 +434,22 @@ model OutsourcedTransportCompanyContract {
 }
 
 model PhysicalCustomerQuoteTable {
-  id                    String                  @id @default(uuid())
-  cod_quote             String
-  recipient_id          String
+  id             String @id @default(uuid())
+  cod_quote      String
+  kind_service   String
+  type_cte       String
+  natute_service String
+  form_payment   String
+  recipient_id   String
+
   Recipient             Recipient               @relation(fields: [recipient_id], references: [id])
   Sender                Sender                  @relation(fields: [senderId], references: [id])
   senderId              String
   who_pays              String
-  postal_cod_origin     String
-  postal_cod_destiny    String
+  adress_origin_id      String
+  AdressOrigin          Adresses                @relation("adress_origin_quote_physical", fields: [adress_origin_id], references: [id])
+  adress_destiny_id     String
+  AdressDestiny         Adresses                @relation("adress_destiny_quote_physical", fields: [adress_destiny_id], references: [id])
   type_merchandise      String
   amount                Int
   description           String
@@ -458,8 +463,9 @@ model PhysicalCustomerQuoteTable {
   updated_by            String
   UpdatedBy             User                    @relation("updated_by", fields: [updated_by], references: [id])
   PhysicalCustomerOrder PhysicalCustomerOrder[]
+  icms_id               String
+  Icms                  Icms                    @relation(fields: [icms_id], references: [id])
 
-  @@unique([postal_cod_destiny, postal_cod_origin])
   @@map("physical_customer_quote")
 }
 
@@ -468,6 +474,9 @@ model PhysicalCustomerOrder {
   order                      String                     @unique
   updated_by                 String
   physical_customer_id       String
+  total_shipping_cost        Float
+  total_receivable           Float
+  total_tax_payable          Float
   PhysicalCustomer           PhysicalCustomer           @relation(fields: [physical_customer_id], references: [id])
   created_at                 DateTime                   @default(now())
   updated_at                 DateTime                   @default(now())
@@ -494,8 +503,9 @@ model PhysicalCustomerCte {
   PhysicalCustomerOrder PhysicalCustomerOrder @relation(fields: [order_id], references: [id])
   access_key            String
   type_cte              String
-  observations          String
-  cte_number            String
+
+  observations String
+  cte_number   String
 
   @@map("physical_customer_cte")
 }
@@ -537,17 +547,19 @@ model Recipient {
 }
 
 model Icms {
-  id              String   @id @default(uuid())
-  state_orgin     String
-  recipient_state String
-  aliquot         Float
-  effective_date  DateTime
-  created_at      DateTime @default(now())
-  updated_at      DateTime @default(now())
-  CreatedBy       User     @relation("created_by", fields: [created_by], references: [id])
-  created_by      String
-  updated_by      String
-  UpdatedBy       User     @relation("updated_by", fields: [updated_by], references: [id])
+  id                         String                       @id @default(uuid())
+  state_orgin                String
+  recipient_state            String
+  aliquot                    Float
+  effective_date             DateTime
+  created_at                 DateTime                     @default(now())
+  updated_at                 DateTime                     @default(now())
+  CreatedBy                  User                         @relation("created_by", fields: [created_by], references: [id])
+  created_by                 String
+  updated_by                 String
+  UpdatedBy                  User                         @relation("updated_by", fields: [updated_by], references: [id])
+  PhysicalCustomerQuoteTable PhysicalCustomerQuoteTable[]
+  LegalClientQuoteTable      LegalClientQuoteTable[]
 
   @@unique([state_orgin, recipient_state])
   @@map("icms")
@@ -630,30 +642,58 @@ model LegalContract {
 }
 
 model LegalClientQuoteTable {
-  id                 String             @id @default(uuid())
-  cod_quote          String
-  recipient_id       String
-  Recipient          Recipient          @relation(fields: [recipient_id], references: [id])
-  Sender             Sender             @relation(fields: [sender_id], references: [id])
-  sender_id          String
-  who_pays           String
-  postal_cod_origin  String
-  postal_cod_destiny String
-  type_merchandise   String
-  amount             Int
-  description        String
-  mass               Float
-  volume             Float
-  nf_value           Float
-  LegalClientOrder   LegalClientOrder[]
-  created_at         DateTime           @default(now())
-  updated_at         DateTime           @default(now())
-  CreatedBy          User               @relation("created_by", fields: [created_by], references: [id])
-  created_by         String
-  UpdatedBy          User               @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by         String
+  id               String    @id @default(uuid())
+  cod_quote        String
+  kind_service     String
+  type_cte         String
+  nature_service   String
+  form_payment     String
+  recipient_id     String
+  Recipient        Recipient @relation(fields: [recipient_id], references: [id])
+  Sender           Sender    @relation(fields: [sender_id], references: [id])
+  sender_id        String
+  who_pays         String
+  adress_origin_id String
+  AdressOrigin     Adresses  @relation("origin_adress_quote_legal", fields: [adress_origin_id], references: [id])
+  AdressDestiny    Adresses  @relation("destiny_adress_quote_legal", fields: [adress_destiny_id], references: [id])
+
+  adress_destiny_id String
+  type_merchandise  String
+  amount            Int
+  description       String
+  mass              Float
+  volume            Float
+  nf_value          Float
+  LegalClientOrder  LegalClientOrder[]
+  created_at        DateTime           @default(now())
+  updated_at        DateTime           @default(now())
+  CreatedBy         User               @relation("created_by", fields: [created_by], references: [id])
+  created_by        String
+  UpdatedBy         User               @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by        String
+
+  icms_id String
+  Icms    Icms   @relation(fields: [icms_id], references: [id])
 
   @@map("legal_client_quote")
+}
+
+model Adresses {
+  id                                String                       @id @default(uuid())
+  postal_cod                        String
+  street                            String
+  address_number                    String
+  neighborhood                      String
+  complement                        String?
+  city                              String
+  uf                                String
+  LegalClientQuoteTableOrigin       LegalClientQuoteTable[]      @relation("origin_adress_quote_legal")
+  LegalClientQuoteTablesDestiny     LegalClientQuoteTable[]      @relation("destiny_adress_quote_legal")
+  PhysicalCustomerQuoteTableOrigin  PhysicalCustomerQuoteTable[] @relation("adress_destiny_quote_physical")
+  PhysicalCustomerQuoteTableDestiny PhysicalCustomerQuoteTable[] @relation("adress_origin_quote_physical")
+
+  @@unique([postal_cod, address_number])
+  @@map("adresses")
 }
 
 model LegalClientOrder {
@@ -661,6 +701,9 @@ model LegalClientOrder {
   order                              String                              @unique
   created_at                         DateTime                            @default(now())
   updated_at                         DateTime                            @default(now())
+  total_shipping_cost                Float
+  total_receivable                   Float
+  total_tax_payable                  Float
   CreatedBy                          User                                @relation("created_by", fields: [created_by], references: [id])
   created_by                         String
   UpdatedBy                          User                                @relation("updated_by", fields: [updated_by], references: [id])
@@ -707,7 +750,7 @@ model OrderProcessing {
   total_distance          Float
   total_spend_liters      Float
   total_spending_money    Float
-  status                  String @default("created")
+  status                  String                  @default("created")
   start_at                DateTime
   end_at                  DateTime?
   updated_at              DateTime

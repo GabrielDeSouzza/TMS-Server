@@ -1,91 +1,369 @@
-<div >
-  <div  >
-    <table border="1"  style="width:50%; ">
-      <tbody style="border: 1px;">
+<div style=>
+  <div style="float: left; width: 50%; margin: 0; padding: 0; height: 50%;">
+    <table border="1" style="width:100%;  ">
+      <tbody style="border: 1px; font-size: 0.5em; border: 0px; ">
         <tr style="column-span: 3;">
           <td colspan="3" ;>
-            <span style="font-size: 0.5em;">Transportadora: <%= carrierCompany.fantasy_name %></span>
+            <span>Transportadora: <%= carrierCompany.fantasy_name %></span>
             <br>
-            <span  style="font-size: 0.5em;">CNPJ: <%= carrierCompany.cnpj %></span>
+            <span>CNPJ: <%= carrierCompany.cnpj %></span>
             <br>
-            <span  style="font-size: 0.5em;">Inscrição Estatual: <%= carrierCompany.state_registration %></span>
+            <span>Inscrição Estatual: <%= carrierCompany.state_registration %></span>
             <br>
-            <span  style="font-size: 0.5em;">
+            <span>
               Endereço:
               Rua: <%= carrierCompany.public_place %>
-              <br>
-              Numero: <%= carrierCompany.adress_number %>
-              <br>
-              Bairro: <%= carrierCompany.neighborhood %>
-              <br>
-              Cidede: <%= carrierCompany.city %>
-              <br>
-              Estado: <%= carrierCompany.uf %>
-              <br>
-              Telefone: <%= carrierCompany.first_phone%>
-
-
+                <br>
+                Numero: <%= carrierCompany.adress_number %>
+                  <br>
+                  Bairro: <%= carrierCompany.neighborhood %>
+                    <br>
+                    Cidede: <%= carrierCompany.city %>
+                      <br>
+                      Estado: <%= carrierCompany.uf %>
+                        <br>
+                        Telefone: <%= carrierCompany.first_phone%>
             </span>
-
           </td>
         </tr>
         <tr>
           <td>
             TIPO DO CT-E
             <br>
-            cteData.cteType
+            <%= cteData.cteType %>
           </td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>
+            TIPO DO SERVIÇO
+            <br>
+            <%= orderData.kindService %>
+          </td>
+          <td>
+            NATURUREZA DA PRESTAÇÃO
+            <br>
+            <%= orderData.natureService %>
+          </td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>
+            Origem:
+            <br>
+            <%= orderData.adressOrigin.city %>/<%= orderData.adressOrigin.uf %>
+          </td>
+          <td> Destino:
+            <br>
+            <%= orderData.adressDestiny.city %>/<%= orderData.adressDestiny.uf %>
+          <td>
+            Emitido por
+            <br>
+            <%= carrierCompany.fantasy_name %>
+          </td>
         </tr>
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="3">
+            <% if ( typeof legalClient != "undefined") { %>
+              REMETENTE: <%= legalClient.corporate_name %>
+                <br>
+                END: <%= legalClient.public_place %>
+                  <%= legalClient.address_number %>
+                    <%= legalClient.neighborhood %>
+                      <br>
+                      MUN: <%= legalClient.city %> - <%= legalClient.uf %> CEP: A Fazer
+                          <br>
+                          CNPJ: <%= legalClient.cnpj %> IE: <%= legalClient.state_registration %> FONE: <%=
+                                legalClient.first_phone %>
+                                <% } else { %>
+                                  REMETENTE: <%= physicalCustomer.name %>
+                                    <br>
+                                    END: <%= physicalCustomer.public_place %>
+                                      <%= physicalCustomer.address_number %>
+                                        <%= physicalCustomer.neighborhood %>
+                                          <br>
+                                          MUN: <%= physicalCustomer.city %> - <%= physicalCustomer.uf %> CEP: A Fazer
+                                              <br>
+                                              FONE: <%= physicalCustomer.first_phone %>
+                                                <% } %>
+          </td>
 
         </tr>
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="3">
+            <% if ( recipientLegalPerson ) { %>
+              REMETENTE: <%= recipientLegalPerson.corporate_name %>
+                <br>
+                END: <%= recipientLegalPerson.public_place %>
+                  <%= recipientLegalPerson.address_number %>
+                    <%= recipientLegalPerson.neighborhood %>
+                      <br>
+                      MUN: <%= recipientLegalPerson.city %> - <%= recipientLegalPerson.uf %> CEP: A Fazer
+                          <br>
+                          CNPJ: <%= recipientLegalPerson.cnpj %> IE: <%= recipientLegalPerson.state_registration %>
+                              FONE: <%= recipientLegalPerson.first_phone %>
+                                <% } else { %>
+                                  REMETENTE: <%= recipientNaturalPerson.name %>
+                                    <br>
+                                    END: <%= recipientNaturalPerson.public_place %>
+                                      <%= recipientNaturalPerson.address_number %>
+                                        <%= recipientNaturalPerson.neighborhood %>
+                                          <br>
+                                          MUN: <%= recipientNaturalPerson.city %> - <%= recipientNaturalPerson.uf %>
+                                              CEP: A Fazer
+                                              <br>
+                                              FONE: <%= recipientNaturalPerson.first_phone %>
+                                                <% } %>
+          </td>
 
         </tr>
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="3">
+            <% if ( senderLegalPerson ) { %>
+              RECEBEDOR: <%= senderLegalPerson.corporate_name %>
+                <br>
+                END: <%= senderLegalPerson.public_place %>
+                  <%= senderLegalPerson.address_number %>
+                    <%= senderLegalPerson.neighborhood %>
+                      <br>
+                      MUN: <%= senderLegalPerson.city %> - <%= senderLegalPerson.uf %> CEP: A Fazer
+                          <br>
+                          CNPJ: <%= senderLegalPerson.cnpj %> IE: <%= senderLegalPerson.state_registration %> FONE: <%=
+                                senderLegalPerson.first_phone %>
+                                <% } else { %>
+                                  RECEBEDOR: <%= senderNaturalPerson.name %>
+                                    <br>
+                                    END: <%= senderNaturalPerson.public_place %>
+                                      <%= senderNaturalPerson.address_number %>
+                                        <%= senderNaturalPerson.neighborhood %>
+                                          <br>
+                                          MUN: <%= senderNaturalPerson.city %> - <%= senderNaturalPerson.uf %> CEP: A
+                                              Fazer
+                                              <br>
+                                              FONE: <%= senderNaturalPerson.first_phone %>
+                                                <% } %>
+          </td>
 
         </tr>
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="3">
+            <% if (  typeof legalClient != "undefined" ) { %>
+              TOMADOR: <%= legalClient.corporate_name %>
+                <br>
+                END: <%= legalClient.public_place %>
+                  <%= legalClient.address_number %>
+                    <%= legalClient.neighborhood %>
+                      <br>
+                      MUN: <%= legalClient.city %> - <%= legalClient.uf %> CEP: A Fazer
+                          <br>
+                          CNPJ: <%= legalClient.cnpj %> IE: <%= legalClient.state_registration %> FONE: <%=
+                                legalClient.first_phone %>
+                                <% } else { %>
+                                  TOMADOR: <%= physicalCustomer.name %>
+                                    <br>
+                                    END: <%= physicalCustomer.public_place %>
+                                      <%= physicalCustomer.address_number %>
+                                        <%= physicalCustomer.neighborhood %>
+                                          <br>
+                                          MUN: <%= physicalCustomer.city %> - <%= physicalCustomer.uf %> CEP: A Fazer
+                                              <br>
+                                              FONE: <%= physicalCustomer.first_phone %>
+                                                <% } %>
+          </td>
 
         </tr>
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td colspan="3">
+            Observações:
+            <br>
+            <%= cteData?.observations %>
+              <Br></Br>
+
+              PLACA DE COLETE: A FAZER NR: <%= cteData.cteNumber %>
+          </td>
 
         </tr>
         <tr>
-          <td colspan="3">&nbsp;</td>
+          <td>
+            TOMADOR SERVIÇO:
+            <br>
+            A FAZER
+          </td>
+          <td>
+            COBRAR
+            <br>
+            <%= orderData.formPayment %>
+          </td>
+          <td>
+            PREV.ENTREGA
+            <br>
+            A Fazer
+          </td>
 
         </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
 
-        </tr>
-        <tr>
-          <td colspan="3">&nbsp;</td>
-
-        </tr>
-        <tr>
-          <td colspan="2">&nbsp;</td>
-          <td colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
       </tbody>
     </table>
+
+  </div>
+  <div>
+
+  </div>
+
+
+  <div style="float: right; width: 50%;  margin: 0; padding: 0;">
+    <table border="1" style="width:100%; height: 50%; ">
+      <tbody style="border: 1px; font-size: 0.5em; ">
+        <tr style="column-span: 3;">
+          <td colspan="3">
+            <h3>D A C T E</h3>
+            <br>
+            <span>Documento Auxiliar do Conhecimento de Transporte Eletrônico</span>
+          </td>
+          <td colspan="1">
+            AUTORIZAÇÃO
+            <br>
+            A Fazer
+          </td>
+        </tr>
+        <tr>
+          <td>
+            SERIE
+            <br>
+            A Fazer
+          </td>
+          <td>
+            NUMERO
+            <br>
+            A Fazer
+          </td>
+          <td>
+            MODELO
+            <br>
+            A fazer
+          </td>
+          <td>
+            N°PROTOCOLO
+            <br>
+            A fazer
+          </td>
+
+        </tr>
+        <tr>
+          <td colspan="4">
+            FOTO CODIGO DE BARRAS
+            <br>
+            Chave de acesso para consulta de autenticidade no site www.cte.fazenda.gov.br
+            <br>
+            <%= cteData.acessKey %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="height: min-content; ">
+            COMPONENTES DE FRETE(R$)
+          </td>
+          <td colspan="2" style="height: min-content;">
+            MERCADORIA
+          </td>
+
+        </tr>
+        <tr style="width: 50%; font-size: 0.4rem; vertical-align: top;">
+          <td colspan="2" rowspan="4" style="height: 100px; ">
+            <% expenses.forEach(expense=> { %>
+              <span style="margin: 1px;">
+                <span>
+                  <%= expense.expenseName %>
+                </span>
+                <span style="float: right;">
+                  <%= expense.value %>
+                </span>
+              </span>
+              <br>
+              <% }) %>
+          </td>
+
+        </tr>
+        <tr style="width: 50%; font-size: 0.4rem;">
+          <td colspan="2" rowspan="1" style="height: 40px;vertical-align: top;">
+            <span style="float: left;"> PROD PREDOMIN </span>
+            <span style="float: right;">
+              <%= orderData.description %>
+            </span>
+            <br>
+            <span  style="float: left;">ESPECIE:</span>
+            <span style="float: right;">A Fazer</span>
+            <br>
+            <span style="float: left;">VALOR MERCADORIA(R$)</span>
+            <span style="float: right;">
+              <%= orderData.nf_value %>
+            </span>
+            <br>
+            <span style="float: left;">QTDE PARES/VOLUMES</span>
+            <span style="float: right;">
+              <%= orderData.amount %>
+            </span>
+            <br>
+            <span style="float: left;">CUBAG(m3)</span>
+            <span style="float: right;">
+              <%= orderData.volume %>
+            </span>
+            <br >
+            <span style="float: left;">PESO CALCULO (Kg)</span>
+            <span style="float: right;">
+              <%= orderData.mass %>
+            </span>
+          </td>
+
+        </tr>
+        <tr>
+          <td colspan="2" rowspan="1" style="height: min-content;">
+            ICMS(R$)
+          </td>
+
+        </tr>
+        <tr style="font-size: 0.4rem;">
+          <td colspan="2" rowspan="1" style="height: 40px; vertical-align: top;">
+            <span> SITUAÇÃO TRIBUTARIA</span>
+            <br>
+            <span>BASE CALCULO</span>
+            <span style="float: right;"><%= orderData.nf_value %></span>
+            <br>
+            <span>ALIQ DIFAL/ICMS(%)</span>
+            <span style="float: right;">12.00</span>
+            <br>
+            <span>VALOR ICMS</span>
+            <br>
+           <span> DIFAL ICMS ORIG/DEST</span>
+            <br>
+            <span> CRED PRES/ICMS ST</span>
+          </td>
+
+        </tr>
+        <tr>
+          <td colspan="2">
+            FRETE TOTAL(R$) <%=  %>
+          </td>
+          <td colspan="2">
+            VALOR A RECEBER(R$)
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="3">
+            DESTAQUE DE TRIBUTOS (Lei 12.741/2012) - Em R$
+          </td>
+          <td> PIX</td>
+        </tr>
+        <tr>
+          <td colspan="4">ICMS/ISS PIS: A FAZER COFINS 0.25 TOTAL: A FAZER</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+              <H5>
+                CHAVES NF-E/CT-E
+              </H5>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
   </div>
   <div>
 

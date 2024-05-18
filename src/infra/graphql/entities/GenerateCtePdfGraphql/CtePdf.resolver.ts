@@ -17,7 +17,7 @@ export class CtePdfResolver {
     @Args('request') request: CtePdfLegalClientInput,
   ) {
     const cteUrl = await this.ctePdfUseCase.getCteUrlLegalClient(
-      request.legalClientOrderId,
+      request.cteLegalPersonId,
     );
 
     return { cteUrl };
@@ -27,7 +27,7 @@ export class CtePdfResolver {
     @Args('request') request: CtePdfPhysicalCustomerInput,
   ) {
     const cteUrl = await this.ctePdfUseCase.getCteUrlPhysicalCustomer(
-      request.physicalCustomerOrderId,
+      request.ctePhysicalCustomerId,
     );
 
     return { cteUrl };

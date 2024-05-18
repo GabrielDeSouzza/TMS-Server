@@ -40,6 +40,7 @@ export class LegalClientOrderUseCases {
     const order = await this.legalClientOrderRepository.findLegalClientOrder(
       request,
     );
+
     if (order) return order;
 
     throw new GraphQLError('ORDER Not Found', {
@@ -74,6 +75,10 @@ export class LegalClientOrderUseCases {
       created_by: data.created_by,
       carrier_id: data.carrier_id,
       quote_table_id: data.quote_table_id,
+      total_receivable: data.total_receivable,
+      total_shipping_cost: data.total_shipping_cost,
+      total_tax_payable: data.total_tax_payable,
+      expenses: data.expenses,
     });
 
     return this.legalClientOrderRepository.createLegalClientOrder(order);
@@ -93,7 +98,11 @@ export class LegalClientOrderUseCases {
       updated_by: data.updated_by,
       created_by: data.updated_by,
       quote_table_id: data.legal_contract_id,
+      total_receivable: data.total_receivable,
+      total_shipping_cost: data.total_shipping_cost,
+      total_tax_payable: data.total_tax_payable,
       order: null,
+      expenses: data.expenses,
     });
 
     return this.legalClientOrderRepository.updateLegalClientOrder(id, order);
@@ -111,8 +120,12 @@ export class LegalClientOrderUseCases {
         carrier_id: legalclientorder.carrier_id,
         updated_by: updateBy,
         quote_table_id: legalclientorder.legal_contract_id,
+        total_receivable: legalclientorder.total_receivable,
+        total_shipping_cost: legalclientorder.total_shipping_cost,
+        total_tax_payable: legalclientorder.total_tax_payable,
         order: null,
         id: legalclientorder.id,
+        expenses: legalclientorder.expenses,
       });
 
       return updateLegalClientOrder;
