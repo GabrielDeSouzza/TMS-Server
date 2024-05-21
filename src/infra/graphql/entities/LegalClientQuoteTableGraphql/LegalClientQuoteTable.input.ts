@@ -18,28 +18,25 @@ import {
 
 import { type ILegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 
+import { formPaymentEnum } from 'infra/graphql/enums/FormPayment.enum';
+import { kindOfServicerOrderEnum } from 'infra/graphql/enums/KindOfServiceOrder.enum';
+import { typeMerchandiseEnum } from 'infra/graphql/enums/TypesMerchandise.enum';
+import { whoIsPayEmum } from 'infra/graphql/enums/WhoIsPay.enum';
+
 import { AdressInput } from '../AdressesGraphql/Adresses.input';
 
 @InputType()
 export class LegalClientQuoteTableInput
   implements Omit<ILegalClientQuoteTable, 'id' | 'created_at' | 'updated_at'>
 {
-  @Field()
+  @Field(() => kindOfServicerOrderEnum)
   @IsNotEmpty()
   @IsString()
-  kindService: string;
-  @Field()
+  kindService: kindOfServicerOrderEnum;
+  @Field(() => formPaymentEnum)
   @IsNotEmpty()
   @IsString()
-  typeCte: string;
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  natureService: string;
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  formPayment: string;
+  formPayment: formPaymentEnum;
   @Field(() => AdressInput)
   @IsObject()
   @IsNotEmpty()
@@ -59,15 +56,15 @@ export class LegalClientQuoteTableInput
   @IsString()
   @IsNotEmpty()
   senderId: string;
-  @Field()
+  @Field(() => whoIsPayEmum)
   @IsString()
   @IsNotEmpty()
-  who_pays: string;
+  who_pays: whoIsPayEmum;
 
-  @Field()
+  @Field(() => typeMerchandiseEnum)
   @IsString()
   @IsNotEmpty()
-  typeMerchandise: string;
+  typeMerchandise: typeMerchandiseEnum;
   @Field(() => Int)
   @IsNumber()
   @IsNotEmpty()

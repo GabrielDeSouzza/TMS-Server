@@ -7,6 +7,7 @@ abstract class WhereLegalPersonTypeDTO extends WhereDTO {
   fantasy_name?: StringFilterDTO;
   cnpj?: StringFilterDTO;
   state_registration?: StringFilterDTO;
+  cep?: StringFilterDTO;
   corporate_name?: StringFilterDTO;
   public_place?: StringFilterDTO;
   address_number?: StringFilterDTO;
@@ -30,6 +31,7 @@ abstract class SortByLegalPersonTypeDTO {
   corporate_name?: 'asc' | 'desc';
   public_place?: 'asc' | 'desc';
   address_number?: 'asc' | 'desc';
+  cep?: 'asc' | 'desc';
   neighborhood?: 'asc' | 'desc';
   complement?: 'asc' | 'desc';
   city?: 'asc' | 'desc';

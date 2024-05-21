@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import { type IExpense } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
+import { cofinsValue, pisValue } from 'domain/shared/taxes/taxes';
 
 import { type Replace } from 'helpers/Replace';
 
@@ -32,7 +33,7 @@ export interface IPhysicalCustomerOrder {
 
 export class PhysicalCustomerOrder extends Entity {
   private props: IPhysicalCustomerOrder;
-
+  private totolExpense: number;
   constructor(
     props: Replace<
       IPhysicalCustomerOrder,
@@ -54,6 +55,11 @@ export class PhysicalCustomerOrder extends Entity {
 
       throw new NotificationError(errors);
     }
+
+    this.totolExpense = props.expenses.reduce(
+      (total, expense) => total + expense.value,
+      0,
+    );
   }
 
   validate() {
@@ -136,6 +142,10 @@ export class PhysicalCustomerOrder extends Entity {
   }
   public set expenses(expenses: IExpense[]) {
     this.props.expenses = expenses;
+    this.totolExpense = this.props.expenses.reduce(
+      (total, expense) => total + expense.value,
+      0,
+    );
   }
   get order(): string {
     return this.props.order;
@@ -144,21 +154,7 @@ export class PhysicalCustomerOrder extends Entity {
   set order(order: string) {
     this.props.order = order;
   }
-  public get total_shipping_cost(): number {
-    return this.props.total_shipping_cost | 0;
-  }
-  public set total_shipping_cost(total_shipping_cost: number) {
-    this.props.total_shipping_cost = total_shipping_cost;
-  }
-  public get total_receivable(): number {
-    return (this.total_shipping_cost + this.total_tax_payable) | 0;
-  }
 
-  public get total_tax_payable(): number {
-    return (
-      (this.calculate_cofins + this.calculate_icms + this.calculated_pis) | 0
-    );
-  }
   get physicalCustomerId(): string {
     return this.props.physicalCustomerId;
   }
@@ -212,37 +208,48 @@ export class PhysicalCustomerOrder extends Entity {
   }
 
   public get pis_tax(): number {
-    return this.props.pis_tax;
+    const pisTax =
+      this.props.pis_tax === undefined ? pisValue : this.props.pis_tax;
+
+    return pisTax;
   }
   public set cofins_tax(cofins_tax: number) {
     this.props.cofins_tax = cofins_tax;
   }
 
   public get cofins_tax(): number {
-    return this.props.cofins_tax;
-  }
+    const cofinsTax =
+      this.props.cofins_tax === undefined ? cofinsValue : this.props.cofins_tax;
 
-  public set calculated_pis(calculated_pis: number) {
-    this.props.calculated_pis = calculated_pis;
+    return cofinsTax;
   }
 
   public get calculated_pis(): number {
-    return this.aroundValues(this.props.calculated_pis);
-  }
-
-  public set calculate_icms(calculate_icms: number) {
-    this.props.calculate_icms = calculate_icms;
+    return this.aroundValues((this.pis_tax * this.totolExpense) / 100);
   }
 
   public get calculate_icms(): number {
-    return this.aroundValues(this.props.calculate_icms);
-  }
-  public set calculate_cofins(calculate_cofins: number) {
-    this.props.calculate_cofins = calculate_cofins;
+    return this.aroundValues(this.props.icms_tax * this.totolExpense) / 100;
   }
 
   public get calculate_cofins(): number {
-    return this.aroundValues(this.props.calculate_cofins);
+    const calculeteCofins = (this.cofins_tax / 100) * this.totolExpense;
+
+    return this.aroundValues(calculeteCofins);
+  }
+
+  public get total_shipping_cost(): number {
+    return this.totolExpense | 0;
+  }
+
+  public get total_receivable(): number {
+    return this.aroundValues(this.total_shipping_cost + this.total_tax_payable);
+  }
+
+  public get total_tax_payable(): number {
+    return this.aroundValues(
+      this.calculate_cofins + this.calculate_icms + this.calculated_pis,
+    );
   }
 
   private aroundValues(value: number): number {

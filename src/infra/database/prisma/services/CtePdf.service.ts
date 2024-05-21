@@ -7,9 +7,11 @@ import { LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type CtePdfRepository } from 'domain/repositories/CtePdfRepository';
 
 import { PrismaService } from '../prisma.service';
+import { LegalClientOrderPrismaDTO } from './prismaDTO/LegalClientOrderPrismaDto';
 import { LegalClientQuoteTablePrismaDTO } from './prismaDTO/LegalClientQuoteTablePrismaDto';
 import { LegalPersonPrismaDTO } from './prismaDTO/LegalPersonPrismaDto';
 import { NaturalPersonPrismaDTO } from './prismaDTO/NaturalPersonPrismaDto';
+import { PhysicalCustomerOrderPrismaDTO } from './prismaDTO/PhysicalCustomerOrderPrismaDto';
 import { PhysicalCustomerQuoteTablePrismaDTO } from './prismaDTO/PhysicalCustomerQuoteTablePrismaDto';
 
 @Injectable()
@@ -23,11 +25,8 @@ export class CtePdfPrismaService implements CtePdfRepository {
       where: { id: cteId },
       select: {
         LegalClientOrder: {
-          select: {
-            total_receivable: true,
-            total_shipping_cost: true,
-            total_tax_payable: true,
-            FreightExpenses: { select: { value: true, expense_name: true } },
+          include: {
+            FreightExpenses: true,
             LegalContract: {
               select: { LegalClient: { select: { LegalPerson: true } } },
             },
@@ -41,6 +40,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
                 Sender: {
                   select: { NaturalPerson: true, LegalPerson: true },
                 },
+                Icms: true,
               },
             },
             CarrierCompany: { select: { LegalPerson: true, rntrc: true } },
@@ -52,6 +52,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
         observations: true,
         type_cte: true,
         order_id: true,
+        autorization: true,
       },
     });
     const recipientLegalPerson =
@@ -75,16 +76,16 @@ export class CtePdfPrismaService implements CtePdfRepository {
 
     const legalClientPrisma =
       cteDataPrisma.LegalClientOrder.LegalContract.LegalClient.LegalPerson;
-    const expenses = cteDataPrisma?.LegalClientOrder.FreightExpenses.map(
-      expense => ({
-        expenseName: expense.expense_name,
-        value: expense.value,
-      }),
-    );
-    const order = LegalClientQuoteTablePrismaDTO.PrismaToEntity(
+
+    const quote = LegalClientQuoteTablePrismaDTO.PrismaToEntity(
       cteDataPrisma.LegalClientOrder.QuoteTable,
       originAdress,
       destinyAdress,
+    );
+    const order = LegalClientOrderPrismaDTO.PrismaToEntity(
+      cteDataPrisma.LegalClientOrder,
+      cteDataPrisma.LegalClientOrder.FreightExpenses,
+      cteDataPrisma.LegalClientOrder.QuoteTable.Icms.aliquot,
     );
     const cteData = new LegalClientCte({
       acessKey: cteDataPrisma?.access_key,
@@ -95,7 +96,6 @@ export class CtePdfPrismaService implements CtePdfRepository {
       id: cteDataPrisma?.id,
     });
     const ctePdf = new CteLegalClientPdf({
-      expenses,
       cteData,
       recipientLegalPerson:
         LegalPersonPrismaDTO.PrismaToEntity(recipientLegalPerson),
@@ -109,6 +109,8 @@ export class CtePdfPrismaService implements CtePdfRepository {
       carrierCompany,
       rntrc: cteDataPrisma.LegalClientOrder.CarrierCompany.rntrc,
       orderData: order,
+      quoteData: quote,
+      autorizationDate: cteDataPrisma.autorization,
     });
 
     return ctePdf;
@@ -120,8 +122,8 @@ export class CtePdfPrismaService implements CtePdfRepository {
       where: { id: cteId },
       select: {
         PhysicalCustomerOrder: {
-          select: {
-            FreightExpenses: { select: { value: true, expense_name: true } },
+          include: {
+            FreightExpenses: true,
             PhysicalCustomer: { select: { NaturalPerson: true } },
             PhysicalCustomerQuoteTable: {
               include: {
@@ -133,6 +135,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
                 Sender: {
                   select: { NaturalPerson: true, LegalPerson: true },
                 },
+                Icms: { select: { aliquot: true } },
               },
             },
             CarrierCompany: { select: { LegalPerson: true, rntrc: true } },
@@ -144,6 +147,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
         observations: true,
         type_cte: true,
         order_id: true,
+        autorization: true,
       },
     });
     const recipientLegalPerson =
@@ -166,12 +170,7 @@ export class CtePdfPrismaService implements CtePdfRepository {
 
     const legalClientPrisma =
       cteDataPrisma?.PhysicalCustomerOrder?.PhysicalCustomer.NaturalPerson;
-    const expenses = cteDataPrisma?.PhysicalCustomerOrder.FreightExpenses.map(
-      expense => ({
-        expenseName: expense.expense_name,
-        value: expense.value,
-      }),
-    );
+
     const originAdress =
       cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable
         .AdressOrigin;
@@ -179,6 +178,13 @@ export class CtePdfPrismaService implements CtePdfRepository {
     const destinyAdress =
       cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable
         .AdressDestiny;
+
+    const order = PhysicalCustomerOrderPrismaDTO.PrismaToEntity(
+      cteDataPrisma.PhysicalCustomerOrder,
+      cteDataPrisma.PhysicalCustomerOrder.FreightExpenses,
+      cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable.Icms
+        .aliquot,
+    );
     const cteData = new LegalClientCte({
       acessKey: cteDataPrisma?.access_key,
       cteNumber: cteDataPrisma?.cte_number,
@@ -187,13 +193,12 @@ export class CtePdfPrismaService implements CtePdfRepository {
       observations: cteDataPrisma?.observations,
       id: cteDataPrisma?.id,
     });
-    const order = PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
+    const quote = PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
       cteDataPrisma.PhysicalCustomerOrder.PhysicalCustomerQuoteTable,
       originAdress,
       destinyAdress,
     );
     const ctePdf = new CtePhyscialCustomerPdf({
-      expenses,
       cteData,
       recipientLegalPerson:
         LegalPersonPrismaDTO.PrismaToEntity(recipientLegalPerson),
@@ -208,6 +213,8 @@ export class CtePdfPrismaService implements CtePdfRepository {
       carrierCompany,
       rntrc: cteDataPrisma?.PhysicalCustomerOrder?.CarrierCompany.rntrc,
       orderData: order,
+      quoteData: quote,
+      autorizationDate: cteDataPrisma.autorization,
     });
 
     return ctePdf;

@@ -16,6 +16,11 @@ import {
 
 import { type IPhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 
+import { formPaymentEnum } from 'infra/graphql/enums/FormPayment.enum';
+import { kindOfServicerOrderEnum } from 'infra/graphql/enums/KindOfServiceOrder.enum';
+import { typeMerchandiseEnum } from 'infra/graphql/enums/TypesMerchandise.enum';
+import { whoIsPayEmum } from 'infra/graphql/enums/WhoIsPay.enum';
+
 import { AdressInput } from '../AdressesGraphql/Adresses.input';
 
 @InputType()
@@ -23,22 +28,14 @@ export class PhysicalCustomerQuoteTableInput
   implements
     Omit<IPhysicalCustomerQuoteTable, 'id' | 'created_at' | 'updated_at'>
 {
-  @Field()
+  @Field(() => kindOfServicerOrderEnum)
   @IsNotEmpty()
   @IsString()
-  kindService: string;
-  @Field()
+  kindService: kindOfServicerOrderEnum;
+  @Field(() => formPaymentEnum)
   @IsNotEmpty()
   @IsString()
-  typeCte: string;
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  natureService: string;
-  @Field()
-  @IsNotEmpty()
-  @IsString()
-  formPayment: string;
+  formPayment: formPaymentEnum;
   @HideField()
   @Allow()
   codQuote: string;
@@ -50,10 +47,10 @@ export class PhysicalCustomerQuoteTableInput
   @IsString()
   @IsNotEmpty()
   senderId: string;
-  @Field()
+  @Field(() => whoIsPayEmum)
   @IsString()
   @IsNotEmpty()
-  who_pays: string;
+  who_pays: whoIsPayEmum;
   @Field(() => AdressInput)
   @IsObject()
   @IsNotEmpty()
@@ -62,10 +59,10 @@ export class PhysicalCustomerQuoteTableInput
   @IsObject()
   @IsNotEmpty()
   adressDestiny: AdressInput;
-  @Field()
+  @Field(() => typeMerchandiseEnum)
   @IsString()
   @IsNotEmpty()
-  typeMerchandise: string;
+  typeMerchandise: typeMerchandiseEnum;
   @Field()
   @IsNumber()
   @IsNotEmpty()

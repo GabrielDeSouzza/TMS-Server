@@ -1,16 +1,11 @@
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
+import { type PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 import { type PhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 
 import { type LegalClientCte } from '../LegalClientCte/LegalClientCte';
 
-interface IExpensesCte {
-  value: number;
-  expenseName: string;
-}
-
 export interface ICtePhyscialCustomerPdf {
-  expenses: IExpensesCte[];
   senderLegalPerson: LegalPerson;
   senderNaturalPerson: NaturalPerson;
   recipientLegalPerson?: LegalPerson;
@@ -19,7 +14,9 @@ export interface ICtePhyscialCustomerPdf {
   carrierCompany: LegalPerson;
   physicalCustomer: NaturalPerson;
   rntrc: string;
-  orderData: PhysicalCustomerQuoteTable;
+  orderData: PhysicalCustomerOrder;
+  quoteData: PhysicalCustomerQuoteTable;
+  autorizationDate: Date;
 }
 
 export class CtePhyscialCustomerPdf {
@@ -31,18 +28,25 @@ export class CtePhyscialCustomerPdf {
     };
   }
 
-  public get expenses(): IExpensesCte[] {
-    return this.props.expenses;
-  }
-  public set expenses(expense: IExpensesCte) {
-    this.props.expenses.push(expense);
-  }
-
-  public get orderData(): PhysicalCustomerQuoteTable {
+  public get orderData(): PhysicalCustomerOrder {
     return this.props.orderData;
   }
-  public set orderData(orderData: PhysicalCustomerQuoteTable) {
+  public set orderData(orderData: PhysicalCustomerOrder) {
     this.props.orderData = orderData;
+  }
+
+  public get autorizationDate(): Date {
+    return this.props.autorizationDate;
+  }
+  public set autorizationDate(autorizationDate: Date) {
+    this.props.autorizationDate = autorizationDate;
+  }
+
+  public get quoteData(): PhysicalCustomerQuoteTable {
+    return this.props.quoteData;
+  }
+  public set quoteData(quoteData: PhysicalCustomerQuoteTable) {
+    this.props.quoteData = quoteData;
   }
 
   public get physicalCustomer(): NaturalPerson {

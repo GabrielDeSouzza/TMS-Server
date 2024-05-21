@@ -13,6 +13,7 @@ describe('LegalPerson', () => {
       complement: 'Sala 456',
       city: 'São Paulo',
       uf: 'SP',
+      cep: '464646464',
       first_phone: '11111111111',
       second_phone: '22222222211',
       third_phone: null,

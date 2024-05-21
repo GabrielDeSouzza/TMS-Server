@@ -2,6 +2,8 @@ import { Field, InputType } from '@nestjs/graphql';
 
 import { type AdressesType } from 'domain/entities/QuoteTables/AdressesType';
 
+import { UFEnum } from 'infra/graphql/enums/Uf.enum';
+
 @InputType()
 export class AdressInput implements AdressesType {
   @Field()
@@ -16,6 +18,6 @@ export class AdressInput implements AdressesType {
   complement?: string;
   @Field()
   city: string;
-  @Field()
-  uf: string;
+  @Field(() => UFEnum)
+  uf: UFEnum;
 }

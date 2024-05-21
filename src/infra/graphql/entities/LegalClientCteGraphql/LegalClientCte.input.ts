@@ -4,6 +4,8 @@ import { Allow, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { type ILegalClientCte } from 'domain/entities/Cte Entities/LegalClientCte/LegalClientCte';
 
+import { typeCteEnum } from 'infra/graphql/enums/TypesCte.enum';
+
 @InputType()
 export class LegalClientCteInput implements ILegalClientCte {
   @Field()
@@ -20,10 +22,10 @@ export class LegalClientCteInput implements ILegalClientCte {
   @HideField()
   @Allow()
   cteNumber: string;
-  @Field()
+  @Field(() => typeCteEnum)
   @IsString()
   @IsNotEmpty()
-  cteType: string;
+  cteType: typeCteEnum;
 }
 
 @InputType()

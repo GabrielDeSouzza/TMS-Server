@@ -10,6 +10,7 @@ export interface ILegalPerson {
   id?: string;
   fantasy_name: string;
   cnpj: string;
+  cep: string;
   state_registration: string;
   corporate_name: string;
   public_place: string;
@@ -147,6 +148,14 @@ export class LegalPerson extends Entity {
 
   public get fantasy_name(): string {
     return this.props.fantasy_name;
+  }
+
+  public set cep(cep: string) {
+    this.props.cep = cep;
+  }
+
+  public get cep(): string {
+    return this.props.cep;
   }
 
   public set cnpj(cnpj: string) {

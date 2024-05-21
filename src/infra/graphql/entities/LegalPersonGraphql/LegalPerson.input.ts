@@ -13,6 +13,7 @@ import {
 import { type ILegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 
 import { ValidationPhone } from 'infra/CustomValidations/PhoneValidation';
+import { UFEnum } from 'infra/graphql/enums/Uf.enum';
 
 @InputType()
 export class LegalPersonInput
@@ -28,6 +29,11 @@ export class LegalPersonInput
   @IsNotEmpty()
   @Length(14)
   cnpj: string;
+  @Field()
+  @IsString()
+  @IsNotEmpty()
+  @Length(8)
+  cep: string;
   @Field()
   @IsString()
   @IsNotEmpty()
@@ -58,11 +64,10 @@ export class LegalPersonInput
   @IsString()
   @IsNotEmpty()
   city: string;
-  @Field()
+  @Field(() => UFEnum)
   @IsString()
   @IsNotEmpty()
-  @Length(2)
-  uf: string;
+  uf: UFEnum;
   @Field()
   @Validate(ValidationPhone)
   @IsNotEmpty()

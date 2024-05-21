@@ -9,7 +9,7 @@ input AdressInput {
   neighborhood: String!
   postalCod: String!
   street: String!
-  uf: String!
+  uf: UFEnum!
 }
 
 type AdressModel {
@@ -525,6 +525,20 @@ input FloatFilter {
   notIn: [Float!]
 }
 
+enum FormPayment {
+  ADVANCE_PAYMENT
+  CASH_IN_PAYMENT
+  CASH_PAYMENT
+  PAYMENT_BY_BANK_SLIP
+  PAYMENT_BY_BANK_TRANSFER
+  PAYMENT_BY_CHECK
+  PAYMENT_BY_CONSIGNMENT
+  PAYMENT_BY_CREDIT_DEBIT_CARD
+  PAYMENT_BY_FREIGHT_CARD
+  PAYMENT_BY_INVOICE
+  PAYMENT_BY_PIX
+}
+
 input FreightExpenseInput {
   expenseName: String!
   legalClientOrderId: String
@@ -802,8 +816,15 @@ input IntNullableFilter {
   notIn: [Int!]
 }
 
+enum KindOfServicerOrder {
+  HAZARDOUS_CARGO
+  LOAD_CAPACITY
+  LTL
+  REFRIGERATED_CARGO
+}
+
 input LegalClientCteInput {
-  cteType: String!
+  cteType: TypesCteEnum!
   observations: String
   orderId: String!
 }
@@ -820,6 +841,7 @@ type LegalClientCteModel {
 input LegalClientCteOrderByWithRelationInput {
   LegalClientOrder: LegalClientOrderOrderByWithRelationInput
   access_key: SortOrder
+  autorization: SortOrder
   cte_number: SortOrder
   id: SortOrder
   observations: SortOrder
@@ -828,7 +850,7 @@ input LegalClientCteOrderByWithRelationInput {
 }
 
 input LegalClientCteUpdateInput {
-  cteType: String
+  cteType: TypesCteEnum
   observations: String
   orderId: String
 }
@@ -839,6 +861,7 @@ input LegalClientCteWhereInput {
   NOT: [LegalClientCteWhereInput!]
   OR: [LegalClientCteWhereInput!]
   access_key: StringFilter
+  autorization: DateTimeFilter
   cte_number: StringFilter
   id: StringFilter
   observations: StringFilter
@@ -1018,17 +1041,15 @@ input LegalClientQuoteTableInput {
   adressOrigin: AdressInput!
   amount: Int!
   description: String!
-  formPayment: String!
-  kindService: String!
+  formPayment: FormPayment!
+  kindService: KindOfServicerOrder!
   mass: Float!
-  natureService: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
-  typeCte: String!
-  typeMerchandise: String!
+  typeMerchandise: TypeMerchandise!
   volume: Float!
-  who_pays: String!
+  who_pays: WhoIsPay!
 }
 
 input LegalClientQuoteTableListRelationFilter {
@@ -1054,11 +1075,9 @@ type LegalClientQuoteTableModel {
   id: String!
   kindService: String!
   mass: Float!
-  natureService: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
-  typeCte: String!
   typeMerchandise: String!
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
@@ -1092,11 +1111,9 @@ input LegalClientQuoteTableOrderByWithRelationInput {
   id: SortOrder
   kind_service: SortOrder
   mass: SortOrder
-  nature_service: SortOrder
   nf_value: SortOrder
   recipient_id: SortOrder
   sender_id: SortOrder
-  type_cte: SortOrder
   type_merchandise: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
@@ -1109,17 +1126,15 @@ input LegalClientQuoteTableUpdate {
   adressOrigin: AdressInput
   amount: Int
   description: String
-  formPayment: String
-  kindService: String
+  formPayment: FormPayment
+  kindService: KindOfServicerOrder
   mass: Float
-  natureService: String
   nf_value: Float
   recipientId: String
   senderId: String
-  typeCte: String
-  typeMerchandise: String
+  typeMerchandise: TypeMerchandise
   volume: Float
-  who_pays: String
+  who_pays: WhoIsPay
 }
 
 input LegalClientQuoteTableUpdateManyInput {
@@ -1127,18 +1142,16 @@ input LegalClientQuoteTableUpdateManyInput {
   adressOrigin: AdressInput
   amount: Int
   description: String
-  formPayment: String
+  formPayment: FormPayment
   id: String!
-  kindService: String
+  kindService: KindOfServicerOrder
   mass: Float
-  natureService: String
   nf_value: Float
   recipientId: String
   senderId: String
-  typeCte: String
-  typeMerchandise: String
+  typeMerchandise: TypeMerchandise
   volume: Float
-  who_pays: String
+  who_pays: WhoIsPay
 }
 
 input LegalClientQuoteTableWhereInput {
@@ -1165,11 +1178,9 @@ input LegalClientQuoteTableWhereInput {
   id: StringFilter
   kind_service: StringFilter
   mass: FloatFilter
-  nature_service: StringFilter
   nf_value: FloatFilter
   recipient_id: StringFilter
   sender_id: StringFilter
-  type_cte: StringFilter
   type_merchandise: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
@@ -1303,6 +1314,7 @@ input LegalContractWhereInput {
 
 input LegalPersonInput {
   address_number: String!
+  cep: String!
   city: String!
   cnpj: String!
   complement: String
@@ -1315,11 +1327,12 @@ input LegalPersonInput {
   second_phone: String
   state_registration: String!
   third_phone: String
-  uf: String!
+  uf: UFEnum!
 }
 
 type LegalPersonModel {
   address_number: String!
+  cep: String!
   city: String!
   complement: String
   corporate_name: String!
@@ -1345,6 +1358,7 @@ input LegalPersonOrderByWithRelationInput {
   Recipient: RecipientOrderByWithRelationInput
   Sender: SenderOrderByWithRelationInput
   address_number: SortOrder
+  cep: SortOrder
   city: SortOrder
   cnpj: SortOrder
   complement: SortOrder
@@ -1365,6 +1379,7 @@ input LegalPersonOrderByWithRelationInput {
 
 input LegalPersonUpdateInput {
   address_number: String
+  cep: String
   city: String
   cnpj: String
   complement: String
@@ -1377,7 +1392,7 @@ input LegalPersonUpdateInput {
   second_phone: String
   state_registration: String
   third_phone: String
-  uf: String
+  uf: UFEnum
 }
 
 input LegalPersonWhereInput {
@@ -1391,6 +1406,7 @@ input LegalPersonWhereInput {
   Recipient: RecipientWhereInput
   Sender: SenderWhereInput
   address_number: StringFilter
+  cep: StringFilter
   city: StringFilter
   cnpj: StringFilter
   complement: StringNullableFilter
@@ -1720,7 +1736,7 @@ input NaturalPersonInput {
   rg: String!
   second_phone: String
   third_phone: String
-  uf: String!
+  uf: UFEnum!
 }
 
 type NaturalPersonModel {
@@ -1788,7 +1804,7 @@ input NaturalPersonUpdate {
   rg: String
   second_phone: String
   third_phone: String
-  uf: String
+  uf: UFEnum
 }
 
 input NaturalPersonWhereInput {
@@ -2569,7 +2585,7 @@ input OwnDriverWhereInput {
 }
 
 input PhysicalCustomerCteInput {
-  cteType: String!
+  cteType: TypesCteEnum!
   observations: String
   orderId: String!
 }
@@ -2586,6 +2602,7 @@ type PhysicalCustomerCteModel {
 input PhysicalCustomerCteOrderByWithRelationInput {
   PhysicalCustomerOrder: PhysicalCustomerOrderOrderByWithRelationInput
   access_key: SortOrder
+  autorization: SortOrder
   cte_number: SortOrder
   id: SortOrder
   observations: SortOrder
@@ -2594,7 +2611,7 @@ input PhysicalCustomerCteOrderByWithRelationInput {
 }
 
 input PhysicalCustomerCteUpdateInput {
-  cteType: String
+  cteType: TypesCteEnum
   observations: String
   orderId: String
 }
@@ -2605,6 +2622,7 @@ input PhysicalCustomerCteWhereInput {
   OR: [PhysicalCustomerCteWhereInput!]
   PhysicalCustomerOrder: PhysicalCustomerOrderWhereInput
   access_key: StringFilter
+  autorization: DateTimeFilter
   cte_number: StringFilter
   id: StringFilter
   observations: StringFilter
@@ -2674,13 +2692,19 @@ type PhysicalCustomerOrderModel {
   PhysicalCustomer: PhysicalCustomerModel!
   Quote: PhysicalCustomerQuoteTableModel!
   UpdatedUser: UserModelRefereces!
+  calculate_cofins: Float!
+  calculate_icms: Float!
+  calculated_pis: Float!
   carrier_id: String!
+  cofins_tax: Float!
   created_at: Timestamp!
   created_by: String!
   expenses: [FreightExpenseOrderModel!]!
+  icms_tax: Float!
   id: String!
   order: String!
   physicalCustomerId: String!
+  pis_tax: Float!
   quote_table_id: String!
   total_receivable: Float
   total_shipping_cost: Float
@@ -2768,17 +2792,15 @@ input PhysicalCustomerQuoteTableInput {
   adressOrigin: AdressInput!
   amount: Float!
   description: String!
-  formPayment: String!
-  kindService: String!
+  formPayment: FormPayment!
+  kindService: KindOfServicerOrder!
   mass: Float!
-  natureService: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
-  typeCte: String!
-  typeMerchandise: String!
+  typeMerchandise: TypeMerchandise!
   volume: Float!
-  who_pays: String!
+  who_pays: WhoIsPay!
 }
 
 input PhysicalCustomerQuoteTableListRelationFilter {
@@ -2804,11 +2826,9 @@ type PhysicalCustomerQuoteTableModel {
   id: String!
   kindService: String!
   mass: Float!
-  natureService: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
-  typeCte: String!
   typeMerchandise: String!
   updatedUser: UserModelRefereces!
   updated_at: Timestamp!
@@ -2842,11 +2862,9 @@ input PhysicalCustomerQuoteTableOrderByWithRelationInput {
   id: SortOrder
   kind_service: SortOrder
   mass: SortOrder
-  natute_service: SortOrder
   nf_value: SortOrder
   recipient_id: SortOrder
   senderId: SortOrder
-  type_cte: SortOrder
   type_merchandise: SortOrder
   updated_at: SortOrder
   updated_by: SortOrder
@@ -2859,17 +2877,15 @@ input PhysicalCustomerQuoteTableUpdate {
   adressOrigin: AdressInput
   amount: Float
   description: String
-  formPayment: String
-  kindService: String
+  formPayment: FormPayment
+  kindService: KindOfServicerOrder
   mass: Float
-  natureService: String
   nf_value: Float
   recipientId: String
   senderId: String
-  typeCte: String
-  typeMerchandise: String
+  typeMerchandise: TypeMerchandise
   volume: Float
-  who_pays: String
+  who_pays: WhoIsPay
 }
 
 input PhysicalCustomerQuoteTableWhereInput {
@@ -2896,11 +2912,9 @@ input PhysicalCustomerQuoteTableWhereInput {
   id: StringFilter
   kind_service: StringFilter
   mass: FloatFilter
-  natute_service: StringFilter
   nf_value: FloatFilter
   recipient_id: StringFilter
   senderId: StringFilter
-  type_cte: StringFilter
   type_merchandise: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
@@ -3254,6 +3268,22 @@ enum TypeMaintenanceEnum {
   PREVENTIVE_MAINTENANCE
 }
 
+enum TypeMerchandise {
+  BULK
+  CONSUMER_GOODS
+  CONTAINERIZED
+  DRY
+  FINISHED_PRODUCTS
+  HAZARDOUS
+  INDUSTRIAL_SUPPLIES
+  LIQUID
+  NON_PERISHABLES
+  PACKAGED
+  PERISHABLES
+  RAW_MATERIALS
+  SPECIAL_CARGO
+}
+
 input TypeOfMaintenanceInput {
   description: String!
   typeMaintenance: TypeMaintenanceEnum!
@@ -3313,6 +3343,48 @@ input TypeOfMaintenanceWhereInput {
   typeMaintenance: StringFilter
   updated_at: DateTimeFilter
   updated_by: StringFilter
+}
+
+enum TypesCteEnum {
+  CANCELLATION_CTE
+  COMPLEMENTARY_CTE
+  INTERMEDIATE_REROUTING_CTE
+  NORMAL_CTE
+  REPLACEMENT_CTE
+  REROUTING_CTE
+  STORAGE_CTE
+  STORAGE_TRANSIT_CTE
+  SUBCONTRACTING_CTE
+}
+
+enum UFEnum {
+  AC
+  AL
+  AM
+  AP
+  BA
+  CE
+  DF
+  ES
+  GO
+  MA
+  MG
+  MS
+  MT
+  PA
+  PB
+  PE
+  PI
+  PR
+  RJ
+  RN
+  RO
+  RR
+  RS
+  SC
+  SE
+  SP
+  TO
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -3921,4 +3993,11 @@ input VehicleWhereInput {
   registration: DateTimeFilter
   renavam: StringFilter
   year: StringFilter
+}
+
+enum WhoIsPay {
+  CARRIER
+  RECIPIENT
+  SENDER
+  SERVICE_TAKER
 }

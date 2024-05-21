@@ -14,7 +14,6 @@ import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/Carrier
 import { LegalPersonUseCases } from 'app/useCases/LegalPersonUseCases/LegalPersonUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { LegalPersonGraphqlDTO } from 'infra/graphql/DTO/LegalPersonGraphqlDto';
 import {
   CarrierCompanyCountArgs,
   CarrierCompanyWhereArgs,
@@ -104,7 +103,7 @@ export class CarrierCompanyResolver {
       legalPersonId: legalPersonID,
     });
 
-    return LegalPersonGraphqlDTO.createInputToEntity(legalPerson);
+    return legalPerson;
   }
 
   @ResolveField(() => UserModelRefereces)

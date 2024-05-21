@@ -2,11 +2,11 @@ import { Field, Float, ObjectType } from '@nestjs/graphql';
 
 import { type IOrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
 
+import { statusOrderEmum } from '../../enums/OrderStatusEnum.enum';
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
 import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
-import { statusOrderEmum } from './OrderStatusEnum.enum';
 
 @ObjectType()
 export abstract class OrderProcessingModel implements IOrderProcessing {

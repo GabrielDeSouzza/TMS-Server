@@ -16,11 +16,6 @@ export class PhysicalCustomerQuoteTableModel
   @Field()
   kindService: string;
   @Field()
-  @Field()
-  typeCte: string;
-  @Field()
-  natureService: string;
-  @Field()
   formPayment: string;
   @Field(() => Date)
   created_at: Date;

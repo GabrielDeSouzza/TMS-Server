@@ -38,10 +38,6 @@ export class ctePdfUseCase {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
 
-    if (!ctePdf.expenses)
-      throw new GraphQLError('EXPENSES NOT FOUND', {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
     if (!ctePdf.recipientLegalPerson && !ctePdf.recipientNaturalPerson)
       throw new GraphQLError('RECIPIENT NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
@@ -66,10 +62,6 @@ export class ctePdfUseCase {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
 
-    if (!ctePdf.expenses)
-      throw new GraphQLError('EXPENSES NOT FOUND', {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
     if (!ctePdf.recipientLegalPerson && !ctePdf.recipientNaturalPerson)
       throw new GraphQLError('RECIPIENT NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },

@@ -6,8 +6,6 @@ export abstract class UpdatePhysicalCustomerQuoteTableDTO
 {
   recipientId?: string;
   kindService?: string;
-  typeCte?: string;
-  natureService?: string;
   formPayment?: string;
   senderId?: string;
   who_pays?: string;

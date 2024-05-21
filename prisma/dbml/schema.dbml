@@ -364,8 +364,6 @@ Table physical_customer_quote {
   id String [pk]
   cod_quote String [not null]
   kind_service String [not null]
-  type_cte String [not null]
-  natute_service String [not null]
   form_payment String [not null]
   recipient_id String [not null]
   Recipient recipient [not null]
@@ -427,6 +425,7 @@ Table physical_customer_cte {
   type_cte String [not null]
   observations String [not null]
   cte_number String [not null]
+  autorization DateTime [default: `now()`, not null]
 }
 
 Table sender {
@@ -486,6 +485,7 @@ Table legal_people {
   fantasy_name String [not null]
   cnpj String [unique, not null]
   state_registration String [unique, not null]
+  cep String [not null]
   corporate_name String [not null]
   public_place String [not null]
   address_number String [not null]
@@ -527,6 +527,7 @@ Table legal_client_cte {
   type_cte String [not null]
   observations String [not null]
   cte_number String [not null]
+  autorization DateTime [default: `now()`, not null]
 }
 
 Table legal_Contracts {
@@ -553,8 +554,6 @@ Table legal_client_quote {
   id String [pk]
   cod_quote String [not null]
   kind_service String [not null]
-  type_cte String [not null]
-  nature_service String [not null]
   form_payment String [not null]
   recipient_id String [not null]
   Recipient recipient [not null]

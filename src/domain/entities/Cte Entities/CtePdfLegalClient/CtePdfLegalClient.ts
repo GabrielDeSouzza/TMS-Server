@@ -1,16 +1,11 @@
+import { type LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { type LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { type NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { type LegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 
 import { type LegalClientCte } from '../LegalClientCte/LegalClientCte';
 
-export interface IExpensesCte {
-  value: number;
-  expenseName: string;
-}
-
 export interface ICteLegalClientPdf {
-  expenses: IExpensesCte[];
   senderLegalPerson: LegalPerson;
   senderNaturalPerson: NaturalPerson;
   recipientLegalPerson?: LegalPerson;
@@ -19,7 +14,9 @@ export interface ICteLegalClientPdf {
   carrierCompany: LegalPerson;
   legalClient: LegalPerson;
   rntrc: string;
-  orderData: LegalClientQuoteTable;
+  orderData: LegalClientOrder;
+  quoteData: LegalClientQuoteTable;
+  autorizationDate: Date;
 }
 
 export class CteLegalClientPdf {
@@ -31,18 +28,25 @@ export class CteLegalClientPdf {
     };
   }
 
-  public get expenses(): IExpensesCte[] {
-    return this.props.expenses;
-  }
-  public set expenses(expense: IExpensesCte) {
-    this.props.expenses.push(expense);
-  }
-
-  public get orderData(): LegalClientQuoteTable {
+  public get orderData(): LegalClientOrder {
     return this.props.orderData;
   }
-  public set orderData(orderData: LegalClientQuoteTable) {
+  public set orderData(orderData: LegalClientOrder) {
     this.props.orderData = orderData;
+  }
+
+  public get autorizationDate(): Date {
+    return this.props.autorizationDate;
+  }
+  public set autorizationDate(autorizationDate: Date) {
+    this.props.autorizationDate = autorizationDate;
+  }
+
+  public get quoteData(): LegalClientQuoteTable {
+    return this.props.quoteData;
+  }
+  public set quoteData(orderData: LegalClientQuoteTable) {
+    this.props.quoteData = orderData;
   }
 
   public get legalClient(): LegalPerson {

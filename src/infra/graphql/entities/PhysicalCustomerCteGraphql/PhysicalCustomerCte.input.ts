@@ -4,6 +4,8 @@ import { Allow, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { type IPhysicalCustomerCte } from 'domain/entities/Cte Entities/PhysicalCustomerCte/PhysicalCustomerCte';
 
+import { typeCteEnum } from 'infra/graphql/enums/TypesCte.enum';
+
 @InputType()
 export class PhysicalCustomerCteInput implements IPhysicalCustomerCte {
   @Field()
@@ -20,10 +22,10 @@ export class PhysicalCustomerCteInput implements IPhysicalCustomerCte {
   @HideField()
   @Allow()
   cteNumber: string;
-  @Field()
+  @Field(() => typeCteEnum)
   @IsString()
   @IsNotEmpty()
-  cteType: string;
+  cteType: typeCteEnum;
 }
 
 @InputType()

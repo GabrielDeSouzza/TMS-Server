@@ -18,6 +18,8 @@ export class LegalPersonModel implements ILegalPerson {
   @Field()
   address_number: string;
   @Field()
+  cep: string;
+  @Field()
   neighborhood: string;
   @Field({ nullable: true })
   complement?: string;

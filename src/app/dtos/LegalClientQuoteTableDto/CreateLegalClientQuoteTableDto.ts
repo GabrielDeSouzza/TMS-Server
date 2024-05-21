@@ -7,8 +7,6 @@ export abstract class CreateLegalClientQuoteTableDTO
   id?: string;
   codQuote: string;
   kindService: string;
-  typeCte: string;
-  natureService: string;
   formPayment: string;
   recipientId: string;
   senderId: string;

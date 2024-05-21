@@ -5,8 +5,6 @@ export abstract class CreatePhysicalCustomerQuoteTableDTO
   implements IPhysicalCustomerQuoteTable
 {
   kindService: string;
-  typeCte: string;
-  natureService: string;
   formPayment: string;
   codQuote: string;
   recipientId: string;

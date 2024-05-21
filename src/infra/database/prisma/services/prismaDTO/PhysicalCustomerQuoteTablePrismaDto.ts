@@ -19,8 +19,6 @@ export class PhysicalCustomerQuoteTablePrismaDTO {
       codQuote: physicalcustomerquotetablePrisma.cod_quote,
       formPayment: physicalcustomerquotetablePrisma.form_payment,
       kindService: physicalcustomerquotetablePrisma.kind_service,
-      natureService: physicalcustomerquotetablePrisma.natute_service,
-      typeCte: physicalcustomerquotetablePrisma.type_cte,
       description: physicalcustomerquotetablePrisma.description,
       mass: physicalcustomerquotetablePrisma.mass,
       nf_value: physicalcustomerquotetablePrisma.nf_value,
@@ -75,8 +73,6 @@ export class PhysicalCustomerQuoteTablePrismaDTO {
         cod_quote: physicalcustomerquotetable.codQuote,
         form_payment: physicalcustomerquotetable.formPayment,
         kind_service: physicalcustomerquotetable.kindService,
-        natute_service: physicalcustomerquotetable.natureService,
-        type_cte: physicalcustomerquotetable.typeCte,
         description: physicalcustomerquotetable.description,
         mass: physicalcustomerquotetable.mass,
         nf_value: physicalcustomerquotetable.nf_value,
@@ -148,8 +144,6 @@ export class PhysicalCustomerQuoteTablePrismaDTO {
         mass: physicalcustomerquotetable.mass,
         form_payment: physicalcustomerquotetable.formPayment,
         kind_service: physicalcustomerquotetable.kindService,
-        natute_service: physicalcustomerquotetable.natureService,
-        type_cte: physicalcustomerquotetable.typeCte,
         nf_value: physicalcustomerquotetable.nf_value,
         AdressDestiny: physicalcustomerquotetable.adressDestiny
           ? {

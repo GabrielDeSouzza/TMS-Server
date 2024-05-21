@@ -7,8 +7,6 @@ export abstract class UpdateManyLegalClientQuoteTableDTO
   id: string;
   recipientId?: string;
   kindService?: string;
-  typeCte?: string;
-  natureService?: string;
   formPayment?: string;
   senderId?: string;
   who_pays?: string;

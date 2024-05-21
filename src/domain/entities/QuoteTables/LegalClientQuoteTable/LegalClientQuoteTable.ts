@@ -11,8 +11,6 @@ export interface ILegalClientQuoteTable {
   id?: string;
   codQuote: string;
   kindService: string;
-  typeCte: string;
-  natureService: string;
   formPayment: string;
   recipientId: string;
   senderId: string;
@@ -115,7 +113,7 @@ export class LegalClientQuoteTable extends Entity {
       {
         field: this.props.who_pays,
         fieldName: 'Who is Play',
-        maxLength: 3,
+        maxLength: 20,
       },
     );
     this.notification.requiredField('LegalClientQuoteTable', fieldsValidation);
@@ -143,22 +141,6 @@ export class LegalClientQuoteTable extends Entity {
 
   set kindService(value: string) {
     this.props.kindService = value;
-  }
-
-  get typeCte(): string {
-    return this.props.typeCte;
-  }
-
-  set typeCte(value: string) {
-    this.props.typeCte = value;
-  }
-
-  get natureService(): string {
-    return this.props.natureService;
-  }
-
-  set natureService(value: string) {
-    this.props.natureService = value;
   }
 
   get formPayment(): string {

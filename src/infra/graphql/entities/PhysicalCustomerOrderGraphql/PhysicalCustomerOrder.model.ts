@@ -46,4 +46,16 @@ export class PhysicalCustomerOrderModel implements IPhysicalCustomerOrder {
   total_receivable?: number;
   @Field(() => Float, { nullable: true })
   total_tax_payable?: number;
+  @Field(() => Float)
+  calculate_cofins?: number;
+  @Field(() => Float)
+  calculated_pis?: number;
+  @Field(() => Float)
+  cofins_tax?: number;
+  @Field(() => Float)
+  calculate_icms?: number;
+  @Field(() => Float)
+  pis_tax?: number;
+  @Field(() => Float)
+  icms_tax?: number;
 }

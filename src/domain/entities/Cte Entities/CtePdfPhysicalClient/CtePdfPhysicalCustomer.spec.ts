@@ -1,5 +1,6 @@
 import { LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
+import { PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 import { PhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 
 import { LegalClientCte } from '../LegalClientCte/LegalClientCte';
@@ -19,6 +20,7 @@ describe('CarrierCompany', () => {
         complement: 'Sala 456',
         city: 'São Paulo',
         uf: 'SP',
+        cep: '4545454',
         first_phone: '11111111111',
         second_phone: '22222222211',
         third_phone: null,
@@ -51,8 +53,17 @@ describe('CarrierCompany', () => {
         observations: '464654',
         cteType: '546496',
       }),
-      expenses: [{ expenseName: 'sdsds', value: 465_654 }],
-      orderData: new PhysicalCustomerQuoteTable({
+      autorizationDate: new Date(),
+      orderData: new PhysicalCustomerOrder({
+        order: '65465d4as687d984asd987d9as7d9',
+        created_by: 'test',
+        updated_by: 'test',
+        physicalCustomerId: '54564654',
+        quote_table_id: '454654',
+        carrier_id: '467899',
+        expenses: [{ expenseName: 'sadsad', value: 6546 }],
+      }),
+      quoteData: new PhysicalCustomerQuoteTable({
         amount: 564,
         codQuote: 'aSdasd',
         created_by: 'sdsds',
@@ -79,8 +90,6 @@ describe('CarrierCompany', () => {
         },
         formPayment: 'Pix',
         kindService: 'sadasd',
-        natureService: 'plksk',
-        typeCte: '5657467',
         recipientId: '546.54.+654.6',
         senderId: '454654654',
         typeMerchandise: '155',
@@ -98,6 +107,7 @@ describe('CarrierCompany', () => {
         address_number: '123',
         neighborhood: 'Centro',
         complement: 'Sala 456',
+        cep: '64646',
         city: 'São Paulo',
         uf: 'SP',
         first_phone: '11111111111',
@@ -108,6 +118,7 @@ describe('CarrierCompany', () => {
       recipientLegalPerson: new LegalPerson({
         fantasy_name: 'Empresa ABC',
         cnpj: '12345678000123',
+        cep: '546546',
         state_registration: '123456789',
         corporate_name: 'Empresa ABC LTDA',
         public_place: 'Rua Principal',

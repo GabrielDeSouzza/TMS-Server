@@ -18,8 +18,6 @@ export class LegalClientQuoteTablePrismaDTO {
       amount: legalclientquotetablePrisma.amount,
       formPayment: legalclientquotetablePrisma.form_payment,
       kindService: legalclientquotetablePrisma.kind_service,
-      natureService: legalclientquotetablePrisma.nature_service,
-      typeCte: legalclientquotetablePrisma.type_cte,
       codQuote: legalclientquotetablePrisma.cod_quote,
       description: legalclientquotetablePrisma.description,
       mass: legalclientquotetablePrisma.mass,
@@ -74,8 +72,6 @@ export class LegalClientQuoteTablePrismaDTO {
         cod_quote: legalclientquotetable.codQuote,
         form_payment: legalclientquotetable.formPayment,
         kind_service: legalclientquotetable.kindService,
-        nature_service: legalclientquotetable.natureService,
-        type_cte: legalclientquotetable.typeCte,
         description: legalclientquotetable.description,
         mass: legalclientquotetable.mass,
         nf_value: legalclientquotetable.nf_value,
@@ -144,8 +140,6 @@ export class LegalClientQuoteTablePrismaDTO {
         mass: legalclientquotetable.mass,
         form_payment: legalclientquotetable.formPayment,
         kind_service: legalclientquotetable.kindService,
-        nature_service: legalclientquotetable.natureService,
-        type_cte: legalclientquotetable.typeCte,
         nf_value: legalclientquotetable.nf_value,
         AdressDestiny: legalclientquotetable.adressDestiny
           ? {

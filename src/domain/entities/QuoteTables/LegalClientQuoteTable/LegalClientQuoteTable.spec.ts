@@ -29,8 +29,6 @@ describe('User', () => {
       },
       formPayment: 'Pix',
       kindService: 'sadasd',
-      natureService: 'plksk',
-      typeCte: '5657467',
       recipientId: '546.54.+654.6',
       senderId: '454654654',
       typeMerchandise: '155',

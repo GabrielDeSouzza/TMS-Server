@@ -9,6 +9,7 @@ describe('CustomerOrder', () => {
       physicalCustomerId: '54564654',
       quote_table_id: '454654',
       carrier_id: '467899',
+      expenses: [{ expenseName: 'sdsd', value: 5454 }],
     });
 
     expect(customerOrder).toBeTruthy();

@@ -21,7 +21,6 @@ export class GenerateCtePdfService {
       format: 'A4',
       type: 'pdf',
     };
-    console.log(cteData.orderData.natureService);
     const html = await this.compileEjs(cteData);
 
     return new Promise((resolve, reject) => {
@@ -45,7 +44,7 @@ export class GenerateCtePdfService {
   ) {
     const html = await ejs.renderFile(
       path.dirname(process.cwd()) +
-        '/app/src//infra/services/generatePdf/templates/test.ejs',
+        '/app/src/infra/services/generatePdf/templates/test.ejs',
       cteData,
     );
 

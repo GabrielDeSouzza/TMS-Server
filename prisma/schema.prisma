@@ -437,8 +437,6 @@ model PhysicalCustomerQuoteTable {
   id             String @id @default(uuid())
   cod_quote      String
   kind_service   String
-  type_cte       String
-  natute_service String
   form_payment   String
   recipient_id   String
 
@@ -506,6 +504,7 @@ model PhysicalCustomerCte {
 
   observations String
   cte_number   String
+  autorization DateTime @default(now())
 
   @@map("physical_customer_cte")
 }
@@ -570,6 +569,7 @@ model LegalPerson {
   fantasy_name               String
   cnpj                       String                       @unique
   state_registration         String                       @unique
+  cep                        String
   corporate_name             String
   public_place               String
   address_number             String
@@ -615,6 +615,7 @@ model LegalClientCte {
   type_cte         String
   observations     String
   cte_number       String
+  autorization     DateTime         @default(now())
 
   @@map("legal_client_cte")
 }
@@ -645,8 +646,6 @@ model LegalClientQuoteTable {
   id               String    @id @default(uuid())
   cod_quote        String
   kind_service     String
-  type_cte         String
-  nature_service   String
   form_payment     String
   recipient_id     String
   Recipient        Recipient @relation(fields: [recipient_id], references: [id])

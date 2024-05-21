@@ -20,7 +20,7 @@ import {
 
 import { type IOrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
 
-import { statusOrderEmum } from './OrderStatusEnum.enum';
+import { statusOrderEmum } from '../../enums/OrderStatusEnum.enum';
 
 @InputType()
 export class OrderProcessingInput

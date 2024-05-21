@@ -14,6 +14,7 @@ import {
 import { type INaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 
 import { ValidationPhone } from 'infra/CustomValidations/PhoneValidation';
+import { UFEnum } from 'infra/graphql/enums/Uf.enum';
 
 @InputType()
 export class NaturalPersonInput implements INaturalPerson {
@@ -61,10 +62,9 @@ export class NaturalPersonInput implements INaturalPerson {
   @IsString()
   @IsNotEmpty()
   city: string;
-  @Field()
+  @Field(() => UFEnum)
   @IsString()
-  @Length(2)
-  uf: string;
+  uf: UFEnum;
   @Field()
   @Validate(ValidationPhone)
   first_phone: string;

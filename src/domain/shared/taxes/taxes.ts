@@ -1,2 +1,2 @@
 export const pisValue = 1.65;
-export const cofinsValue = 0.76;
+export const cofinsValue = 7.6;

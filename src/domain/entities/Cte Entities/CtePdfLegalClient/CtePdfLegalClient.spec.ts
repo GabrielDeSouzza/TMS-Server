@@ -1,3 +1,4 @@
+import { LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { LegalPerson } from 'domain/entities/LegalPerson/LegalPerson';
 import { NaturalPerson } from 'domain/entities/NaturalPerson/NaturalPerson';
 import { LegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
@@ -19,11 +20,14 @@ describe('CarrierCompany', () => {
         complement: 'Sala 456',
         city: 'São Paulo',
         uf: 'SP',
+        cep: '61546464',
         first_phone: '11111111111',
         second_phone: '22222222211',
         third_phone: null,
         email: 'empresa@example.com',
       }),
+      autorizationDate: new Date(),
+
       legalClient: new LegalPerson({
         fantasy_name: 'Empresa ABC',
         cnpj: '12345678000123',
@@ -39,6 +43,7 @@ describe('CarrierCompany', () => {
         second_phone: '22222222211',
         third_phone: null,
         email: 'empresa@example.com',
+        cep: '07142090',
       }),
       cteData: new LegalClientCte({
         acessKey: '26.5.65.645.465464654.45.645646546',
@@ -48,8 +53,7 @@ describe('CarrierCompany', () => {
         observations: '464654',
         cteType: '546496',
       }),
-      expenses: [{ expenseName: 'sdsds', value: 465_654 }],
-      orderData: new LegalClientQuoteTable({
+      quoteData: new LegalClientQuoteTable({
         amount: 564,
         codQuote: 'aSdasd',
         created_by: 'sdsds',
@@ -76,8 +80,6 @@ describe('CarrierCompany', () => {
         },
         formPayment: 'Pix',
         kindService: 'sadasd',
-        natureService: 'plksk',
-        typeCte: '5657467',
         recipientId: '546.54.+654.6',
         senderId: '454654654',
         typeMerchandise: '155',
@@ -97,6 +99,7 @@ describe('CarrierCompany', () => {
         complement: 'Sala 456',
         city: 'São Paulo',
         uf: 'SP',
+        cep: '646546',
         first_phone: '11111111111',
         second_phone: '22222222211',
         third_phone: null,
@@ -113,6 +116,7 @@ describe('CarrierCompany', () => {
         complement: 'Sala 456',
         city: 'São Paulo',
         uf: 'SP',
+        cep: '1717171',
         first_phone: '11111111111',
         second_phone: '22222222211',
         third_phone: null,
@@ -155,6 +159,14 @@ describe('CarrierCompany', () => {
         third_phone: '333333333',
         email: 'joao@example.com',
         nationality: 'Brasileiro',
+      }),
+      orderData: new LegalClientOrder({
+        legal_contract_id: '1231',
+        order: '313',
+        updated_by: '646',
+        quote_table_id: '165414',
+        carrier_id: '456',
+        expenses: [{ expenseName: '64654', value: 5465 }],
       }),
     });
 

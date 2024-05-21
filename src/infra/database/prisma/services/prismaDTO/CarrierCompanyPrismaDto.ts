@@ -48,6 +48,7 @@ export class CarrierCompanyPrismaDTO {
             first_phone: legalPerson.first_phone,
             neighborhood: legalPerson.neighborhood,
             public_place: legalPerson.public_place,
+            cep: legalPerson.cep,
             state_registration: legalPerson.state_registration,
             uf: legalPerson.uf,
             complement: legalPerson.complement,
@@ -85,7 +86,7 @@ export class CarrierCompanyPrismaDTO {
               public_place: legalPerson.public_place,
               state_registration: legalPerson.state_registration,
               uf: legalPerson.uf,
-
+              cep: legalPerson.cep,
               complement: legalPerson.complement,
               created_at: legalPerson.created_at,
               second_phone: legalPerson.second_phone,
