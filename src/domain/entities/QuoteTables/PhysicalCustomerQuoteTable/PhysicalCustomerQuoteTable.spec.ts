@@ -35,6 +35,9 @@ describe('User', () => {
       updated_by: '45654654',
       volume: 54.45,
       who_pays: 'FOB',
+      digital_signature: '4565465',
+      nf_number: '5464645',
+      nf_serie: '66767687',
     });
 
     expect(quote).toBeTruthy();

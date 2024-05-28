@@ -91,11 +91,23 @@ export class LegalClientQuoteTableInput
   @HideField()
   @Allow()
   updated_by: string;
+  @Field()
+  @IsNotEmpty()
+  nf_number: string;
+  @Field()
+  @IsNotEmpty()
+  nf_serie: string;
+  @Allow()
+  digital_signature: string;
 }
 
 @InputType()
 export class LegalClientQuoteTableUpdate extends PartialType(
-  OmitType(LegalClientQuoteTableInput, ['codQuote', 'created_by']),
+  OmitType(LegalClientQuoteTableInput, [
+    'codQuote',
+    'created_by',
+    'digital_signature',
+  ]),
 ) {
   updated_by: string;
 }

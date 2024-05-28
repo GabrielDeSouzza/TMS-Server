@@ -28,6 +28,9 @@ export interface ILegalClientQuoteTable {
   created_by: string;
   updated_by: string;
   icms_id?: string;
+  nf_serie: string;
+  nf_number: string;
+  digital_signature: string;
 }
 
 export class LegalClientQuoteTable extends Entity {
@@ -237,7 +240,29 @@ export class LegalClientQuoteTable extends Entity {
   set nf_value(nf_value: number) {
     this.props.nf_value = nf_value;
   }
+  get nf_serie(): string {
+    return this.props.nf_serie;
+  }
 
+  set nf_serie(nf_serie: string) {
+    this.props.nf_serie = nf_serie;
+  }
+
+  get nf_number(): string {
+    return this.props.nf_number;
+  }
+
+  set nf_number(nf_number: string) {
+    this.props.nf_number = nf_number;
+  }
+
+  get digital_signature(): string {
+    return this.props.digital_signature;
+  }
+
+  set digital_signature(digital_signature: string) {
+    this.props.digital_signature = digital_signature;
+  }
   get updated_at(): Date {
     return this.props.updated_at;
   }

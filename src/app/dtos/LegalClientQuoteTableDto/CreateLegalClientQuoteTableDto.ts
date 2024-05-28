@@ -1,9 +1,6 @@
 import { type AdressesType } from 'domain/entities/QuoteTables/AdressesType';
-import { type ILegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 
-export abstract class CreateLegalClientQuoteTableDTO
-  implements ILegalClientQuoteTable
-{
+export abstract class CreateLegalClientQuoteTableDTO {
   id?: string;
   codQuote: string;
   kindService: string;
@@ -22,4 +19,6 @@ export abstract class CreateLegalClientQuoteTableDTO
   created_by: string;
   updated_by: string;
   icms_id?: string;
+  nf_serie: string;
+  nf_number: string;
 }

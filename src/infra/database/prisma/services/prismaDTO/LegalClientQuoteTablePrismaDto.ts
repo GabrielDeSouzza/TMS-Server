@@ -52,6 +52,9 @@ export class LegalClientQuoteTablePrismaDTO {
       updated_by: legalclientquotetablePrisma.updated_by,
       created_at: legalclientquotetablePrisma.created_at,
       updated_at: legalclientquotetablePrisma.updated_at,
+      digital_signature: legalclientquotetablePrisma.digital_signature,
+      nf_number: legalclientquotetablePrisma.nf_number,
+      nf_serie: legalclientquotetablePrisma.nf_serie,
     });
   }
   public static EntityToCreatePrisma(
@@ -125,6 +128,9 @@ export class LegalClientQuoteTablePrismaDTO {
         created_at: legalclientquotetable.created_at,
         id: legalclientquotetable.id,
         updated_at: legalclientquotetable.updated_at,
+        digital_signature: legalclientquotetable.digital_signature,
+        nf_number: legalclientquotetable.nf_number,
+        nf_serie: legalclientquotetable.nf_serie,
       };
 
     return legalclientquotetablePrisma;
@@ -188,6 +194,8 @@ export class LegalClientQuoteTablePrismaDTO {
             },
           },
         },
+        nf_number: legalclientquotetable.nf_number,
+        nf_serie: legalclientquotetable.nf_number,
       };
 
     return legalclientquotetableUptade;

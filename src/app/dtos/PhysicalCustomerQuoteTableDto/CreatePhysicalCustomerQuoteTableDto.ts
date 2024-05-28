@@ -1,9 +1,6 @@
 import { type AdressesType } from 'domain/entities/QuoteTables/AdressesType';
-import { type IPhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 
-export abstract class CreatePhysicalCustomerQuoteTableDTO
-  implements IPhysicalCustomerQuoteTable
-{
+export abstract class CreatePhysicalCustomerQuoteTableDTO {
   kindService: string;
   formPayment: string;
   codQuote: string;
@@ -21,4 +18,6 @@ export abstract class CreatePhysicalCustomerQuoteTableDTO
   created_by: string;
   updated_by: string;
   icms_id?: string;
+  nf_serie: string;
+  nf_number: string;
 }

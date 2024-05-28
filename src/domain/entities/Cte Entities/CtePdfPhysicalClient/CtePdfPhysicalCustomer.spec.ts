@@ -96,6 +96,9 @@ describe('CarrierCompany', () => {
         updated_by: '45654654',
         volume: 54.45,
         who_pays: 'FOB',
+        digital_signature: '65465456',
+        nf_number: '564654654',
+        nf_serie: '+46654',
       }),
       rntrc: '46546',
       senderLegalPerson: new LegalPerson({

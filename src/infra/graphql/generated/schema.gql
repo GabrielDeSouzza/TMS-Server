@@ -1044,6 +1044,8 @@ input LegalClientQuoteTableInput {
   formPayment: FormPayment!
   kindService: KindOfServicerOrder!
   mass: Float!
+  nf_number: String!
+  nf_serie: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
@@ -1070,11 +1072,14 @@ type LegalClientQuoteTableModel {
   created_at: Timestamp!
   created_by: String!
   description: String!
+  digital_signature: String!
   formPayment: String!
   icms_id: String!
   id: String!
   kindService: String!
   mass: Float!
+  nf_number: String!
+  nf_serie: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
@@ -1106,11 +1111,14 @@ input LegalClientQuoteTableOrderByWithRelationInput {
   created_at: SortOrder
   created_by: SortOrder
   description: SortOrder
+  digital_signature: SortOrder
   form_payment: SortOrder
   icms_id: SortOrder
   id: SortOrder
   kind_service: SortOrder
   mass: SortOrder
+  nf_number: SortOrder
+  nf_serie: SortOrder
   nf_value: SortOrder
   recipient_id: SortOrder
   sender_id: SortOrder
@@ -1129,6 +1137,8 @@ input LegalClientQuoteTableUpdate {
   formPayment: FormPayment
   kindService: KindOfServicerOrder
   mass: Float
+  nf_number: String
+  nf_serie: String
   nf_value: Float
   recipientId: String
   senderId: String
@@ -1146,6 +1156,8 @@ input LegalClientQuoteTableUpdateManyInput {
   id: String!
   kindService: KindOfServicerOrder
   mass: Float
+  nf_number: String
+  nf_serie: String
   nf_value: Float
   recipientId: String
   senderId: String
@@ -1173,11 +1185,14 @@ input LegalClientQuoteTableWhereInput {
   created_at: DateTimeFilter
   created_by: StringFilter
   description: StringFilter
+  digital_signature: StringFilter
   form_payment: StringFilter
   icms_id: StringFilter
   id: StringFilter
   kind_service: StringFilter
   mass: FloatFilter
+  nf_number: StringFilter
+  nf_serie: StringFilter
   nf_value: FloatFilter
   recipient_id: StringFilter
   sender_id: StringFilter
@@ -2795,6 +2810,8 @@ input PhysicalCustomerQuoteTableInput {
   formPayment: FormPayment!
   kindService: KindOfServicerOrder!
   mass: Float!
+  nf_number: String!
+  nf_serie: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
@@ -2821,11 +2838,14 @@ type PhysicalCustomerQuoteTableModel {
   created_at: Timestamp!
   created_by: String!
   description: String!
+  digital_signature: String!
   formPayment: String!
   icms_id: String!
   id: String!
   kindService: String!
   mass: Float!
+  nf_number: String!
+  nf_serie: String!
   nf_value: Float!
   recipientId: String!
   senderId: String!
@@ -2857,11 +2877,14 @@ input PhysicalCustomerQuoteTableOrderByWithRelationInput {
   created_at: SortOrder
   created_by: SortOrder
   description: SortOrder
+  digital_signature: SortOrder
   form_payment: SortOrder
   icms_id: SortOrder
   id: SortOrder
   kind_service: SortOrder
   mass: SortOrder
+  nf_number: SortOrder
+  nf_serie: SortOrder
   nf_value: SortOrder
   recipient_id: SortOrder
   senderId: SortOrder
@@ -2880,6 +2903,8 @@ input PhysicalCustomerQuoteTableUpdate {
   formPayment: FormPayment
   kindService: KindOfServicerOrder
   mass: Float
+  nf_number: String
+  nf_serie: String
   nf_value: Float
   recipientId: String
   senderId: String
@@ -2907,11 +2932,14 @@ input PhysicalCustomerQuoteTableWhereInput {
   created_at: DateTimeFilter
   created_by: StringFilter
   description: StringFilter
+  digital_signature: StringFilter
   form_payment: StringFilter
   icms_id: StringFilter
   id: StringFilter
   kind_service: StringFilter
   mass: FloatFilter
+  nf_number: StringFilter
+  nf_serie: StringFilter
   nf_value: FloatFilter
   recipient_id: StringFilter
   senderId: StringFilter

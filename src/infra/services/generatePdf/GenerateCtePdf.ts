@@ -42,6 +42,7 @@ export class GenerateCtePdfService {
   private async compileEjs(
     cteData: CteLegalClientPdf | CtePhyscialCustomerPdf,
   ) {
+    console.log(cteData.quoteData);
     const html = await ejs.renderFile(
       path.dirname(process.cwd()) +
         '/app/src/infra/services/generatePdf/templates/test.ejs',

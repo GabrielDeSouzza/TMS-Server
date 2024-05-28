@@ -53,6 +53,9 @@ export class PhysicalCustomerQuoteTablePrismaDTO {
       created_at: physicalcustomerquotetablePrisma.created_at,
       updated_at: physicalcustomerquotetablePrisma.updated_at,
       icms_id: physicalcustomerquotetablePrisma.icms_id,
+      digital_signature: physicalcustomerquotetablePrisma.digital_signature,
+      nf_number: physicalcustomerquotetablePrisma.nf_number,
+      nf_serie: physicalcustomerquotetablePrisma.nf_serie,
     });
   }
   public static EntityToCreatePrisma(
@@ -129,6 +132,9 @@ export class PhysicalCustomerQuoteTablePrismaDTO {
         created_at: physicalcustomerquotetable.created_at,
         id: physicalcustomerquotetable.id,
         updated_at: physicalcustomerquotetable.updated_at,
+        digital_signature: physicalcustomerquotetable.digital_signature,
+        nf_number: physicalcustomerquotetable.nf_number,
+        nf_serie: physicalcustomerquotetable.nf_serie,
       };
 
     return physicalcustomerquotetablePrisma;
@@ -195,6 +201,8 @@ export class PhysicalCustomerQuoteTablePrismaDTO {
             },
           },
         },
+        nf_number: physicalcustomerquotetable.nf_number,
+        nf_serie: physicalcustomerquotetable.nf_serie,
       };
 
     return physicalcustomerquotetableUptade;

@@ -89,6 +89,9 @@ export class LegalClientQuoteTableUseCases {
       who_pays: data.who_pays,
       created_by: data.created_by,
       updated_by: data.updated_by,
+      nf_number: data.nf_number,
+      nf_serie: data.nf_serie,
+      digital_signature: generateRandomNumber(40),
     });
 
     return this.legalClientQuoteTableRepository.createLegalClientQuoteTable(
@@ -128,6 +131,9 @@ export class LegalClientQuoteTableUseCases {
       who_pays: data.who_pays,
       created_by: null,
       updated_by: data.updated_by,
+      nf_number: data.nf_number,
+      nf_serie: data.nf_serie,
+      digital_signature: null,
     });
 
     return this.legalClientQuoteTableRepository.updateLegalClientQuoteTable(
@@ -160,6 +166,9 @@ export class LegalClientQuoteTableUseCases {
         created_by: null,
         updated_by: updateBy,
         id: legalclientquotetable.id,
+        nf_number: legalclientquotetable.nf_number,
+        nf_serie: legalclientquotetable.nf_serie,
+        digital_signature: null,
       });
 
       return updateLegalClientQuoteTable;

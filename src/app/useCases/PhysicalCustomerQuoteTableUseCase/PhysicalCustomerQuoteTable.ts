@@ -82,6 +82,9 @@ export class PhysicalCustomerQuoteTableUseCases {
       who_pays: data.who_pays,
       created_by: data.created_by,
       updated_by: data.updated_by,
+      nf_number: data.nf_number,
+      nf_serie: data.nf_serie,
+      digital_signature: generateRandomNumber(40),
     });
 
     return this.physicalCustomerQuoteTableRepository.createPhysicalCustomerQuoteTable(
@@ -127,6 +130,9 @@ export class PhysicalCustomerQuoteTableUseCases {
       who_pays: data.who_pays,
       created_by: null,
       updated_by: data.updated_by,
+      nf_number: data.nf_number,
+      nf_serie: data.nf_serie,
+      digital_signature: null,
     });
 
     return this.physicalCustomerQuoteTableRepository.updatePhysicalCustomerQuoteTable(

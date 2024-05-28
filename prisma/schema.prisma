@@ -434,26 +434,30 @@ model OutsourcedTransportCompanyContract {
 }
 
 model PhysicalCustomerQuoteTable {
-  id             String @id @default(uuid())
-  cod_quote      String
-  kind_service   String
-  form_payment   String
-  recipient_id   String
+  id           String @id @default(uuid())
+  cod_quote    String
+  kind_service String
+  form_payment String
+  recipient_id String
 
-  Recipient             Recipient               @relation(fields: [recipient_id], references: [id])
-  Sender                Sender                  @relation(fields: [senderId], references: [id])
-  senderId              String
-  who_pays              String
-  adress_origin_id      String
-  AdressOrigin          Adresses                @relation("adress_origin_quote_physical", fields: [adress_origin_id], references: [id])
-  adress_destiny_id     String
-  AdressDestiny         Adresses                @relation("adress_destiny_quote_physical", fields: [adress_destiny_id], references: [id])
-  type_merchandise      String
-  amount                Int
+  Recipient         Recipient @relation(fields: [recipient_id], references: [id])
+  Sender            Sender    @relation(fields: [senderId], references: [id])
+  senderId          String
+  who_pays          String
+  adress_origin_id  String
+  AdressOrigin      Adresses  @relation("adress_origin_quote_physical", fields: [adress_origin_id], references: [id])
+  adress_destiny_id String
+  AdressDestiny     Adresses  @relation("adress_destiny_quote_physical", fields: [adress_destiny_id], references: [id])
+  type_merchandise  String
+  amount            Int
+
   description           String
   mass                  Float
   volume                Float
   nf_value              Float
+  nf_serie              String
+  nf_number             String
+  digital_signature     String                  @unique
   created_at            DateTime                @default(now())
   updated_at            DateTime                @default(now())
   CreatedBy             User                    @relation("created_by", fields: [created_by], references: [id])
@@ -663,6 +667,9 @@ model LegalClientQuoteTable {
   mass              Float
   volume            Float
   nf_value          Float
+  nf_serie          String
+  nf_number         String
+  digital_signature String             @unique
   LegalClientOrder  LegalClientOrder[]
   created_at        DateTime           @default(now())
   updated_at        DateTime           @default(now())

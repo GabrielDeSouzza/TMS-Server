@@ -19,8 +19,11 @@ img{
   <div style="float: left; width: 45%; margin: 0; padding: 0; height: 50%;">
     <table>
       <tbody >
-        <tr style="column-span: 3;">
-          <td colspan="3" ;>
+        <tr style="column-span: 3; ;">
+          <td style="width: 70%; height: 20px;">
+            <img src="https://res.cloudinary.com/dqifr2lrr/image/upload/v1716767616/wolves/Icons/cpjiinyn5g7tvoexrbfz.png" alt="" style="width: 100%; height: 100px; ">
+          </td>
+          <td colspan="3" style="width: 30%; " ;>
             <span>Transportadora: <%= carrierCompany.fantasy_name %></span>
             <br>
             <span>CNPJ: <%= carrierCompany.cnpj %></span>
@@ -158,7 +161,7 @@ img{
         <tr>
           <td colspan="3">
 
-            <% if ( legalClient  && quoteData.who_pays == "SERVICE_TAKER" ) { %>
+            <% if ( typeof legalClient == "undefined" && quoteData.who_pays == "SERVICE_TAKER" ) { %>
             TOMADOR: <%= legalClient.corporate_name %>
             <br>
             END: <%= legalClient.public_place %>
@@ -286,6 +289,7 @@ img{
             <h3>D A C T E</h3>
             <br>
             <span>Documento Auxiliar do Conhecimento de Transporte Eletrônico</span>
+            <br>
           </td>
           <td colspan="1">
             AUTORIZAÇÃO
@@ -301,12 +305,12 @@ img{
           <td>
             SERIE
             <br>
-            A Fazer
+            <%= quoteData.nf_serie %>
           </td>
           <td>
             NUMERO
             <br>
-            A Fazer
+            <%= quoteData.nf_number %>
           </td>
           <td>
             MODELO
@@ -326,7 +330,7 @@ img{
             <br>
             Chave de acesso para consulta de autenticidade no site www.cte.fazenda.gov.br
             <br>
-            <%= cteData.acessKey %>
+            <span><%= quoteData.digital_signature %></span>
           </td>
         </tr>
         <tr>
@@ -362,7 +366,7 @@ img{
             </span>
             <br>
             <span style="float: left;">ESPECIE:</span>
-            <span style="float: right;">A Fazer</span>
+            <span style="float: right;"><%= quoteData.typeMerchandise %></span>
             <br>
             <span style="float: left;">VALOR MERCADORIA(R$)</span>
             <span style="float: right;">

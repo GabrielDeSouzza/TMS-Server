@@ -57,4 +57,10 @@ export class PhysicalCustomerQuoteTableModel
   icms_id?: string;
   @Field(() => IcmsModel)
   Icms: IcmsModel;
+  @Field()
+  nf_serie: string;
+  @Field()
+  nf_number: string;
+  @Field()
+  digital_signature: string;
 }

@@ -1,9 +1,6 @@
 import { type AdressesType } from 'domain/entities/QuoteTables/AdressesType';
-import { type ILegalClientQuoteTable } from 'domain/entities/QuoteTables/LegalClientQuoteTable/LegalClientQuoteTable';
 
-export abstract class UpdateManyLegalClientQuoteTableDTO
-  implements Partial<ILegalClientQuoteTable>
-{
+export abstract class UpdateManyLegalClientQuoteTableDTO {
   id: string;
   recipientId?: string;
   kindService?: string;
@@ -19,4 +16,6 @@ export abstract class UpdateManyLegalClientQuoteTableDTO
   volume?: number;
   nf_value?: number;
   icms_id?: string;
+  nf_serie?: string;
+  nf_number?: string;
 }

@@ -70,6 +70,11 @@ export class PhysicalCustomerOrderPrismaService
   async createPhysicalCustomerOrder(
     physicalCustomerOrder: PhysicalCustomerOrder,
   ): Promise<PhysicalCustomerOrder> {
+    const icms = await this.prisma.physicalCustomerQuoteTable.findFirst({
+      select: { Icms: { select: { aliquot: true } } },
+      where: { id: physicalCustomerOrder.quote_table_id },
+    });
+    physicalCustomerOrder.icms_tax = icms.Icms.aliquot;
     const physicalCustomerOrderPrisma =
       await this.prisma.physicalCustomerOrder.create({
         data: PhysicalCustomerOrderPrismaDTO.EntityToCreatePrisma(

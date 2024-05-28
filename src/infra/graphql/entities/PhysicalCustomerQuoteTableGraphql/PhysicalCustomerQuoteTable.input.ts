@@ -89,11 +89,23 @@ export class PhysicalCustomerQuoteTableInput
   @HideField()
   @Allow()
   updated_by: string;
+  @Field()
+  @IsNotEmpty()
+  nf_number: string;
+  @Field()
+  @IsNotEmpty()
+  nf_serie: string;
+  @Allow()
+  digital_signature: string;
 }
 
 @InputType()
 export class PhysicalCustomerQuoteTableUpdate extends PartialType(
-  OmitType(PhysicalCustomerQuoteTableInput, ['codQuote', 'created_by']),
+  OmitType(PhysicalCustomerQuoteTableInput, [
+    'codQuote',
+    'created_by',
+    'digital_signature',
+  ]),
 ) {
   updated_by: string;
 }
