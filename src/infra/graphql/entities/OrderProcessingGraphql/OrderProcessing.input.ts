@@ -74,6 +74,11 @@ export class OrderProcessingInput
   @HideField()
   @Allow()
   updated_by: string;
+
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  driver_id: string;
 }
 
 @InputType()

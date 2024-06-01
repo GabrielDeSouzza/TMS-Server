@@ -12,6 +12,7 @@ import {
 import { ROLE, User } from 'domain/entities/User/User';
 
 import { OrderProcessingUseCases } from 'app/useCases/OrderProcessingUseCases/OrderProcessingUseCases';
+import { OwnDriverUseCases } from 'app/useCases/OwnDriverUseCases/OwnDriverUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 import { VehicleUseCases } from 'app/useCases/VehicleUseCases/VehicleUseCases';
 
@@ -21,6 +22,7 @@ import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterc
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { OwnDriverModel } from '../OwnDriverGraphql/OwnDriver.model';
 import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
@@ -45,6 +47,7 @@ export class OrderProcessingResolver {
     private orderProcessingUseCase: OrderProcessingUseCases,
     private userCase: UserUseCases,
     private vehicleUseCase: VehicleUseCases,
+    private ownDriverUseCase: OwnDriverUseCases,
   ) {}
   @Query(() => Int)
   async countOrderProcessing(@Args() request: OrderProcessingCountArgs) {
@@ -136,5 +139,9 @@ export class OrderProcessingResolver {
     const { updated_by: updatedBy } = user;
 
     return await this.userCase.getUser({ id: updatedBy });
+  }
+  @ResolveField(() => OwnDriverModel)
+  async OwnDriver(@Parent() order: OrderProcessingInput) {
+    return await this.ownDriverUseCase.getOwnDriver({ id: order.driver_id });
   }
 }

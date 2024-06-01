@@ -4,14 +4,14 @@ import { CepSearchProvider } from 'domain/providers/CepSearchProvider';
 
 import { ServicesModule } from '../services.module';
 import { ViaCepService } from '../viaCep/provider/ViaCepService';
-import { GenerateCtePdfService } from './GenerateCtePdf';
+import { GeneratePdfService } from './GeneratePdf';
 
 @Module({
+  imports: [ServicesModule],
   providers: [
-    GenerateCtePdfService,
+    GeneratePdfService,
     { provide: CepSearchProvider, useClass: ViaCepService },
   ],
-  exports: [GenerateCtePdfService],
-  imports: [ServicesModule],
+  exports: [GeneratePdfService],
 })
-export class GenerateCtePDFModule {}
+export class GeneratePDFModule {}

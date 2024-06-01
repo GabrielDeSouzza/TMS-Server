@@ -115,7 +115,6 @@ model Vehicle {
   model_id                   String
   OutsourcedTransportVehicle OutsourcedTransportVehicle?
   OrderProcessing            OrderProcessing?
-  CompletedOrders            CompletedOrders?
 
   @@map("vehicles")
 }
@@ -201,14 +200,13 @@ model OutsourcedVehicle {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  CreatedBy           User?             @relation("created_by", fields: [created_by], references: [id])
-  created_by          String
-  UpdatedBy           User?             @relation("updated_by", fields: [updated_by], references: [id])
-  updated_by          String
-  Vehicle             Vehicle           @relation(fields: [vehicle_id], references: [id])
-  vehicle_id          String            @unique
-  order_processing_id String?
-  OutsourcedDriver    OutsourcedDriver?
+  CreatedBy        User?             @relation("created_by", fields: [created_by], references: [id])
+  created_by       String
+  UpdatedBy        User?             @relation("updated_by", fields: [updated_by], references: [id])
+  updated_by       String
+  Vehicle          Vehicle           @relation(fields: [vehicle_id], references: [id])
+  vehicle_id       String            @unique
+  OutsourcedDriver OutsourcedDriver?
 
   @@map("outsourced_vehicles")
 }
@@ -324,12 +322,13 @@ model OwnDriver {
   created_at      DateTime @default(now())
   updated_at      DateTime @default(now())
 
-  CreatedBy         User?         @relation("created_by", fields: [created_by], references: [id])
+  CreatedBy         User?             @relation("created_by", fields: [created_by], references: [id])
   created_by        String
-  UpdatedBy         User?         @relation("updated_by", fields: [updated_by], references: [id])
+  UpdatedBy         User?             @relation("updated_by", fields: [updated_by], references: [id])
   updated_by        String
-  NaturalPerson     NaturalPerson @relation(fields: [natural_person_id], references: [id])
+  NaturalPerson     NaturalPerson     @relation(fields: [natural_person_id], references: [id])
   natural_person_id String
+  OrderProcessing   OrderProcessing[]
 
   @@map("own_drivers")
 }
@@ -489,7 +488,6 @@ model PhysicalCustomerOrder {
   CarrierCompany             CarrierCompany             @relation(fields: [carrier_id], references: [id])
   order_processing_id        String?
   OrderProcessing            OrderProcessing?           @relation(fields: [order_processing_id], references: [id])
-  CompletedOrders            CompletedOrders?           @relation(fields: [completedOrdersId], references: [id])
   completedOrdersId          String?
   PhysicalCustomerQuoteTable PhysicalCustomerQuoteTable @relation(fields: [quote_table_id], references: [id])
   quote_table_id             String
@@ -724,7 +722,6 @@ model LegalClientOrder {
   CarrierCompany                     CarrierCompany                      @relation(fields: [carrier_id], references: [id])
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
 
-  CompletedOrders     CompletedOrders?  @relation(fields: [completed_orders_id], references: [id])
   completed_orders_id String?
   LegalClientCte      LegalClientCte?
   FreightExpenses     FreightExpenses[]
@@ -756,18 +753,33 @@ model OrderProcessing {
   total_distance          Float
   total_spend_liters      Float
   total_spending_money    Float
-  status                  String                  @default("created")
+  status                  String
   start_at                DateTime
   end_at                  DateTime?
   updated_at              DateTime
   created_at              DateTime
   created_by              String
   updated_by              String
+  driver_id               String
+  OwnDriver               OwnDriver?              @relation(fields: [driver_id], references: [id])
   PhysicalCustomerOrder   PhysicalCustomerOrder[]
   LegalClientOrder        LegalClientOrder[]
   Incident                Incident[]
+  Manifest                Manifest[]
 
   @@map("order_procesing")
+}
+
+model Manifest {
+  id                  String          @id @default(uuid())
+  order_processing_id String
+  OrderProcessing     OrderProcessing @relation(fields: [order_processing_id], references: [id])
+  manifest_url        String?
+  emission_date       DateTime
+  number              String
+  serie               String
+  num_protocol        String
+  acess_key           String
 }
 
 model Incident {
@@ -784,27 +796,6 @@ model Incident {
   updated_by    String
   created_at    DateTime
   updated_at    DateTime
-}
-
-model CompletedOrders {
-  id                      String @id @default(uuid())
-  order_processing_number String
-  vehicle_id              String @unique
-
-  Vehicle               Vehicle                 @relation(fields: [vehicle_id], references: [id])
-  total_distance        Float
-  total_spend_liters    Float
-  total_spending_money  Float
-  start_at              DateTime
-  end_at                DateTime
-  updated_at            DateTime
-  created_at            DateTime
-  created_by            String
-  updated_by            String
-  PhysicalCustomerOrder PhysicalCustomerOrder[]
-  LegalClientOrder      LegalClientOrder[]
-
-  @@map("completed_orders")
 }
 
 model FreightExpenses {

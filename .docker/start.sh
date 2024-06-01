@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npx prisma db push --force-reset
+npx prisma db push
 
 if [ $? -eq 0 ]; then
     echo "Database updated successfully. Running the server 🚀"

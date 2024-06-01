@@ -88,7 +88,6 @@ Table vehicles {
   model_id String [not null]
   OutsourcedTransportVehicle outsourced_transport_vehicle
   OrderProcessing order_procesing
-  CompletedOrders completed_orders
 }
 
 Table vehicle_models {
@@ -162,7 +161,6 @@ Table outsourced_vehicles {
   updated_by String [not null]
   Vehicle vehicles [not null]
   vehicle_id String [unique, not null]
-  order_processing_id String
   OutsourcedDriver outsourced_drivers
 }
 
@@ -267,6 +265,7 @@ Table own_drivers {
   updated_by String [not null]
   NaturalPerson natural_people [not null]
   natural_person_id String [not null]
+  OrderProcessing order_procesing [not null]
 }
 
 Table natural_people {
@@ -412,7 +411,6 @@ Table physical_orders {
   CarrierCompany carrier_companies [not null]
   order_processing_id String
   OrderProcessing order_procesing
-  CompletedOrders completed_orders
   completedOrdersId String
   PhysicalCustomerQuoteTable physical_customer_quote [not null]
   quote_table_id String [not null]
@@ -627,7 +625,6 @@ Table legal_orders {
   carrier_id String [not null]
   CarrierCompany carrier_companies [not null]
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract
-  CompletedOrders completed_orders
   completed_orders_id String
   LegalClientCte legal_client_cte
   FreightExpenses freight_expenses [not null]
@@ -655,16 +652,31 @@ Table order_procesing {
   total_distance Float [not null]
   total_spend_liters Float [not null]
   total_spending_money Float [not null]
-  status String [not null, default: 'created']
+  status String [not null]
   start_at DateTime [not null]
   end_at DateTime
   updated_at DateTime [not null]
   created_at DateTime [not null]
   created_by String [not null]
   updated_by String [not null]
+  driver_id String [not null]
+  OwnDriver own_drivers
   PhysicalCustomerOrder physical_orders [not null]
   LegalClientOrder legal_orders [not null]
   Incident Incident [not null]
+  Manifest Manifest [not null]
+}
+
+Table Manifest {
+  id String [pk]
+  order_processing_id String [not null]
+  OrderProcessing order_procesing [not null]
+  manifest_url String
+  emission_date DateTime [not null]
+  number String [not null]
+  serie String [not null]
+  num_protocol String [not null]
+  acess_key String [not null]
 }
 
 Table Incident {
@@ -680,24 +692,6 @@ Table Incident {
   updated_by String [not null]
   created_at DateTime [not null]
   updated_at DateTime [not null]
-}
-
-Table completed_orders {
-  id String [pk]
-  order_processing_number String [not null]
-  vehicle_id String [unique, not null]
-  Vehicle vehicles [not null]
-  total_distance Float [not null]
-  total_spend_liters Float [not null]
-  total_spending_money Float [not null]
-  start_at DateTime [not null]
-  end_at DateTime [not null]
-  updated_at DateTime [not null]
-  created_at DateTime [not null]
-  created_by String [not null]
-  updated_by String [not null]
-  PhysicalCustomerOrder physical_orders [not null]
-  LegalClientOrder legal_orders [not null]
 }
 
 Table freight_expenses {
@@ -884,8 +878,6 @@ Ref: physical_orders.carrier_id > carrier_companies.id
 
 Ref: physical_orders.order_processing_id > order_procesing.id
 
-Ref: physical_orders.completedOrdersId > completed_orders.id
-
 Ref: physical_orders.quote_table_id > physical_customer_quote.id
 
 Ref: physical_customer_cte.order_id - physical_orders.id
@@ -952,8 +944,6 @@ Ref: legal_orders.order_processing_id > order_procesing.id
 
 Ref: legal_orders.carrier_id > carrier_companies.id
 
-Ref: legal_orders.completed_orders_id > completed_orders.id
-
 Ref: ciots_for_legal_clients.legal_contract_id > legal_Contracts.id
 
 Ref: ciots_for_legal_clients.created_by > users.id
@@ -962,13 +952,15 @@ Ref: ciots_for_legal_clients.updated_by > users.id
 
 Ref: order_procesing.vehicle_id - vehicles.id
 
+Ref: order_procesing.driver_id > own_drivers.id
+
+Ref: Manifest.order_processing_id > order_procesing.id
+
 Ref: Incident.order_process_id > order_procesing.id
 
 Ref: Incident.created_by > users.id
 
 Ref: Incident.updated_by > users.id
-
-Ref: completed_orders.vehicle_id - vehicles.id
 
 Ref: freight_expenses.legal_client_order_id > legal_orders.id
 

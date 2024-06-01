@@ -16,6 +16,7 @@ export abstract class UpdateManyOrderProcessingDTO
   vehicle_id?: string;
   updated_at?: Date;
   updated_by: string;
+  driver_id?: string;
   physical_customer_order_ids?: string[];
   legal_customer_order_ids?: string[];
 }

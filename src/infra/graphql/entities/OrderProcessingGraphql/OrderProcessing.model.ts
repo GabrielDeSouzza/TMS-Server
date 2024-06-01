@@ -4,6 +4,7 @@ import { type IOrderProcessing } from 'domain/entities/OrdersEntities/OrderProce
 
 import { statusOrderEmum } from '../../enums/OrderStatusEnum.enum';
 import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { OwnDriverModel } from '../OwnDriverGraphql/OwnDriver.model';
 import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { UserModelRefereces } from '../UserGraphql/user.model';
 import { VehicleCarModel } from '../VehicleGraphql/vehicle.model';
@@ -33,7 +34,8 @@ export abstract class OrderProcessingModel implements IOrderProcessing {
   start_at: Date;
   @Field(() => Date)
   end_at?: Date;
-
+  @Field()
+  driver_id: string;
   @Field()
   vehicle_id: string;
   @Field()
@@ -50,4 +52,6 @@ export abstract class OrderProcessingModel implements IOrderProcessing {
   CreatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)
   UpdatedUser: UserModelRefereces;
+  @Field(() => OwnDriverModel)
+  OwnDriver: OwnDriverModel;
 }

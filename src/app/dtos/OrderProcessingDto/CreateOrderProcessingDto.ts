@@ -12,6 +12,7 @@ export abstract class CreateOrderProcessingDTO implements IOrderProcessing {
   start_at: Date;
   end_at?: Date;
   vehicle_id: string;
+  driver_id: string;
   created_by: string;
   updated_by: string;
 }

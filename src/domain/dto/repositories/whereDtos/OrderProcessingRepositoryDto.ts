@@ -19,6 +19,7 @@ export abstract class WhereOrderProcessingTypeDTO extends WhereDTO {
   created_at?: DateTimeFilterDTO;
   created_by?: StringFilterDTO;
   updated_by?: StringFilterDTO;
+  driver_id?: StringFilterDTO;
 }
 
 export abstract class SortByOrderProcessingTypeDTO {
@@ -35,6 +36,7 @@ export abstract class SortByOrderProcessingTypeDTO {
   created_at?: 'asc' | 'desc';
   created_by?: 'asc' | 'desc';
   updated_by?: 'asc' | 'desc';
+  driver_id?: 'asc' | 'desc';
 }
 
 export class FindAllOrderProcessingWhereRequestDTO {

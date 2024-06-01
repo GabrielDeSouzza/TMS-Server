@@ -8,6 +8,7 @@ import { OrderProcessingPrismaService } from 'infra/database/prisma/services/Ord
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { LegalClientOrderModule } from '../LegalClientOrderGraphql/LegalClientOrder.module';
+import { OwnDriverModule } from '../OwnDriverGraphql/OwnDriver.module';
 import { PhysicalCustomerOrderModule } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.module';
 import { VehicleModule } from '../VehicleGraphql/Vehicle.module';
 import { OrderProcessingResolver } from './OrderProcessing.resolver';
@@ -18,6 +19,7 @@ import { OrderProcessingResolver } from './OrderProcessing.resolver';
     VehicleModule,
     LegalClientOrderModule,
     PhysicalCustomerOrderModule,
+    OwnDriverModule,
   ],
   providers: [
     OrderProcessingUseCases,

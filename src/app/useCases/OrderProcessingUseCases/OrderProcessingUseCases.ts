@@ -105,6 +105,7 @@ export class OrderProcessingUseCases {
       end_at: data.end_at,
       legal_customer_order_ids: data.legal_customer_order_ids,
       physical_customer_order_ids: data.physical_customer_order_ids,
+      driver_id: data.driver_id,
     });
 
     return this.orderProcessingResitory.createOrderProcessing(
@@ -152,6 +153,7 @@ export class OrderProcessingUseCases {
       end_at: data.end_at,
       created_by: null,
       order_processing_number: null,
+      driver_id: data.driver_id,
     });
 
     return this.orderProcessingResitory.updateOrderProcessing(
@@ -191,6 +193,7 @@ export class OrderProcessingUseCases {
         end_at: orderprocessing.end_at,
         created_by: null,
         order_processing_number: null,
+        driver_id: orderprocessing.driver_id,
       });
 
       return orderprocessingUpdated;

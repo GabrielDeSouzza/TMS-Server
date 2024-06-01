@@ -29,6 +29,9 @@ export class OrderProcessingPrismaDTO {
       updated_at: orderprocessingEntity.updated_at,
       updated_by: orderprocessingEntity.updated_by,
       status: orderprocessingEntity.status,
+      OwnDriver: {
+        connect: { id: orderprocessingEntity.driver_id },
+      },
       LegalClientOrder:
         orderprocessingEntity.legal_customer_order_ids?.length > 0
           ? {
@@ -90,6 +93,11 @@ export class OrderProcessingPrismaDTO {
           ? { id: orderProcessing.vehicle_id }
           : undefined,
       },
+      OwnDriver: orderProcessing.driver_id
+        ? {
+            connect: { id: orderProcessing.driver_id },
+          }
+        : undefined,
     };
 
     return orderprocessingUptate;

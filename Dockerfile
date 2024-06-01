@@ -30,8 +30,6 @@ COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modul
 
 COPY --chown=node:node . .
 
-RUN pnpm build
-
 ENV NODE_ENV production
 
 RUN pnpm fetch --prod
@@ -39,6 +37,8 @@ RUN pnpm fetch --prod
 RUN pnpm install
 
 RUN pnpm prisma generate
+
+RUN pnpm build
 
 USER node
 

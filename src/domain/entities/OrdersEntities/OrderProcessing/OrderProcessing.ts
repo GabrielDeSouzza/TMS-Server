@@ -20,6 +20,7 @@ export interface IOrderProcessing {
   start_at: Date;
   end_at?: Date;
   vehicle_id: string;
+  driver_id: string;
   updated_at?: Date;
   created_at?: Date;
   created_by: string;
@@ -144,6 +145,14 @@ export class OrderProcessing extends Entity {
 
   set status(status: string) {
     this.props.status = status;
+  }
+
+  get driver_id(): string {
+    return this.props.driver_id;
+  }
+
+  set driver_id(driver_id: string) {
+    this.props.driver_id = driver_id;
   }
 
   get vehicle_id(): string {

@@ -6,20 +6,20 @@ import { type CteLegalClientPdf } from 'domain/entities/Cte Entities/CtePdfLegal
 import { type CtePhyscialCustomerPdf } from 'domain/entities/Cte Entities/CtePdfPhysicalClient/CtePdfPhysicalCustomer';
 import { CtePdfRepository } from 'domain/repositories/CtePdfRepository';
 
-import { GenerateCtePdfService } from 'infra/services/generatePdf/GenerateCtePdf';
+import { GenerateCtePDF } from 'infra/services/generatePdf/CreatePDF/CreateCtePdf';
 
 @Injectable()
 export class ctePdfUseCase {
   constructor(
     private ctePdfRepository: CtePdfRepository,
-    private uploader: GenerateCtePdfService,
+    private uploader: GenerateCtePDF,
   ) {}
   async getCteUrlLegalClient(cteId: string) {
     const ctePdf =
       await this.ctePdfRepository.getDataForGenerateCtePdfLegalClient(cteId);
     this.validateCtePdfData(ctePdf);
 
-    return await this.uploader.generatePdf(ctePdf);
+    return await this.uploader.GenerateCte(ctePdf);
   }
 
   async getCteUrlPhysicalCustomer(cteId: string) {
@@ -29,7 +29,7 @@ export class ctePdfUseCase {
       );
     this.validateCtePdfDataPhyscialCustomer(ctePdf);
 
-    return await this.uploader.generatePdf(ctePdf);
+    return await this.uploader.GenerateCte(ctePdf);
   }
 
   private validateCtePdfData(ctePdf: CteLegalClientPdf) {

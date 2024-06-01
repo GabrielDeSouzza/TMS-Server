@@ -5,7 +5,7 @@ import { CtePdfRepository } from 'domain/repositories/CtePdfRepository';
 import { ctePdfUseCase } from 'app/useCases/CtePdf/CtePdfUseCase';
 
 import { CtePdfPrismaService } from 'infra/database/prisma/services/CtePdf.service';
-import { GenerateCtePDFModule } from 'infra/services/generatePdf/GeneratePdfCteModule';
+import { GenerateCTEPDFModule } from 'infra/services/generatePdf/CreatePDF/CreateCtePdf.module';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
 import { LegalClientCteModule } from '../LegalClientCteGraphql/LegalClientCte.module';
@@ -13,16 +13,16 @@ import { PhysicalCustomerCteModule } from '../PhysicalCustomerCteGraphql/Physica
 import { CtePdfResolver } from './CtePdf.resolver';
 
 @Module({
+  imports: [
+    GenerateCTEPDFModule,
+    GraphqlCenterModule,
+    LegalClientCteModule,
+    PhysicalCustomerCteModule,
+  ],
   providers: [
     { provide: CtePdfRepository, useClass: CtePdfPrismaService },
     ctePdfUseCase,
     CtePdfResolver,
-  ],
-  imports: [
-    GraphqlCenterModule,
-    GenerateCtePDFModule,
-    LegalClientCteModule,
-    PhysicalCustomerCteModule,
   ],
   exports: [ctePdfUseCase],
 })

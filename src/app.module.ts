@@ -11,7 +11,6 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { CarrierCompanyModule } from 'infra/graphql/entities/CarrierCompanyGraphql/CarrierCompany.module';
 import { CiotForLegalClientModule } from 'infra/graphql/entities/CiotForLegalClientGraphql/CiotForLegalClient.module';
 import { CompanyVehicleModule } from 'infra/graphql/entities/CompanyVehicle/CompanyVehicle.module';
-import { CompletedOrdersModule } from 'infra/graphql/entities/CompletedOrdersGraphql/CompletedOrders.module';
 import { ContractOutsoucedDriverModule } from 'infra/graphql/entities/ContractOutsourcedDriverGraphql/ContractOutsoucedDriver.module';
 import { FreightExpenseModule } from 'infra/graphql/entities/FreightExpenseGraphql/FreightExpense.module';
 import { CtePdfModule } from 'infra/graphql/entities/GenerateCtePdfGraphql/CtePdf.module';
@@ -24,6 +23,7 @@ import { LegalClientQuoteTableModule } from 'infra/graphql/entities/LegalClientQ
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
 import { MaintenanceCompanyModule } from 'infra/graphql/entities/MaintenanceCompanyGraphql/MaintenanceCompany.module';
 import { MaintenanceModule } from 'infra/graphql/entities/MaintenanceGraphql/Maintenance.module';
+import { ManifestModule } from 'infra/graphql/entities/ManifestGraphql/Manifest.module';
 import { OrderProcessingModule } from 'infra/graphql/entities/OrderProcessingGraphql/OrderProcessing.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
 import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
@@ -91,7 +91,6 @@ import { AuthModule } from 'infra/guard/auth.module';
     SenderModule,
     LegalClientQuoteTableModule,
     PhysicalCustomerQuoteTableModule,
-    CompletedOrdersModule,
     PhysicalCustomerCteModule,
     LegalClientCteModule,
     FreightExpenseModule,
@@ -100,6 +99,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     MaintenanceCompanyModule,
     MaintenanceModule,
     IncidentModule,
+    ManifestModule,
   ],
 })
 export class AppModule {}

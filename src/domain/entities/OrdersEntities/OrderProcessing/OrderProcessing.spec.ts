@@ -16,6 +16,7 @@ describe('OrderProcessing', () => {
       id: '13',
       updated_at: new Date(),
       status: 'CREATED',
+      driver_id: '6546546',
     });
     expect(customerOrder).toBeTruthy();
   });
