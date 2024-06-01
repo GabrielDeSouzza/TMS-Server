@@ -52,10 +52,6 @@ export class MaintenanceCompanyUseCases {
   ) {
     const companies =
       await this.maintenanceCompanyRepository.getAllMaintenanceCompany(request);
-    if (companies.length === 0)
-      throw new GraphQLError('ANY MAINTENANCE COMPANY FOUND', {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
 
     return companies;
   }

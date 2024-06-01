@@ -84,7 +84,7 @@ export class PhysicalCustomerOrderResolver {
     );
   }
   @Mutation(() => PhysicalCustomerOrderModel)
-  async updatephysicalCustomerOrder(
+  async updatePhysicalCustomerOrder(
     @Args('id') id: string,
     @Args('physicalCustomerOrderInput')
     physicalCustomerOrderInput: PhysicalCustomerOrderUpdateInput,

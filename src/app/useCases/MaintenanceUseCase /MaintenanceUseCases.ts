@@ -36,10 +36,6 @@ export class MaintenanceUseCases {
     const maintenances = await this.maintenanceRepository.findAllMaintenance(
       request,
     );
-    if (maintenances.length === 0)
-      throw new GraphQLError('ANY MAINTENANCE FOUND ', {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
 
     return maintenances;
   }
