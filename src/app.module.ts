@@ -21,9 +21,11 @@ import { LegalClientModule } from 'infra/graphql/entities/LegalClientGraphql/Leg
 import { LegalClientOrderModule } from 'infra/graphql/entities/LegalClientOrderGraphql/LegalClientOrder.module';
 import { LegalClientQuoteTableModule } from 'infra/graphql/entities/LegalClientQuoteTableGraphql/LegalClientQuoteTable.module';
 import { LegalContractModule } from 'infra/graphql/entities/LegalContractGraphql/LegalContract.module';
+import { LegalPersonModule } from 'infra/graphql/entities/LegalPersonGraphql/LegalPerson.module';
 import { MaintenanceCompanyModule } from 'infra/graphql/entities/MaintenanceCompanyGraphql/MaintenanceCompany.module';
 import { MaintenanceModule } from 'infra/graphql/entities/MaintenanceGraphql/Maintenance.module';
 import { ManifestModule } from 'infra/graphql/entities/ManifestGraphql/Manifest.module';
+import { NaturalPersonModule } from 'infra/graphql/entities/NaturalPersonGraphql/NaturalPerson.module';
 import { OrderProcessingModule } from 'infra/graphql/entities/OrderProcessingGraphql/OrderProcessing.module';
 import { OutsourcedDriverModule } from 'infra/graphql/entities/OutsourcedDriverGraphql/OutsourcedDriver.module';
 import { OutsourcedTransportCompanyContractModule } from 'infra/graphql/entities/OutsourcedTransportCompanyContractGraphql/OutsourcedTransportCompanyContract.module';
@@ -100,6 +102,8 @@ import { AuthModule } from 'infra/guard/auth.module';
     MaintenanceModule,
     IncidentModule,
     ManifestModule,
+    LegalPersonModule,
+    NaturalPersonModule,
   ],
 })
 export class AppModule {}

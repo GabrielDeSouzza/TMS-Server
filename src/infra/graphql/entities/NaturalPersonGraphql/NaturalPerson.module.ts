@@ -7,12 +7,14 @@ import { NaturalPersonUseCases } from 'app/useCases/NaturalPersoUseCases/Natural
 import { NaturalPersonPrismaService } from 'infra/database/prisma/services/natural-person.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { NaturalPersonResolver } from './NaturalPerson.resolver';
 
 @Module({
   imports: [GraphqlCenterModule],
   providers: [
     { provide: NaturalPersonRepository, useClass: NaturalPersonPrismaService },
     NaturalPersonUseCases,
+    NaturalPersonResolver,
   ],
   exports: [NaturalPersonUseCases, NaturalPersonRepository],
 })

@@ -7,12 +7,15 @@ import { LegalPersonUseCases } from 'app/useCases/LegalPersonUseCases/LegalPerso
 import { LegalPersonPrismaService } from 'infra/database/prisma/services/legal-person.service';
 
 import { GraphqlCenterModule } from '../GraphqlCenter.module';
+import { LegalPersonResolver } from './LegalPerson.resolver';
 
 @Module({
   imports: [GraphqlCenterModule],
   providers: [
-    { provide: LegalPersonRepository, useClass: LegalPersonPrismaService },
     LegalPersonUseCases,
+    { provide: LegalPersonRepository, useClass: LegalPersonPrismaService },
+
+    LegalPersonResolver,
   ],
   exports: [LegalPersonUseCases],
 })

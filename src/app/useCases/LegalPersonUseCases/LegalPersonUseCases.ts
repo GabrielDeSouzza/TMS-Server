@@ -3,7 +3,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetLegalPersonDTO } from 'domain/dto/repositories/getDataDtos/GetLegalPersonDto';
-import { type ValidateLegalPersonDTO } from 'domain/dto/repositories/whereDtos/LegalPersonRepository';
+import {
+  type FindAllLegalPersonWhereRequestDTO,
+  type ValidateLegalPersonDTO,
+} from 'domain/dto/repositories/whereDtos/LegalPersonRepository';
 import { LegalPersonRepository } from 'domain/repositories/LegalPerson.repository';
 
 @Injectable()
@@ -69,5 +72,9 @@ export class LegalPersonUseCases {
       });
 
     return person;
+  }
+
+  getAllLegalPerson(request: FindAllLegalPersonWhereRequestDTO) {
+    return this.legalPersonRepository.getAllLegalPerson(request);
   }
 }

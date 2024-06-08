@@ -1625,6 +1625,7 @@ type Mutation {
   deleteManyRecipients(deleteManyRecipients: [String!]!): [RecipientModel!]!
   deleteManySenders(deleteManySenders: [String!]!): [SenderModel!]!
   deleteManyUsers(deleteManyUsers: [String!]!): [UserModel!]!
+  deleteManyVehicleBodyworks(deleteManyVehicleBodyworks: [String!]!): [VehicleBodyworkModel!]!
   deleteManyVehicleBrands(deleteManyVehicleBrands: [String!]!): [VehicleBrandModel!]!
   deleteManyVehicleModels(deleteManyVehicleModels: [String!]!): [VehicleModelGraphql!]!
   deleteManyVehicleTypes(deleteManyVehicleTypes: [String!]!): [VehicleTypeModel!]!
@@ -1636,6 +1637,7 @@ type Mutation {
   deleteRecipient(id: String!): RecipientModel!
   deleteSender(id: String!): SenderModel!
   deleteUser(id: String!): UserModel!
+  deleteVehicleBodywork(id: String!): VehicleBodyworkModel!
   deleteVehicleBrand(id: String!): VehicleBrandModel!
   deleteVehicleModel(id: String!): VehicleModelGraphql!
   deleteVehicleType(id: String!): VehicleTypeModel!
@@ -1667,6 +1669,7 @@ type Mutation {
   updateManyRecipients(updateManyRecipients: [RecipientUpdateManyInput!]!): [RecipientModel!]!
   updateManySenders(updateManySenders: [SenderUpdateManyInput!]!): [SenderModel!]!
   updateManyUsers(updateManyUsers: [UserUpdateManyInput!]!): [UserModel!]!
+  updateManyVehicleBodyworks(updateManyVehicleBodyworks: [VehicleBodyworkUpdateManyInput!]!): [VehicleBodyworkModel!]!
   updateManyVehicleBrands(updateManyVehicleBrands: [VehicleBrandUpdateManyInput!]!): [VehicleBrandModel!]!
   updateManyVehicleModels(updateManyVehicleModels: [VehicleModelUpdateManyInput!]!): [VehicleModelGraphql!]!
   updateManyVehicleTypes(updateManyVehicleTypes: [VehicleTypeUpdateManyInput!]!): [VehicleTypeModel!]!
@@ -1675,6 +1678,7 @@ type Mutation {
   updateOwnDriver(id: String!, ownDriverUpdate: OwnDriverUpdate!): OwnDriverModel!
   updatePhysicalCustomer(id: String!, ownDriverUpdate: PhysicalCustomerUpdateInput!): PhysicalCustomerModel!
   updatePhysicalCustomerCte(id: String!, ownDriverUpdate: PhysicalCustomerCteUpdateInput!): PhysicalCustomerCteModel!
+  updatePhysicalCustomerOrder(id: String!, physicalCustomerOrderInput: PhysicalCustomerOrderUpdateInput!): PhysicalCustomerOrderModel!
   updatePhysicalCustomerQuoteTable(id: String!, physicalCustomerQuoteTableUpdate: PhysicalCustomerQuoteTableUpdate!): PhysicalCustomerQuoteTableModel!
   updateRecipient(data: RecipientUpdateInput!, id: String!): RecipientModel!
   updateSender(data: SenderUpdateInput!, id: String!): SenderModel!
@@ -1695,7 +1699,6 @@ type Mutation {
   updateoutsourcedTransportCompanyContract(id: String!, outsourcedTransportCompanyContractInput: OutsourcedTransportCompanyContractUpdateInput!): OutsourcedTransportCompanyContractModel!
   updateoutsourcedTransportCompanyDriver(data: OutsourcedTransportCompanyDriverUpdateInput!, id: String!): OutsourcedTransportCompanyDriverModel!
   updateoutsourcedTransportVehicle(id: String!, outsourcedTransportVehicleInput: OutsourcedTransportVehicleUpdateInput!): OutsourcedTransportVehicleModel!
-  updatephysicalCustomerOrder(id: String!, physicalCustomerOrderInput: PhysicalCustomerOrderUpdateInput!): PhysicalCustomerOrderModel!
 }
 
 input NaturalPersonInput {
@@ -2990,9 +2993,11 @@ type Query {
   getAllLegalClientOrder(limit: Int! = 25, offset: Int! = 0, sort: LegalClientOrderOrderByWithRelationInput, where: LegalClientOrderWhereInput): [LegalClientOrderModel!]
   getAllLegalClientQuoteTable(limit: Int! = 25, offset: Int! = 0, sort: LegalClientQuoteTableOrderByWithRelationInput, where: LegalClientQuoteTableWhereInput): [LegalClientQuoteTableModel!]!
   getAllLegalContract(limit: Int! = 25, offset: Int! = 0, sort: LegalContractOrderByWithRelationInput, where: LegalContractWhereInput): [LegalContractModel!]
+  getAllLegalPerson(limit: Int! = 25, offset: Int! = 0, sort: LegalPersonOrderByWithRelationInput, where: LegalPersonWhereInput): [LegalPersonModel!]
   getAllMaintenance(limit: Int! = 25, offset: Int! = 0, sort: MaintenanceOrderByWithRelationInput, where: MaintenanceWhereInput): [MaintenanceModel!]
   getAllMaintenanceCompany(limit: Int! = 25, offset: Int! = 0, sort: MaintenanceCompanyOrderByWithRelationInput, where: MaintenanceCompanyWhereInput): [MaintenanceCompanyModel!]
   getAllManifest(limit: Int! = 25, offset: Int! = 0, sort: ManifestOrderByWithRelationInput, where: ManifestWhereInput): [ManifestModel!]
+  getAllNaturalPerson(limit: Int! = 25, offset: Int! = 0, sort: NaturalPersonOrderByWithRelationInput, where: NaturalPersonWhereInput): [NaturalPersonModel!]
   getAllOrderProcessing(limit: Int! = 25, offset: Int! = 0, sort: OrderProcessingOrderByWithRelationInput, where: OrderProcessingWhereInput): [OrderProcessingModel!]!
   getAllOutsourcedDriver(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedDriverOrderByWithRelationInput, where: OutsourcedDriverWhereInput): [OutsourcedDriverModel!]!
   getAllOutsourcedTransportCompany(limit: Int! = 25, offset: Int! = 0, sort: OutsourcedTransportCompanyOrderByWithRelationInput, where: OutsourcedTransportCompanyWhereInput): [OutsourcedTransportCompanyModel!]
@@ -3054,6 +3059,7 @@ type Query {
   totalRecipients(where: RecipientWhereInput): Float!
   totalSenders(where: SenderWhereInput): Float!
   totalUsers(where: UserWhereInput): Float!
+  totalVehicleBodyworks(where: VehicleBodyworkWhereInput): Float!
   totalVehicleBrands(where: VehicleBrandWhereInput): Float!
   totalVehicleModels(where: VehicleModelWhereInput): Float!
   totalVehicleTypes(where: VehicleTypeWhereInput): Float!
@@ -3637,6 +3643,14 @@ input VehicleBodyworkOrderByWithRelationInput {
 
 input VehicleBodyworkUpdateInput {
   axles: Int
+  mass: Float
+  name: String
+  volume: Float
+}
+
+input VehicleBodyworkUpdateManyInput {
+  axles: Int
+  id: String!
   mass: Float
   name: String
   volume: Float

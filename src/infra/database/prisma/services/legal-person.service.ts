@@ -26,7 +26,6 @@ export class LegalPersonPrismaService implements LegalPersonRepository {
         ],
       },
     });
-    console.log(request);
 
     return LegalPersonPrismaDTO.PrismaToEntity(legalPersonPrisma);
   }
