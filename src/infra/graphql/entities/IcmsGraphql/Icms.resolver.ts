@@ -44,8 +44,8 @@ export class IcmsResolver {
     return this.icmsUseCase.getIcms({
       id: request.id,
       stateRelationIcms: {
-        recipient_state: request.StateRelation.recipient_state,
-        state_origin: request.StateRelation.state_origin,
+        recipient_state: request.StateRelation?.recipient_state,
+        state_origin: request.StateRelation?.state_origin,
       },
     });
   }
