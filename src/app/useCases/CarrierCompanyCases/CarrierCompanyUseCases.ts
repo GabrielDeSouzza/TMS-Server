@@ -97,6 +97,7 @@ export class CarrierCompanyUseCases {
       created_by: null,
       legalPersonId: null,
     });
+    console.log(request);
     const legalPerson = LegalPersonEntityDto.updateEntity(request.LegalPerson);
 
     return this.carrierCompanyRepository.updateCarrierCompany(

@@ -37,7 +37,7 @@ export class LegalPersonEntityDto {
       complement: update?.complement,
       city: update?.city,
       uf: update?.uf,
-      cep: update.cep,
+      cep: update?.cep,
       first_phone: update?.first_phone,
       second_phone: update?.second_phone,
       third_phone: update?.third_phone,

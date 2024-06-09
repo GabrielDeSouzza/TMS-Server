@@ -49,6 +49,7 @@ export class FreightExpenseUseCases {
     return this.freightExpenseRepository.findAllFreightExpense(request);
   }
   async createFreightExpense(data: CreateFreightExpenseDTO) {
+    console.log(data);
     if (data.legalClientOrderId && data.physicalCustomerOrderId)
       throw new GraphQLError('SEND ONLY ORDER', {
         extensions: { code: HttpStatus.BAD_REQUEST },

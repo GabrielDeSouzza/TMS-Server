@@ -28,7 +28,7 @@ export class IncidentInput
   date_incident: Date;
   @Field()
   @IsUUID()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'O PROCESSAMENTO DE ID NÃO PODE SER VAZIO' })
   order_process_id: string;
   @Field(() => Date, { nullable: true })
   @Field(() => Date)

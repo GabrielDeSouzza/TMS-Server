@@ -41,9 +41,12 @@ export class LegalPersonUseCases {
       state_registration: data?.state_registration,
       id: data?.id,
     });
-    console.log(person);
     if (person) {
       let errors = '';
+
+      if (data.id == person.id) {
+        errors += 'EMPRESA JÁ CADASTRADA';
+      }
 
       if (data.cnpj == person.cnpj) {
         errors += 'CNPJ IN USE;';

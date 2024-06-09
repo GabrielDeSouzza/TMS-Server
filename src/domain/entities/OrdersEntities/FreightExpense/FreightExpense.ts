@@ -41,12 +41,6 @@ export class FreightExpense extends Entity {
         maxLength: 80,
       },
       {
-        field: this.props.legalClientOrderId,
-        fieldName: 'Order Id',
-        maxLength: 1000,
-        isNullAble: true,
-      },
-      {
         field: this.props.value,
         fieldName: 'Value',
         maxLength: 8,

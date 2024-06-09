@@ -82,11 +82,20 @@ export class LegalClientUseCases {
       created_by: data.created_by,
       legal_person_id: data.legal_person_id,
     });
-    const legalPerson = LegalPersonEntityDto.createEntity(data.LegalPerson);
+
+    if (data.LegalPerson) {
+      const legalPerson = LegalPersonEntityDto.createEntity(data.LegalPerson);
+
+      return this.legalClientRepository.createLegalClient(
+        legalClient,
+        legalPerson,
+        data.legal_person_id,
+      );
+    }
 
     return this.legalClientRepository.createLegalClient(
       legalClient,
-      legalPerson,
+      null,
       data.legal_person_id,
     );
   }
