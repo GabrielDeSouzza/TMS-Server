@@ -3,11 +3,15 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetPhysicalCustomerQuoteTableDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerQuoteTableDto';
-import { type FindAllPhysicalCustomerQuoteTableWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerQuoteTableRepositoryDto';
+import {
+  type CountAllPhysicalCustomerQuoteTableWhereRequestDTO,
+  type FindAllPhysicalCustomerQuoteTableWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/PhysicalCustomerQuoteTableRepositoryDto';
 import { PhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 import { PhysicalCustomerQuoteTableRepository } from 'domain/repositories/PhysicalCustomerQuoteTable.repository';
 
 import { type CreatePhysicalCustomerQuoteTableDTO } from 'app/dtos/PhysicalCustomerQuoteTableDto/CreatePhysicalCustomerQuoteTableDto';
+import { type UpdateManyPhysicalCustomerQuoteTableDTO } from 'app/dtos/PhysicalCustomerQuoteTableDto/UpdateManyPhysicalCustomerQuoteTableDto';
 import { type UpdatePhysicalCustomerQuoteTableDTO } from 'app/dtos/PhysicalCustomerQuoteTableDto/UpdatePhysicalCustomerQuoteTableDto';
 import { generateRandomNumber } from 'app/utils/RandomNumber';
 
@@ -21,6 +25,11 @@ export class PhysicalCustomerQuoteTableUseCases {
     private senderUseCase: SenderUseCases,
     private recipientUseCase: RecipientUseCases,
   ) {}
+  async countPhysicalCustomerQuoteTable(
+    request: CountAllPhysicalCustomerQuoteTableWhereRequestDTO,
+  ) {
+    return this.physicalCustomerQuoteTableRepository.count(request);
+  }
   async getPhysicalCustomerQuoteTable(
     request: GetPhysicalCustomerQuoteTableDTO,
   ) {
@@ -139,5 +148,79 @@ export class PhysicalCustomerQuoteTableUseCases {
       id,
       order,
     );
+  }
+
+  async updateManyPhysicalCustomerQuoteTable(
+    data: UpdateManyPhysicalCustomerQuoteTableDTO[],
+    updateBy: string,
+  ) {
+    for (const physicalcustomerquotetable of data)
+      await this.verifyPhysicalCustomerQuoteTableExist(
+        physicalcustomerquotetable.id,
+      );
+    const physicalcustomerquotetables = data.map(physicalcustomerquotetable => {
+      const updatePhysicalCustomerQuoteTable = new PhysicalCustomerQuoteTable({
+        amount: physicalcustomerquotetable.amount,
+        codQuote: null,
+        formPayment: physicalcustomerquotetable.formPayment,
+        kindService: physicalcustomerquotetable.kindService,
+        description: physicalcustomerquotetable.description,
+        mass: physicalcustomerquotetable.mass,
+        nf_value: physicalcustomerquotetable.nf_value,
+        adressDestiny: physicalcustomerquotetable.adressDestiny,
+        adressOrigin: physicalcustomerquotetable.adressOrigin,
+        recipientId: physicalcustomerquotetable.recipientId,
+        senderId: physicalcustomerquotetable.senderId,
+        typeMerchandise: physicalcustomerquotetable.typeMerchandise,
+        volume: physicalcustomerquotetable.volume,
+        who_pays: physicalcustomerquotetable.who_pays,
+        created_by: null,
+        updated_by: updateBy,
+        id: physicalcustomerquotetable.id,
+        nf_number: physicalcustomerquotetable.nf_number,
+        nf_serie: physicalcustomerquotetable.nf_serie,
+        digital_signature: null,
+      });
+
+      return updatePhysicalCustomerQuoteTable;
+    });
+
+    return this.physicalCustomerQuoteTableRepository.updateManyPhysicalCustomerQuoteTable(
+      physicalcustomerquotetables,
+    );
+  }
+
+  async deletePhysicalCustomerQuoteTable(id: string) {
+    await this.getPhysicalCustomerQuoteTable({ id });
+
+    return this.physicalCustomerQuoteTableRepository.deletePhysicalCustomerQuoteTable(
+      id,
+    );
+  }
+  async deleteManyPhysicalCustomerQuoteTable(ids: string[]) {
+    for (const physicalcustomerquotetableId of ids)
+      await this.verifyPhysicalCustomerQuoteTableExist(
+        physicalcustomerquotetableId,
+      );
+
+    return this.physicalCustomerQuoteTableRepository.deleteManyPhysicalCustomerQuoteTable(
+      ids,
+    );
+  }
+
+  private async verifyPhysicalCustomerQuoteTableExist(id: string) {
+    const exist =
+      await this.physicalCustomerQuoteTableRepository.findPhysicalCustomerQuoteTable(
+        {
+          id,
+        },
+      );
+    if (!exist)
+      throw new GraphQLError(
+        `THIS LEGAL CLIENT QUOTETABLE ID ${id} NOT FOUND`,
+        {
+          extensions: { code: HttpStatus.NOT_FOUND },
+        },
+      );
   }
 }

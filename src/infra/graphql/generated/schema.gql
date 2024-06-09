@@ -1631,6 +1631,7 @@ type Mutation {
   deleteManyOutsourcedDriver(ids: [String!]!): [OutsourcedDriverModel!]!
   deleteManyOwnDrivers(deleteManOwnDrivers: [String!]!): [OwnDriverModel!]!
   deleteManyPhysicalCustomerOrder(ids: [String!]!): [PhysicalCustomerOrderModel!]!
+  deleteManyPhysicalCustomerQuoteTable(ids: [String!]!): [PhysicalCustomerQuoteTableModel!]!
   deleteManyPhysicalCustomers(deleteManyPhysicalCustomers: [String!]!): [PhysicalCustomerModel!]!
   deleteManyRecipients(deleteManyRecipients: [String!]!): [RecipientModel!]!
   deleteManySenders(deleteManySenders: [String!]!): [SenderModel!]!
@@ -1644,6 +1645,7 @@ type Mutation {
   deleteOwnDriver(id: String!): OwnDriverModel!
   deletePhysicalCustomer(id: String!): PhysicalCustomerModel!
   deletePhysicalCustomerOrder(id: String!): PhysicalCustomerOrderModel!
+  deletePhysicalCustomerQuoteTable(id: String!): PhysicalCustomerQuoteTableModel!
   deleteRecipient(id: String!): RecipientModel!
   deleteSender(id: String!): SenderModel!
   deleteUser(id: String!): UserModel!
@@ -1676,6 +1678,7 @@ type Mutation {
   updateManyOutsourcedDriver(data: [OutsourcedDriverUpdateManyInput!]!): [OutsourcedDriverModel!]!
   updateManyOwnDrivers(updateManyOwnDrivers: [OwnDriverUpdateManyInput!]!): [OwnDriverModel!]!
   updateManyPhysicalCustomerOrder(data: [PhysicalCustomerOrderUpdateManyInput!]!): [PhysicalCustomerOrderModel!]!
+  updateManyPhysicalCustomerQuoteTable(data: [PhysicalCustomerQuoteTableUpdateManyInput!]!): [PhysicalCustomerQuoteTableModel!]!
   updateManyPhysicalCustomers(updateManyPhysicalCustomers: [PhysicalCustomerUpdateManyInput!]!): [PhysicalCustomerModel!]!
   updateManyRecipients(updateManyRecipients: [RecipientUpdateManyInput!]!): [RecipientModel!]!
   updateManySenders(updateManySenders: [SenderUpdateManyInput!]!): [SenderModel!]!
@@ -2910,6 +2913,25 @@ input PhysicalCustomerQuoteTableUpdate {
   who_pays: WhoIsPay
 }
 
+input PhysicalCustomerQuoteTableUpdateManyInput {
+  adressDestiny: AdressInput
+  adressOrigin: AdressInput
+  amount: Float
+  description: String
+  formPayment: FormPayment
+  id: String!
+  kindService: KindOfServicerOrder
+  mass: Float
+  nf_number: String
+  nf_serie: String
+  nf_value: Float
+  recipientId: String
+  senderId: String
+  typeMerchandise: TypeMerchandise
+  volume: Float
+  who_pays: WhoIsPay
+}
+
 input PhysicalCustomerQuoteTableWhereInput {
   AND: [PhysicalCustomerQuoteTableWhereInput!]
   AdressDestiny: AdressesWhereInput
@@ -2990,6 +3012,7 @@ type Query {
   countOrderProcessing(where: OrderProcessingWhereInput): Int!
   countOutsourcedDriver(where: OutsourcedDriverWhereInput): Int!
   countPhysicalCustomerOrder(where: PhysicalCustomerOrderWhereInput): Int!
+  countPhysicalCustomerQuoteTable(where: PhysicalCustomerQuoteTableWhereInput): Int!
   generateLegalClientCte(request: CtePdfLegalClientInput!): CtePDfModel!
   generatePhysicalCustomerCte(request: CtePdfPhysicalCustomerInput!): CtePDfModel!
   getAllCarrierCompany(limit: Int! = 25, offset: Int! = 0, sort: CarrierCompanyOrderByWithRelationInput, where: CarrierCompanyWhereInput): [CarrierCompanyModel!]

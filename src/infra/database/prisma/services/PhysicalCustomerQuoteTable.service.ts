@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { type GetPhysicalCustomerQuoteTableDTO } from 'domain/dto/repositories/getDataDtos/GetPhysicalCustomerQuoteTableDto';
-import { type FindAllPhysicalCustomerQuoteTableWhereRequestDTO } from 'domain/dto/repositories/whereDtos/PhysicalCustomerQuoteTableRepositoryDto';
+import {
+  type CountAllPhysicalCustomerQuoteTableWhereRequestDTO,
+  type FindAllPhysicalCustomerQuoteTableWhereRequestDTO,
+} from 'domain/dto/repositories/whereDtos/PhysicalCustomerQuoteTableRepositoryDto';
 import { type PhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
 import { type PhysicalCustomerQuoteTableRepository } from 'domain/repositories/PhysicalCustomerQuoteTable.repository';
 
@@ -13,6 +16,14 @@ export class PhysicalCustomerQuoteTablePrismaService
   implements PhysicalCustomerQuoteTableRepository
 {
   constructor(private prisma: PrismaService) {}
+
+  count(
+    request: CountAllPhysicalCustomerQuoteTableWhereRequestDTO,
+  ): Promise<number> {
+    return this.prisma.physicalCustomerQuoteTable.count({
+      where: request.where ?? undefined,
+    });
+  }
   async findPhysicalCustomerQuoteTable(
     request: GetPhysicalCustomerQuoteTableDTO,
   ): Promise<PhysicalCustomerQuoteTable> {
@@ -86,5 +97,75 @@ export class PhysicalCustomerQuoteTablePrismaService
         physicalcustomerquotetable.AdressDestiny,
       ),
     );
+  }
+
+  updateManyPhysicalCustomerQuoteTable(
+    data: PhysicalCustomerQuoteTable[],
+  ): Promise<PhysicalCustomerQuoteTable[]> {
+    console.log(data);
+    const physicalcustomerquotetableUpdate = this.prisma.$transaction(
+      async tx => {
+        const promises = data.map(async physicalcustomerquotetable => {
+          const physicalcustomerquotetablePrisma =
+            await tx.physicalCustomerQuoteTable.update({
+              data: PhysicalCustomerQuoteTablePrismaDTO.EntityToPrismaUpdate(
+                physicalcustomerquotetable,
+              ),
+              where: { id: physicalcustomerquotetable.id },
+              include: { AdressDestiny: true, AdressOrigin: true },
+            });
+
+          return PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
+            physicalcustomerquotetablePrisma,
+            physicalcustomerquotetablePrisma.AdressOrigin,
+            physicalcustomerquotetablePrisma.AdressDestiny,
+          );
+        });
+
+        return Promise.all(promises);
+      },
+    );
+
+    return physicalcustomerquotetableUpdate;
+  }
+
+  async deletePhysicalCustomerQuoteTable(
+    id: string,
+  ): Promise<PhysicalCustomerQuoteTable> {
+    const data = await this.prisma.physicalCustomerQuoteTable.delete({
+      where: { id },
+      include: { AdressDestiny: true, AdressOrigin: true },
+    });
+
+    return PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
+      data,
+      data.AdressOrigin,
+      data.AdressDestiny,
+    );
+  }
+  deleteManyPhysicalCustomerQuoteTable(
+    ids: string[],
+  ): Promise<PhysicalCustomerQuoteTable[]> {
+    const physicalcustomerquotetableDeleted = this.prisma.$transaction(
+      async tx => {
+        const promises = ids.map(async icmdsId => {
+          const physicalcustomerquotetablePrisma =
+            await tx.physicalCustomerQuoteTable.delete({
+              where: { id: icmdsId },
+              include: { AdressDestiny: true, AdressOrigin: true },
+            });
+
+          return PhysicalCustomerQuoteTablePrismaDTO.PrismaToEntity(
+            physicalcustomerquotetablePrisma,
+            physicalcustomerquotetablePrisma.AdressOrigin,
+            physicalcustomerquotetablePrisma.AdressDestiny,
+          );
+        });
+
+        return Promise.all(promises);
+      },
+    );
+
+    return physicalcustomerquotetableDeleted;
   }
 }

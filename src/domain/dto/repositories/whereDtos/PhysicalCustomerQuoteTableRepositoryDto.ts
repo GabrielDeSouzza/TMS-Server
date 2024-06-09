@@ -49,3 +49,7 @@ export class FindAllPhysicalCustomerQuoteTableWhereRequestDTO {
   sort?: SortByPhysicalCustomerQuoteTableTypeDTO;
   where?: WherePhysicalCustomerQuoteTableTypeDTO;
 }
+
+export abstract class CountAllPhysicalCustomerQuoteTableWhereRequestDTO {
+  where?: WherePhysicalCustomerQuoteTableTypeDTO;
+}

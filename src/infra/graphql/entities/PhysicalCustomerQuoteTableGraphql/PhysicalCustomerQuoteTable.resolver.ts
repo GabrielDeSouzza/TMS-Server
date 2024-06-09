@@ -1,6 +1,7 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
@@ -16,7 +17,10 @@ import { RecipientUseCases } from 'app/useCases/RecipientUseCase /RecipientUseCa
 import { SenderUseCases } from 'app/useCases/SenderUseCase /SenderUseCases';
 import { UserUseCases } from 'app/useCases/user/UserCases';
 
-import { PhysicalCustomerQuoteTableWhereArgs } from 'infra/graphql/entities/PhysicalCustomerQuoteTableGraphql/Args/WherePhysicalCustomerQuoteTableArgs';
+import {
+  PhysicalCustomerQuoteTableCountArgs,
+  PhysicalCustomerQuoteTableWhereArgs,
+} from 'infra/graphql/entities/PhysicalCustomerQuoteTableGraphql/Args/WherePhysicalCustomerQuoteTableArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -30,6 +34,7 @@ import { GetPhysicalCustomerQuoteTableArgs } from './Args/GetPhysicalCustomerQuo
 import {
   PhysicalCustomerQuoteTableInput,
   PhysicalCustomerQuoteTableUpdate,
+  PhysicalCustomerQuoteTableUpdateManyInput,
 } from './PhysicalCustomerQuoteTable.input';
 import { PhysicalCustomerQuoteTableModel } from './PhysicalCustomerQuoteTable.model';
 
@@ -45,6 +50,14 @@ export class PhysicalCustomerQuoteTableResolver {
     private senderUseCase: SenderUseCases,
     private icmsUseCase: IcmsUseCases,
   ) {}
+  @Query(() => Int)
+  async countPhysicalCustomerQuoteTable(
+    @Args() request: PhysicalCustomerQuoteTableCountArgs,
+  ) {
+    return this.physicalCustomerQuoteTableUseCase.countPhysicalCustomerQuoteTable(
+      request,
+    );
+  }
   @Query(() => PhysicalCustomerQuoteTableModel, { nullable: true })
   async getPhysicalCustomerQuoteTable(
     @Args() request: GetPhysicalCustomerQuoteTableArgs,
@@ -86,6 +99,36 @@ export class PhysicalCustomerQuoteTableResolver {
     return this.physicalCustomerQuoteTableUseCase.updateQuoteTable(
       id,
       physicalCustomerQuoteTableUpdate,
+    );
+  }
+  @Mutation(() => [PhysicalCustomerQuoteTableModel])
+  async updateManyPhysicalCustomerQuoteTable(
+    @Args({
+      name: 'data',
+      type: () => [PhysicalCustomerQuoteTableUpdateManyInput],
+    })
+    data: PhysicalCustomerQuoteTableUpdateManyInput[],
+    @CurrentUser() user: User,
+  ) {
+    return this.physicalCustomerQuoteTableUseCase.updateManyPhysicalCustomerQuoteTable(
+      data,
+      user.id,
+    );
+  }
+  @Mutation(() => PhysicalCustomerQuoteTableModel)
+  async deletePhysicalCustomerQuoteTable(@Args('id') id: string) {
+    return this.physicalCustomerQuoteTableUseCase.deletePhysicalCustomerQuoteTable(
+      id,
+    );
+  }
+
+  @Mutation(() => [PhysicalCustomerQuoteTableModel])
+  async deleteManyPhysicalCustomerQuoteTable(
+    @Args({ name: 'ids', type: () => [String] })
+    ids: string[],
+  ) {
+    return this.physicalCustomerQuoteTableUseCase.deleteManyPhysicalCustomerQuoteTable(
+      ids,
     );
   }
   @ResolveField(() => UserModelRefereces)

@@ -31,3 +31,11 @@ export class PhysicalCustomerQuoteTableWhereArgs {
   @IsOptional()
   sort?: PhysicalCustomerQuoteTableOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class PhysicalCustomerQuoteTableCountArgs {
+  @Field(() => PhysicalCustomerQuoteTableWhereInput, { nullable: true })
+  @Type(() => PhysicalCustomerQuoteTableWhereInput)
+  @IsOptional()
+  where?: PhysicalCustomerQuoteTableWhereInput;
+}

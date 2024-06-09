@@ -12,6 +12,7 @@ import {
   IsNumber,
   IsObject,
   IsString,
+  IsUUID,
 } from 'class-validator';
 
 import { type IPhysicalCustomerQuoteTable } from 'domain/entities/QuoteTables/PhysicalCustomerQuoteTable/PhysicalCustomerQuoteTable';
@@ -108,4 +109,14 @@ export class PhysicalCustomerQuoteTableUpdate extends PartialType(
   ]),
 ) {
   updated_by: string;
+}
+
+@InputType()
+export class PhysicalCustomerQuoteTableUpdateManyInput extends PartialType(
+  PhysicalCustomerQuoteTableInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
 }
