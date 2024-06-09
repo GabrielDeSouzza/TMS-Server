@@ -31,3 +31,11 @@ export class CompanyVehicleWhereArgs {
   @IsOptional()
   sort?: CompanyVehicleOrderByWithRelationInput;
 }
+
+@ArgsType()
+export class CompanyVehicleCountArgs {
+  @Field(() => CompanyVehicleWhereInput, { nullable: true })
+  @Type(() => CompanyVehicleWhereInput)
+  @IsOptional()
+  where?: CompanyVehicleWhereInput;
+}

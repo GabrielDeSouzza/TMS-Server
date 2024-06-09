@@ -3,6 +3,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { GraphQLError } from 'graphql';
 
 import { type GetCompanyVehcicleDTO } from 'domain/dto/repositories/getDataDtos/GetCompanyVehicleDto';
+import {
+  type CountAllCompanyVehiclesWhereRequestDTO,
+  type UpdateManyCompanyVehiclesDTO,
+} from 'domain/dto/repositories/whereDtos/CompanyVehicleRepositoryDto';
 import { CompanyVehicle } from 'domain/entities/CompanyEntities/companyVehicle/CompanyVehicle';
 import { CompanyVehicleRepository } from 'domain/repositories/CompanyVehicleRepository';
 import { VehicleRepository } from 'domain/repositories/VehicleRepository';
@@ -18,6 +22,32 @@ export class CompanyVehicleUseCases {
     private companyVehicleRepository: CompanyVehicleRepository,
     private vehicleRepository: VehicleRepository,
   ) {}
+  async count(
+    parameters: CountAllCompanyVehiclesWhereRequestDTO,
+  ): Promise<number> {
+    return await this.companyVehicleRepository.count(parameters);
+  }
+
+  async updateManyCompanyVehicles(
+    CompanyVehicles: UpdateManyCompanyVehiclesDTO[],
+  ): Promise<CompanyVehicle[]> {
+    const updateCompanyVehicles =
+      await this.companyVehicleRepository.updateMany(CompanyVehicles);
+
+    return updateCompanyVehicles;
+  }
+
+  async deleteCompanyVehicle(id: string): Promise<CompanyVehicle> {
+    return await this.companyVehicleRepository.delete(id);
+  }
+
+  async deleteManyCompanyVehicles(ids: string[]): Promise<CompanyVehicle[]> {
+    const deleteCompanyVehicles =
+      await this.companyVehicleRepository.deleteMany(ids);
+
+    return deleteCompanyVehicles;
+  }
+
   async getCompanyVehicle(
     request: GetCompanyVehcicleDTO,
   ): Promise<CompanyVehicle | string> {

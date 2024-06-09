@@ -271,6 +271,13 @@ input CompanyVehicleUpdateInput {
   vehicle_id: String
 }
 
+input CompanyVehicleUpdateManyInput {
+  Vehicle: VehicleInput
+  carrier_company_id: String
+  id: String!
+  vehicle_id: String
+}
+
 input CompanyVehicleWhereInput {
   AND: [CompanyVehicleWhereInput!]
   CarrierCompany: CarrierCompanyWhereInput
@@ -1597,6 +1604,7 @@ type Mutation {
   createVehicleModel(vehicleModelInput: VehicleModelInput!): VehicleModelGraphql!
   createVehicleType(vehicleTypeCreate: VehicleTypeInput!): VehicleTypeModel!
   deleteCarrierCompany(id: String!): CarrierCompanyModel!
+  deleteCompanyVehicle(id: String!): CompanyVehicleIModel!
   deleteContractOutsourcedDriver(id: String!): ContractOutsourcedDriverModel!
   deleteFreightExpense(delData: DeletFreightExpenseInput!): FreightExpenseModel!
   deleteIcms(id: String!): IcmsModel!
@@ -1608,6 +1616,7 @@ type Mutation {
   deleteMaintenance(id: String!): MaintenanceModel!
   deleteMaintenanceCompany(id: String!): MaintenanceCompanyModel!
   deleteManyCarrierCompanies(deleteManyCarrierCompanies: [String!]!): [CarrierCompanyModel!]!
+  deleteManyCompanyVehicles(deleteManyCompanyVehicles: [String!]!): [CompanyVehicleIModel!]!
   deleteManyContractOutsourcedDriver(ids: [String!]!): [ContractOutsourcedDriverModel!]!
   deleteManyFreightExpenses(ids: [String!]!): [FreightExpenseModel!]!
   deleteManyIcms(ids: [String!]!): [IcmsModel!]!
@@ -1653,6 +1662,7 @@ type Mutation {
   updateMaintenance(data: MaintenanceUpdateInput!, id: String!): MaintenanceModel!
   updateMaintenanceCompany(id: String!, maintenancecompanyInput: MaintenanceCompanyUpdateInput!): MaintenanceCompanyModel!
   updateManyCarrierCompanies(updateManyCarrierCompanies: [CarrierCompanyUpdateManyInput!]!): [CarrierCompanyModel!]!
+  updateManyCompanyVehicles(updateManyCompanyVehicles: [CompanyVehicleUpdateManyInput!]!): [CompanyVehicleIModel!]!
   updateManyFreightExpenses(Data: [FreightExpenseUpdateManyInput!]!): [FreightExpenseModel!]!
   updateManyIcms(data: [IcmsUpdateManyInput!]!): [IcmsModel!]!
   updateManyIncident(data: [IncidentUpdateManyInput!]!): [IncidentModel!]!
@@ -3055,6 +3065,7 @@ type Query {
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
   getVehicleType(id: String, name: String): VehicleTypeModel!
   totalCarrierCompanies(where: CarrierCompanyWhereInput): Float!
+  totalCompanyVehicles(where: CompanyVehicleWhereInput): Float!
   totalContractOutsourcedDriver(where: ContractOutsourcedDriverWhereInput): Float!
   totalLegalClients(where: LegalClientWhereInput): Float!
   totalOwnDrivers(where: OwnDriverWhereInput): Float!

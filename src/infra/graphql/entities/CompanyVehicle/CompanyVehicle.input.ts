@@ -56,3 +56,13 @@ export class CompanyVehicleUpdateInput extends PartialType(
   @Allow()
   updated_by: string;
 }
+
+@InputType()
+export class CompanyVehicleUpdateManyInput extends PartialType(
+  CompanyVehicleInput,
+) {
+  @Field()
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+}

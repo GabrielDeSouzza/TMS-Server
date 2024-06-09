@@ -27,6 +27,19 @@ export class FindAllCompanyVehicleWhereRequestDTO {
   where?: WhereCompanyVehicleTypeDto;
 }
 
+export abstract class CountAllCompanyVehiclesWhereRequestDTO {
+  where?: WhereCompanyVehicleTypeDto;
+}
+
+export abstract class UpdateManyCompanyVehiclesDTO {
+  id: string;
+  vehicle_id?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  created_by?: string;
+  updated_by?: string;
+}
+
 export abstract class ValidadeVehicle {
   id?: string;
   plate?: string;

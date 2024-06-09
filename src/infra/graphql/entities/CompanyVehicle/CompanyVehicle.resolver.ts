@@ -14,7 +14,10 @@ import { CarrierCompanyUseCases } from 'app/useCases/CarrierCompanyCases/Carrier
 import { CompanyVehicleUseCases } from 'app/useCases/CompanyVehicleUseCases/CompanyVehicleUseCases';
 import { VehicleUseCases } from 'app/useCases/VehicleUseCases/VehicleUseCases';
 
-import { CompanyVehicleWhereArgs } from 'infra/graphql/entities/CompanyVehicle/Args/WhereCompanyVehicleArgs';
+import {
+  CompanyVehicleCountArgs,
+  CompanyVehicleWhereArgs,
+} from 'infra/graphql/entities/CompanyVehicle/Args/WhereCompanyVehicleArgs';
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { CurrentUser } from 'infra/graphql/utilities/decorators/CurrentUser';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
@@ -25,6 +28,7 @@ import { GetCompanVehicleArgs } from './Args/GetCompanyVehicleArgs';
 import {
   CompanyVehicleInput,
   CompanyVehicleUpdateInput,
+  CompanyVehicleUpdateManyInput,
 } from './CompanyVehicle.input';
 import { CompanyVehicleIModel } from './CompanyVehicle.model';
 
@@ -38,6 +42,13 @@ export class CompanyVehicleResolver {
     private vehicleUseCase: VehicleUseCases,
     private carrierCompanyUseCase: CarrierCompanyUseCases,
   ) {}
+  @Query(() => Number)
+  async totalCompanyVehicles(@Args() request: CompanyVehicleCountArgs) {
+    const companyVehicle = await this.companyVehcileUseCases.count(request);
+
+    return companyVehicle;
+  }
+
   @Query(() => CompanyVehicleIModel)
   async getCompanyVehicle(@Args() request: GetCompanVehicleArgs) {
     return this.companyVehcileUseCases.getCompanyVehicle(request);
@@ -76,6 +87,33 @@ export class CompanyVehicleResolver {
       companyVehicle,
     );
   }
+
+  @Mutation(() => [CompanyVehicleIModel])
+  async updateManyCompanyVehicles(
+    @Args({
+      name: 'updateManyCompanyVehicles',
+      type: () => [CompanyVehicleUpdateManyInput],
+    })
+    updateCompanyVehicleInput: CompanyVehicleUpdateManyInput[],
+  ) {
+    return await this.companyVehcileUseCases.updateManyCompanyVehicles(
+      updateCompanyVehicleInput,
+    );
+  }
+
+  @Mutation(() => CompanyVehicleIModel)
+  async deleteCompanyVehicle(@Args('id', { type: () => String }) id: string) {
+    return await this.companyVehcileUseCases.deleteCompanyVehicle(id);
+  }
+
+  @Mutation(() => [CompanyVehicleIModel])
+  async deleteManyCompanyVehicles(
+    @Args({ name: 'deleteManyCompanyVehicles', type: () => [String] })
+    ids: string[],
+  ) {
+    return await this.companyVehcileUseCases.deleteManyCompanyVehicles(ids);
+  }
+
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() outsoucedVehicle: CompanyVehicleInput) {
     const { vehicle_id: vehicleId } = outsoucedVehicle;
