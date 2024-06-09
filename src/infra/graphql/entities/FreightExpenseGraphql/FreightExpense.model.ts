@@ -2,6 +2,9 @@ import { Field, Float, ObjectType } from '@nestjs/graphql';
 
 import { type IFreightExpense } from 'domain/entities/OrdersEntities/FreightExpense/FreightExpense';
 
+import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
+
 @ObjectType()
 export class FreightExpenseModel implements IFreightExpense {
   @Field()
@@ -14,6 +17,10 @@ export class FreightExpenseModel implements IFreightExpense {
   physicalCustomerOrderId?: string;
   @Field({ nullable: true })
   legalClientOrderId?: string;
+  @Field(() => LegalClientOrderModel)
+  LegalClientOrder: LegalClientOrderModel;
+  @Field(() => PhysicalCustomerOrderModel)
+  PhysicalCustomerOrder: PhysicalCustomerOrderModel;
 }
 
 @ObjectType()

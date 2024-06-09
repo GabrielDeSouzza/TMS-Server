@@ -116,11 +116,13 @@ export class VehicleModelUseCases {
       });
     }
 
-    await this.vehicleTypeUseCase.getVehicleType({
-      id: data.type_id,
-    });
+    if (data.type_id)
+      await this.vehicleTypeUseCase.getVehicleType({
+        id: data.type_id,
+      });
 
-    await this.vehicleBrandUseCase.getVehicleBrand({ id: data.brand_id });
+    if (data.brand_id)
+      await this.vehicleBrandUseCase.getVehicleBrand({ id: data.brand_id });
 
     const modelEntity = new VehicleModel({
       axles: data.axles,

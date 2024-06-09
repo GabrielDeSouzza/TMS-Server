@@ -470,6 +470,8 @@ input FreightExpenseInput {
 }
 
 type FreightExpenseModel {
+  LegalClientOrder: LegalClientOrderModel!
+  PhysicalCustomerOrder: PhysicalCustomerOrderModel!
   expenseName: String!
   id: String!
   legalClientOrderId: String

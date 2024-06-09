@@ -1,14 +1,25 @@
 import { UseGuards, UseInterceptors } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 
 import { ROLE } from 'domain/entities/User/User';
 
 import { FreightExpenseUseCases } from 'app/useCases/FreightExpenseUseCases/FreightExpenseUseCases';
+import { LegalClientOrderUseCases } from 'app/useCases/LegalClientOrderUseCases/LegalClientOrderUseCases';
+import { PhysicalCustomerOrderUseCases } from 'app/useCases/PhysicalCustomerOrderCases/PhysicalCustomerOrderUseCases';
 
 import { AcessAllowed } from 'infra/graphql/utilities/decorators/AcessAllowed';
 import { RoleInterceptor } from 'infra/graphql/utilities/interceptors/RoleInterceptor';
 import { GraphQLAuthGuard } from 'infra/guard/GraphQlAuthGuard';
 
+import { LegalClientOrderModel } from '../LegalClientOrderGraphql/LegalClientOrder.model';
+import { PhysicalCustomerOrderModel } from '../PhysicalCustomerOrderGraphql/PhysicalCustomerOrder.model';
 import { DeletFreightExpenseInput } from './Args/DeleteFreightExpenseInput';
 import { GetFreightExpenseArgs } from './Args/GetFreightExpenseArgs';
 import {
@@ -27,7 +38,11 @@ import { FreightExpenseModel } from './FreightExpense.model';
 @AcessAllowed(ROLE.USER)
 @Resolver(() => FreightExpenseModel)
 export class FreightExpenseResolver {
-  constructor(private freightExpenseUseCase: FreightExpenseUseCases) {}
+  constructor(
+    private freightExpenseUseCase: FreightExpenseUseCases,
+    private legalClientOrderUseCase: LegalClientOrderUseCases,
+    private physicalCustomerUseCase: PhysicalCustomerOrderUseCases,
+  ) {}
 
   @Query(() => Number)
   async countFreightExpenses(@Args() args: FreightExpenseCountArgs) {
@@ -82,5 +97,17 @@ export class FreightExpenseResolver {
     @Args({ name: 'ids', type: () => [String] }) ids: string[],
   ) {
     return this.freightExpenseUseCase.deleteManyFreightExpenses(ids);
+  }
+  @ResolveField(() => LegalClientOrderModel)
+  async LegalClientOrder(@Parent() expense: FreightExpenseInput) {
+    return this.legalClientOrderUseCase.getLegalClientOrder({
+      id: expense.legalClientOrderId,
+    });
+  }
+  @ResolveField(() => PhysicalCustomerOrderModel)
+  async PhysicalCustomerOrder(@Parent() expense: FreightExpenseInput) {
+    return this.physicalCustomerUseCase.getPhysicalCustomerOrder({
+      id: expense.physicalCustomerOrderId,
+    });
   }
 }
