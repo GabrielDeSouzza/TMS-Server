@@ -8,6 +8,7 @@ export class LegalPersonModel implements ILegalPerson {
   id?: string;
   @Field()
   fantasy_name: string;
+  @Field()
   cnpj: string;
   @Field()
   state_registration: string;

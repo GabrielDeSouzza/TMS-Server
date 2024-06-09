@@ -1,29 +1,35 @@
+import { type BoolFilterDTO } from 'domain/shared/dtos/BoolFilterDto';
+import { type DateTimeFilterDTO } from 'domain/shared/dtos/DateTimeFilterDto';
 import { type StringFilterDTO } from 'domain/shared/dtos/StringFilterDto';
 import { WhereDTO } from 'domain/shared/dtos/WhereDto';
 
-export abstract class WhereVehicleTypeDTO extends WhereDTO {
+export abstract class WhereVehicleDTO extends WhereDTO {
   id?: StringFilterDTO;
   plate?: StringFilterDTO;
   year?: StringFilterDTO;
   color?: StringFilterDTO;
   renavam?: StringFilterDTO;
-  rntrc_expiration?: StringFilterDTO;
+  antt?: StringFilterDTO;
+  registration?: DateTimeFilterDTO;
+  is_ipva_paid?: BoolFilterDTO;
   model_id?: StringFilterDTO;
 }
 
-export abstract class SortByVehicleTypeDTO {
+export abstract class SortByVehicleDTO {
   id?: 'asc' | 'desc';
   plate?: 'asc' | 'desc';
   year?: 'asc' | 'desc';
   color?: 'asc' | 'desc';
   renavam?: 'asc' | 'desc';
-  rntrc_expiration?: 'asc' | 'desc';
+  antt?: 'asc' | 'desc';
+  registration?: 'asc' | 'desc';
+  is_ipva_paid?: 'asc' | 'desc';
   model_id?: 'asc' | 'desc';
 }
 
 export class FindAllVehicleWhereRequestDTO {
   limit: number;
   offset: number;
-  sort?: SortByVehicleTypeDTO;
-  where?: WhereVehicleTypeDTO;
+  sort?: SortByVehicleDTO;
+  where?: WhereVehicleDTO;
 }

@@ -104,6 +104,7 @@ import { AuthModule } from 'infra/guard/auth.module';
     ManifestModule,
     LegalPersonModule,
     NaturalPersonModule,
+    VehicleModule,
   ],
 })
 export class AppModule {}

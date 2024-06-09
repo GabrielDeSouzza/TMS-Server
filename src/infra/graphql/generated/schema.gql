@@ -1263,6 +1263,7 @@ type LegalPersonModel {
   address_number: String!
   cep: String!
   city: String!
+  cnpj: String!
   complement: String
   corporate_name: String!
   created_at: Timestamp!
@@ -3017,6 +3018,7 @@ type Query {
   getAllVehicleBrand(limit: Int! = 25, offset: Int! = 0, sort: VehicleBrandOrderByWithRelationInput, where: VehicleBrandWhereInput): [VehicleBrandModel!]!
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
   getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
+  getAllVehicles(limit: Int! = 25, offset: Int! = 0, sort: VehicleOrderByWithRelationInput, where: VehicleWhereInput): [VehicleCarModel!]
   getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): CarrierCompanyModel!
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
@@ -3047,6 +3049,7 @@ type Query {
   getRecipient(id: String, legalPerson: GetLegalPersonInput, naturalPerson: GetNaturalPersonInput): RecipientModel!
   getSender(id: String, legalPerson: GetLegalPersonInput, naturalPerson: GetNaturalPersonInput): SenderModel!
   getTypeOfMaintenance(id: String): TypeOfMaintenanceModel!
+  getVehicle(plate: String, vehicleId: String): VehicleCarModel!
   getVehicleBodyworkModel(id: String, name: String): VehicleBodyworkModel!
   getVehicleBrand(id: String, name: String): VehicleBrandModel!
   getVehicleModel(id: String, name: String): VehicleModelGraphql!
