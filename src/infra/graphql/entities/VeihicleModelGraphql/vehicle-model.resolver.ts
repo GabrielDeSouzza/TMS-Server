@@ -55,6 +55,8 @@ export class VehicleModelResolver {
 
   @Query(() => VehicleModelGraphql)
   async getVehicleModel(@Args() request: GetVehicleModelArgs) {
+    console.log(request);
+
     return await this.vehicleModelUseCase.getModel(request);
   }
 

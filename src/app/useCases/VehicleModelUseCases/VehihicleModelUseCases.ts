@@ -57,7 +57,9 @@ export class VehicleModelUseCases {
       throw new GraphQLError('IS NECESSARY AN ID OR MODEL NAME', {
         extensions: { code: HttpStatus.BAD_REQUEST },
       });
+
     const model = await this.vehicleModelRepository.findVehicleModel(request);
+
     if (model) return model;
 
     throw new GraphQLError('MODEL NOT FOUND', {
@@ -104,7 +106,9 @@ export class VehicleModelUseCases {
     return this.vehicleModelRepository.createVehicleModel(modelEntity);
   }
   async updateModel(id: string, data: UpdateVehicleModelDTO) {
-    const modelExist = await this.getModel({ name: data.name });
+    const modelExist = await this.vehicleModelRepository.findVehicleModel({
+      name: data.name,
+    });
 
     if (modelExist) {
       throw new GraphQLError('NAME ALREADY IN USE', {

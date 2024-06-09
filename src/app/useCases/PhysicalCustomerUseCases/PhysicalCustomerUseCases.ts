@@ -57,15 +57,15 @@ export class PhysicalCustomerUseCases {
         'IS NECESSARY AN ID, CPF, RG OR NATURALPERSON ID',
         { extensions: { code: HttpStatus.BAD_REQUEST } },
       );
-    const physicalCustomerOrder =
+    const physicalCustomer =
       await this.physicalCustomerRepository.findPhysicalCustomer(request);
     console.log(request);
-    if (!physicalCustomerOrder)
-      throw new GraphQLError('ORDER NOT FOUND', {
+    if (!physicalCustomer)
+      throw new GraphQLError('Physical Customer  NOT FOUND', {
         extensions: { code: HttpStatus.NOT_FOUND },
       });
 
-    return physicalCustomerOrder;
+    return physicalCustomer;
   }
   async getAllPhysicalCustomer(request: GetAllPhysicalCustomerDTO) {
     return this.physicalCustomerRepository.findAllPhysicalCustomer(request);
