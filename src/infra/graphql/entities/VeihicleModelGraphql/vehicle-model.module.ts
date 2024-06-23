@@ -21,5 +21,6 @@ import { VehicleModelResolver } from './vehicle-model.resolver';
     VehicleModelResolver,
     VehicleModelUseCases,
   ],
+  exports: [VehicleModelUseCases],
 })
 export class VehicleModelModule {}

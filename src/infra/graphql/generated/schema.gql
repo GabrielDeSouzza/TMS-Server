@@ -3782,7 +3782,7 @@ input VehicleBrandWhereInput {
 
 type VehicleCarModel {
   VehicleBrand: VehicleBrandReferences!
-  VehicleModel: VehicleModelReferences!
+  VehicleModel: VehicleModelReferences
   VehicleType: VehicleTypeModel!
   antt: String!
   color: String!

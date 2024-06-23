@@ -31,7 +31,7 @@ export class VehicleCarModel implements IVehicle {
   updatedUser: UserModelRefereces;
   @Field(() => UserModelRefereces)
   createdUser: UserModelRefereces;
-  @Field(() => VehicleModelReferences)
+  @Field(() => VehicleModelReferences, { nullable: true })
   VehicleModel: VehicleModelReferences;
   @Field(() => VehicleBrandReferences)
   VehicleBrand: VehicleBrandReferences;
