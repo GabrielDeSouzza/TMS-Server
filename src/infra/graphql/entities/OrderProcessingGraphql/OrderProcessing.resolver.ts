@@ -82,6 +82,7 @@ export class OrderProcessingResolver {
 
     return this.orderProcessingUseCase.updateOrderProcessing(id, data);
   }
+
   @Mutation(() => [OrderProcessingModel])
   async updateManyOrderProcessing(
     @Args({ name: 'data', type: () => [OrderProcessingUpdateManyInput] })
@@ -101,6 +102,16 @@ export class OrderProcessingResolver {
     ids: string[],
   ) {
     return this.orderProcessingUseCase.deleteManyOrderProcessing(ids);
+  }
+
+  @Mutation(() => OrderProcessingModel)
+  async completedOrder(
+    @Args()
+    data: GetOrderProcessingArgs,
+    @CurrentUser()
+    user: User,
+  ) {
+    return this.orderProcessingUseCase.completedOrder(data, user.id);
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() orderProcessing: OrderProcessingInput) {

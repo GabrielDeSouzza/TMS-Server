@@ -8,6 +8,7 @@ import {
   type CountFreightIncidentWhereRequestDTO,
 } from 'domain/dto/repositories/whereDtos/FreightIncidentRepository.Dto';
 import { Incident } from 'domain/entities/OrdersEntities/IncidentEntity/Incident';
+import { OrderProcessing } from 'domain/entities/OrdersEntities/OrderProcessing/OrderProcessing';
 import { IncidentRepository } from 'domain/repositories/IncidentResitory';
 
 import { type CreateIncidentDTO } from 'app/dtos/IncidentDto/CreateIncidentDto';
@@ -45,13 +46,35 @@ export class IncidentUseCases {
     return this.incidentRepository.findAllIncident(request);
   }
   async createIncident(data: CreateIncidentDTO) {
-    await this.orderProcessing.getOrderProcessing({
+    const order = await this.orderProcessing.getOrderProcessing({
       id: data.order_process_id,
     });
-
-    const newExpense = new Incident({
-      ...data,
+    const orderProcesingEntity = new OrderProcessing({
+      created_by: undefined,
+      driver_id: undefined,
+      order_processing_number: undefined,
+      start_at: undefined,
+      status: 'IN_INCIDENT',
+      total_distance: undefined,
+      total_spend_liters: undefined,
+      total_spending_money: undefined,
+      updated_by: data.updated_by,
+      vehicle_id: undefined,
+      created_at: undefined,
+      disconnect_legal_order: undefined,
+      disconnect_physical_customer_order: undefined,
+      end_at: undefined,
+      id: undefined,
+      legal_customer_order_ids: undefined,
+      physical_customer_order_ids: undefined,
+      updated_at: new Date(),
     });
+
+    await this.orderProcessing.updateOrderProcessing(
+      order.id,
+      orderProcesingEntity,
+    );
+    const newExpense = new Incident({ ...data });
 
     return this.incidentRepository.createIncident(newExpense);
   }

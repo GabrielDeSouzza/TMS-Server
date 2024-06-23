@@ -15,8 +15,6 @@ export abstract class OrderProcessingModel implements IOrderProcessing {
   order_processing_number: string;
 
   @Field()
-  order_processing: string;
-  @Field()
   id: string;
   @Field(() => Date)
   updated_at: Date;
@@ -32,7 +30,7 @@ export abstract class OrderProcessingModel implements IOrderProcessing {
   total_spending_money: number;
   @Field(() => Date)
   start_at: Date;
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   end_at?: Date;
   @Field()
   driver_id: string;

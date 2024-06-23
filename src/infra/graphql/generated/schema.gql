@@ -1570,6 +1570,7 @@ input ManifestWhereInput {
 }
 
 type Mutation {
+  completedOrder(id: String, order_processing: String, vehicleData: GetVehicleTypeArgs): OrderProcessingModel!
   createCarrierCompany(data: CarrierCompanyInput!): CarrierCompanyModel!
   createCiotForLegalClient(ciotForLegalClientInput: CiotForLegalClientInput!): CiotForLegalClientModel!
   createCompanyVehicle(CompanyVehicleInput: CompanyVehicleInput!): CompanyVehicleIModel!
@@ -1952,9 +1953,8 @@ type OrderProcessingModel {
   created_at: Timestamp!
   created_by: String!
   driver_id: String!
-  end_at: Timestamp!
+  end_at: Timestamp
   id: String!
-  order_processing: String!
   order_processing_number: String!
   start_at: Timestamp!
   status: StatusOrder!

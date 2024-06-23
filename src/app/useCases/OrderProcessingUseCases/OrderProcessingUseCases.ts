@@ -113,21 +113,21 @@ export class OrderProcessingUseCases {
       await this.vehicleUseCase.getVehicle({
         vehicleId: data.vehicle_id,
       });
-    if (data.legal_customer_order_ids.length > 0)
+    if (data?.legal_customer_order_ids?.length > 0)
       for (const legalOrderId of data.legal_customer_order_ids)
         await this.legalClientOrderUseCase.getLegalClientOrder({
           id: legalOrderId,
         });
-    if (data.physical_customer_order_ids.length > 0)
+    if (data?.physical_customer_order_ids?.length > 0)
       for (const physicalCustomerId of data.legal_customer_order_ids)
         await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
           id: physicalCustomerId,
         });
-    if (data.disconnect_legal_order)
+    if (data?.disconnect_legal_order)
       await this.legalClientOrderUseCase.getLegalClientOrder({
         id: data.disconnect_legal_order,
       });
-    else if (data.disconnect_physical_customer_order)
+    else if (data?.disconnect_physical_customer_order)
       await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
         id: data.disconnect_physical_customer_order,
       });
@@ -208,6 +208,54 @@ export class OrderProcessingUseCases {
 
     return this.orderProcessingResitory.deleteManyOrderProcessing(ids);
   }
+
+  async completedOrder(data: GetOrderProcessingDTO, updatedBy: string) {
+    if (!data.id && !data.order_processing_number && !data.vehicleData)
+      throw new GraphQLError(
+        'IS NECESSARY AN ID, ORDER PROCESSING NUMBER OR VEHICLE DATA',
+        {
+          extensions: { code: HttpStatus.BAD_REQUEST },
+        },
+      );
+    const orderProcessing =
+      await this.orderProcessingResitory.findOrderProcessing(data);
+
+    if (!orderProcessing)
+      throw new GraphQLError('ORDER PROCESSING FOR NOT FOUND', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+
+    if (orderProcessing.status == 'COMPLETE')
+      throw new GraphQLError('ORDER PROCESSING HAS ALREADY BEEN COMPLETED', {
+        extensions: { code: HttpStatus.NOT_FOUND },
+      });
+    const orderProcesingEntity = new OrderProcessing({
+      created_by: undefined,
+      driver_id: undefined,
+      order_processing_number: undefined,
+      start_at: undefined,
+      status: 'COMPLETE',
+      total_distance: undefined,
+      total_spend_liters: undefined,
+      total_spending_money: undefined,
+      updated_by: updatedBy,
+      vehicle_id: undefined,
+      created_at: undefined,
+      disconnect_legal_order: undefined,
+      disconnect_physical_customer_order: undefined,
+      end_at: undefined,
+      id: undefined,
+      legal_customer_order_ids: undefined,
+      physical_customer_order_ids: undefined,
+      updated_at: new Date(),
+    });
+
+    return this.orderProcessingResitory.updateOrderProcessing(
+      orderProcessing.id,
+      orderProcesingEntity,
+    );
+  }
+
   private async verifyOrderProcessingExist(id: string) {
     const exist = await this.orderProcessingResitory.findOrderProcessing({
       id,

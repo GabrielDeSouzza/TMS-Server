@@ -56,14 +56,14 @@ export class OrderProcessingPrismaDTO {
 
   public static EntityToPrismaUpdate(orderProcessing: OrderProcessing) {
     const orderprocessingUptate: Prisma.OrderProcessingUpdateInput = {
-      end_at: orderProcessing.end_at,
+      end_at: orderProcessing?.end_at,
 
-      start_at: orderProcessing.start_at,
-      total_distance: orderProcessing.total_distance,
-      total_spend_liters: orderProcessing.total_spend_liters,
-      total_spending_money: orderProcessing.total_spending_money,
-      updated_at: orderProcessing.updated_at,
-      status: orderProcessing.status,
+      start_at: orderProcessing?.start_at,
+      total_distance: orderProcessing?.total_distance,
+      total_spend_liters: orderProcessing?.total_spend_liters,
+      total_spending_money: orderProcessing?.total_spending_money,
+      updated_at: orderProcessing?.updated_at,
+      status: orderProcessing?.status,
       LegalClientOrder: {
         connect:
           orderProcessing.legal_customer_order_ids?.length > 0
@@ -71,29 +71,29 @@ export class OrderProcessingPrismaDTO {
                 id: legalOrderId,
               }))
             : undefined,
-        disconnect: orderProcessing.disconnect_legal_order
-          ? { id: orderProcessing.disconnect_legal_order }
+        disconnect: orderProcessing?.disconnect_legal_order
+          ? { id: orderProcessing?.disconnect_legal_order }
           : undefined,
       },
 
       PhysicalCustomerOrder: {
         connect:
           orderProcessing.physical_customer_order_ids?.length > 0
-            ? orderProcessing.physical_customer_order_ids.map(
+            ? orderProcessing.physical_customer_order_ids?.map(
                 physicalCustomerId => ({ id: physicalCustomerId }),
               )
             : undefined,
-        disconnect: orderProcessing.disconnect_physical_customer_order
-          ? { id: orderProcessing.disconnect_physical_customer_order }
+        disconnect: orderProcessing?.disconnect_physical_customer_order
+          ? { id: orderProcessing?.disconnect_physical_customer_order }
           : undefined,
       },
 
       Vehicle: {
-        connect: orderProcessing.vehicle_id
-          ? { id: orderProcessing.vehicle_id }
+        connect: orderProcessing?.vehicle_id
+          ? { id: orderProcessing?.vehicle_id }
           : undefined,
       },
-      OwnDriver: orderProcessing.driver_id
+      OwnDriver: orderProcessing?.driver_id
         ? {
             connect: { id: orderProcessing.driver_id },
           }
