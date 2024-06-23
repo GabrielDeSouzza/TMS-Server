@@ -2609,6 +2609,12 @@ input PhysicalCustomerCteInput {
   orderId: String!
 }
 
+input PhysicalCustomerCteListRelationFilter {
+  every: PhysicalCustomerCteWhereInput
+  none: PhysicalCustomerCteWhereInput
+  some: PhysicalCustomerCteWhereInput
+}
+
 type PhysicalCustomerCteModel {
   acessKey: String!
   cteNumber: String!
@@ -2616,6 +2622,10 @@ type PhysicalCustomerCteModel {
   id: String!
   observations: String
   orderId: String!
+}
+
+input PhysicalCustomerCteOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input PhysicalCustomerCteOrderByWithRelationInput {
@@ -2742,7 +2752,7 @@ input PhysicalCustomerOrderOrderByWithRelationInput {
   FreightExpenses: FreightExpensesOrderByRelationAggregateInput
   OrderProcessing: OrderProcessingOrderByWithRelationInput
   PhysicalCustomer: PhysicalCustomerOrderByWithRelationInput
-  PhysicalCustomerCte: PhysicalCustomerCteOrderByWithRelationInput
+  PhysicalCustomerCte: PhysicalCustomerCteOrderByRelationAggregateInput
   PhysicalCustomerQuoteTable: PhysicalCustomerQuoteTableOrderByWithRelationInput
   UpdatedBy: UserOrderByWithRelationInput
   carrier_id: SortOrder
@@ -2785,7 +2795,7 @@ input PhysicalCustomerOrderWhereInput {
   OR: [PhysicalCustomerOrderWhereInput!]
   OrderProcessing: OrderProcessingWhereInput
   PhysicalCustomer: PhysicalCustomerWhereInput
-  PhysicalCustomerCte: PhysicalCustomerCteWhereInput
+  PhysicalCustomerCte: PhysicalCustomerCteListRelationFilter
   PhysicalCustomerQuoteTable: PhysicalCustomerQuoteTableWhereInput
   UpdatedBy: UserWhereInput
   carrier_id: StringFilter

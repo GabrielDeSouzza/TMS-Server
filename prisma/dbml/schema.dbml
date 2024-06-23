@@ -414,13 +414,13 @@ Table physical_orders {
   completedOrdersId String
   PhysicalCustomerQuoteTable physical_customer_quote [not null]
   quote_table_id String [not null]
-  PhysicalCustomerCte physical_customer_cte
+  PhysicalCustomerCte physical_customer_cte [not null]
   FreightExpenses freight_expenses [not null]
 }
 
 Table physical_customer_cte {
   id String [pk]
-  order_id String [unique, not null]
+  order_id String [not null]
   PhysicalCustomerOrder physical_orders [not null]
   access_key String [not null]
   type_cte String [not null]
@@ -880,7 +880,7 @@ Ref: physical_orders.order_processing_id > order_procesing.id
 
 Ref: physical_orders.quote_table_id > physical_customer_quote.id
 
-Ref: physical_customer_cte.order_id - physical_orders.id
+Ref: physical_customer_cte.order_id > physical_orders.id
 
 Ref: sender.legal_person_id - legal_people.id
 

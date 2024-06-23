@@ -491,7 +491,7 @@ model PhysicalCustomerOrder {
   completedOrdersId          String?
   PhysicalCustomerQuoteTable PhysicalCustomerQuoteTable @relation(fields: [quote_table_id], references: [id])
   quote_table_id             String
-  PhysicalCustomerCte        PhysicalCustomerCte?
+  PhysicalCustomerCte        PhysicalCustomerCte[]
   FreightExpenses            FreightExpenses[]
 
   @@map("physical_orders")
@@ -499,7 +499,7 @@ model PhysicalCustomerOrder {
 
 model PhysicalCustomerCte {
   id                    String                @id @default(uuid())
-  order_id              String                @unique
+  order_id              String
   PhysicalCustomerOrder PhysicalCustomerOrder @relation(fields: [order_id], references: [id])
   access_key            String
   type_cte              String
