@@ -1994,8 +1994,8 @@ input OrderProcessingOrderByWithRelationInput {
 }
 
 input OrderProcessingUpdateInput {
-  disconnect_legal_client_order: String
-  disconnect_physical_customer_order: String
+  disconnect_legal_client_order: [String!]
+  disconnect_physical_customer_order: [String!]
   driver_id: String
   end_at: Timestamp
   legal_customer_order_ids: [String!]
@@ -2009,8 +2009,8 @@ input OrderProcessingUpdateInput {
 }
 
 input OrderProcessingUpdateManyInput {
-  disconnect_legal_client_order: String
-  disconnect_physical_customer_order: String
+  disconnect_legal_client_order: [String!]
+  disconnect_physical_customer_order: [String!]
   driver_id: String
   end_at: Timestamp
   id: String!

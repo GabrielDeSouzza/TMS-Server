@@ -57,7 +57,7 @@ export class LegalClientOrder extends Entity {
       throw new NotificationError(errors);
     }
 
-    this.totolExpense = props.expenses.reduce(
+    this.totolExpense = props.expenses?.reduce(
       (total, expense) => total + expense.value,
       0,
     );
@@ -121,7 +121,7 @@ export class LegalClientOrder extends Entity {
   }
   public set expenses(expenses: IExpense[]) {
     this.props.expenses = expenses;
-    this.totolExpense = expenses.reduce(
+    this.totolExpense = expenses?.reduce(
       (total, expense) => total + expense.value,
       0,
     );

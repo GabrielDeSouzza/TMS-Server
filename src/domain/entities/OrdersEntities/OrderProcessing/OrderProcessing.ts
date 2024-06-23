@@ -12,8 +12,8 @@ export interface IOrderProcessing {
   order_processing_number: string;
   legal_customer_order_ids?: string[];
   physical_customer_order_ids?: string[];
-  disconnect_legal_order?: string;
-  disconnect_physical_customer_order?: string;
+  disconnect_legal_order?: string[];
+  disconnect_physical_customer_order?: string[];
   total_spend_liters: number;
   total_spending_money: number;
   status: string;
@@ -179,11 +179,11 @@ export class OrderProcessing extends Entity {
     this.props.legal_customer_order_ids = legal_customer_order_ids;
   }
 
-  get disconnect_legal_order(): string {
+  get disconnect_legal_order(): string[] {
     return this.props.disconnect_legal_order;
   }
 
-  set disconnect_legal_order(disconnect_legal_order: string) {
+  set disconnect_legal_order(disconnect_legal_order: string[]) {
     this.props.disconnect_legal_order = disconnect_legal_order;
   }
 
@@ -195,12 +195,12 @@ export class OrderProcessing extends Entity {
     this.props.physical_customer_order_ids = physical_customer_order_ids;
   }
 
-  get disconnect_physical_customer_order(): string {
+  get disconnect_physical_customer_order(): string[] {
     return this.props.disconnect_physical_customer_order;
   }
 
   set disconnect_physical_customer_order(
-    disconnect_physical_customer_order: string,
+    disconnect_physical_customer_order: string[],
   ) {
     this.props.disconnect_physical_customer_order =
       disconnect_physical_customer_order;

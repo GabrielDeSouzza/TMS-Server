@@ -123,14 +123,7 @@ export class OrderProcessingUseCases {
         await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
           id: physicalCustomerId,
         });
-    if (data?.disconnect_legal_order)
-      await this.legalClientOrderUseCase.getLegalClientOrder({
-        id: data.disconnect_legal_order,
-      });
-    else if (data?.disconnect_physical_customer_order)
-      await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
-        id: data.disconnect_physical_customer_order,
-      });
+
     const orderProcesingEntity = new OrderProcessing({
       physical_customer_order_ids: data.physical_customer_order_ids,
       legal_customer_order_ids: data.legal_customer_order_ids,

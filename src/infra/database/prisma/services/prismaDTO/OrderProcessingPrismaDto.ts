@@ -71,8 +71,10 @@ export class OrderProcessingPrismaDTO {
                 id: legalOrderId,
               }))
             : undefined,
-        disconnect: orderProcessing?.disconnect_legal_order
-          ? { id: orderProcessing?.disconnect_legal_order }
+        disconnect: orderProcessing?.legal_customer_order_ids
+          ? orderProcessing.legal_customer_order_ids.map(physicalOrderId => ({
+              id: physicalOrderId,
+            }))
           : undefined,
       },
 
@@ -84,7 +86,11 @@ export class OrderProcessingPrismaDTO {
               )
             : undefined,
         disconnect: orderProcessing?.disconnect_physical_customer_order
-          ? { id: orderProcessing?.disconnect_physical_customer_order }
+          ? orderProcessing.disconnect_physical_customer_order.map(
+              physicalOrderId => ({
+                id: physicalOrderId,
+              }),
+            )
           : undefined,
       },
 

@@ -35,6 +35,8 @@ export class PhysicalCustomerOrderUseCases {
     );
   }
   async getPhysicalCustomerOrder(request: GetPhysicalCustomerOrderDTO) {
+    console.log(request);
+
     if (!request.id && !request.order) {
       throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
         extensions: { code: HttpStatus.BAD_REQUEST },

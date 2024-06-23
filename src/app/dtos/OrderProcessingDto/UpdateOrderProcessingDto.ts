@@ -10,8 +10,8 @@ export abstract class UpdateOrderProcessingDTO
   end_at?: Date;
   status?: string;
   order_processing_number?: string;
-  disconnect_legal_order?: string;
-  disconnect_physical_customer_order?: string;
+  disconnect_legal_order?: string[];
+  disconnect_physical_customer_order?: string[];
   vehicle_id?: string;
   updated_at?: Date;
   updated_by: string;
