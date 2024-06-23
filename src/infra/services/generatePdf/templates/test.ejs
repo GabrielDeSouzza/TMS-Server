@@ -1,7 +1,8 @@
 <style>
   tr, td{
     border: 1px solid;
-    padding-left: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
     margin: 0;
   }
 table{
@@ -15,441 +16,428 @@ img{
   height: 40px;
 }
 </style>
-<div style=>
-  <div style="float: left; width: 45%; margin: 0; padding: 0; height: 50%;">
-    <table>
-      <tbody >
-        <tr style="column-span: 3; ;">
-          <td style="width: 70%; height: 20px;">
-            <img src="https://res.cloudinary.com/dqifr2lrr/image/upload/v1716767616/wolves/Icons/cpjiinyn5g7tvoexrbfz.png" alt="" style="width: 100%; height: 100px; ">
-          </td>
-          <td colspan="3" style="width: 30%; " ;>
-            <span>Transportadora: <%= carrierCompany.fantasy_name %></span>
+
+<div style="display: flex; width: 100%; height: 100%;">
+  <table style="width: 45%; margin: 0; padding: 0; height: 50%; font-size: 10px;">
+    <tbody >
+      <tr style="column-span: 3; ;">
+        <td style="width: 70%; height: 20px;">
+          <img src="https://res.cloudinary.com/dqifr2lrr/image/upload/v1716767616/wolves/Icons/cpjiinyn5g7tvoexrbfz.png" alt="" style="width: 95px; height: 95px; margin-left: 45px;">
+        </td>
+        <td colspan="3" style="width: 30%; " ;>
+          <span>Transportadora: <%= carrierCompany.fantasy_name %></span>
+          <br>
+          <span>CNPJ: <%= carrierCompany.cnpj %></span>
+          <br>
+          <span>Inscrição Estatual: <%= carrierCompany.state_registration %></span>
+          <br>
+          <span>
+            Endereço:
+            Rua: <%= carrierCompany.public_place %>
             <br>
-            <span>CNPJ: <%= carrierCompany.cnpj %></span>
+            Numero: <%= carrierCompany.adress_number %>
             <br>
-            <span>Inscrição Estatual: <%= carrierCompany.state_registration %></span>
+            Bairro: <%= carrierCompany.neighborhood %>
             <br>
-            <span>
-              Endereço:
-              Rua: <%= carrierCompany.public_place %>
-              <br>
-              Numero: <%= carrierCompany.adress_number %>
-              <br>
-              Bairro: <%= carrierCompany.neighborhood %>
-              <br>
-              CEP: <%= carrierCompany.cep %>
-              <br>
-              Cidede: <%= carrierCompany.city %>
-              <br>
-              Estado: <%= carrierCompany.uf %>
-              <br>
-              Telefone: <%= carrierCompany.first_phone %>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            TIPO DO CT-E
+            CEP: <%= carrierCompany.cep %>
             <br>
-            <%= cteData.cteType %>
-          </td>
-          <td>
-            TIPO DO SERVIÇO
+            Cidede: <%= carrierCompany.city %>
             <br>
-            <%= quoteData.kindService %>
-          </td>
-          <td>
-            NATURUREZA DA PRESTAÇÃO
+            Estado: <%= carrierCompany.uf %>
             <br>
-            Transporte Rodoviário de Cargas
-          </td>
-        </tr>
-        <tr>
-          <td>
-            Origem:
-            <br>
-            <%= quoteData.adressOrigin.city %> / <%= quoteData.adressOrigin.uf %>
-          </td>
-          <td> Destino:
-            <br>
-            <%= quoteData.adressDestiny.city %> / <%= quoteData.adressDestiny.uf %>
-          <td>
-            Emitido por
-            <br>
-            <%= carrierCompany.fantasy_name %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <% if ( typeof legalClient != "undefined") { %>
-            REMETENTE: <%= legalClient.corporate_name %>
-            <br>
-            END: <%= legalClient.public_place %>
-            <%= legalClient.address_number %>
-            <%= legalClient.neighborhood %>
-            <br>
-            MUN: <%= legalClient.city %> - <%= legalClient.uf %> CEP: <%= legalClient.cep %>
-            <br>
-            CNPJ: <%= legalClient.cnpj %> IE: <%= legalClient.state_registration %> FONE: <%= legalClient.first_phone %>
-            <% } else { %>
-            REMETENTE: <%= physicalCustomer.name %>
-            <br>
-            END: <%= physicalCustomer.public_place %>
-            <%= physicalCustomer.address_number %>
-            <%= physicalCustomer.neighborhood %>
-            <br>
-            MUN: <%= physicalCustomer.city %> - <%= physicalCustomer.uf %> CEP: <%= physicalCustomer.cep %>
-            <br>
-            FONE: <%= physicalCustomer.first_phone %>
-            <% } %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <% if ( recipientLegalPerson ) { %>
-            DESTINATARIO: <%= recipientLegalPerson.corporate_name %>
-            <br>
-            END: <%= recipientLegalPerson.public_place %>
-            <%= recipientLegalPerson.address_number %>
-            <%= recipientLegalPerson.neighborhood %>
-            <br>
-            MUN: <%= recipientLegalPerson.city %> - <%= recipientLegalPerson.uf %> <%= recipientLegalPerson.cep %>
-            <br>
-            CNPJ: <%= recipientLegalPerson.cnpj %> IE: <%= recipientLegalPerson.state_registration %>
-            FONE: <%= recipientLegalPerson.first_phone %>
-            <% } else { %>
-            DESTINATARIO: <%= recipientNaturalPerson.name %>
-            <br>
-            END: <%= recipientNaturalPerson.public_place %>
-            <%= recipientNaturalPerson.address_number %>
-            <%= recipientNaturalPerson.neighborhood %>
-            <br>
-            MUN: <%= recipientNaturalPerson.city %> - <%= recipientNaturalPerson.uf %>
-            CEP: <%= recipientNaturalPerson.cep %>
-            <br>
-            CPF: <%= recipientNaturalPerson.cpf %>  FONE: <%= recipientNaturalPerson.first_phone %>
-            <% } %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <% if ( senderLegalPerson ) { %>
-            RECEBEDOR: <%= senderLegalPerson.corporate_name %>
+            Telefone: <%= carrierCompany.first_phone %>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          TIPO DO CT-E
+          <br>
+          <%= cteData.cteType %>
+        </td>
+        <td>
+          TIPO DO SERVIÇO
+          <br>
+          <%= quoteData.kindService %>
+        </td>
+        <td>
+          NATURUREZA DA PRESTAÇÃO
+          <br>
+          Transporte Rodoviário de Cargas
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Origem:
+          <br>
+          <%= quoteData.adressOrigin.city %> / <%= quoteData.adressOrigin.uf %>
+        </td>
+        <td> Destino:
+          <br>
+          <%= quoteData.adressDestiny.city %> / <%= quoteData.adressDestiny.uf %>
+        <td>
+          Emitido por
+          <br>
+          <%= carrierCompany.fantasy_name %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <% if ( typeof legalClient != "undefined") { %>
+          REMETENTE: <%= legalClient.corporate_name %>
+          <br>
+          END: <%= legalClient.public_place %>
+          <%= legalClient.address_number %>
+          <%= legalClient.neighborhood %>
+          <br>
+          MUN: <%= legalClient.city %> - <%= legalClient.uf %> CEP: <%= legalClient.cep %>
+          <br>
+          CNPJ: <%= legalClient.cnpj %> IE: <%= legalClient.state_registration %> FONE: <%= legalClient.first_phone %>
+          <% } else { %>
+          REMETENTE: <%= physicalCustomer.name %>
+          <br>
+          END: <%= physicalCustomer.public_place %>
+          <%= physicalCustomer.address_number %>
+          <%= physicalCustomer.neighborhood %>
+          <br>
+          MUN: <%= physicalCustomer.city %> - <%= physicalCustomer.uf %> CEP: <%= physicalCustomer.cep %>
+          <br>
+          FONE: <%= physicalCustomer.first_phone %>
+          <% } %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <% if ( recipientLegalPerson ) { %>
+          DESTINATARIO: <%= recipientLegalPerson.corporate_name %>
+          <br>
+          END: <%= recipientLegalPerson.public_place %>
+          <%= recipientLegalPerson.address_number %>
+          <%= recipientLegalPerson.neighborhood %>
+          <br>
+          MUN: <%= recipientLegalPerson.city %> - <%= recipientLegalPerson.uf %> <%= recipientLegalPerson.cep %>
+          <br>
+          CNPJ: <%= recipientLegalPerson.cnpj %> IE: <%= recipientLegalPerson.state_registration %>
+          FONE: <%= recipientLegalPerson.first_phone %>
+          <% } else { %>
+          DESTINATARIO: <%= recipientNaturalPerson.name %>
+          <br>
+          END: <%= recipientNaturalPerson.public_place %>
+          <%= recipientNaturalPerson.address_number %>
+          <%= recipientNaturalPerson.neighborhood %>
+          <br>
+          MUN: <%= recipientNaturalPerson.city %> - <%= recipientNaturalPerson.uf %>
+          CEP: <%= recipientNaturalPerson.cep %>
+          <br>
+          CPF: <%= recipientNaturalPerson.cpf %>  FONE: <%= recipientNaturalPerson.first_phone %>
+          <% } %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <% if ( senderLegalPerson ) { %>
+          RECEBEDOR: <%= senderLegalPerson.corporate_name %>
+          <br>
+          END: <%= senderLegalPerson.public_place %>
+          <%= senderLegalPerson.address_number %>
+          <%= senderLegalPerson.neighborhood %>
+          <br>
+          MUN: <%= senderLegalPerson.city %> - <%= senderLegalPerson.uf %> CEP:  <%= senderLegalPerson.cep %>
+          <br>
+          CNPJ: <%= senderLegalPerson.cnpj %> IE: <%= senderLegalPerson.state_registration %> FONE: <%= senderLegalPerson.first_phone %>
+          <% } else { %>
+          RECEBEDOR: <%= senderNaturalPerson.name %>
+          <br>
+          END: <%= senderNaturalPerson.public_place %>
+          <%= senderNaturalPerson.address_number %>
+          <%= senderNaturalPerson.neighborhood %>
+          <br>
+          MUN: <%= senderNaturalPerson.city %> - <%= senderNaturalPerson.uf %> CEP: <%= senderNaturalPerson.cep %>
+          <br>
+          CPF <%= senderNaturalPerson.cpf %> FONE: <%= senderNaturalPerson.first_phone %>
+          <% } %>
+        </td>
+
+      </tr>
+      <tr>
+        <td colspan="3">
+
+          <% if ( typeof legalClient == "undefined" && quoteData.who_pays == "SERVICE_TAKER" ) { %>
+          TOMADOR: <%= legalClient.corporate_name %>
+          <br>
+          END: <%= legalClient.public_place %>
+          <%= legalClient.address_number %>
+          <%= legalClient.neighborhood %>
+          <br>
+          MUN: <%= legalClient.city %> - <%= legalClient.uf %> CEP: <%= legalClient.cep %>
+          <br>
+          CNPJ: <%= legalClient.cnpj %> IE: <%= legalClient.state_registration %> FONE: <%= legalClient.first_phone %>
+            <% } else if ( typeof  physicalCustomer  != "undefined"  && quoteData.who_pays == "SERVICE_TAKER" ) { %>
+          TOMADOR: <%= physicalCustomer.name %>
+          <br>
+          END: <%= physicalCustomer.public_place %>
+          <%= physicalCustomer.address_number %>
+          <%= physicalCustomer.neighborhood %>
+          <br>
+          MUN: <%= physicalCustomer.city %> - <%= physicalCustomer.uf %> CEP: <%= physicalCustomer.cep %>
+          <br>
+          CPF: <%= physicalCustomer.cpf %> FONE: <%= physicalCustomer.first_phone %>
+          <% } else if (  senderLegalPerson  && quoteData.who_pays == "SENDER"  ) { %>
+            TOMADOR: <%= senderLegalPerson.corporate_name %>
             <br>
             END: <%= senderLegalPerson.public_place %>
             <%= senderLegalPerson.address_number %>
             <%= senderLegalPerson.neighborhood %>
             <br>
-            MUN: <%= senderLegalPerson.city %> - <%= senderLegalPerson.uf %> CEP:  <%= senderLegalPerson.cep %>
+            MUN: <%= senderLegalPerson.city %> - <%= senderLegalPerson.uf %> CEP: <%= senderLegalPerson.cep %>
             <br>
-            CNPJ: <%= senderLegalPerson.cnpj %> IE: <%= senderLegalPerson.state_registration %> FONE: <%= senderLegalPerson.first_phone %>
-            <% } else { %>
-            RECEBEDOR: <%= senderNaturalPerson.name %>
-            <br>
-            END: <%= senderNaturalPerson.public_place %>
-            <%= senderNaturalPerson.address_number %>
-            <%= senderNaturalPerson.neighborhood %>
-            <br>
-            MUN: <%= senderNaturalPerson.city %> - <%= senderNaturalPerson.uf %> CEP: <%= senderNaturalPerson.cep %>
-            <br>
-            CPF <%= senderNaturalPerson.cpf %> FONE: <%= senderNaturalPerson.first_phone %>
-            <% } %>
-          </td>
-
-        </tr>
-        <tr>
-          <td colspan="3">
-
-            <% if ( typeof legalClient == "undefined" && quoteData.who_pays == "SERVICE_TAKER" ) { %>
-            TOMADOR: <%= legalClient.corporate_name %>
-            <br>
-            END: <%= legalClient.public_place %>
-            <%= legalClient.address_number %>
-            <%= legalClient.neighborhood %>
-            <br>
-            MUN: <%= legalClient.city %> - <%= legalClient.uf %> CEP: <%= legalClient.cep %>
-            <br>
-            CNPJ: <%= legalClient.cnpj %> IE: <%= legalClient.state_registration %> FONE: <%= legalClient.first_phone %>
-             <% } else if ( typeof  physicalCustomer  != "undefined"  && quoteData.who_pays == "SERVICE_TAKER" ) { %>
-            TOMADOR: <%= physicalCustomer.name %>
-            <br>
-            END: <%= physicalCustomer.public_place %>
-            <%= physicalCustomer.address_number %>
-            <%= physicalCustomer.neighborhood %>
-            <br>
-            MUN: <%= physicalCustomer.city %> - <%= physicalCustomer.uf %> CEP: <%= physicalCustomer.cep %>
-            <br>
-            CPF: <%= physicalCustomer.cpf %> FONE: <%= physicalCustomer.first_phone %>
-            <% } else if (  senderLegalPerson  && quoteData.who_pays == "SENDER"  ) { %>
-              TOMADOR: <%= senderLegalPerson.corporate_name %>
+            CNPJ: <%= senderLegalPerson.cnpj %> IE: <%= senderLegalPerson.state_registration  %> FONE: <%= senderLegalPerson.first_phone %>
+            <% } else if (  senderNaturalPerson  && quoteData.who_pays == "SENDER"  ) { %>
+              TOMADOR: <%= senderNaturalPerson.name %>
               <br>
-              END: <%= senderLegalPerson.public_place %>
-              <%= senderLegalPerson.address_number %>
-              <%= senderLegalPerson.neighborhood %>
+              END: <%= senderNaturalPerson.public_place %>
+              <%= senderNaturalPerson.address_number %>
+              <%= senderNaturalPerson.neighborhood %>
               <br>
-              MUN: <%= senderLegalPerson.city %> - <%= senderLegalPerson.uf %> CEP: <%= senderLegalPerson.cep %>
+              MUN: <%= senderNaturalPerson.city %> - <%= senderNaturalPerson.uf %> CEP: <%= senderNaturalPerson.cep %>
               <br>
-              CNPJ: <%= senderLegalPerson.cnpj %> IE: <%= senderLegalPerson.state_registration  %> FONE: <%= senderLegalPerson.first_phone %>
-              <% } else if (  senderNaturalPerson  && quoteData.who_pays == "SENDER"  ) { %>
-                TOMADOR: <%= senderNaturalPerson.name %>
+              CPF <%= senderNaturalPerson.cpf %> FONE: <%= senderNaturalPerson.first_phone %>
+              <% } else if (  recipientLegalPerson  && quoteData.who_pays == "RECIPIENT"  ) { %>
+                TOMADOR: <%= recipientLegalPerson.corporate_name %>
                 <br>
-                END: <%= senderNaturalPerson.public_place %>
-                <%= senderNaturalPerson.address_number %>
-                <%= senderNaturalPerson.neighborhood %>
+                END: <%= recipientLegalPerson.public_place %>
+                <%= recipientLegalPerson.address_number %>
+                <%= recipientLegalPerson.neighborhood %>
                 <br>
-                MUN: <%= senderNaturalPerson.city %> - <%= senderNaturalPerson.uf %> CEP: <%= senderNaturalPerson.cep %>
+                MUN: <%= recipientLegalPerson.city %> - <%= recipientLegalPerson.uf %> <%= recipientLegalPerson.cep %>
                 <br>
-                CPF <%= senderNaturalPerson.cpf %> FONE: <%= senderNaturalPerson.first_phone %>
-                <% } else if (  recipientLegalPerson  && quoteData.who_pays == "RECIPIENT"  ) { %>
-                  TOMADOR: <%= recipientLegalPerson.corporate_name %>
+                CNPJ: <%= recipientLegalPerson.cnpj %> IE: <%= recipientLegalPerson.state_registration %>
+                FONE: <%= recipientLegalPerson.first_phone %>
+                <% } else if (  recipientNaturalPerson && quoteData.who_pays == "RECIPIENT"  ) { %>
+                  TOMADORR: <%= recipientNaturalPerson.name %>
                   <br>
-                  END: <%= recipientLegalPerson.public_place %>
-                  <%= recipientLegalPerson.address_number %>
-                  <%= recipientLegalPerson.neighborhood %>
+                  END: <%= recipientNaturalPerson.public_place %>
+                  <%= recipientNaturalPerson.address_number %>
+                  <%= recipientNaturalPerson.neighborhood %>
                   <br>
-                  MUN: <%= recipientLegalPerson.city %> - <%= recipientLegalPerson.uf %> <%= recipientLegalPerson.cep %>
+                  MUN: <%= recipientNaturalPerson.city %> - <%= recipientNaturalPerson.uf %>
+                  CEP: <%= recipientNaturalPerson.cep %>
                   <br>
-                  CNPJ: <%= recipientLegalPerson.cnpj %> IE: <%= recipientLegalPerson.state_registration %>
-                  FONE: <%= recipientLegalPerson.first_phone %>
-                  <% } else if (  recipientNaturalPerson && quoteData.who_pays == "RECIPIENT"  ) { %>
-                    TOMADORR: <%= recipientNaturalPerson.name %>
-                    <br>
-                    END: <%= recipientNaturalPerson.public_place %>
-                    <%= recipientNaturalPerson.address_number %>
-                    <%= recipientNaturalPerson.neighborhood %>
-                    <br>
-                    MUN: <%= recipientNaturalPerson.city %> - <%= recipientNaturalPerson.uf %>
-                    CEP: <%= recipientNaturalPerson.cep %>
-                    <br>
-                    CPF: <%= recipientNaturalPerson.cpf %>  FONE: <%= recipientNaturalPerson.first_phone %>
-                    <% } else if (  carrierCompany  && quoteData.who_pays == "CARRIER"  ) { %>
-                      TOMADOR: <%= carrierCompany.corporate_name %>
-                  <br>
-                  END: <%= carrierCompany.public_place %>
-                  <%= carrierCompany.address_number %>
-                  <%= carrierCompany.neighborhood %>
-                  <br>
-                  MUN: <%= carrierCompany.city %> - <%= carrierCompany.uf %> <%= carrierCompany.cep %>
-                  <br>
-                  CNPJ: <%= carrierCompany.cnpj %> IE: <%= carrierCompany.state_registration %>
-                  FONE: <%= carrierCompany.first_phone %>
-                    <% } %>
+                  CPF: <%= recipientNaturalPerson.cpf %>  FONE: <%= recipientNaturalPerson.first_phone %>
+                  <% } else if (  carrierCompany  && quoteData.who_pays == "CARRIER"  ) { %>
+                    TOMADOR: <%= carrierCompany.corporate_name %>
+                <br>
+                END: <%= carrierCompany.public_place %>
+                <%= carrierCompany.address_number %>
+                <%= carrierCompany.neighborhood %>
+                <br>
+                MUN: <%= carrierCompany.city %> - <%= carrierCompany.uf %> <%= carrierCompany.cep %>
+                <br>
+                CNPJ: <%= carrierCompany.cnpj %> IE: <%= carrierCompany.state_registration %>
+                FONE: <%= carrierCompany.first_phone %>
+                  <% } %>
 
 
-          </td>
+        </td>
 
-        </tr>
-        <tr>
-          <td colspan="3">
-            Observações:
-            <br>
-            <%= cteData?.observations %>
-            <Br></Br>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Observações:
+          <br>
+          <%= cteData?.observations %>
+          <Br></Br>
 
-            NR: <%= cteData.cteNumber %>
-          </td>
+          NR: <%= cteData.cteNumber %>
+        </td>
 
-        </tr>
-        <tr>
-          <td>
-            TOMADOR SERVIÇO:
-            <br>
-            <%= quoteData.who_pays %>
-          </td>
-          <td>
-            COBRAR
-            <br>
-            <%= quoteData.formPayment %>
-          </td>
-          <td>
-            PREV.ENTREGA
-            <br>
-            <%= new Intl.DateTimeFormat('pt-BR').format( quoteData.created_at.setDate(
-              quoteData.created_at.getDate() + 5,
-            ))   %>
-          </td>
+      </tr>
+      <tr>
+        <td>
+          TOMADOR SERVIÇO:
+          <br>
+          <%= quoteData.who_pays %>
+        </td>
+        <td>
+          COBRAR
+          <br>
+          <%= quoteData.formPayment %>
+        </td>
+        <td>
+          PREV.ENTREGA
+          <br>
+          <%= new Intl.DateTimeFormat('pt-BR').format( quoteData.created_at.setDate(
+            quoteData.created_at.getDate() + 5,
+          ))   %>
+        </td>
 
-        </tr>
+      </tr>
 
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 
-  </div>
-  <div>
+  <table style="width: 55%; margin: 0; padding: 0; height: 50%; font-size: 13px;">
+    <tbody >
+      <tr style="column-span: 3;" >
+        <td colspan="3">
+          <h3 style="font-size: 16px; text-align: center;">D A C T E</h3>
+          <strong style="font-size: 12px; text-align: center; margin-top: 2px;">Documento Auxiliar do Conhecimento de Transporte Eletrônico</strong>
+          <br>
+        </td>
+        <td colspan="1">
+          AUTORIZAÇÃO
+          <br>
+          <%= autorizationDate.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          }); %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          SERIE
+          <br>
+          <%= quoteData.nf_serie %>
+        </td>
+        <td>
+          NUMERO
+          <br>
+          <%= quoteData.nf_number %>
+        </td>
+        <td>
+          MODELO
+          <br>
+          57
+        </td>
+        <td>
+          N°PROTOCOLO
+          <br>
+          A fazer
+        </td>
 
-  </div>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <img src="https://res.cloudinary.com/dqifr2lrr/image/upload/v1716245986/wolves/qogzs0rqspu645olrwif.png" alt="">
+          <br>
+          Chave de acesso para consulta de autenticidade no site www.cte.fazenda.gov.br
+          <br>
+          <span><%= quoteData.digital_signature %></span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="height: min-content; ">
+          COMPONENTES DE FRETE(R$)
+        </td>
+        <td colspan="2" style="height: min-content;">
+          MERCADORIA
+        </td>
 
-
-  <div style="float: right; width: 55%;  margin: 0; padding: 0;">
-    <table>
-      <tbody >
-        <tr style="column-span: 3;" >
-          <td colspan="3">
-            <h3>D A C T E</h3>
-            <br>
-            <span>Documento Auxiliar do Conhecimento de Transporte Eletrônico</span>
-            <br>
-          </td>
-          <td colspan="1">
-            AUTORIZAÇÃO
-            <br>
-            <%= autorizationDate.toLocaleDateString('pt-BR', {
-              day: '2-digit',
-              month: '2-digit',
-              year: 'numeric'
-            }); %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            SERIE
-            <br>
-            <%= quoteData.nf_serie %>
-          </td>
-          <td>
-            NUMERO
-            <br>
-            <%= quoteData.nf_number %>
-          </td>
-          <td>
-            MODELO
-            <br>
-            57
-          </td>
-          <td>
-            N°PROTOCOLO
-            <br>
-            A fazer
-          </td>
-
-        </tr>
-        <tr>
-          <td colspan="4">
-            <img src="https://res.cloudinary.com/dqifr2lrr/image/upload/v1716245986/wolves/qogzs0rqspu645olrwif.png" alt="">
-            <br>
-            Chave de acesso para consulta de autenticidade no site www.cte.fazenda.gov.br
-            <br>
-            <span><%= quoteData.digital_signature %></span>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" style="height: min-content; ">
-            COMPONENTES DE FRETE(R$)
-          </td>
-          <td colspan="2" style="height: min-content;">
-            MERCADORIA
-          </td>
-
-        </tr>
-        <tr style="width: 50%; font-size: 0.4rem; vertical-align: top;">
-          <td colspan="2" rowspan="4" style="height: 100px; ">
-            <% orderData.expenses.forEach(expense=> { %>
-            <span style="margin: 1px;">
-              <span>
-                <%= expense.expenseName %>
-              </span>
-              <span style="float: right;">
-                <%= expense.value %>
-              </span>
+      </tr>
+      <tr style="width: 50%; font-size: 0.4rem; vertical-align: top;">
+        <td colspan="2" rowspan="4" style="height: 100px; ">
+          <% orderData.expenses.forEach(expense=> { %>
+          <span style="margin: 1px;">
+            <span>
+              <%= expense.expenseName %>
             </span>
-            <br>
-            <% }) %>
-          </td>
-
-        </tr>
-        <tr style="width: 50%; font-size: 0.4rem;">
-          <td colspan="2" rowspan="1" style="height: 40px;vertical-align: top;">
-            <span style="float: left;"> PROD PREDOMIN </span>
             <span style="float: right;">
-              <%= quoteData.description %>
+              <%= expense.value %>
             </span>
-            <br>
-            <span style="float: left;">ESPECIE:</span>
-            <span style="float: right;"><%= quoteData.typeMerchandise %></span>
-            <br>
-            <span style="float: left;">VALOR MERCADORIA(R$)</span>
-            <span style="float: right;">
-              <%= quoteData.nf_value %>
-            </span>
-            <br>
-            <span style="float: left;">QTDE PARES/VOLUMES</span>
-            <span style="float: right;">
-              <%= quoteData.amount %>
-            </span>
-            <br>
-            <span style="float: left;">CUBAG(m3)</span>
-            <span style="float: right;">
-              <%= quoteData.volume %>
-            </span>
-            <br>
-            <span style="float: left;">PESO CALCULO (Kg)</span>
-            <span style="float: right;">
-              <%= quoteData.mass %>
-            </span>
-          </td>
+          </span>
+          <br>
+          <% }) %>
+        </td>
 
-        </tr>
-        <tr>
-          <td colspan="2" rowspan="1" style="height: min-content; font-size: 0.7em;">
-            ICMS(R$)
-          </td>
+      </tr>
+      <tr style="width: 50%; font-size: 0.4rem;">
+        <td colspan="2" rowspan="1" style="height: 40px;vertical-align: top;">
+          <span style="float: left;"> PROD PREDOMIN </span>
+          <span style="float: right;">
+            <%= quoteData.description %>
+          </span>
+          <br>
+          <span style="float: left;">ESPECIE:</span>
+          <span style="float: right;"><%= quoteData.typeMerchandise %></span>
+          <br>
+          <span style="float: left;">VALOR MERCADORIA(R$)</span>
+          <span style="float: right;">
+            <%= quoteData.nf_value %>
+          </span>
+          <br>
+          <span style="float: left;">QTDE PARES/VOLUMES</span>
+          <span style="float: right;">
+            <%= quoteData.amount %>
+          </span>
+          <br>
+          <span style="float: left;">CUBAG(m3)</span>
+          <span style="float: right;">
+            <%= quoteData.volume %>
+          </span>
+          <br>
+          <span style="float: left;">PESO CALCULO (Kg)</span>
+          <span style="float: right;">
+            <%= quoteData.mass %>
+          </span>
+        </td>
 
-        </tr>
-        <tr style="font-size: 0.4rem;">
-          <td colspan="2" rowspan="1" style="height: 40px; vertical-align: top;">
-            <span> SITUAÇÃO TRIBUTARIA</span>
-            <br>
-            <span>BASE CALCULO</span>
-            <span style="float: right;"><%= orderData.total_shipping_cost %></span>
-            <br>
-            <span>ALIQ DIFAL/ICMS(%)</span>
-            <span style="float: right;"><%= orderData.icms_tax %></span>
-            <br>
-            <span>VALOR ICMS</span>
-            <span style="float: right;"> <%= orderData.calculate_icms %></span>
-            <br>
-            <span> DIFAL ICMS ORIG/DEST</span>
-            <span style="float: right;"> 0</span>
-            <br>
-            <span> CRED PRES/ICMS ST</span>
-            <span style="float: right;"> 0</span>
-          </td>
+      </tr>
+      <tr>
+        <td colspan="2" rowspan="1" style="height: min-content; font-size: 0.7em;">
+          ICMS(R$)
+        </td>
 
-        </tr>
-        <tr>
-          <td colspan="2">
-            FRETE TOTAL(R$) <%= orderData.total_shipping_cost %>
-          </td>
-          <td colspan="2">
-            VALOR A RECEBER(R$) <%= orderData.total_receivable %>
-          </td>
-        </tr>
+      </tr>
+      <tr style="font-size: 0.4rem;">
+        <td colspan="2" rowspan="1" style="height: 40px; vertical-align: top;">
+          <span> SITUAÇÃO TRIBUTARIA</span>
+          <br>
+          <span>BASE CALCULO</span>
+          <span style="float: right;"><%= orderData.total_shipping_cost %></span>
+          <br>
+          <span>ALIQ DIFAL/ICMS(%)</span>
+          <span style="float: right;"><%= orderData.icms_tax %></span>
+          <br>
+          <span>VALOR ICMS</span>
+          <span style="float: right;"> <%= orderData.calculate_icms %></span>
+          <br>
+          <span> DIFAL ICMS ORIG/DEST</span>
+          <span style="float: right;"> 0</span>
+          <br>
+          <span> CRED PRES/ICMS ST</span>
+          <span style="float: right;"> 0</span>
+        </td>
 
-        <tr style="font-size: 0.8em;">
-          <td colspan="3">
-            DESTAQUE DE TRIBUTOS (Lei 12.741/2012) - Em R$
-          </td>
-          <td> PIX</td>
-        </tr>
-        <tr>
-          <td colspan="4">ICMS/ISS  <%= orderData.calculate_icms %> PIS: <%= orderData.calculate_pis %> COFINS: <%= orderData.calculate_cofins %> TOTAL: <%= orderData.total_tax_payable %></td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            <H5>
-              CHAVES NF-E/CT-E
-            </H5>
-          </td>
-        </tr>
+      </tr>
+      <tr>
+        <td colspan="2">
+          FRETE TOTAL(R$) <%= orderData.total_shipping_cost %>
+        </td>
+        <td colspan="2">
+          VALOR A RECEBER(R$) <%= orderData.total_receivable %>
+        </td>
+      </tr>
 
-      </tbody>
-    </table>
+      <tr style="font-size: 0.8em;">
+        <td colspan="3">
+          DESTAQUE DE TRIBUTOS (Lei 12.741/2012) - Em R$
+        </td>
+        <td> PIX</td>
+      </tr>
+      <tr>
+        <td colspan="4">ICMS/ISS  <%= orderData.calculate_icms %> PIS: <%= orderData.calculate_pis %> COFINS: <%= orderData.calculate_cofins %> TOTAL: <%= orderData.total_tax_payable %></td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <H5>
+            CHAVES NF-E/CT-E
+          </H5>
+        </td>
+      </tr>
 
-  </div>
-  <div>
-
-  </div>
+    </tbody>
+  </table>
 </div>
 
 </body>
