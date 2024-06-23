@@ -53,12 +53,6 @@ export class OrderProcessingUseCases {
     const orderProcesings =
       await this.orderProcessingResitory.findAllOrderProcessing(request);
 
-    if (orderProcesings.length === 0) {
-      throw new GraphQLError('ANY ORDER PROCESSING FOR LEGAL CLIENT FOUND', {
-        extensions: { code: HttpStatus.NOT_FOUND },
-      });
-    }
-
     return orderProcesings;
   }
 

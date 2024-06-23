@@ -61,11 +61,6 @@ export class Vehicle extends Entity {
       },
       { field: this.props.year, fieldName: 'Year', maxLength: 4 },
       {
-        field: this.props.registration,
-        fieldName: 'Registration',
-        maxLength: 100,
-      },
-      {
         field: this.props.isIpvaPaid,
         fieldName: 'IS  IPVA PAID',
         maxLength: 100,

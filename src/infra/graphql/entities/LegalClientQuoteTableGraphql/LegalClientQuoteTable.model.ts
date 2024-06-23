@@ -51,7 +51,7 @@ export class LegalClientQuoteTableModel implements ILegalClientQuoteTable {
   Recipient: RecipientModel;
   @Field(() => SenderModel)
   Sender: SenderModel;
-  @Field()
+  @Field({ nullable: true })
   icms_id?: string;
   @Field(() => IcmsModel)
   Icms: IcmsModel;

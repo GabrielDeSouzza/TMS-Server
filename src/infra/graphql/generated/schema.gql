@@ -997,7 +997,7 @@ type LegalClientQuoteTableModel {
   description: String!
   digital_signature: String!
   formPayment: String!
-  icms_id: String!
+  icms_id: String
   id: String!
   kindService: String!
   mass: Float!
