@@ -94,6 +94,7 @@ export class LegalClientOrderPrismaService
     id: string,
     legalClientOrder?: LegalClientOrder,
   ): Promise<LegalClientOrder> {
+    console.log(legalClientOrder);
     const legalClientOrderPrisma = await this.prisma.legalClientOrder.update({
       data: LegalClientOrderPrismaDTO.EntityToPrismaUpdate(legalClientOrder),
       where: { id },

@@ -87,6 +87,7 @@ export class LegalClientOrderResolver {
     legalClientOrderInput: LegalClientOrderUpdateInput,
     @CurrentUser() user: User,
   ) {
+    console.log(legalClientOrderInput);
     legalClientOrderInput.updated_by = user.id;
 
     return await this.legalClientOrdeUseCase.updateOrder(

@@ -92,16 +92,22 @@ export class LegalClientOrderUseCases {
       });
     if (data.carrier_id)
       await this.carrierCompany.getCarrierCompany({ id: data.carrier_id });
+
+    const orderExist =
+      await this.legalClientOrderRepository.findLegalClientOrder({
+        id,
+      });
     const order = new LegalClientOrder({
       legal_contract_id: data.legal_contract_id,
       carrier_id: data.carrier_id,
       updated_by: data.updated_by,
       created_by: data.updated_by,
-      quote_table_id: data.legal_contract_id,
+      quote_table_id: data.quote_table_id,
       total_receivable: data.total_receivable,
       total_shipping_cost: data.total_shipping_cost,
       total_tax_payable: data.total_tax_payable,
       order: null,
+      icms_tax: orderExist.icms_tax,
       expenses: data.expenses,
     });
 

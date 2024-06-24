@@ -109,6 +109,12 @@ export class PhysicalCustomerOrderUseCases {
       await this.carrierCompanyUseCase.getCarrierCompany({
         id: data.carrier_id,
       });
+
+    const orderExist =
+      await this.physicalCustomerOrderRepository.findPhysicalCustomerOrder({
+        id,
+      });
+
     const order = new PhysicalCustomerOrder({
       created_by: null,
       physicalCustomerId: data.physicalCustomerId,
@@ -117,6 +123,7 @@ export class PhysicalCustomerOrderUseCases {
       total_receivable: data.total_receivable,
       total_shipping_cost: data.total_shipping_cost,
       total_tax_payable: data.total_tax_payable,
+      icms_tax: orderExist.icms_tax,
       order: null,
       quote_table_id: data.quote_table_id,
       expenses: data.expenses,
