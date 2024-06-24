@@ -111,7 +111,7 @@ export class OrderProcessingResolver {
     @CurrentUser()
     user: User,
   ) {
-    return this.orderProcessingUseCase.completedOrder(data, user.id);
+    return await this.orderProcessingUseCase.completedOrder(data, user.id);
   }
   @ResolveField(() => VehicleCarModel)
   async Vehicle(@Parent() orderProcessing: OrderProcessingInput) {

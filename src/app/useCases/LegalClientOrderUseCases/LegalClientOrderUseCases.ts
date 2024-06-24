@@ -43,7 +43,7 @@ export class LegalClientOrderUseCases {
 
     if (order) return order;
 
-    throw new GraphQLError('ORDER Not Found', {
+    throw new GraphQLError('ORDER Not Found jurídico', {
       extensions: { code: HttpStatus.NOT_FOUND },
     });
   }

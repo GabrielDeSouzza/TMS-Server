@@ -69,8 +69,8 @@ export class LegalClientOrderPrismaService
 
     return LegalClientOrderPrismaDTO.PrismaToEntity(
       legalClientOrder,
-      legalClientOrder.FreightExpenses,
-      legalClientOrder.QuoteTable.Icms.aliquot,
+      legalClientOrder?.FreightExpenses,
+      legalClientOrder?.QuoteTable.Icms.aliquot,
     );
   }
   async createLegalClientOrder(

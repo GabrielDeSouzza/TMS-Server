@@ -56,7 +56,7 @@ export class PhysicalCustomerOrder extends Entity {
       throw new NotificationError(errors);
     }
 
-    this.totolExpense = props.expenses?.reduce(
+    this.totolExpense = props?.expenses?.reduce(
       (total, expense) => total + expense.value,
       0,
     );

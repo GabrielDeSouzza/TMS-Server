@@ -109,20 +109,26 @@ export class OrderProcessingUseCases {
 
   async updateOrderProcessing(id: string, data: UpdateOrderProcessingDTO) {
     await this.getOrderProcessing({ id });
-    if (data.vehicle_id)
+
+    if (data.vehicle_id) {
       await this.vehicleUseCase.getVehicle({
         vehicleId: data.vehicle_id,
       });
-    if (data?.legal_customer_order_ids?.length > 0)
+    }
+
+    if (data?.legal_customer_order_ids?.length > 0) {
       for (const legalOrderId of data.legal_customer_order_ids)
         await this.legalClientOrderUseCase.getLegalClientOrder({
           id: legalOrderId,
         });
-    if (data?.physical_customer_order_ids?.length > 0)
-      for (const physicalCustomerId of data.legal_customer_order_ids)
+    }
+
+    if (data?.physical_customer_order_ids?.length > 0) {
+      for (const physicalCustomerId of data.physical_customer_order_ids)
         await this.physicalCusotmerOrderUseCase.getPhysicalCustomerOrder({
           id: physicalCustomerId,
         });
+    }
 
     const orderProcesingEntity = new OrderProcessing({
       physical_customer_order_ids: data.physical_customer_order_ids,
@@ -131,7 +137,7 @@ export class OrderProcessingUseCases {
       total_distance: data.total_distance,
       total_spend_liters: data.total_spend_liters,
       total_spending_money: data.total_spending_money,
-      disconnect_legal_order: data.disconnect_legal_order,
+      disconnect_legal_order: data.disconnect_legal_client_order,
       disconnect_physical_customer_order:
         data.disconnect_physical_customer_order,
       updated_by: data.updated_by,

@@ -57,7 +57,6 @@ export class OrderProcessingPrismaDTO {
   public static EntityToPrismaUpdate(orderProcessing: OrderProcessing) {
     const orderprocessingUptate: Prisma.OrderProcessingUpdateInput = {
       end_at: orderProcessing?.end_at,
-
       start_at: orderProcessing?.start_at,
       total_distance: orderProcessing?.total_distance,
       total_spend_liters: orderProcessing?.total_spend_liters,
@@ -67,13 +66,13 @@ export class OrderProcessingPrismaDTO {
       LegalClientOrder: {
         connect:
           orderProcessing.legal_customer_order_ids?.length > 0
-            ? orderProcessing.legal_customer_order_ids.map(legalOrderId => ({
+            ? orderProcessing.legal_customer_order_ids?.map(legalOrderId => ({
                 id: legalOrderId,
               }))
             : undefined,
-        disconnect: orderProcessing?.legal_customer_order_ids
-          ? orderProcessing.legal_customer_order_ids.map(physicalOrderId => ({
-              id: physicalOrderId,
+        disconnect: orderProcessing?.disconnect_legal_order
+          ? orderProcessing.disconnect_legal_order.map(legalOrderId => ({
+              id: legalOrderId,
             }))
           : undefined,
       },

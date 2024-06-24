@@ -35,8 +35,6 @@ export class PhysicalCustomerOrderUseCases {
     );
   }
   async getPhysicalCustomerOrder(request: GetPhysicalCustomerOrderDTO) {
-    console.log(request);
-
     if (!request.id && !request.order) {
       throw new GraphQLError('IS NECESSARY AN ID OR ORDER', {
         extensions: { code: HttpStatus.BAD_REQUEST },
@@ -47,9 +45,10 @@ export class PhysicalCustomerOrderUseCases {
       await this.physicalCustomerOrderRepository.findPhysicalCustomerOrder(
         request,
       );
+
     if (order) return order;
 
-    throw new GraphQLError('ORDER Not Found', {
+    throw new GraphQLError('ORDER Not Found fisico', {
       extensions: { code: HttpStatus.NOT_FOUND },
     });
   }
