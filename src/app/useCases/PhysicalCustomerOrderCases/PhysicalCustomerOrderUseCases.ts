@@ -114,7 +114,7 @@ export class PhysicalCustomerOrderUseCases {
       await this.physicalCustomerOrderRepository.findPhysicalCustomerOrder({
         id,
       });
-
+    console.log(orderExist);
     const order = new PhysicalCustomerOrder({
       created_by: null,
       physicalCustomerId: data.physicalCustomerId,
@@ -127,7 +127,9 @@ export class PhysicalCustomerOrderUseCases {
       order: null,
       quote_table_id: data.quote_table_id,
       expenses: data.expenses,
+      deleted_expenses: data.deleted_expenses,
     });
+    console.log('ORDER', order);
 
     return this.physicalCustomerOrderRepository.updatePhysicalCustomerOrder(
       id,

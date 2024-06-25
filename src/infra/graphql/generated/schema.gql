@@ -2773,6 +2773,7 @@ input PhysicalCustomerOrderOrderByWithRelationInput {
 
 input PhysicalCustomerOrderUpdateInput {
   carrier_id: String
+  deleted_expenses: [String!]
   expenses: [FreightExpenseUpdateOrderInput!]
   physicalCustomerId: String
   quote_table_id: String

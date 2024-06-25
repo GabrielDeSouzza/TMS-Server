@@ -63,6 +63,9 @@ export class PhysicalCustomerOrderUpdateInput extends PartialType(
   @IsOptional()
   @Type(() => FreightExpenseUpdateOrderInput)
   expenses?: FreightExpenseUpdateOrderInput[];
+  @Field(() => [String], { nullable: true })
+  @Allow()
+  deleted_expenses: string[];
 }
 @InputType()
 export class PhysicalCustomerOrderUpdateManyInput extends PartialType(

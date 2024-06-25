@@ -4,6 +4,7 @@ import {
   type FreightExpenses as FreightExpensePrisma,
 } from '@prisma/client';
 
+import { type IExpense } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { PhysicalCustomerOrder } from 'domain/entities/PhysicalClientEntities/physicalCustomerOrder/PhysicalCustomerOrder';
 
 export class PhysicalCustomerOrderPrismaDTO {
@@ -38,7 +39,6 @@ export class PhysicalCustomerOrderPrismaDTO {
   public static EntityToCreatePrisma(
     physicalCustomerOrder: PhysicalCustomerOrder,
   ) {
-    console.log(physicalCustomerOrder.expenses);
     const physicalCustomerOrderPrisma: Prisma.PhysicalCustomerOrderCreateInput =
       {
         CreatedBy: { connect: { id: physicalCustomerOrder.created_by } },
@@ -71,6 +71,11 @@ export class PhysicalCustomerOrderPrismaDTO {
   public static EntityToPrismaUpdate(
     physicalCustomerOrder: PhysicalCustomerOrder,
   ) {
+    const x = this.freightExpensesQuery(
+      physicalCustomerOrder.expenses,
+      physicalCustomerOrder.deleted_expenses,
+    );
+    console.log(physicalCustomerOrder);
     const physicalCustomerOrderPrisma: Prisma.PhysicalCustomerOrderUpdateInput =
       {
         PhysicalCustomer: physicalCustomerOrder.physicalCustomerId
@@ -89,23 +94,52 @@ export class PhysicalCustomerOrderPrismaDTO {
         total_receivable: physicalCustomerOrder.total_receivable,
         total_shipping_cost: physicalCustomerOrder.total_shipping_cost,
         total_tax_payable: physicalCustomerOrder.total_tax_payable,
-        FreightExpenses: physicalCustomerOrder.expenses
-          ? {
-              upsert: physicalCustomerOrder.expenses.map(expense => ({
-                create: {
-                  expense_name: expense.expenseName,
-                  value: expense.value,
-                },
-                update: {
-                  expense_name: expense.expenseName,
-                  value: expense.value,
-                },
-                where: { id: expense.id ?? '' },
-              })),
-            }
-          : undefined,
+        FreightExpenses: x,
       };
 
     return physicalCustomerOrderPrisma;
+  }
+  private static freightExpensesQuery(
+    expenses?: IExpense[],
+    deleted?: string[],
+  ): Prisma.FreightExpensesUpdateManyWithoutPhysicalCustomerOrderNestedInput {
+    if (expenses && deleted) {
+      return {
+        disconnect: deleted.map(expenseId => ({
+          id: expenseId,
+        })),
+        upsert: expenses.map(expense => ({
+          create: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          update: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          where: { id: expense.id ?? '' },
+        })),
+      };
+    } else if (!expenses && deleted) {
+      return {
+        disconnect: deleted.map(expenseId => ({
+          id: expenseId,
+        })),
+      };
+    } else if (expenses && !deleted) {
+      return {
+        upsert: expenses.map(expense => ({
+          create: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          update: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          where: { id: expense.id ?? '' },
+        })),
+      };
+    } else return undefined;
   }
 }

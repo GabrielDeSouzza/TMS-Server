@@ -9,4 +9,5 @@ export abstract class UpdatePhysicalCustomerOrderDTO {
   updated_by?: string;
   carrier_id?: string;
   expenses?: IExpense[];
+  deleted_expenses?: string[];
 }

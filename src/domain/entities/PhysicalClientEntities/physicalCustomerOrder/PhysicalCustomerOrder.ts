@@ -29,6 +29,7 @@ export interface IPhysicalCustomerOrder {
   updated_by: string;
   created_by: string;
   expenses?: IExpense[];
+  deleted_expenses?: string[];
 }
 
 export class PhysicalCustomerOrder extends Entity {
@@ -56,7 +57,7 @@ export class PhysicalCustomerOrder extends Entity {
       throw new NotificationError(errors);
     }
 
-    this.totolExpense = props?.expenses?.reduce(
+    this.totolExpense = props.expenses?.reduce(
       (total, expense) => total + expense.value,
       0,
     );
@@ -153,6 +154,15 @@ export class PhysicalCustomerOrder extends Entity {
 
   set order(order: string) {
     this.props.order = order;
+  }
+
+  get deleted_expenses(): string[] {
+    return this.props.deleted_expenses;
+  }
+
+  set deleted_expenses(deleted_expenses: string[]) {
+    console.log('SSS', deleted_expenses);
+    this.props.deleted_expenses = deleted_expenses;
   }
 
   get physicalCustomerId(): string {
