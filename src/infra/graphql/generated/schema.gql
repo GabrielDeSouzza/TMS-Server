@@ -911,6 +911,7 @@ input LegalClientOrderOrderByWithRelationInput {
 
 input LegalClientOrderUpdateInput {
   carrier_id: String
+  deleted_expenses: [String!]
   expenses: [FreightExpenseUpdateOrderInput!]
   legal_contract_id: String
   quote_table_id: String
@@ -3065,7 +3066,7 @@ type Query {
   getAllVehicleModel(limit: Int! = 25, offset: Int! = 0, sort: VehicleModelOrderByWithRelationInput, where: VehicleModelWhereInput): [VehicleModelGraphql!]
   getAllVehicleTypes(limit: Int! = 25, offset: Int! = 0, sort: VehicleTypeOrderByWithRelationInput, where: VehicleTypeWhereInput): [VehicleTypeModel!]
   getAllVehicles(limit: Int! = 25, offset: Int! = 0, sort: VehicleOrderByWithRelationInput, where: VehicleWhereInput): [VehicleCarModel!]
-  getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): CarrierCompanyModel!
+  getCarrierCompanyModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalClientId: String, legalPersonId: String): CarrierCompanyModel!
   getCiotForLegalClientModel(ciot: String, id: String): CiotForLegalClientModel!
   getCompanyVehicle(id: String, plate: String, vehicleId: String): CompanyVehicleIModel!
   getContractOutsourcedDriver(contractNumber: String, id: String): ContractOutsourcedDriverModel!
@@ -3073,7 +3074,7 @@ type Query {
   getICMS(StateRelation: StateRelationIcmsArgs, id: String): IcmsModel!
   getIncident(id: String): IncidentModel!
   getLegalClientCte(acessKey: String, cteNumber: String, id: String): LegalClientCteModel
-  getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, legalClientId: String, legalPersonId: String): LegalClientModel!
+  getLegalClientModel(cnpj: String, corporateName: String, fantasyName: String, id: String, legalClientId: String, legalPersonId: String): LegalClientModel!
   getLegalClientOrderModel(id: String, order: String): LegalClientOrderModel
   getLegalClientQuoteTable(cod_quote: String, id: String): LegalClientQuoteTableModel
   getLegalContractModel(contractNumber: String, id: String): LegalContractModel!

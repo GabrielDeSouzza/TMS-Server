@@ -61,7 +61,12 @@ export class LegalClientUseCases {
         'IS NECESSARY IN CNPJ, CORPORATENAME, FANTASYNAME, ID OR LEGALPERSONID',
         { extensions: { code: HttpStatus.BAD_REQUEST } },
       );
+
+    console.log('INICIO');
+    console.log(request);
+    console.log('FIM');
     const client = await this.legalClientRepository.findLegalClient(request);
+
     if (client) return client;
 
     throw new GraphQLError('Client Not Found', {
