@@ -33,6 +33,7 @@ export interface ILegalClientOrder {
   created_by?: string;
   updated_by: string;
   expenses?: IExpense[];
+  deleted_expenses?: string[];
 }
 
 export class LegalClientOrder extends Entity {
@@ -126,7 +127,12 @@ export class LegalClientOrder extends Entity {
       0,
     );
   }
-
+  get deleted_expenses(): string[] {
+    return this.props.deleted_expenses;
+  }
+  set deleted_expenses(deleted_expenses: string[]) {
+    this.props.deleted_expenses = deleted_expenses;
+  }
   public set order(order: string) {
     this.props.order = order;
   }

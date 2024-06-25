@@ -6,21 +6,21 @@ import { type UpdateLegalPersonDTO } from './UpdateLegalPersonDto';
 export class LegalPersonEntityDto {
   public static createEntity(create: CreateLegalPersonDTO) {
     return new LegalPerson({
-      fantasy_name: create.fantasy_name,
-      cnpj: create.cnpj,
-      state_registration: create.state_registration,
-      corporate_name: create.corporate_name,
-      public_place: create.public_place,
-      address_number: create.address_number,
-      neighborhood: create.neighborhood,
-      complement: create.complement,
-      city: create.city,
-      uf: create.uf,
-      first_phone: create.first_phone,
-      cep: create.cep,
-      second_phone: create.second_phone,
-      third_phone: create.third_phone,
-      email: create.email,
+      fantasy_name: create?.fantasy_name,
+      cnpj: create?.cnpj,
+      state_registration: create?.state_registration,
+      corporate_name: create?.corporate_name,
+      public_place: create?.public_place,
+      address_number: create?.address_number,
+      neighborhood: create?.neighborhood,
+      complement: create?.complement,
+      city: create?.city,
+      uf: create?.uf,
+      first_phone: create?.first_phone,
+      cep: create?.cep,
+      second_phone: create?.second_phone,
+      third_phone: create?.third_phone,
+      email: create?.email,
     });
   }
   public static updateEntity(update: UpdateLegalPersonDTO) {

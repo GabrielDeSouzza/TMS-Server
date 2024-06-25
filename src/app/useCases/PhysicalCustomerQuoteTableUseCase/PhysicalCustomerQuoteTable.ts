@@ -104,19 +104,6 @@ export class PhysicalCustomerQuoteTableUseCases {
     id: string,
     data: UpdatePhysicalCustomerQuoteTableDTO,
   ) {
-    const orderExist =
-      await this.physicalCustomerQuoteTableRepository.findPhysicalCustomerQuoteTable(
-        {
-          id,
-        },
-      );
-
-    if (orderExist) {
-      throw new GraphQLError('ORDER ALREADY EXISTS', {
-        extensions: { code: HttpStatus.CONFLICT },
-      });
-    }
-
     if (!data.senderId)
       await this.senderUseCase.getSender({ id: data.senderId });
     else if (!data.recipientId)

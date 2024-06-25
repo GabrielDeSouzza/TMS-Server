@@ -4,6 +4,7 @@ import {
   type FreightExpenses as FreightExpensePrisma,
 } from '@prisma/client';
 
+import { type IExpense } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 import { LegalClientOrder } from 'domain/entities/LegalClientEntities/LegalClientOrder/LegaClientOrder';
 
 export class LegalClientOrderPrismaDTO {
@@ -78,23 +79,55 @@ export class LegalClientOrderPrismaDTO {
       total_receivable: legalClientOrder.total_receivable,
       total_shipping_cost: legalClientOrder.total_shipping_cost,
       total_tax_payable: legalClientOrder.total_tax_payable,
-      FreightExpenses: legalClientOrder.expenses
-        ? {
-            upsert: legalClientOrder.expenses.map(expense => ({
-              create: {
-                expense_name: expense.expenseName,
-                value: expense.value,
-              },
-              update: {
-                expense_name: expense.expenseName,
-                value: expense.value,
-              },
-              where: { id: expense.id ?? '' },
-            })),
-          }
-        : undefined,
+      FreightExpenses: this.freightExpensesQuery(
+        legalClientOrder.expenses,
+        legalClientOrder.deleted_expenses,
+      ),
     };
 
     return legalClientOrderUptade;
+  }
+  private static freightExpensesQuery(
+    expenses?: IExpense[],
+    deleted?: string[],
+  ): Prisma.FreightExpensesUpdateManyWithoutPhysicalCustomerOrderNestedInput {
+    if (expenses && deleted) {
+      return {
+        disconnect: deleted.map(expenseId => ({
+          id: expenseId,
+        })),
+        upsert: expenses.map(expense => ({
+          create: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          update: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          where: { id: expense.id ?? '' },
+        })),
+      };
+    } else if (!expenses && deleted) {
+      return {
+        disconnect: deleted.map(expenseId => ({
+          id: expenseId,
+        })),
+      };
+    } else if (expenses && !deleted) {
+      return {
+        upsert: expenses.map(expense => ({
+          create: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          update: {
+            expense_name: expense.expenseName,
+            value: expense.value,
+          },
+          where: { id: expense.id ?? '' },
+        })),
+      };
+    } else return undefined;
   }
 }

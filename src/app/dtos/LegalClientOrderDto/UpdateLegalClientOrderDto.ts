@@ -9,4 +9,5 @@ export abstract class UpdateLegalClientOrderDTO {
   carrier_id?: string;
   updated_by?: string;
   expenses?: IExpense[];
+  deleted_expenses?: string[];
 }

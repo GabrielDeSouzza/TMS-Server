@@ -161,7 +161,6 @@ export class PhysicalCustomerOrder extends Entity {
   }
 
   set deleted_expenses(deleted_expenses: string[]) {
-    console.log('SSS', deleted_expenses);
     this.props.deleted_expenses = deleted_expenses;
   }
 

@@ -80,6 +80,7 @@ export class MaintenanceResolver {
     recipent: MaintenanceUpdateInput,
     @CurrentUser() user: User,
   ) {
+    console.log(recipent);
     recipent.updated_by = user.id;
 
     return this.maintenanceUseCase.updateMaintenance(id, recipent);

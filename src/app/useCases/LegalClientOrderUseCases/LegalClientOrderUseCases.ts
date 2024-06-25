@@ -109,6 +109,7 @@ export class LegalClientOrderUseCases {
       order: null,
       icms_tax: orderExist.icms_tax,
       expenses: data.expenses,
+      deleted_expenses: data.deleted_expenses,
     });
 
     return this.legalClientOrderRepository.updateLegalClientOrder(id, order);

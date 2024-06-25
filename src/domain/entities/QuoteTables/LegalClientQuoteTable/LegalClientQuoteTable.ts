@@ -84,16 +84,6 @@ export class LegalClientQuoteTable extends Entity {
         maxLength: 8,
       },
       {
-        field: this.props.adressOrigin.postalCod,
-        fieldName: 'Adress  Destiny',
-        maxLength: 8000,
-      },
-      {
-        field: this.props.adressOrigin.postalCod,
-        fieldName: 'Adress  Origin',
-        maxLength: 9,
-      },
-      {
         field: this.props.recipientId,
         fieldName: 'Recipient',
         maxLength: 1000,

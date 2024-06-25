@@ -99,17 +99,6 @@ export class LegalClientQuoteTableUseCases {
     );
   }
   async updateQuoteTable(id: string, data: UpdateLegalClientQuoteTableDTO) {
-    const orderExist =
-      await this.legalClientQuoteTableRepository.findLegalClientQuoteTable({
-        id,
-      });
-
-    if (!orderExist) {
-      throw new GraphQLError('ORDER NOT EXISTS', {
-        extensions: { code: HttpStatus.CONFLICT },
-      });
-    }
-
     if (data.senderId)
       await this.senderUseCase.getSender({ id: data.senderId });
     else if (data.recipientId)
