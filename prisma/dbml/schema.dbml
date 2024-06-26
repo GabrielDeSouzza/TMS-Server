@@ -87,7 +87,7 @@ Table vehicles {
   Model vehicle_models [not null]
   model_id String [not null]
   OutsourcedTransportVehicle outsourced_transport_vehicle
-  OrderProcessing order_procesing
+  OrderProcessing order_procesing [not null]
 }
 
 Table vehicle_models {
@@ -647,7 +647,7 @@ Table ciots_for_legal_clients {
 Table order_procesing {
   id String [pk]
   order_processing_number String [unique, not null]
-  vehicle_id String [unique, not null]
+  vehicle_id String [not null]
   Vehicle vehicles [not null]
   total_distance Float [not null]
   total_spend_liters Float [not null]
@@ -950,7 +950,7 @@ Ref: ciots_for_legal_clients.created_by > users.id
 
 Ref: ciots_for_legal_clients.updated_by > users.id
 
-Ref: order_procesing.vehicle_id - vehicles.id
+Ref: order_procesing.vehicle_id > vehicles.id
 
 Ref: order_procesing.driver_id > own_drivers.id
 

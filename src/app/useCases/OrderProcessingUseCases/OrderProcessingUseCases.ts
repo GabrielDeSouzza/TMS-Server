@@ -61,7 +61,8 @@ export class OrderProcessingUseCases {
       await this.orderProcessingResitory.findOrderProcessing({
         vehicleData: { vehicleId: data.vehicle_id },
       });
-    if (orderProcesingExist)
+    console.log(orderProcesingExist);
+    if (orderProcesingExist && orderProcesingExist.status != 'COMPLETE')
       throw new GraphQLError('VEHICLE ALREADY IN USE IN AN ORDER PROCESSING ', {
         extensions: { code: HttpStatus.CONFLICT },
       });

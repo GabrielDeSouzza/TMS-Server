@@ -114,7 +114,7 @@ model Vehicle {
   Model                      VehicleModel                @relation(fields: [model_id], references: [id])
   model_id                   String
   OutsourcedTransportVehicle OutsourcedTransportVehicle?
-  OrderProcessing            OrderProcessing?
+  OrderProcessing            OrderProcessing[]
 
   @@map("vehicles")
 }
@@ -748,7 +748,7 @@ model CiotForLegalClient {
 model OrderProcessing {
   id                      String                  @id @default(uuid())
   order_processing_number String                  @unique
-  vehicle_id              String                  @unique
+  vehicle_id              String
   Vehicle                 Vehicle                 @relation(fields: [vehicle_id], references: [id])
   total_distance          Float
   total_spend_liters      Float

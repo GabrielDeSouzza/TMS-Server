@@ -50,11 +50,6 @@ export class PhysicalCustomer extends Entity {
         isNullAble: true,
       },
       {
-        field: this.props.natural_person_id,
-        fieldName: 'Natural Person ID',
-        maxLength: 200,
-      },
-      {
         field: this.props.created_by,
         fieldName: 'Created By',
         maxLength: 200,

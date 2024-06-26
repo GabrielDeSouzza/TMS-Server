@@ -78,12 +78,14 @@ export class CompanyVehicleUseCases {
         extensions: { code: HttpStatus.CONFLICT },
       });
 
-    const vehicleEntity = VehicleEntityDTO.createEntity(data.Vehicle);
+    const vehicleEntity = data.Vehicle
+      ? VehicleEntityDTO.createEntity(data.Vehicle)
+      : undefined;
     const companyVehicleEntity = new CompanyVehicle({
       carrier_company_id: data.carrier_company_id,
       created_by: data.created_by,
       updated_by: data.updated_by,
-      vehicle_id: vehicleEntity.id,
+      vehicle_id: vehicleEntity?.id,
     });
 
     return await this.companyVehicleRepository.createCompanyVehicle(

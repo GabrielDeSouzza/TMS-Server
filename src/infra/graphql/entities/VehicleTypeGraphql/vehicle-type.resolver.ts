@@ -53,6 +53,8 @@ export class VehicleTypeResolver {
 
   @Query(() => VehicleTypeModel)
   async getVehicleType(@Args() request: GetVehicleTypeArgs) {
+    console.log(request);
+
     return this.vehicleTypeUseCase.getVehicleType(request);
   }
 

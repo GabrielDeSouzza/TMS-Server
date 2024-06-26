@@ -154,7 +154,6 @@ export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
         ],
       },
     });
-    console.log(carrierCompany);
 
     return CarrierCompanyPrismaDTO.PrismaToEntity(carrierCompany);
   }
@@ -185,6 +184,7 @@ export class CarrierCompanyPrismaService implements CarrierCompanyRepository {
       ),
       where: { id },
     });
+    console.log('SSSSS', carriercompanyPrisma);
 
     return CarrierCompanyPrismaDTO.PrismaToEntity(carriercompanyPrisma);
   }

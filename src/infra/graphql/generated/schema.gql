@@ -3948,7 +3948,7 @@ input VehicleOrderByWithRelationInput {
   CompanyVehicle: CompanyVehicleOrderByWithRelationInput
   Maintenance: MaintenanceOrderByRelationAggregateInput
   Model: VehicleModelOrderByWithRelationInput
-  OrderProcessing: OrderProcessingOrderByWithRelationInput
+  OrderProcessing: OrderProcessingOrderByRelationAggregateInput
   OutsourcedTransportVehicle: OutsourcedTransportVehicleOrderByWithRelationInput
   OutsourcedVehicle: OutsourcedVehicleOrderByWithRelationInput
   antt: SortOrder
@@ -4056,7 +4056,7 @@ input VehicleWhereInput {
   Model: VehicleModelWhereInput
   NOT: [VehicleWhereInput!]
   OR: [VehicleWhereInput!]
-  OrderProcessing: OrderProcessingWhereInput
+  OrderProcessing: OrderProcessingListRelationFilter
   OutsourcedTransportVehicle: OutsourcedTransportVehicleWhereInput
   OutsourcedVehicle: OutsourcedVehicleWhereInput
   antt: StringFilter
