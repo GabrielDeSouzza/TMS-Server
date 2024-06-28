@@ -754,6 +754,12 @@ input LegalClientCteInput {
   orderId: String!
 }
 
+input LegalClientCteListRelationFilter {
+  every: LegalClientCteWhereInput
+  none: LegalClientCteWhereInput
+  some: LegalClientCteWhereInput
+}
+
 type LegalClientCteModel {
   acessKey: String!
   cteNumber: String!
@@ -761,6 +767,10 @@ type LegalClientCteModel {
   id: String!
   observations: String
   orderId: String!
+}
+
+input LegalClientCteOrderByRelationAggregateInput {
+  _count: SortOrder
 }
 
 input LegalClientCteOrderByWithRelationInput {
@@ -887,7 +897,7 @@ input LegalClientOrderOrderByWithRelationInput {
   CarrierCompany: CarrierCompanyOrderByWithRelationInput
   CreatedBy: UserOrderByWithRelationInput
   FreightExpenses: FreightExpensesOrderByRelationAggregateInput
-  LegalClientCte: LegalClientCteOrderByWithRelationInput
+  LegalClientCte: LegalClientCteOrderByRelationAggregateInput
   LegalContract: LegalContractOrderByWithRelationInput
   OrderProcessing: OrderProcessingOrderByWithRelationInput
   OutsourcedTransportCompanyContract: OutsourcedTransportCompanyContractOrderByWithRelationInput
@@ -936,7 +946,7 @@ input LegalClientOrderWhereInput {
   CarrierCompany: CarrierCompanyWhereInput
   CreatedBy: UserWhereInput
   FreightExpenses: FreightExpensesListRelationFilter
-  LegalClientCte: LegalClientCteWhereInput
+  LegalClientCte: LegalClientCteListRelationFilter
   LegalContract: LegalContractWhereInput
   NOT: [LegalClientOrderWhereInput!]
   OR: [LegalClientOrderWhereInput!]

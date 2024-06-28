@@ -611,7 +611,7 @@ model LegalClient {
 
 model LegalClientCte {
   id               String           @id @default(uuid())
-  order_id         String           @unique
+  order_id         String
   LegalClientOrder LegalClientOrder @relation(fields: [order_id], references: [id])
   access_key       String
   type_cte         String
@@ -723,7 +723,7 @@ model LegalClientOrder {
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract?
 
   completed_orders_id String?
-  LegalClientCte      LegalClientCte?
+  LegalClientCte      LegalClientCte[]
   FreightExpenses     FreightExpenses[]
 
   @@map("legal_orders")

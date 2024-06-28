@@ -69,8 +69,8 @@ export class CompanyVehicleUseCases {
   }
   async createCompanyVehicle(data: CreateCompanyVehcicleDTO) {
     const vehicleExist = await this.vehicleRepository.validadeVehicle({
-      plate: data.Vehicle.plate,
-      renavam: data.Vehicle.renavam,
+      plate: data.Vehicle?.plate,
+      renavam: data.Vehicle?.renavam,
     });
 
     if (vehicleExist)
@@ -81,11 +81,12 @@ export class CompanyVehicleUseCases {
     const vehicleEntity = data.Vehicle
       ? VehicleEntityDTO.createEntity(data.Vehicle)
       : undefined;
+
     const companyVehicleEntity = new CompanyVehicle({
       carrier_company_id: data.carrier_company_id,
       created_by: data.created_by,
       updated_by: data.updated_by,
-      vehicle_id: vehicleEntity?.id,
+      vehicle_id: data?.vehicle_id,
     });
 
     return await this.companyVehicleRepository.createCompanyVehicle(

@@ -522,7 +522,7 @@ Table legal_clients {
 
 Table legal_client_cte {
   id String [pk]
-  order_id String [unique, not null]
+  order_id String [not null]
   LegalClientOrder legal_orders [not null]
   access_key String [not null]
   type_cte String [not null]
@@ -626,7 +626,7 @@ Table legal_orders {
   CarrierCompany carrier_companies [not null]
   OutsourcedTransportCompanyContract OutsourcedTransportCompanyContract
   completed_orders_id String
-  LegalClientCte legal_client_cte
+  LegalClientCte legal_client_cte [not null]
   FreightExpenses freight_expenses [not null]
 }
 
@@ -908,7 +908,7 @@ Ref: legal_clients.created_by > users.id
 
 Ref: legal_clients.updated_by > users.id
 
-Ref: legal_client_cte.order_id - legal_orders.id
+Ref: legal_client_cte.order_id > legal_orders.id
 
 Ref: legal_Contracts.legal_client_id > legal_clients.id
 

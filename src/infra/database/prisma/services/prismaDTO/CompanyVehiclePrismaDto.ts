@@ -32,18 +32,22 @@ export class CompanyVehiclePrismaDTO {
       CreatedBy: { connect: { id: companyVehicle.created_by } },
       updated_at: companyVehicle.updated_at,
       Vehicle: {
-        create: {
-          color: vehicle.color,
-          plate: vehicle.plate,
-          renavam: vehicle.renavam,
-          antt: vehicle.antt,
-          year: vehicle.year,
-          Model: { connect: { id: vehicle.model_id } },
-          is_ipva_paid: vehicle.isIpvaPaid,
-          registration: vehicle.registration,
+        connectOrCreate: {
+          create: {
+            color: vehicle?.color,
+            plate: vehicle?.plate,
+            renavam: vehicle?.renavam,
+            antt: vehicle?.antt,
+            year: vehicle?.year,
+            Model: { connect: { id: vehicle?.model_id } },
+            is_ipva_paid: vehicle?.isIpvaPaid,
+            registration: vehicle?.registration,
+          },
+          where: { id: companyVehicle?.vehicle_id ?? '' },
         },
       },
     };
+    console.log(companyVehiclePrisma);
 
     return companyVehiclePrisma;
   }
